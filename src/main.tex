@@ -1,0 +1,211 @@
+\documentclass[10pt, a5j, ]{ltjsbook} % lualatex
+
+\usepackage{caption}
+\usepackage{subcaption}
+\renewcommand{\thesubfigure}{\alph{subfigure}}
+
+\makeatletter
+\captionsetup{compatibility=false}
+\captionsetup{%
+	format = plain,
+	labelsep = quad,
+	font = small,
+	skip = .2\baselineskip,
+	width = .85\linewidth,
+	subrefformat = parens,
+	skip = 5\jsc@mpt
+}
+\captionsetup[subfigure]{%
+	labelformat = parens,
+	labelsep = space
+}
+\makeatother
+%%%%%%%%=========package=============%%%%%%%%%%%%%
+%
+\usepackage[no-math]{luatexja-fontspec}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont[Ligatures=TeX]{Libertinus Serif}
+\setsansfont[Ligatures=TeX]{Libertinus Sans}
+\setmathfont{Libertinus Math}[math-style=ISO, bold-style=ISO]
+\setmathfont{TeX Gyre Pagella Math}[range=bb]
+\DeclareFontFamily{OML}{nxlmi}{\skewchar \font =127}
+\DeclareFontShape{OML}{nxlmi}{m}{it}{
+	<-6.3>  nxlmi035
+	<6.3-8.6> nxlmi037
+	<8.6->  nxlmi03
+}{}
+\DeclareSymbolFont{gletters}{OML}{nxlmi}{m}{it}
+\DeclareMathSymbol{g}{\mathalpha}{gletters}{`g}
+\usepackage[HaranoAji]{luatexja-preset}
+\ltjsetparameter{jacharrange={-2,-3}}
+\usepackage{amsthm}
+\usepackage[draft]{graphicx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{multienum}
+\usepackage[binary-units = true]{siunitx}
+\usepackage{index}
+\usepackage{pxrubrica}
+\usepackage{luatexja-ruby}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[listings, breakable]{tcolorbox}
+
+\delimitershortfall=-.5pt
+
+\graphicspath{{./fig/}}
+
+%
+%%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
+%
+\setlist[description, 1]{%
+  style = nextline%
+}
+%
+%%%%%%%%%%%%%%=======================theorem==================%%%%%%%%%%%%%
+%
+%
+\theoremstyle{definition}
+\newtheorem{Ex}{例}[section]
+\newtheorem{Note}{注意}[section]
+%
+%
+%%%%%%%%%%%%%=====================index==================================%%%%%%%%%%%%%%
+%
+\newindex{sidx}{sidx}{sind}{記号索引}
+\newindex{widx}{widx}{wind}{用語索引}
+%
+%
+%%%%%%%%%===================foot note numbering=================%%%%%%%%%%%%%%%%%%%%
+%
+\makeatletter
+\@addtoreset{footnote}{section}
+\makeatother
+
+%%
+%%%%%%%%%%%%%%========hyperref============%%%%%%%%%%
+%
+\usepackage[unicode, pdfusetitle, hidelinks, draft = true]{hyperref} % hyperlink
+
+\hypersetup{% setting hyperref
+  bookmarksnumbered=true,
+  bookmarksopen=true,
+  bookmarkstype=toc,
+  pdfborder={0 0 0},
+  colorlinks = true,
+}
+\usepackage{footnotebackref}
+%
+%
+%%%%%%%==============crossreference================%%%%%%%%%%
+%
+\usepackage[nameinlink]{cleveref}
+\crefname{figure}{図}{図}
+\Crefname{figure}{図}{図}
+\crefformat{chapter}{#2第#1章#3}
+\Crefformat{chapter}{#2第#1章#3}
+\crefrangeformat{chapter}{#3第#1#4章から#5第#2#6章}
+\Crefrangeformat{chapter}{#3第#1#4章から#5第#2#6章}
+\crefname{page}{p.}{p.}
+\Crefname{page}{p.}{p.}
+\crefname{Ex}{例}{例}
+\Crefname{Ex}{例}{例}
+\crefname{table}{表}{表}
+\Crefname{table}{表}{表}
+\crefname{section}{\presectionname}{\presectionname}
+\Crefname{section}{\presectionname}{\presectionname}
+\crefname{subsection}{\presubsectionname}{\presubsectionname}
+\Crefname{subsection}{\presubsectionname}{\presubsectionname}
+\crefrangeformat{section}{#3\presectionname#1#4から#5\presectionname#2#6}
+\Crefrangeformat{section}{#3\presectionname#1#4から#5\presectionname#2#6}
+\crefrangeformat{subsection}{#3\presubsectionname#1#4から#5\presubsectionname#2#6}
+\Crefrangeformat{subsection}{#3\presubsectionname#1#4から#5\presubsectionname#2#6}
+
+%
+%
+%%%%%%%======biblatex=============%%%%%%%%%%
+%
+\usepackage[%
+backend = biber,%
+url = false,%
+doi = false,%
+eprint = false,%
+isbn = false,%
+style = numeric-comp%
+]{biblatex} % use "biblatex"
+\DeclareFieldFormat*{title}{\mkbibquote{#1}}
+\DeclareDelimFormat{labelnamepunct}{\addcomma\addspace}
+\DeclareFieldFormat{url}{\url{#1}}
+%\addbibresource{reference/book.bib}
+%\addbibresource{reference/online.bib}
+
+\makeatletter
+\renewcommand{\section}{%
+  \if@slide\clearpage\fi
+  \@startsection{section}{1}{\z@}%
+  {\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
+  {.5\Cvs \@plus.3\Cdp}% 後アキ
+  %   {\normalfont\Large\headfont\@secapp}}
+  {\normalfont\Large\headfont\presectionname\raggedright}%
+}
+\renewcommand{\subsection}{%
+  \@startsection{subsection}{2}{\z@}%
+  {\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
+  {.5\Cvs \@plus.3\Cdp}% 後アキ
+  {\normalfont\large\headfont\presubsectionname}%
+}
+\makeatother
+\renewcommand{\presectionname}{\S}
+\newcommand{\presubsectionname}{\S\S}
+\setcounter{tocdepth}{2}
+%
+%
+
+
+%%%%%%%%%%%%%%%===========index============%%%%%%%%%%%
+
+\usepackage{needspace}
+
+\makeatletter
+\NewDocumentCommand\idxhead{m}{%
+  \needspace{2\baselineskip}%
+  \vspace{\baselineskip}%
+  \def\hrulefill{\leavevmode\leaders\hrule height 0.8pt\hfill\kern\z@}%
+  \hbox to \columnwidth{\hfil%
+    \normalsize%
+    \textcolor{gray}{\raisebox{.15ex}{■}}\hspace{.5\zw}\textsf{#1}\hspace{.5\zw}\textcolor{gray}{\raisebox{.15ex}{■}}\hfil}\vspace{-4.5mm}\hrulefill\par%
+  \nopagebreak%
+}
+\makeatother
+%
+
+\begin{document}
+
+\begin{titlepage}
+	\title{0から始める数理論理学入門}
+	\author{野口匠}
+	\date{2023年12月31日}
+	\maketitle
+\end{titlepage}
+
+\frontmatter
+
+\include{contents/intro}
+
+\tableofcontents
+
+\mainmatter
+
+\include{contents/formalize}
+
+\backmatter
+\nocite{*}
+\printbibliography[title=参考文献, heading=bibintoc]
+
+\printindex[sidx]
+\printindex[widx]
+
+\include{colophon}
+
+\end{document}

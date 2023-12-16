@@ -5,6 +5,7 @@ services:
       dockerfile: .devcontainer/Dockerfile
     volumes:
       - fontcache:/usr/local/texlive/2022/texmf-var/lualatex-cache
+      - ../src:/home/src
     stdin_open: true
     tty: true
 

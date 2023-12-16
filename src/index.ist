@@ -1,0 +1,8 @@
+heading_flag     1
+heading_prefix   "\n\\idxhead{"
+heading_suffix   "}"
+letter_head      2
+symhead_positive "記号"
+delim_0 "\\;\\hfill "
+delim_1 "\\;\\hfill "
+delim_2 "\\;\\hfill "

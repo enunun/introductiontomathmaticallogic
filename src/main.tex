@@ -137,7 +137,7 @@ style = numeric-comp%
 \DeclareFieldFormat*{title}{\mkbibquote{#1}}
 \DeclareDelimFormat{labelnamepunct}{\addcomma\addspace}
 \DeclareFieldFormat{url}{\url{#1}}
-%\addbibresource{reference/book.bib}
+\addbibresource{reference/book.bib}
 %\addbibresource{reference/online.bib}
 
 \makeatletter
@@ -183,10 +183,10 @@ style = numeric-comp%
 \begin{document}
 
 \begin{titlepage}
-	\title{0から始める数理論理学入門}
-	\author{野口匠}
-	\date{2023年12月31日}
-	\maketitle
+  \title{0から始める数理論理学入門}
+  \author{野口匠}
+  \date{2023年12月31日}
+  \maketitle
 \end{titlepage}
 
 \frontmatter
@@ -198,13 +198,17 @@ style = numeric-comp%
 \mainmatter
 
 \include{contents/formalize}
+\include{contents/syntax}
+\include{contents/proof}
+\include{contents/semantics}
+\include{contents/advance}
 
 \backmatter
 \nocite{*}
 \printbibliography[title=参考文献, heading=bibintoc]
 
-\printindex[sidx]
-\printindex[widx]
+%\printindex[sidx]
+%\printindex[widx]
 
 \include{colophon}
 

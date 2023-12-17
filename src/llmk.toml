@@ -1,5 +1,5 @@
 # custom sequence
-sequence = ["latex", "bibtex", "symbolindex", "wordindex", "latex", "latex"]
+sequence = ["latex", "bibtex", "latex", "latex"]
 
 # select source
 source = "main.tex"

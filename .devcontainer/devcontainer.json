@@ -1,0 +1,6 @@
+{
+	"name": "TeX Live",
+	"dockerComposeFile": "./docker-compose.yml",
+	"service": "latex",
+	"workspaceFolder": "/home/src"
+}

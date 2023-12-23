@@ -1,5 +1,5 @@
 # custom sequence
-sequence = ["latex", "bibtex", "latex", "latex"]
+sequence = ["latex", "biber", "latex", "latex"]
 
 # select source
 source = "main.tex"
@@ -10,7 +10,7 @@ command = "lualatex"
 args = "%T"
 
 # bibtex
-[programs.bibtex]
+[programs.biber]
 command = "biber"
 args = "%B.bcf"
 

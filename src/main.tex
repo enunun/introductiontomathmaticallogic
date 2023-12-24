@@ -51,7 +51,7 @@
 \usepackage{xcolor}
 \usepackage{braket}
 
-\delimitershortfall=-.5pt
+\delimitershortfall=-.3pt
 
 \graphicspath{{./fig/}}
 
@@ -79,8 +79,28 @@
 \NewDocumentCommand{\LKImply}{}{\Rightarrow}
 
 \NewDocumentCommand{\term}{m}{\textbf{#1}}
+\RenewDocumentCommand{\emph}{m}{\textbf{#1}}
 
 \NewDocumentCommand{\obj}{m}{\symtt{#1}}
+
+\NewDocumentCommand{\Natural}{}{\symbb{N}}
+
+\NewDocumentCommand{\Zahlen}{}{\symbb{Z}}
+
+\DeclareMathOperator{\FV}{FV}
+\DeclareMathOperator{\BV}{BV}
+\DeclareMathOperator{\Var}{Var}
+
+\NewDocumentCommand{\subst}{smm}{%
+\IfBooleanTF{#1}{#2[{#3}]%
+  }%
+  {%
+    #2\mathopen{} \left[ #3 \right] \mathclose{}%
+  }%
+}
+
+
+
 %
 %%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
 %
@@ -93,9 +113,10 @@
 %
 \theoremstyle{definition}
 \newtheorem{Def}{定義}[chapter]
-\newtheorem{Thm}{定理}[Def]
-\newtheorem{Ex}[Thm]{例}
-\newtheorem{Note}[Thm]{注意}
+\newtheorem{Thm}[Def]{定理}
+\newtheorem{Ex}[Def]{例}
+\newtheorem{Que}{演習}[chapter]
+\newtheorem{Note}[Def]{注意}
 %
 %
 %%%%%%%%%%%%%=====================index==================================%%%%%%%%%%%%%%
@@ -138,6 +159,7 @@
 \Crefname{page}{p.}{p.}
 \crefname{Ex}{例}{例}
 \Crefname{Ex}{例}{例}
+\Crefname{Def}{定義}{定義}
 \crefname{table}{表}{表}
 \Crefname{table}{表}{表}
 \crefname{section}{\presectionname}{\presectionname}
@@ -199,7 +221,7 @@ style = numeric-comp%
 \NewDocumentCommand\idxhead{m}{%
   \needspace{2\baselineskip}%
   \vspace{\baselineskip}%
-  \def\hrulefill{\leavevmode\leaders\hrule height 0.8pt\hfill\kern\z@}%
+  \DeclareDocumentCommand\hrulefill{}{\leavevmode\leaders\hrule height 0.8pt\hfill\kern\z@}%
   \hbox to \columnwidth{\hfil%
     \normalsize%
     \textcolor{gray}{\raisebox{.15ex}{■}}\hspace{.5\zw}\textsf{#1}\hspace{.5\zw}\textcolor{gray}{\raisebox{.15ex}{■}}\hfil}\vspace{-4.5mm}\hrulefill\par%

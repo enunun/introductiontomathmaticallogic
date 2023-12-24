@@ -15,6 +15,8 @@
 これにより，通常の数学と同じく一般的な法則や定理を研究することが可能となる．
 本章の内容はその前準備に相当する．
 
+\newpage
+
 \section{言語} \label[seciton]{sec:language}
 
 議論を始めるにあたり，どのような記号を使用するのかを明瞭にする必要がある．
@@ -34,6 +36,7 @@
 そのような記号を\cref{tab:commonsymbol}に示し，今後逐一言及しないものとする%
 \footnote{%
 	ここに示す記号とは違う記号を採用する場合もあるが，それは単に流儀や議論の対象の違いである．
+	その違いによって質的に大きな差異が生じることもあればそうでないこともある．
 }%
 ．
 
@@ -48,7 +51,7 @@
 		変数記号 & \(\obj{x}, \obj{y}, \obj{z}, \dotsc\)                                & 無限に多く存在する（可算無限） \\
 		論理記号 & \(\bot, \lnot, \land, \lor, \to, \forall, \exists\)                                    \\
 		等号   & \(\obj{\mathord{=}}\)                                                & オブジェクト側の意味での等号  \\
-		補助記号 & \(\text{``\(\lparen\)''}, \text{``\(\rparen\)''}, \text{``\(,\)''}\)                   \\
+		補助記号 & \(\text{``\(\lparen\)''}, \text{``\(\rparen\)''}, \text{``\(,\)''}\) & カッコやカンマ         \\
 		\bottomrule
 	\end{tabular}
 \end{table}
@@ -77,18 +80,295 @@
 
 言語については，例を述べるのがわかりやすいだろう．
 
-\begin{Def} \label[Def]{def:languageexample}
-	群論の言語\(\symcal{L}_1\)は\(\symcal{L}_1 = \set{\obj{\ast}, \obj{e}, {}^{\obj{-1}}}\)
+\begin{Ex} \label[Ex]{Ex:languageexample}
+	群論の言語\(\symcal{L}_1\)は\(\symcal{L}_1 \equiv \set{\obj{\ast}, \obj{e}, {}^{\obj{-1}}}\)
 	と与えることができる．ここで，\(\obj{\ast}\)はアリティ2の関数記号，\(\obj{e}\)は定数記号，
 	\({}^{\obj{-1}}\)はアリティ1の関数記号である．
-	また，順序の理論の言語\(\symcal{L}_2\)は\(\symcal{L}_2 = \set{\obj{\le}}\)と与えることができる．
+	また，順序の理論の言語\(\symcal{L}_2\)は\(\symcal{L}_2 \equiv \set{\obj{\le}}\)と与えることができる．
 	ここで，\(\obj{\le}\)はアリティ2の関係記号である．
-\end{Def}
+\end{Ex}
 
-アリティというのは，素朴的直観側でいえば「引数の数」を表現しているものと考えられる．
+アリティというのは，素朴的直観における「引数の数」の対応物だと考えられる．
 こう考えてみれば，関数記号や関係記号にアリティが定まっていることを要請するのはごく自然であろう．
 
 
 \section{項と論理式} \label[section]{sec:logicalexpression}
 
-使う記号を定義した
+使う記号を定義したことで，これらを組み合わせて「モノ」や「主張」に相当する概念を構築していくことができる．
+これは言語に対してある種の「文法」を定めることに相当する．
+文法を定めることにより，形式的記号の集合でしかなかった言語が一気に「数学っぽい」性格を帯びてくる．
+
+\index[widx]{こう@項，\(\symcal{L}\)項}
+\begin{Def} \label[Def]{Def:term}
+	言語\(\symcal{L}\)に対し，\(\symcal{L}\)項を以下のように帰納的に定義する：
+	\begin{enumerate}
+		\item 変数記号は\(\symcal{L}\)項である．
+		\item 定数記号は\(\symcal{L}\)項である．
+		\item \(f\)が\(\symcal{L}\)におけるアリティ\(n\)の関数記号であり%
+		      \footnote{%
+			      ここで\(f\)がイタリック体なのは，「\(f\)」という記号そのものが\(\symcal{L}\)の関数記号というわけではなく
+			      \(\symcal{L}\)の関数記号のうちのどれかであるということを明示することを意図している．
+		      }%
+		      ，
+		      \(t_1, t_2, \dotsc, t_n\)が\(\symcal{L}\)項であるならば，記号列
+		      \begin{equation}
+			      \apply{f}{t_1, t_2, \dotsc, t_n}
+		      \end{equation}
+		      は\(\symcal{L}\)項である．
+		\item 以上の規則を有限回適用して得られるもののみが項である．
+	\end{enumerate}
+\end{Def}
+
+\Cref{Def:term}で特徴的なのは，「項とは〇〇であるものをいう」などのような直接的な定義ではなく
+「変数記号と定数記号からどのようにして項全体が得られるか」という構成方法を述べていることである．
+何が項で何が項でないかが明確に定まっているため，この定義は定義として正当なものである．
+\Cref{Def:term}で行ったような「ベースとなる対象から定義したい対象がどのように構成されるかを述べる」
+形式でなされる定義を%
+\index[widx]{きのうてきていぎ@帰納的定義}%
+\term{帰納的定義}，
+あるいは%
+\index[widx]{さいきてきていぎ@再帰的定義|see{帰納的定義}}%
+\term{再帰的定義}という．
+最後に「以上の規則を有限回適用して得られるもののみが」と宣言することで，
+上記の手続きで得られないものはすべてその定義からは外れていることを宣言し，
+対象の範囲を確定させている．この宣言がないと，
+実際に定義したいものよりも広い範囲の対象が定義から外れることが明文化されない
+\footnote{%
+	例えば，偶数全体の集合\(A\)を「\(0 \in A\)であり，\(n \in A\)ならば\(n + 2 \in A\)かつ\(n - 2 \in A\)である」などとして
+	定義しようとしたとき，整数全体の集合\(\Zahlen\)もカギカッコ内の条件自体は満たしている．
+}%
+．
+とはいえ，帰納的定義を行う上でこの宣言が必要なくなることはありえないので，自明であるとして省略されることも多い．
+
+
+\begin{Ex} \label[Ex]{Ex:groupterm}
+	\Cref{Ex:languageexample}で述べた群論の言語\(\symcal{L}_1\)において，
+	\(\apply{\obj{\ast}}{\obj{x}, \obj{y}}, \obj{e}, \apply{\obj{\ast}}{\apply{\obj{\ast}}{\obj{e}, \obj{x}}, \obj{y}}\)は
+	いずれも\(\symcal{L}_1\)項である．ここで，\(\obj{x}, \obj{y}\)は変数記号である．
+	なお，順序の理論の言語\(\symcal{L}_2\)は定数記号も関数記号ももたないため，
+	\(\symcal{L}_2\)項は変数記号のみである．
+\end{Ex}
+
+\begin{Que} \label{Que:termexample}
+	\Cref{Def:term}に基づき，\cref{Ex:groupterm}における
+	「\(\apply{\obj{\ast}}{\apply{\obj{\ast}}{\obj{e}, \obj{x}}, \obj{y}}\)」
+	が\(\symcal{L}_1\)項であることを確かめよ．
+	また，記号列「\(\obj{e} \apply{\mathord{\obj{\ast}}}{\obj{e}, \obj{e}}\)」が\(\symcal{L}_1\)項でないことを確かめよ．
+\end{Que}
+
+
+
+\begin{Def} \label[Def]{Def:logicalexpression}
+	言語\(\symcal{L}\)に対し，\(\symcal{L}\)論理式を以下のように帰納的に定義する：
+	\begin{enumerate}
+		\item \(\bot\)は論理式である．
+		\item \(t_1, t_2\)が\(\symcal{L}\)項であるならば，記号列
+		      \begin{equation}
+			      \paren{t_1 \obj{=} t_2}
+		      \end{equation}
+		      は\(\symcal{L}\)論理式である．
+		\item \(r\)が\(\symcal{L}\)におけるアリティ\(n\)の関係記号であり%
+		      \footnote{%
+			      \Cref{Def:term}のときと同様の理由で\(r\)はイタリック体としている．
+		      }%
+		      ，\(t_1, t_2, \dotsc, t_n\)が\(\symcal{L}\)項であるならば，
+		      記号列
+		      \begin{equation}
+			      \apply{r}{t_1, t_2, \dotsc, t_n}
+		      \end{equation}
+		      は\(\symcal{L}\)論理式である．
+		\item \(\varphi, \psi\)が論理式で\(x\)が変数記号であるならば，
+		      記号列
+		      \begin{align}
+			      \paren{\lnot \varphi},      \\
+			      \paren{\varphi \land \psi}, \\
+			      \paren{\varphi \lor \psi},  \\
+			      \paren{\varphi \to \psi},   \\
+			      \paren{\forall x \varphi},  \\
+			      \paren{\exists x \varphi}
+		      \end{align}
+		      はいずれも\(\symcal{L}\)論理式である．
+		\item 以上の規則を有限回適用して得られるもののみが論理式である．
+	\end{enumerate}
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:logicalexpression}
+	群論の言語\(\symcal{L}_1\)において，
+	\(\paren{\apply{\obj{\ast}}{\obj{x}, \obj{y}} \obj{=} \apply{\obj{\ast}}{\obj{y}, \obj{x}}}\)は
+	\(\symcal{L}_1\)論理式である．また，順序の理論の言語\(\symcal{L}_2\)において，
+	\(\paren{ \forall \obj{y} \mathord{\obj{\le}}\paren{ \obj{x}, \obj{y}} }\)や
+	\(\paren{ \forall \obj{x} \paren{ \forall \obj{y}\apply{\mathord{\obj{\le}}}{\obj{x}, \obj{y}}} }\)は
+	いずれも\(\symcal{L_2}\)論理式である．ここで，\(\obj{x}, \obj{y}\)は変数記号である．
+\end{Ex}
+
+論理式でない記号列の例も挙げておこう．
+
+\begin{Ex} \label[Ex]{Ex:nologicalexpression}
+	言語\(\symcal{L}\)において，\(\obj{x}\)が変数記号であるとき，
+	記号列\(\paren{\exists \obj{x} \paren{\obj{x}}}\)は\(\symcal{L}\)論理式ではない．
+	一方で，\(\paren{\exists \obj{x} \paren{\obj{x} \obj{=} \obj{x}}}\)は\(\symcal{L}\)論理式である．
+	また，群論の言語\(\symcal{L}_1\)において，\(\paren{\forall x \paren{\obj{x} \obj{\ast} \obj{e} = \obj{x}}}\)や
+	\(\forall \obj{x} \paren{ \obj{x} \obj{=} \obj{x}}\)はいずれも
+	\emph{\cref{Def:logicalexpression}で述べた意味においては}\(\symcal{L}_1\)論理式ではない．
+\end{Ex}
+
+\begin{Que} \label[Que]{Que:logicalexpression}
+	\Cref{Def:logicalexpression}に基づき，\cref{Ex:logicalexpression}と\cref{Ex:nologicalexpression}で
+	挙げた各式について，それが実際に論理式であることやそうでないことを確かめよ．
+\end{Que}
+
+\begin{Note} \label[Note]{Note:logicalexpression}
+	\Cref{Ex:nologicalexpression}の後半で「\cref{Def:logicalexpression}で述べた意味においては」
+	と述べたのは，
+	それなりに妥当性のある略記表現に関する約束事を適切に定めることにより，
+	これらが論理式であるようにみなせるからである．
+	例えば，以下のように約束することが多い：
+	\begin{itemize}
+		\item 対象の論理式がどのようにして構成されたかにあいまいさが生じない範囲でかっこは省略してよい．
+		\item 論理記号\(\lnot, \land, \lor, \to\)たちの結合の優先順位については，\(\lnot\)がもっとも高く，次に\(\land, \lor\)が高く，
+		      もっとも低いのが\(\to\)であると約束する．
+		\item アリティ2の関数記号や関係記号については，\(\obj{x} \obj{\ast} \obj{y}\)や\(\obj{x} \le \obj{y}\)のように
+		      その記号が真ん中に来るように配置して表記してよい．
+	\end{itemize}
+	こうすると，\(\paren{\paren{\varphi \land \paren{\lnot \psi}} \to \rho} \equiv \varphi \land \lnot \psi \to \rho\)のように見やすくできる%
+	\footnote{%
+		記号列として異なるように見えるものに対してどうして\(\equiv\)が使われているかというと，
+		「後者は前者の略記だと約束したので同じであるとみなす」ということを主張するためである．
+		これは\(\paren{2 + 3} \equiv 2 + 3\)が妥当であることと全く同じ理屈である．
+	}．
+	これは，通常の数学における数の演算において，\(\mathord{\times}\)が\(\mathord{+}\)よりも優先度が高いとみなして
+	\(\paren{\paren{2 \times 3} + 4} \equiv 2 \times 3 + 4\)と略記することで可読性の向上を図るのとまったく同じである．
+	とはいえ，これは人間が目で見る際に楽をするための約束事であって，数学的な議論の帰結ではないことに注意しておこう．
+\end{Note}
+
+\begin{Note} \label[Note]{Note:languageomission}
+	ここまで「言語\(\symcal{L}\)において」とか「\(\symcal{L}\)項」のように，用いる言語を明示して議論を進めてきた．
+	しかし，以下で行われるのは特定の言語に依存しない議論がほとんどである．
+	そのため，特に断りがない限りは「言語\(\symcal{L}\)」の表記は省略することとする．
+	「\(\symcal{L}\)項」や「\(\symcal{L}\)論理式」は単に「項」や「論理式」と呼称する．
+\end{Note}
+
+\section{変数の出現と代入可能性} \label{sec:substitution}
+
+数学においては，一般論に具体例を当てはめることによって議論を進めることが多い．
+これの形式的記号列の世界での対応物は，
+項や論理式に登場する変数記号に別のものを当てはめることである．
+この操作を定式化するためには，いくつかのステップを踏む必要がある．
+なお，正確に書くとそれなりに面倒な議論が長くなるため，以下では相当にラフに記述していることに注意されたい．
+ラフな部分はいずれも帰納的定義によって精密化できる．
+
+
+\begin{Def} \label[Def]{Def:occurence}
+	論理式
+	\begin{align*}
+		\varphi \equiv \paren{\cdots \paren{\forall x \paren{\cdots x \cdots } \cdots}}, \\
+		\psi \equiv \paren{\cdots \paren{\exists x \paren{\cdots x \cdots } \cdots}}
+	\end{align*}
+	の変数記号\(x\)のように，\(\forall, \exists\)とともに出現している変数記号は
+	その論理式に%
+	\index[widx]{そくばくしゅつげん@束縛出現}%
+	\term{束縛出現}しているといい，
+	\(\forall, \exists\)をともなわずに出現している変数記号は
+	その論理式に%
+	\index[widx]{じゆうしゅつげん@自由出現}%
+	\term{自由出現}しているという．
+	また，論理式\(\varphi\)に束縛出現する変数記号全体の集合と\(\varphi\)に自由出現する変数記号全体の集合を，それぞれ%
+	\index[sidx]{\(\apply{\BV}{\varphi}\)：論理式に束縛出現する変数記号全体の集合}%
+	\index[sidx]{\(\apply{\FV}{\varphi}\)：論理式に自由出現する変数記号全体の集合}%
+	\begin{align}
+		\apply{\BV}{\varphi}, \\
+		\apply{\FV}{\varphi}
+	\end{align}
+	と表す．%
+	\index[sidx]{\(\apply{\Var}{t}\)：項に出現する変数記号全体の集合}%
+	さらに，項\(t\)に出現する変数記号全体の集合を
+	\begin{equation}
+		\apply{\Var}{t}
+	\end{equation}
+	と表す．%
+	\(\apply{\FV}{\varphi} \equiv \emptyset\)であるような論理式\(\varphi\)は%
+	\index[widx]{ろんりしき@論理式!へいろんりしき@閉---}%
+	\term{閉論理式}，あるいは%
+	\index[widx]{ぶん@文|see{閉論理式}}%
+	\term{文}と呼ぶ．
+	\(\apply{\Var}{t} \equiv \emptyset\)となる項\(t\)は%
+	\index[widx]{こう@項，\(\symcal{L}\)項!へいこう@閉---}%
+	\term{閉項}であるという．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:occurence}
+	群論の言語\(\symcal{L} \equiv \set{\obj{\ast}, \obj{e}, {}^{\obj{-1}}}\)において，
+	論理式
+	\begin{equation*}
+		\varphi \equiv \paren{\forall \obj{a} \paren{\forall y \paren{
+					\apply{\mathord{\obj{\ast}}}{\obj{x}, \obj{y}} \obj{=} \apply{\mathord{\ast}}{\obj{y}, \obj{x}}
+				}}}
+	\end{equation*}
+	に対しては
+	\begin{align*}
+		\apply{\BV}{\varphi} \equiv \set{\obj{a}, \obj{y}}, \\
+		\apply{\FV}{\varphi} \equiv \set{\obj{x}}
+	\end{align*}
+	が成り立つ．この\(\obj{a}\)のように，
+	\(\forall, \exists\)記号の直後でのみ出現する変数記号も束縛出現するとみなす．
+\end{Ex}
+
+以上の準備のもと，代入操作を定式化したいのだが，先に代入可能性について論ずる必要がある．
+
+\index[widx]{だいにゅう@代入}
+\begin{Def} \label[Def]{Def:cansubstitution}
+	\(\varphi\)を論理式，\(x\)を変数記号，\(t\)を項とする．
+	以下の2条件をともに満たす変数記号\(y\)が存在するとき，
+	\(t\)は\(\varphi\)中の\(x\)に%
+	\index[widx]{だいにゅう@代入!だいにゅうふかのう@---不可能}%
+	\term{代入不可能}であるといい，
+	そのような\(y\)が存在しないとき，
+	\(t\)は\(\varphi\)中の\(x\)に%
+	\index[widx]{だいにゅう@代入!だいにゅうかのう@---可能}%
+	\term{代入可能}%
+	であるという：
+	\begin{itemize}
+		\item \(\varphi\)が
+		      \(\paren{\cdots \paren{\forall y \paren{\cdots x \cdots} \cdots} \cdots}\)
+		      か
+		      \(\paren{\cdots \paren{\exists y \paren{\cdots x \cdots} \cdots} \cdots}\)
+		      の形の論理式である．ただし，この\(x\)は\(\varphi\)に自由出現しているものとする．
+		\item \(y \in \apply{\Var}{t}\)である．
+	\end{itemize}
+\end{Def}
+
+代入可能性については，例を見るのが手っ取り早い．
+
+\begin{Ex} \label{Ex:cansubstitution}
+	群論の言語\(\symcal{L} \equiv \set{\obj{\ast}, \obj{e}, {}^{\obj{-1}}}\)において，
+	論理式
+	\begin{equation*}
+		\varphi \equiv \paren{\forall \obj{a} \paren{\forall y \paren{
+					\apply{\mathord{\obj{\ast}}}{\obj{x}, \obj{y}} \obj{=} \apply{\mathord{\ast}}{\obj{y}, \obj{x}}
+				}}}
+	\end{equation*}
+	中の\(\obj{x}\)に項\(\apply{\obj{\ast}}{\obj{y}, \obj{e}}\)は代入不可能である．
+	一方で，\(\obj{x}\)に項\(\obj{e}\)は代入可能である．
+	また，\(\obj{a}, \obj{y}\)だけでなく
+	\(\varphi\)に出現しない変数記号すべてに対してあらゆる項が代入可能である．
+\end{Ex}
+
+\begin{Def} \label[Def]{Def:substitution}
+	論理式\(\varphi\)中の変数記号\(x\)に項\(t\)が代入可能であるとき，
+	\(\varphi\)に自由出現している\(x\)すべてを\(t\)に置き換えて得られる論理式を
+	\begin{equation}
+		\subst{\varphi}{t/x}
+	\end{equation}
+	と表す．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:substitution}
+	\Cref{Ex:cansubstitution}における\(\varphi\)において
+	\begin{equation*}
+		\subst{\varphi}{\obj{e} / x} \equiv
+		\paren{\forall \obj{a} \paren{\forall y \paren{
+					\apply{\mathord{\obj{\ast}}}{\obj{e}, \obj{y}} \obj{=} \apply{\mathord{\ast}}{\obj{y}, \obj{e}}
+				}}}
+	\end{equation*}
+	である．また，\(\subst{\varphi}{\obj{e} / \obj{a}} \equiv \subst{\varphi}{\obj{e} / \obj{y}} \equiv \varphi\)である．
+\end{Ex}

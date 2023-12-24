@@ -44,18 +44,43 @@
 \usepackage{booktabs}
 \usepackage{enumitem}
 \usepackage{multienum}
-\usepackage[binary-units = true]{siunitx}
 \usepackage{index}
 \usepackage{pxrubrica}
 \usepackage{luatexja-ruby}
 \usepackage{tikz}
 \usepackage{xcolor}
-\usepackage[listings, breakable]{tcolorbox}
+\usepackage{braket}
 
 \delimitershortfall=-.5pt
 
 \graphicspath{{./fig/}}
 
+%
+%%%%%%%%%%%%%%%%%=============macro=======================%%%%%%%%%%%%%%
+%
+
+\NewDocumentCommand{\paren}{sm}{%
+  \IfBooleanTF{#1}{%
+    \mathopen{} (#2) \mathclose{}%
+  }%
+  {%
+    \mathopen{} \left( #2 \right) \mathclose{}%
+  }%
+}
+
+\NewDocumentCommand{\apply}{smm}{%
+  \IfBooleanTF{#1}{#2\paren*{#3}%
+  }%
+  {%
+    #2\paren{#3}%
+  }%
+}
+
+\NewDocumentCommand{\LKImply}{}{\Rightarrow}
+
+\NewDocumentCommand{\term}{m}{\textbf{#1}}
+
+\NewDocumentCommand{\obj}{m}{\symtt{#1}}
 %
 %%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
 %
@@ -67,7 +92,8 @@
 %
 %
 \theoremstyle{definition}
-\newtheorem{Thm}{定理}[chapter]
+\newtheorem{Def}{定義}[chapter]
+\newtheorem{Thm}{定理}[Def]
 \newtheorem{Ex}[Thm]{例}
 \newtheorem{Note}[Thm]{注意}
 %
@@ -133,6 +159,7 @@ url = false,%
 doi = false,%
 eprint = false,%
 isbn = false,%
+sorting = none,%
 style = numeric-comp%
 ]{biblatex} % use "biblatex"
 \DeclareFieldFormat*{title}{\mkbibquote{#1}}
@@ -208,8 +235,8 @@ style = numeric-comp%
 \nocite{*}
 \printbibliography[title=参考文献, heading=bibintoc]
 
-%\printindex[sidx]
-%\printindex[widx]
+\printindex[sidx]
+\printindex[widx]
 
 \include{colophon}
 

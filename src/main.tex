@@ -50,6 +50,8 @@
 \usepackage{tikz}
 \usepackage{xcolor}
 \usepackage{braket}
+\usepackage{bussproofs}
+\usepackage{multicol}
 
 \delimitershortfall=-.3pt
 
@@ -76,7 +78,7 @@
   }%
 }
 
-\NewDocumentCommand{\LKImply}{}{\Rightarrow}
+\NewDocumentCommand{\sequent}{}{\Rightarrow}
 
 \NewDocumentCommand{\term}{m}{\textbf{#1}}
 \RenewDocumentCommand{\emph}{m}{\textbf{#1}}
@@ -99,6 +101,7 @@
   }%
 }
 
+\NewDocumentCommand{\LK}{}{LK}
 
 
 %

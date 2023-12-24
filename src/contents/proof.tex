@@ -1,2 +1,218 @@
 \chapter{1階述語論理の証明論}
 \label[chapter]{chap:proof}
+
+この章では，いよいよ「証明」という概念の形式化を試みる．
+\Cref{chap:syntax}で定義された論理式は，数学における何らかの主張の
+形式的記号列の世界での対応物であった．
+数学における「証明」は，
+形式的記号列の世界においてはある論理式から別の論理式を得る操作に対応する．
+どのような操作を妥当なものとして認め，それをどのような記法で書き下すかによって
+多種多様な体系が得られる．本書では，その中から自然演繹式シークエント計算と呼ばれる体系を取り上げる．
+
+\newpage
+
+
+\section{シークエント} \label[section]{sec:sequent}
+
+自然演繹式シークエント計算において基本的なのは，シークエントと呼ばれる記号列である．
+
+\begin{Def} \label[Def]{Def:sequent}
+	0個以上の論理式の有限列\(\Gamma\)と論理式\(\varphi\)に対して，記号列%
+	\index[sidx]{\(\Gamma \sequent \varphi\)：シークエント}%
+	\begin{equation}
+		\Gamma \sequent \varphi
+	\end{equation}
+	を%
+	\index[widx]{しーくえんと@シークエント}%
+	\term{シークエント}という．
+	このとき，\(\Gamma\)をこのシークエントの左辺，\(\varphi\)をこのシークエントの右辺という．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:sequent}
+	論理式\(\varphi\)に対して，
+	\begin{equation*}
+		\varphi \sequent \varphi
+	\end{equation*}
+	という記号列はシークエントである．また，左辺に何もない
+	\begin{equation*}
+		\sequent \varphi, \\
+	\end{equation*}
+	といった記号列もシークエントである．
+\end{Ex}
+
+シークエント「\(\Gamma \sequent \varphi\)」は，
+通常の数学における「\(\Gamma\)から\(\varphi\)を証明することができる」という
+主張の形式的記号列の世界での対応物であることを期待して導入されたものである．
+左辺に何もないシークエント「\(\sequent \varphi\)」は，
+何も仮定せずとも\(\varphi\)が証明できること，すなわち「\(\varphi\)は証明できる」ことの
+形式的記号列の世界での対応物であることが期待される．
+以下で行われるのは，このシークエントを操作していくルールをうまく定義して
+「証明っぽいもの」を作り上げていくことである．
+
+
+\section{公理と推論規則} \label[section]{sec:axiomandrule}
+
+通常の数学においては，議論の出発点となる主張，すなわち公理を用意し，
+そこから演繹的推論を重ねていくことによってさまざまな結果を得る．
+自然演繹式シークエント計算においては，
+出発点となるシークエントから特定の操作を行うことによって
+さまざまな結果を得ることになる．
+このとき，出発点となるシークエントのことを%
+\index[widx]{こうり@公理}%
+\term{公理}と呼ぶ．
+また，
+あるシークエントから別のシークエントを得る操作をいくつか列挙し，
+それを使って議論を進めていく．
+この時に列挙した操作のことを%
+\index[widx]{すいろんきそく@推論規則}%
+と呼ぶ．
+以下に自然演繹式シークエント計算で用いる公理と推論規則の一覧を述べる．
+
+公理や推論規則は，シークエントを横や縦に並べた
+\begin{prooftree}
+	\AxiomC{\(\Gamma \sequent \varphi \)}
+	\AxiomC{\(\Delta \sequent \psi\)}
+	\LeftLabel{(name)}
+	\BinaryInfC{\(\Sigma \sequent \xi\)}
+\end{prooftree}
+のような形式で記述される．「(name)」は規則名である．
+この記述は「上側に記述されているシークエントがすべて得られたら下段のシークエントを得てよい」
+という意味ととらえてよい．
+上段に何も書かれていない場合もあり，それが公理である．
+
+\begin{Def}[公理] \label[Def]{Def:axiom}
+	論理式\(\varphi\)に対して，以下は自然演繹式シークエント計算における公理である：
+	\begin{prooftree}
+		\AxiomC{}
+		\LeftLabel{(ID)}
+		\UnaryInfC{\(\varphi \sequent \varphi\)}
+	\end{prooftree}
+\end{Def}
+
+推論規則の数はそれなりに多いので，いくつかのグループに分けて述べる．
+
+\begin{Def}[構造規則] \label[Def]{Def:structuralrule}
+	論理式の有限列\(\Gamma, \Delta\)と論理式\(\varphi, \psi, \xi\)に対し，
+	下記の3つは自然演繹式シークエント計算における推論規則である．
+	\begin{multicols}{3}
+		\begin{prooftree}
+			\AxiomC{\(\Gamma \sequent \xi\)}
+			\LeftLabel{(w)}
+			\UnaryInfC{\(\varphi, \Gamma \sequent \xi\)}
+		\end{prooftree}
+		\columnbreak
+		\begin{prooftree}
+			\AxiomC{\(\Gamma, \psi, \varphi, \Delta \sequent \xi\)}
+			\LeftLabel{(e)}
+			\UnaryInfC{\(\Gamma, \varphi, \psi \sequent \xi\)}
+		\end{prooftree}
+		\columnbreak
+		\begin{prooftree}
+			\AxiomC{\(\varphi, \varphi, \Gamma \sequent \xi\)}
+			\LeftLabel{(c)}
+			\UnaryInfC{\(\varphi, \Gamma \sequent \xi\)}
+		\end{prooftree}
+	\end{multicols}
+\end{Def}
+
+\begin{Def}[論理規則その1] \label[Def]{Def:logicalrule1}
+	論理式の有限列\(\Gamma, \Delta, \Sigma\)と論理式\(\varphi, \psi, \xi\)に対して，
+	下記は自然演繹式シークエント計算における推論規則である．
+	\begin{multicols}{2}
+		\begin{prooftree}
+			\AxiomC{\(\varphi, \Gamma \sequent \psi\)}
+			\LeftLabel{(\(\to\)I)}
+			\UnaryInfC{\(\Gamma \sequent \varphi \to \psi\)}
+		\end{prooftree}
+		\columnbreak
+		\begin{prooftree}
+			\AxiomC{\(\Gamma \sequent \varphi\)}
+			\AxiomC{\(\Delta \sequent \varphi \to \psi\)}
+			\LeftLabel{(\(\to\)E)}
+			\BinaryInfC{\(\Gamma, \Delta \sequent \psi\)}
+		\end{prooftree}
+	\end{multicols}
+	\begin{multicols}{2}
+		\begin{prooftree}
+			\AxiomC{\(\Gamma \sequent \varphi\)}
+			\AxiomC{\(\Delta \sequent \psi\)}
+			\LeftLabel{(\(\land\)I)}
+			\BinaryInfC{\(\Gamma, \Delta \sequent \varphi \land \psi\)}
+		\end{prooftree}
+		\columnbreak
+		\begin{prooftree}
+			\AxiomC{\(\Gamma \sequent \varphi_1 \land \varphi_2\)}
+			\LeftLabel{(\(\land\)E)}
+			\RightLabel{(\(i \equiv 1,2\))}
+			\UnaryInfC{\(\Gamma \sequent \varphi_i\)}
+		\end{prooftree}
+	\end{multicols}
+	\begin{prooftree}
+		\AxiomC{\(\Gamma \sequent \varphi_i\)}
+		\LeftLabel{(\(\lor\)I)}
+		\RightLabel{(\(i \equiv 1,2\))}
+		\UnaryInfC{\(\Gamma \sequent \varphi_1 \lor \varphi_2\)}
+	\end{prooftree}
+	\begin{prooftree}
+		\AxiomC{\(\Gamma \sequent \varphi \lor \psi\)}
+		\AxiomC{\(\varphi, \Delta \sequent \xi\)}
+		\AxiomC{\(\psi, \Sigma \sequent \xi\)}
+		\LeftLabel{(\(\lor\)E)}
+		\TrinaryInfC{\(\Gamma, \Delta, \Sigma \sequent \xi\)}
+	\end{prooftree}
+\end{Def}
+
+\begin{Def}[論理規則その2] \label[Def]{Def:quantiferrule}
+	論理式の有限列\(\Gamma, \Delta\)と論理式\(\varphi, \psi\)および変数記号\(x, a\)に対して，
+	下記の4つは自然演繹式シークエント計算における推論規則である．
+	ここで，\(a\)は\(\varphi\)中の\(x\)に代入可能であるものとする．
+	\begin{multicols}{2}
+		\begin{prooftree}
+			\AxiomC{\(\Gamma \sequent \subst{\varphi}{a/x}\)}
+			\LeftLabel{(\(\forall\)I)}
+			\UnaryInfC{\(\Gamma \sequent \forall x \varphi\)}
+		\end{prooftree}
+		ただし，\(a\)は\(\Gamma\)中の各論理式や\(\varphi\)に自由出現しない．
+		\columnbreak
+		\begin{prooftree}
+			\AxiomC{\(\Gamma \sequent \forall x \varphi\)}
+			\LeftLabel{(\(\forall\)E)}
+			\UnaryInfC{\(\Gamma \sequent \subst{\varphi}{a}{x}\)}
+		\end{prooftree}
+	\end{multicols}
+	\begin{multicols}{2}
+		\begin{prooftree}
+			\AxiomC{\(\Gamma \sequent \subst{\varphi}{a}{x}\)}
+			\LeftLabel{\(\exists\)I}
+			\UnaryInfC{\(\Gamma \sequent \exists x \varphi\)}
+		\end{prooftree}
+		\columnbreak
+		\begin{prooftree}
+			\AxiomC{\(\Gamma \sequent \exists x \varphi\)}
+			\AxiomC{\(\subst{\varphi}{a/x}, \Delta \sequent \psi\)}
+			\LeftLabel{(\(\exists\)E)}
+			\BinaryInfC{\(\Gamma, \Delta \sequent \psi\)}
+		\end{prooftree}
+		ただし，\(a\)は\(\exists x \varphi, \Gamma, \Delta, \psi\)のいずれにも自由出現しない．
+	\end{multicols}
+\end{Def}
+
+\begin{Def}[論理規則その3] \label{Def:EFQDNE}
+	論理式の有限列\(\Gamma\)と論理式\(\varphi\)について，
+	下記は自然演繹式シークエント計算における推論規則である．
+	\begin{multicols}{2}
+		\begin{prooftree}
+			\AxiomC{\(\varphi, \Gamma \sequent \bot\)}
+			\LeftLabel{(\(\lnot\)I)}
+			\UnaryInfC{\(\Gamma \sequent \lnot \varphi\)}
+		\end{prooftree}
+		\columnbreak
+		\begin{prooftree}
+			\AxiomC{\(\Gamma \sequent \varphi\)}
+			\AxiomC{\(\Gamma \sequent \lnot \varphi\)}
+			\LeftLabel{(\(\lnot\)E)}
+			\BinaryInfC{\(\Gamma \sequent \bot\)}
+		\end{prooftree}
+	\end{multicols}
+\end{Def}
+

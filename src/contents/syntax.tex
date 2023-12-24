@@ -98,7 +98,7 @@
 これは言語に対してある種の「文法」を定めることに相当する．
 文法を定めることにより，形式的記号の集合でしかなかった言語が一気に「数学っぽい」性格を帯びてくる．
 
-\index[widx]{こう@項，\(\symcal{L}\)項}
+\index[widx]{こう@項}
 \begin{Def} \label[Def]{Def:term}
 	言語\(\symcal{L}\)に対し，\(\symcal{L}\)項を以下のように帰納的に定義する：
 	\begin{enumerate}
@@ -230,7 +230,7 @@
 		\item アリティ2の関数記号や関係記号については，\(\obj{x} \obj{\ast} \obj{y}\)や\(\obj{x} \le \obj{y}\)のように
 		      その記号が真ん中に来るように配置して表記してよい．
 	\end{itemize}
-	こうすると，\(\paren{\paren{\varphi \land \paren{\lnot \psi}} \to \rho} \equiv \varphi \land \lnot \psi \to \rho\)のように見やすくできる%
+	こうすると，\(\paren{\paren{\varphi \land \paren{\lnot \psi}} \to \xi} \equiv \varphi \land \lnot \psi \to \xi\)のように見やすくできる%
 	\footnote{%
 		記号列として異なるように見えるものに対してどうして\(\equiv\)が使われているかというと，
 		「後者は前者の略記だと約束したので同じであるとみなす」ということを主張するためである．
@@ -239,6 +239,7 @@
 	これは，通常の数学における数の演算において，\(\mathord{\times}\)が\(\mathord{+}\)よりも優先度が高いとみなして
 	\(\paren{\paren{2 \times 3} + 4} \equiv 2 \times 3 + 4\)と略記することで可読性の向上を図るのとまったく同じである．
 	とはいえ，これは人間が目で見る際に楽をするための約束事であって，数学的な議論の帰結ではないことに注意しておこう．
+	本書でも，これらの略記表現を\cref{chap:proof}以降では積極的に利用する．
 \end{Note}
 
 \begin{Note} \label[Note]{Note:languageomission}
@@ -292,7 +293,7 @@
 	\index[widx]{ぶん@文|see{閉論理式}}%
 	\term{文}と呼ぶ．
 	\(\apply{\Var}{t} \equiv \emptyset\)となる項\(t\)は%
-	\index[widx]{こう@項，\(\symcal{L}\)項!へいこう@閉---}%
+	\index[widx]{こう@項!へいこう@閉---}%
 	\term{閉項}であるという．
 \end{Def}
 

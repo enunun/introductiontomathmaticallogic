@@ -240,7 +240,7 @@
 	これは，通常の数学における数の演算において，\(\mathord{\times}\)が\(\mathord{+}\)よりも優先度が高いとみなして
 	\(\paren{\paren{2 \times 3} + 4} \equiv 2 \times 3 + 4\)と略記することで可読性の向上を図るのとまったく同じである．
 	とはいえ，これは人間が目で見る際に楽をするための約束事であって，数学的な議論の帰結ではないことに注意しておこう．
-	本書でも，これらの略記表現を\cref{chap:proof}以降では積極的に利用する．
+	本書でも，これらの略記表現を積極的に利用する．
 \end{Note}
 
 \begin{Note} \label[Note]{Note:languageomission}
@@ -297,6 +297,11 @@
 	\index[widx]{こう@項!へいこう@閉---}%
 	\term{閉項}であるという．
 \end{Def}
+
+\begin{Note} \label[Note]{Note:languagesentence}
+	言語\(\symcal{L}\)を明示する文脈においては
+	閉論理式や文，閉項はそれぞれ\(\symcal{L}\)閉論理式，\(\symcal{L}\)文，\(\symcal{L}\)閉項と呼ぶ．
+\end{Note}
 
 \begin{Ex} \label[Ex]{Ex:occurence}
 	群論の言語\(\symcal{L} \equiv \set{\obj{\ast}, \obj{e}, {}^{\obj{-1}}}\)において，
@@ -374,3 +379,39 @@
 	\end{equation*}
 	である．また，\(\subst{\varphi}{\obj{e} / \obj{a}} \equiv \subst{\varphi}{\obj{e} / \obj{y}} \equiv \varphi\)である．
 \end{Ex}
+
+
+\section{理論} \label[section]{sec:Theory}
+
+前節までは項や論理式に関する一般論を述べた．
+ここでは，実際の数学理論がどう形式化されるかについて少しだけ触れる．
+
+\begin{Def} \label[Def]{Def:theory}
+	\(\symcal{L}\)を言語とするとき，\(\symcal{L}\)文からなる集合を%
+	\index[widx]{りろん@理論}%
+	\(\symcal{L}\)\term{理論}という．
+	言語\(\symcal{L}\)を明示しない文脈では\(\symcal{L}\)理論は単に理論と呼ばれる．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:grouptheory}
+	群論の言語\(\symcal{L} \equiv \set{\obj{\ast}, \obj{e}, {}^{\obj{-1}}}\)において，
+	群の理論は次の3つの文からなると考えることができる：
+	\begin{enumerate}
+		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
+		      \paren{\paren{\obj{x} \obj{\ast} \obj{y}} \obj{\ast} \obj{z} = \obj{x} \obj{\ast} \paren{\obj{y} \obj{\ast} \obj{z}}}\),
+		\item \(\forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} = \obj{x}}\),
+		\item \(\forall \obj{x} \paren{\obj{x}^{\obj{-1}} \obj{\ast} \obj{x} = \obj{e}}\)．
+	\end{enumerate}
+	ここで，\(\apply{{}^{\obj{-1}}}{\obj{x}}\)を\(\obj{x} ^ {\obj{-1}}\)と略記した．
+\end{Ex}
+
+\begin{Que} \label[Que]{Que:invalidtheory}
+	群の言語を\(\symcal{L} \equiv \set{\obj{\ast}}\)だと考えて，群の理論を次のように書き下そうとする場合がある．
+	\begin{enumerate}
+		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
+		      \paren{\paren{\obj{x} \obj{\ast} \obj{y}} \obj{\ast} \obj{z} = \obj{x} \obj{\ast} \paren{\obj{y} \obj{\ast} \obj{z}}},\)
+		\item \(\exists \obj{e} \forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} = \obj{x}},\)
+		\item \(\forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} = \obj{e}}.\)
+	\end{enumerate}
+	しかし，残念ながらこの書き下し方は構文的に不適切である．その理由を述べよ．
+\end{Que}

@@ -91,15 +91,23 @@
 上段に何も書かれていない場合もあり，それが公理である．
 
 \begin{Def}[公理] \label[Def]{Def:axiom}
-	論理式\(\varphi\)に対して，以下は自然演繹式シークエント計算における公理である：
-	\begin{prooftree}
-		\AxiomC{}
-		\LeftLabel{(ID)}
-		\UnaryInfC{\(\varphi \sequent \varphi\)}
-	\end{prooftree}
+	論理式\(\varphi\)と項\(t\)に対して，以下は自然演繹式シークエント計算における公理である：
+	\begin{multicols}{2}
+		\begin{prooftree}
+			\AxiomC{}
+			\LeftLabel{(ID)}
+			\UnaryInfC{\(\varphi \sequent \varphi\)}
+		\end{prooftree}
+		\columnbreak
+		\begin{prooftree}
+			\AxiomC{}
+			\LeftLabel{(REFL)}
+			\UnaryInfC{\(t = t\)}
+		\end{prooftree}
+	\end{multicols}
 \end{Def}
 
-推論規則名になっている「ID」は同一律（law of identity）に由来する．
+推論規則名になっている「ID」と「REFL」は同一律（law of identity）と反射律（reflexive law）に由来する．
 
 推論規則の数はそれなりに多いので，いくつかのグループに分けて述べる．
 なお，\cref{Def:structuralrule}における推論規則名「w」「e」「c」はそれぞれ
@@ -118,7 +126,7 @@
 		\begin{prooftree}
 			\AxiomC{\(\Gamma, \psi, \varphi, \Delta \sequent \xi\)}
 			\LeftLabel{(e)}
-			\UnaryInfC{\(\Gamma, \varphi, \psi \sequent \xi\)}
+			\UnaryInfC{\(\Gamma, \varphi, \psi, \Delta \sequent \xi\)}
 		\end{prooftree}
 		\columnbreak
 		\begin{prooftree}
@@ -242,6 +250,20 @@
 	\end{multicols}
 \end{Def}
 
+等号に関する推論規則も必要である．
+ここで，規則名「SUBST」は代入（substitution）に由来する．
+
+\begin{Def}[等号に関する推論規則] \label[Def]{Def:SUBST}
+	\(\varphi\)を論理式，\(x\)を変数記号，\(s,t\)を\(\varphi\)中の\(x\)に代入可能な項とするとき，
+	以下は自然演繹式シークエント計算における推論規則である．
+	\begin{prooftree}
+		\AxiomC{\(s = t\)}
+		\AxiomC{\(\subst{\varphi}{t / x}\)}
+		\LeftLabel{(SUBST)}
+		\BinaryInfC{\(\subst{\varphi}{s / x}\)}
+	\end{prooftree}
+\end{Def}
+
 最後に，いわゆる背理法の基礎となる推論規則を導入しておく．
 規則名「DNE」は2重否定除去（Double Negation Elimination）に由来する．
 
@@ -347,7 +369,7 @@
 個々のシークエントの導出を人間の目にわかりやすい形で行うには扱いずらい．
 そこで，推論規則の適用過程は
 導出可能であることが分かったシークエントを順に書き並べる形で示すこととする．
-次の\cref{Thm:lawofexcludedmiddle}で実例を見せるとしよう．
+次の\cref{Thm:lawofexcludedmiddle}の証明で実例を見せるとしよう．
 
 \begin{Thm}[排中律] \label[Thm]{Thm:lawofexcludedmiddle}
 	\(\varphi\)を論理式とするとき，論理式
@@ -363,14 +385,18 @@
 	\begin{enumerate}
 		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \lnot \paren{\varphi \lor \lnot \varphi}\)\quad (ID)
 		\item \(\varphi \sequent \varphi\)\quad (ID)
-		\item \(\varphi \sequent \varphi \lor \lnot \varphi\)\quad （2から(\(\lor\)I)）
-		\item \(\varphi, \lnot \paren{\varphi \lor \lnot \varphi} \sequent \bot\)\quad （3から(\(\lnot\)E)）
-		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \lnot \varphi\)\quad （4から(\(\lnot\)I)）
-		\item \(\lnot \varphi \sequent \varphi \lor \lnot \varphi\)\quad （5から(\(\lor\)I)）
-		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \bot\)\quad （5,6から(\(\lnot\)E)）
-		\item \(\sequent \lnot \lnot \paren{\varphi \lor \lnot \varphi}\)\quad （7から(\(\lnot\)I)）
-		\item \(\sequent \varphi \lor \lnot \varphi\)\quad （8から(DNF)）
+		\item \(\varphi \sequent \varphi \lor \lnot \varphi\)\quad （2から(\(\lor\)I)による）
+		\item \(\varphi, \lnot \paren{\varphi, \lnot \varphi} \sequent \lnot \paren{\varphi \lor \lnot \varphi}\)\quad （1から(w)による）
+		\item \(\lnot \paren{\varphi \lor \lnot \varphi}, \varphi \sequent \varphi \lor \lnot \varphi\)\quad （3から(w)による）
+		\item \(\varphi,\lnot \paren{\varphi \lor \lnot \varphi} \sequent \varphi \lor \lnot \varphi\)\quad （4から(e)による）
+		\item \(\varphi, \lnot \paren{\varphi \lor \lnot \varphi} \sequent \bot\)\quad （\(4,6\)から(\(\lnot\)E)による）
+		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \lnot \varphi\)\quad （7から(\(\lnot\)I)による）
+		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \varphi \lor \lnot \varphi\)\quad （8から(\(\lor\)I)による）
+		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \bot\)\quad （\(1,9\)から(\(\lnot\)E)による）
+		\item \(\sequent \lnot \lnot \paren{\varphi \lor \lnot \varphi}\)\quad （10から(\(\lnot\)I)による）
+		\item \(\sequent \varphi \lor \lnot \varphi\)\quad （11から(DNF)による）
 	\end{enumerate}
+	よって\(\varphi \lor \lnot \varphi\)は証明可能である．
 \end{proof}
 
 \Cref{Thm:lawofexcludedmiddle}の証明で提示したシークエントの導出過程は，
@@ -383,6 +409,82 @@
 	従って\(\lnot \varphi\)でなければならない．
 	しかしこの場合も\(\varphi \lor \lnot \varphi\)となり
 	\(\lnot \paren{\varphi \lor \lnot \varphi}\)と矛盾する．
-	よって，\(\lnot \lnot \paren{\varphi \lor \lnot \varphi}\)，
+	よって\(\lnot \lnot \paren{\varphi \lor \lnot \varphi}\)，
 	すなわち\(\varphi \lor \lnot \varphi\)となる．
 \end{naiveproof}
+
+構造規則の関係で多少人工的な操作が見られたものの，
+\Cref{Thm:lawofexcludedmiddle}の証明はその下に述べた通常の数学における証明とうまく対応しているように見える．
+それでいて形式的記号列の世界で議論しているおかげで各々の導出の根拠に一切のあいまいさが存在しない．
+
+\Cref{Thm:lawofexcludedmiddle}と同じように考えれば，
+数学における論理でよく知られてきた結果がこの自然演繹式シークエント計算においても導くことができる．
+
+\begin{Thm} \label[Def]{Thm:equivlogicalexpression}
+	\(\varphi, \psi, \chi\)を論理式，\(x\)を変数記号とする．
+	以下に述べる論理式のペアは，それぞれを左辺，右辺とするシークエントと
+	その左右を入れ替えたシークエントのいずれも導出可能である．
+	（「\(\varphi\)と\(\psi\)」と書かれていれば
+	\(\varphi \sequent \psi\)と\(\psi \sequent \varphi\)の両方が導出可能である．）
+	\begin{enumerate}
+		\item \(\varphi \to \psi\)と\(\lnot \varphi \lor \psi\)
+		\item \(\lnot \paren{\varphi \lor \psi}\)と\(\lnot \varphi \land \lnot \psi\)
+		\item \(\lnot \paren{\varphi \land \psi}\)と\(\lnot \varphi \lor \lnot \psi\)
+		\item \(\lnot \forall x \varphi\)と\(\exists x \lnot \varphi\)
+		\item \(\lnot \exists x \varphi\)と\(\forall x \lnot \varphi\)
+		\item \(\varphi \land \psi\)と\(\psi \land \varphi\)
+		\item \(\varphi \lor \psi\)と\(\psi \lor \varphi\)
+		\item \(\varphi \land \paren{\psi \land \chi}\)と\(\paren{\varphi \land \psi} \land \chi\)
+		\item \(\varphi \lor \paren{\psi \lor \chi}\)と\(\paren{\varphi \lor \psi} \lor \chi\)
+		\item \(\varphi \land \paren{\psi \lor \chi }\)と\(\paren{\varphi \land \psi} \lor \paren{\varphi \land \chi}\)
+		\item \(\varphi \lor \paren{\psi \land \chi }\)と\(\paren{\varphi \lor \psi} \land \paren{\varphi \lor \chi}\)
+		\item \(\lnot \paren{\varphi \to \psi}\)と\(\varphi \land \lnot \psi\)
+		\item \(\lnot \forall x \paren{\varphi \to \psi}\)と\(\exists x \paren{\varphi \land \lnot \psi}\)
+		\item \(\varphi \to \psi\)と\(\lnot \psi \to \lnot \varphi\)
+		\item \(\varphi \to \paren{\psi \to \chi}\)と\(\varphi \land \psi \to \chi\)
+		\item \(\forall x \paren{\varphi \to \psi}\)と\(\exists x \varphi \to \psi\)（ただし\(x\)は\(\psi\)には自由出現しないものとする）
+		\item \(\exists x \paren{\varphi \to \psi}\)と\(\forall x \varphi \to \psi\)（ただし\(x\)は\(\psi\)には自由出現しないものとする）
+		\item \(\forall x \paren{\varphi \to \psi}\)と\(\varphi \to \forall x \psi\)（ただし\(x\)は\(\varphi\)には自由出現しないものとする）
+		\item \(\exists x \paren{\varphi \to \psi}\)と\(\varphi \to \exists x \psi\)（ただし\(x\)は\(\varphi\)には自由出現しないものとする）
+		\item \(\forall x \paren{\varphi \land \psi}\)と\(\forall x \varphi \land \forall x \psi\)
+		\item \(\exists x \paren{\varphi \lor \psi}\)と\(\exists x \varphi \lor \exists x \psi\)
+		\item \(\forall x \paren{\varphi \lor \psi}\)と\(\forall x \varphi \lor \psi\)（ただし\(x\)は\(\psi\)には自由出現しないものとする）
+		\item \(\exists x \paren{\varphi \land \psi}\)と\(\exists x \varphi \land \psi\)（ただし\(x\)は\(\psi\)には自由出現しないものとする）
+	\end{enumerate}
+\end{Thm}
+
+\begin{Que} \label[Que]{Que:sequent}
+	\Cref{Thm:equivlogicalexpression}を証明せよ．
+\end{Que}
+
+\begin{Que} \label[Que]{Que:peirce}
+	\(\varphi, \psi\)を論理式とするとき，Peirceの法則に対応するシークエント
+	\begin{equation}
+		\paren{\varphi \to \psi} \to \varphi \sequent \varphi
+	\end{equation}
+	を導出せよ．
+\end{Que}
+
+等号についてもいろいろなシークエントを導くことができる．
+
+\begin{Thm} \label[Thm]{Thm:equalsign}
+	\(f\)をアリティ\(n\)の関数記号，\(s_1, s_2, \dotsc s_n, t_1, t_2, \dotsc, t_n\)を項とする．
+	\(i \equiv 1, 2, \dotsc, n\)に対して，シークエント
+	\begin{equation}
+		s_i = t_i \sequent \apply{f}{s_1, s_2, \dotsc, s_i, \dotsc, s_n} = \apply{f}{s_1, s_2, \dotsc, t_i, \dotsc, s_n}
+	\end{equation}
+	は導出可能である．
+\end{Thm}
+
+\begin{Thm} \label[Thm]{Thm:equalsignrelation}
+	\(s, t, u\)を項とするとき，シークエント
+	\begin{align}
+		s = t \sequent t = s \\
+		\paren{s = t} \land \paren{t = u} \sequent s = u
+	\end{align}
+	は導出可能である．
+\end{Thm}
+
+\begin{Que} \label[Que]{Que:equalsignrelation}
+	\Cref{Thm:equalsign}と\cref{Thm:equalsignrelation}を証明せよ．
+\end{Que}

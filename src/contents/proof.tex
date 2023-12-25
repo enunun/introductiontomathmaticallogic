@@ -33,7 +33,10 @@
 	\begin{equation*}
 		\varphi \sequent \varphi
 	\end{equation*}
-	という記号列はシークエントである．また，左辺に何もない
+	という記号列はシークエントである．この形のシークエントを%
+	\index[widx]{ししき@始式}%
+	\term{始式}と呼ぶ．
+	また，左辺に何もない
 	\begin{equation*}
 		\sequent \varphi, \\
 	\end{equation*}
@@ -41,7 +44,7 @@
 \end{Ex}
 
 シークエント「\(\Gamma \sequent \varphi\)」は，
-通常の数学における「\(\Gamma\)から\(\varphi\)を証明することができる」という
+通常の数学における「\(\Gamma\)という仮定によって\(\varphi\)を証明することができる」という
 主張の形式的記号列の世界での対応物であることを期待して導入されたものである．
 左辺に何もないシークエント「\(\sequent \varphi\)」は，
 何も仮定せずとも\(\varphi\)が証明できること，すなわち「\(\varphi\)は証明できる」ことの
@@ -59,12 +62,19 @@
 さまざまな結果を得ることになる．
 このとき，出発点となるシークエントのことを%
 \index[widx]{こうり@公理}%
-\term{公理}と呼ぶ．
+\term{公理}と呼ぶ%
+\footnote{%
+	ここでいう「公理」は自然演繹式シークエント計算という証明体系そのものの出発点となるシークエントであり，
+	個々の理論の基礎となる主張のことではない．通常の数学における「公理」に対応するのは
+	閉論理式の集合である．
+}%
+．
 また，
 あるシークエントから別のシークエントを得る操作をいくつか列挙し，
 それを使って議論を進めていく．
 この時に列挙した操作のことを%
 \index[widx]{すいろんきそく@推論規則}%
+\term{推論規則}
 と呼ぶ．
 以下に自然演繹式シークエント計算で用いる公理と推論規則の一覧を述べる．
 
@@ -89,7 +99,11 @@
 	\end{prooftree}
 \end{Def}
 
+推論規則名になっている「ID」は同一律（law of identity）に由来する．
+
 推論規則の数はそれなりに多いので，いくつかのグループに分けて述べる．
+なお，\cref{Def:structuralrule}における推論規則名「w」「e」「c」はそれぞれ
+弱化（weakening），交換（exchange），縮約（contraction）に由来する．
 
 \begin{Def}[構造規則] \label[Def]{Def:structuralrule}
 	論理式の有限列\(\Gamma, \Delta\)と論理式\(\varphi, \psi, \xi\)に対し，
@@ -114,6 +128,18 @@
 		\end{prooftree}
 	\end{multicols}
 \end{Def}
+
+論理記号に関する推論規則を述べる．
+推論規則名の「I」や「E」はそれぞれ
+導入（Introduction）と除去（Elimination）に由来する．
+例えば，「\(\land\)I」は右辺に\(\land\)記号を新しく導入する推論規則であり，
+「\(\land\)E」は右辺から\(\land\)記号を除去するような推論規則である．
+すべての推論規則が導入と除去の対になっていることに着目しよう．
+我々の素朴的直観において導入規則と除去規則はそれぞれ
+「その論理記号を含む論理式に対応する主張を結論として得るためのルール」
+「その論理記号を含む論理式に対応する主張が得られた場合に行える推論を表すルール」
+に対応する．
+
 
 \begin{Def}[論理規則その1] \label[Def]{Def:logicalrule1}
 	論理式の有限列\(\Gamma, \Delta, \Sigma\)と論理式\(\varphi, \psi, \xi\)に対して，
@@ -177,13 +203,13 @@
 		\begin{prooftree}
 			\AxiomC{\(\Gamma \sequent \forall x \varphi\)}
 			\LeftLabel{(\(\forall\)E)}
-			\UnaryInfC{\(\Gamma \sequent \subst{\varphi}{a}{x}\)}
+			\UnaryInfC{\(\Gamma \sequent \subst{\varphi}{a/x}\)}
 		\end{prooftree}
 	\end{multicols}
 	\begin{multicols}{2}
 		\begin{prooftree}
 			\AxiomC{\(\Gamma \sequent \subst{\varphi}{a}{x}\)}
-			\LeftLabel{\(\exists\)I}
+			\LeftLabel{(\(\exists\)I)}
 			\UnaryInfC{\(\Gamma \sequent \exists x \varphi\)}
 		\end{prooftree}
 		\columnbreak
@@ -193,11 +219,11 @@
 			\LeftLabel{(\(\exists\)E)}
 			\BinaryInfC{\(\Gamma, \Delta \sequent \psi\)}
 		\end{prooftree}
-		ただし，\(a\)は\(\exists x \varphi, \Gamma, \Delta, \psi\)のいずれにも自由出現しない．
+		ただし，\(a\)は\(\Gamma, \Delta\)中の各論理式と\(\exists x \varphi, \psi\)のいずれにも自由出現しない．
 	\end{multicols}
 \end{Def}
 
-\begin{Def}[論理規則その3] \label{Def:EFQDNE}
+\begin{Def}[論理規則その3] \label{Def:lnot}
 	論理式の有限列\(\Gamma\)と論理式\(\varphi\)について，
 	下記は自然演繹式シークエント計算における推論規則である．
 	\begin{multicols}{2}
@@ -216,3 +242,147 @@
 	\end{multicols}
 \end{Def}
 
+最後に，いわゆる背理法の基礎となる推論規則を導入しておく．
+規則名「DNE」は2重否定除去（Double Negation Elimination）に由来する．
+
+\begin{Def}[2重否定除去] \label[type]{Def:DNE}
+	論理式の有限列\(\Gamma\)と論理式\(\varphi\)に対し，
+	下記は自然演繹式シークエント計算における推論規則である．
+	\begin{prooftree}
+		\AxiomC{\(\Gamma \sequent \lnot \lnot \varphi\)}
+		\LeftLabel{(DNE)}
+		\UnaryInfC{\(\Gamma \sequent \varphi\)}
+	\end{prooftree}
+\end{Def}
+
+以上で公理と推論規則の準備が整った．あとは「証明」っぽく見えるようにいくつか定義を行うだけである．
+
+\begin{Def} \label[Def]{Def:provable}
+	シークエントが%
+	\index[widx]{どうしゅつかのう@（シークエントが）導出可能}%
+	導出可能であることを，以下のように定義する：
+	\begin{enumerate}
+		\item 任意の論理式\(\varphi\)に対し，始式\(\varphi \sequent \varphi\)は導出可能である．
+		\item これまでに挙げた各推論規則における上段のシークエントがすべて導出可能であるならば，下段のシークエントも導出可能である．
+		\item 以上の規則を有限回適用して得られるシークエントのみが導出可能である．
+	\end{enumerate}
+\end{Def}
+
+あるシークエントが導出可能であることを
+確かめる作業のことをそのシークエントの「導出」と呼ぶことがある．
+「シークエント\(\Gamma \sequent \varphi\)を導出する」といった言い回しである．
+
+さて，シークエントの導出可能性の次は論理式の証明可能性である．
+
+\begin{Def} \label[Def]{Def:logicalexpressionprovable}
+	\(\varphi\)を論理式とする．シークエント
+	\begin{equation}
+		\sequent \varphi
+	\end{equation}
+	が導出可能であるとき，\(\varphi\)は%
+	\index[widx]{しょうめいかのう@（論理式が）証明可能}%
+	\term{証明可能}であるという．
+\end{Def}
+
+
+ここで定義した体系が我々の素朴的直観における「証明」を模倣できているかどうかは，
+ここから導かれるさまざまな結果を見るよりほかはない．
+例を見てみよう．
+
+\begin{Thm}[背理法] \label[Thm]{Thm:RAA}
+	\(\Gamma\)を論理式の有限列，\(\varphi\)を論理式とするとき，
+	シークエント
+	\(\lnot \varphi, \Gamma \sequent \bot\)
+	が導出可能であるならば，シークエント
+	\(\Gamma \sequent \varphi\)
+	は導出可能である．
+\end{Thm}
+
+\begin{proof}
+	シークエント\(\Gamma \sequent \varphi\)は次のように得られる．
+	\begin{prooftree}
+		\AxiomC{\(\lnot \varphi, \Gamma \sequent \bot \)}
+		\LeftLabel{(\(\lnot\)I)}
+		\UnaryInfC{\(\Gamma \sequent \lnot \lnot \varphi\)}
+		\LeftLabel{(DNF)}
+		\UnaryInfC{\(\Gamma \sequent \varphi\)}
+	\end{prooftree}
+	よって，シークエント\(\Gamma \sequent \varphi\)は導出可能である．
+\end{proof}
+
+\begin{Thm} \label[Thm]{Thm:DNFsequent}
+	\(\varphi\)を論理式とするとき，シークエント\(\lnot \lnot \varphi \sequent \varphi\)と
+	\(\varphi \sequent \lnot \lnot \varphi\)はいずれも導出可能である．
+\end{Thm}
+
+\begin{proof}
+	シークエント\(\lnot \lnot \varphi \sequent \varphi\)は次のようにして得られる．
+	\begin{prooftree}
+		\AxiomC{}
+		\LeftLabel{(ID)}
+		\UnaryInfC{\(\lnot \lnot \varphi \sequent \lnot \lnot \varphi\)}
+		\LeftLabel{(DNF)}
+		\UnaryInfC{\(\lnot \lnot \varphi \sequent \varphi\)}
+	\end{prooftree}
+	次に，シークエント\(\varphi \sequent \lnot \lnot \varphi\)を導出する．
+	\begin{prooftree}
+		\AxiomC{}
+		\LeftLabel{(ID)}
+		\UnaryInfC{\(\lnot \varphi \sequent \lnot \varphi\)}
+		\AxiomC{}
+		\LeftLabel{(ID)}
+		\UnaryInfC{\(\varphi \sequent \varphi\)}
+		\LeftLabel{(\(\lnot\)E)}
+		\BinaryInfC{\(\lnot \varphi, \varphi \sequent \bot\)}
+		\LeftLabel{(\(\lnot\)I)}
+		\UnaryInfC{\(\varphi \sequent \lnot \lnot \varphi\)}
+	\end{prooftree}
+	よって，シークエント\(\lnot \lnot \varphi \sequent \varphi\)と
+	\(\varphi \sequent \lnot \lnot \varphi\)はいずれも導出可能である．
+\end{proof}
+
+シークエントの導出過程を示すとき，\cref{Thm:RAA}の証明のように各推論規則の適用過程を
+上から下に進む木構造として書き下すのが普通である．
+体系がもつ一般的な性質を研究する上ではこの記法は非常に便利なのだが，
+個々のシークエントの導出を人間の目にわかりやすい形で行うには扱いずらい．
+そこで，推論規則の適用過程は
+導出可能であることが分かったシークエントを順に書き並べる形で示すこととする．
+次の\cref{Thm:lawofexcludedmiddle}で実例を見せるとしよう．
+
+\begin{Thm}[排中律] \label[Thm]{Thm:lawofexcludedmiddle}
+	\(\varphi\)を論理式とするとき，論理式
+	\begin{equation}
+		\varphi \lor \lnot \varphi
+	\end{equation}
+	は証明可能である．
+\end{Thm}
+
+\begin{proof}
+	シークエント\(\sequent \varphi \lor \lnot \varphi\)
+	を以下のようにして導く．
+	\begin{enumerate}
+		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \lnot \paren{\varphi \lor \lnot \varphi}\)\quad (ID)
+		\item \(\varphi \sequent \varphi\)\quad (ID)
+		\item \(\varphi \sequent \varphi \lor \lnot \varphi\)\quad （2から(\(\lor\)I)）
+		\item \(\varphi, \lnot \paren{\varphi \lor \lnot \varphi} \sequent \bot\)\quad （3から(\(\lnot\)E)）
+		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \lnot \varphi\)\quad （4から(\(\lnot\)I)）
+		\item \(\lnot \varphi \sequent \varphi \lor \lnot \varphi\)\quad （5から(\(\lor\)I)）
+		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \bot\)\quad （5,6から(\(\lnot\)E)）
+		\item \(\sequent \lnot \lnot \paren{\varphi \lor \lnot \varphi}\)\quad （7から(\(\lnot\)I)）
+		\item \(\sequent \varphi \lor \lnot \varphi\)\quad （8から(DNF)）
+	\end{enumerate}
+\end{proof}
+
+\Cref{Thm:lawofexcludedmiddle}の証明で提示したシークエントの導出過程は，
+通常の数学における次のような証明に対応していると考えることができる．
+
+\begin{naiveproof}
+	\(\lnot \paren{\varphi \lor \lnot \varphi}\)だと仮定して矛盾を導く．
+	\(\varphi\)であるとすると\(\varphi \lor \lnot \varphi\)となり，
+	\(\lnot \paren{\varphi \lor \lnot \varphi}\)と矛盾する．
+	従って\(\lnot \varphi\)でなければならない．
+	しかしこの場合も\(\varphi \lor \lnot \varphi\)となり
+	\(\lnot \paren{\varphi \lor \lnot \varphi}\)と矛盾する．
+	よって，\(\lnot \lnot \paren{\varphi \lor \lnot \varphi}\)，
+	すなわち\(\varphi \lor \lnot \varphi\)となる．
+\end{naiveproof}

@@ -52,6 +52,7 @@
 \usepackage{braket}
 \usepackage{bussproofs}
 \usepackage{multicol}
+\usepackage{framed}
 
 \delimitershortfall=-.3pt
 
@@ -103,6 +104,7 @@
 
 \NewDocumentCommand{\LK}{}{LK}
 
+\NewDocumentEnvironment{naiveproof}{}{\oframed}{\endoframed}
 
 %
 %%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
@@ -163,6 +165,8 @@
 \crefname{Ex}{例}{例}
 \Crefname{Ex}{例}{例}
 \Crefname{Def}{定義}{定義}
+\crefname{Thm}{定理}{定理}
+\Crefname{Thm}{定理}{定理}
 \crefname{table}{表}{表}
 \Crefname{table}{表}{表}
 \crefname{section}{\presectionname}{\presectionname}

@@ -225,7 +225,8 @@
 	例えば，以下のように約束することが多い：
 	\begin{itemize}
 		\item 対象の論理式がどのようにして構成されたかにあいまいさが生じない範囲でかっこは省略してよい．
-		\item 論理記号\(\lnot, \land, \lor, \to\)たちの結合の優先順位については，\(\lnot\)がもっとも高く，次に\(\land, \lor\)が高く，
+		\item 論理記号\(\lnot, \land, \lor, \to, \forall, \exists\)たちの結合の優先順位については，
+		      \(\lnot, \forall, \exists\)がもっとも高く，次に\(\land, \lor\)が高く，
 		      もっとも低いのが\(\to\)であると約束する．
 		\item アリティ2の関数記号や関係記号については，\(\obj{x} \obj{\ast} \obj{y}\)や\(\obj{x} \le \obj{y}\)のように
 		      その記号が真ん中に来るように配置して表記してよい．
@@ -255,7 +256,7 @@
 これの形式的記号列の世界での対応物は，
 項や論理式に登場する変数記号に別のものを当てはめることである．
 この操作を定式化するためには，いくつかのステップを踏む必要がある．
-なお，正確に書くとそれなりに面倒な議論が長くなるため，以下では相当にラフに記述していることに注意されたい．
+なお，正確に書くとそれなりに議論が長くなるため，以下では相当にラフに記述していることに注意されたい．
 ラフな部分はいずれも帰納的定義によって精密化できる．
 
 
@@ -366,8 +367,8 @@
 \begin{Ex} \label[Ex]{Ex:substitution}
 	\Cref{Ex:cansubstitution}における\(\varphi\)において
 	\begin{equation*}
-		\subst{\varphi}{\obj{e} / x} \equiv
-		\paren{\forall \obj{a} \paren{\forall y \paren{
+		\subst{\varphi}{\obj{e} / \obj{x}} \equiv
+		\paren{\forall \obj{a} \paren{\forall \obj{y} \paren{
 					\apply{\mathord{\obj{\ast}}}{\obj{e}, \obj{y}} \obj{=} \apply{\mathord{\ast}}{\obj{y}, \obj{e}}
 				}}}
 	\end{equation*}

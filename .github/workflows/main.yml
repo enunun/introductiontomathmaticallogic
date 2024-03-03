@@ -4,6 +4,11 @@ on:
   push:
     tags:
       - '*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Specify the tag to build and release'
+        required: true
 
 jobs:
   build-and-release:
@@ -15,10 +20,11 @@ jobs:
 
     - name: Build with Docker
       run: |
+        mkdir output
         docker compose -f ./.devcontainer/docker-compose.yml build
         docker compose -f ./.devcontainer/docker-compose.yml up -d
         docker exec -it $(docker ps -q --filter name=latex) sh -c "cd /home/src && llmk"
-        docker cp $(docker ps -q --filter name=latex):/home/src/main.pdf ./main.pdf
+        docker cp $(docker ps -q --filter name=latex):/home/src/* ./output/*
     - name: Set tag name from ref
       id: set_tag
       run: echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
@@ -26,6 +32,8 @@ jobs:
     - name: Upload release asset
       uses: softprops/action-gh-release@v1
       with:
-        files: ./main.pdf
+        files: |
+          ./output/*
+          ./LICENSE
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

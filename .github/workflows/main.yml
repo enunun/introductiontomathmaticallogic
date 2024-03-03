@@ -23,7 +23,7 @@ jobs:
         mkdir output
         docker compose -f ./.devcontainer/docker-compose.yml build
         docker compose -f ./.devcontainer/docker-compose.yml up -d
-        docker exec -it $(docker ps -q --filter name=latex) sh -c "cd /home/src && llmk"
+        docker exec $(docker ps -q --filter name=latex) sh -c "cd /home/src && llmk"
         docker cp $(docker ps -q --filter name=latex):/home/src/* ./output/*
     - name: Set tag name from ref
       id: set_tag

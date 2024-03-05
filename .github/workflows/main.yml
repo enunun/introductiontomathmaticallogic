@@ -24,7 +24,7 @@ jobs:
         docker compose -f ./.devcontainer/docker-compose.yml build
         docker compose -f ./.devcontainer/docker-compose.yml up -d
         docker exec $(docker ps -q --filter name=latex) sh -c "cd /home/src && llmk"
-        docker cp $(docker ps -q --filter name=latex):/home/src/* ./output/*
+        docker cp $(docker ps -q --filter name=latex):/home/src/main.pdf ./output/main.pdf
     - name: Set tag name from ref
       id: set_tag
       run: echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
@@ -33,7 +33,6 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          ./output/*
-          ./LICENSE
+          ./output/main.pdf
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

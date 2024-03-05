@@ -27,7 +27,14 @@ jobs:
         docker cp $(docker ps -q --filter name=latex):/home/src/main.pdf ./output/main.pdf
     - name: Set tag name from ref
       id: set_tag
-      run: echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
+      run: |
+        if [ -n "${{ github.event.inputs.tag }}" ]; then
+          echo "Using tag from manual inputs"
+          echo ::set-output name=TAG_NAME::${{ github.event.inputs.tag }}
+        else
+          echo "Using tag from push event"
+          echo ::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/}
+        fi
 
     - name: Upload release asset
       uses: softprops/action-gh-release@v1

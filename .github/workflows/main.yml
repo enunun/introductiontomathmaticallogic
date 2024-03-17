@@ -21,46 +21,51 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
+      
     steps:
-    - name: Set tag name
-      id: set_tag
+    
+    - name: Get tag name
+      id: get_tag_name
       run: |
         if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-          echo "Mannually"
+          echo "Manually"
           echo "TAG_NAME=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
         else
           echo "On push"
-          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          echo "TAG_NAME=${{ github.ref_name }}" >> $GITHUB_OUTPUT
         fi
-
+        
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: ${{ steps.get_tag_name.outputs.TAG_NAME }}
+   
     - name: Set release name
       id: set_release_name
       run: |
         if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-          echo "Mannually"
+          echo "Manually"
           echo "RELEASE_NAME=${{ github.event.inputs.name }}" >> $GITHUB_OUTPUT
         else
           echo "On push"
-          echo "RELEASE_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          echo "RELEASE_NAME=${{ steps.get_tag_name.outputs.TAG_NAME }}" >> $GITHUB_OUTPUT
         fi
-
+    - name: Get tag message
+      id: get_tag_message
+      run: |
+        echo "TAG_MESSAGE=$(git tag -l --format='%(subject)' ${GITHUB_REF#refs/tags/})" >> $GITHUB_OUTPUT
+    
     - name: Set body
       id: set_body
       run: |
         if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-          echo "Mannually"
+          echo "Manually"
           echo "BODY=${{ github.event.inputs.body }}" >> $GITHUB_OUTPUT
         else
           echo "On push"
-          echo "BODY=Automatic release on the tag '${{ steps.set_tag.outputs.TAG_NAME}}' pushed" >> $GITHUB_OUTPUT
+          echo "BODY=${{ steps.get_tag_message.outputs.TAG_MESSAGE }}" >> $GITHUB_OUTPUT
         fi
-
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        ref: ${{ steps.set_tag.outputs.TAG_NAME }}
-
     - name: Build with Docker
       run: |
         mkdir output

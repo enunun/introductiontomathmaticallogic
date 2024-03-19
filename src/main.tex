@@ -171,6 +171,8 @@
 \Crefname{Thm}{定理}{定理}
 \crefname{table}{表}{表}
 \Crefname{table}{表}{表}
+\Crefname{Que}{演習}{演習}
+\crefname{Que}{演習}{演習}
 \crefname{section}{\presectionname}{\presectionname}
 \Crefname{section}{\presectionname}{\presectionname}
 \crefname{subsection}{\presubsectionname}{\presubsectionname}
@@ -242,10 +244,10 @@ style = numeric-comp%
 \begin{document}
 
 \begin{titlepage}
-  \title{0から始める数理論理学入門}
-  \author{野口匠}
-  \date{2023年12月31日}
-  \maketitle
+	\title{0から始める数理論理学入門}
+	\author{野口匠}
+	\date{2023年12月31日}
+	\maketitle
 \end{titlepage}
 
 \frontmatter
@@ -263,6 +265,11 @@ style = numeric-comp%
 %\include{contents/advance}
 
 \backmatter
+
+\RenewDocumentCommand{\presectionname}{}{}
+\RenewDocumentCommand{\presubsectionname}{}{}
+\include{contents/answer}
+
 \nocite{*}
 \printbibliography[title=参考文献, heading=bibintoc]
 

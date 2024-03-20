@@ -4,4 +4,14 @@
 
 \subsection*{\Cref{Que:termexample}} \label{answer:termexample}
 
-hogehoge
+\(\obj{e}\)は変数記号，\(\obj{x}\)は変数記号なので，どちらも\(\symcal{L}_1\)項である．
+これと\(\obj{\ast}\)がアリティ2の関数記号であることにより，\(\apply{\obj{\ast}}{\obj{e}, \obj{x}}\)が
+\(\symcal{L}_1\)項であることがわかる．
+\(\obj{y}\)も変数記号であり\(\symcal{L_1}\)項なので，
+\(\apply{\obj{\ast}}{\apply{\obj{\ast}}{\obj{e}, \obj{x}}, \obj{y}}\)は\(\symcal{L}_1\)項である．
+
+また，\(\obj{e}\apply{\mathord{\obj{\ast}}}{\obj{e}, \obj{e}}\)は変数記号でも定数記号でもないため，
+これが\(\symcal{L}_1\)項であるためには
+\cref{Def:term}における3番目の規則を最後に適用していなければならない．
+このとき最初の文字は関数記号である必要があるが，\(\obj{e}\)は定数記号であり関数記号ではない．
+従って，\(\obj{e}\apply{\mathord{\obj{\ast}}}{\obj{e}, \obj{e}}\)は\(\symcal{L}_1\)項ではない．

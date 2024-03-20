@@ -63,20 +63,20 @@
 %
 
 \NewDocumentCommand{\paren}{sm}{%
-  \IfBooleanTF{#1}{%
-    \mathopen{} (#2) \mathclose{}%
-  }%
-  {%
-    \mathopen{} \left( #2 \right) \mathclose{}%
-  }%
+	\IfBooleanTF{#1}{%
+	\mathopen{} (#2) \mathclose{}%
+	}%
+	{%
+	\mathopen{} \left( #2 \right) \mathclose{}%
+	}%
 }
 
 \NewDocumentCommand{\apply}{smm}{%
-  \IfBooleanTF{#1}{#2\paren*{#3}%
-  }%
-  {%
-    #2\paren{#3}%
-  }%
+	\IfBooleanTF{#1}{#2\paren*{#3}%
+	}%
+	{%
+	#2\paren{#3}%
+	}%
 }
 
 \NewDocumentCommand{\sequent}{}{\Rightarrow}
@@ -96,10 +96,10 @@
 
 \NewDocumentCommand{\subst}{smm}{%
 \IfBooleanTF{#1}{#2[{#3}]%
-  }%
-  {%
-    #2\mathopen{} \left[ #3 \right] \mathclose{}%
-  }%
+	}%
+	{%
+	#2\mathopen{} \left[ #3 \right] \mathclose{}%
+	}%
 }
 
 \NewDocumentCommand{\LK}{}{LK}
@@ -112,7 +112,7 @@
 %%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
 %
 \setlist[description, 1]{%
-  style = nextline%
+	style = nextline%
 }
 %
 %%%%%%%%%%%%%%=======================theorem==================%%%%%%%%%%%%%
@@ -144,11 +144,11 @@
 \usepackage[unicode, pdfusetitle, hidelinks, draft = true]{hyperref} % hyperlink
 
 \hypersetup{% setting hyperref
-  bookmarksnumbered=true,
-  bookmarksopen=true,
-  bookmarkstype=toc,
-  pdfborder={0 0 0},
-  colorlinks = true,
+	bookmarksnumbered=true,
+	bookmarksopen=true,
+	bookmarkstype=toc,
+	pdfborder={0 0 0},
+	colorlinks = true,
 }
 \usepackage{footnotebackref}
 %
@@ -171,6 +171,8 @@
 \Crefname{Thm}{定理}{定理}
 \crefname{table}{表}{表}
 \Crefname{table}{表}{表}
+\Crefname{Que}{演習}{演習}
+\crefname{Que}{演習}{演習}
 \crefname{section}{\presectionname}{\presectionname}
 \Crefname{section}{\presectionname}{\presectionname}
 \crefname{subsection}{\presubsectionname}{\presubsectionname}
@@ -185,13 +187,13 @@
 %%%%%%%======biblatex=============%%%%%%%%%%
 %
 \usepackage[%
-backend = biber,%
-url = false,%
-doi = false,%
-eprint = false,%
-isbn = false,%
-sorting = none,%
-style = numeric-comp%
+	backend = biber,%
+	url = false,%
+	doi = false,%
+	eprint = false,%
+	isbn = false,%
+	sorting = none,%
+	style = numeric-comp%
 ]{biblatex} % use "biblatex"
 \DeclareFieldFormat*{title}{\mkbibquote{#1}}
 \DeclareDelimFormat{labelnamepunct}{\addcomma\addspace}
@@ -201,18 +203,18 @@ style = numeric-comp%
 
 \makeatletter
 \renewcommand{\section}{%
-  \if@slide\clearpage\fi
-  \@startsection{section}{1}{\z@}%
-  {\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
-  {.5\Cvs \@plus.3\Cdp}% 後アキ
-  %   {\normalfont\Large\headfont\@secapp}}
-  {\normalfont\Large\headfont\presectionname\raggedright}%
+	\if@slide\clearpage\fi
+	\@startsection{section}{1}{\z@}%
+	{\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
+	{.5\Cvs \@plus.3\Cdp}% 後アキ
+	%   {\normalfont\Large\headfont\@secapp}}
+	{\normalfont\Large\headfont\presectionname\raggedright}%
 }
 \renewcommand{\subsection}{%
-  \@startsection{subsection}{2}{\z@}%
-  {\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
-  {.5\Cvs \@plus.3\Cdp}% 後アキ
-  {\normalfont\large\headfont\presubsectionname}%
+	\@startsection{subsection}{2}{\z@}%
+	{\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
+	{.5\Cvs \@plus.3\Cdp}% 後アキ
+	{\normalfont\large\headfont\presubsectionname}%
 }
 \makeatother
 \renewcommand{\presectionname}{\S}
@@ -228,13 +230,13 @@ style = numeric-comp%
 
 \makeatletter
 \NewDocumentCommand\idxhead{m}{%
-  \needspace{2\baselineskip}%
-  \vspace{\baselineskip}%
-  \DeclareDocumentCommand\hrulefill{}{\leavevmode\leaders\hrule height 0.8pt\hfill\kern\z@}%
-  \hbox to \columnwidth{\hfil%
-    \normalsize%
-    \textcolor{gray}{\raisebox{.15ex}{■}}\hspace{.5\zw}\textsf{#1}\hspace{.5\zw}\textcolor{gray}{\raisebox{.15ex}{■}}\hfil}\vspace{-4.5mm}\hrulefill\par%
-  \nopagebreak%
+	\needspace{2\baselineskip}%
+	\vspace{\baselineskip}%
+	\DeclareDocumentCommand\hrulefill{}{\leavevmode\leaders\hrule height 0.8pt\hfill\kern\z@}%
+	\hbox to \columnwidth{\hfil%
+	\normalsize%
+	\textcolor{gray}{\raisebox{.15ex}{■}}\hspace{.5\zw}\textsf{#1}\hspace{.5\zw}\textcolor{gray}{\raisebox{.15ex}{■}}\hfil}\vspace{-4.5mm}\hrulefill\par%
+	\nopagebreak%
 }
 \makeatother
 %
@@ -242,10 +244,10 @@ style = numeric-comp%
 \begin{document}
 
 \begin{titlepage}
-  \title{0から始める数理論理学入門}
-  \author{野口匠}
-  \date{2023年12月31日}
-  \maketitle
+	\title{0から始める数理論理学入門}
+	\author{野口匠}
+	\date{2023年12月31日}
+	\maketitle
 \end{titlepage}
 
 \frontmatter
@@ -263,6 +265,11 @@ style = numeric-comp%
 %\include{contents/advance}
 
 \backmatter
+
+\RenewDocumentCommand{\presectionname}{}{}
+\RenewDocumentCommand{\presubsectionname}{}{}
+\include{contents/answer}
+
 \nocite{*}
 \printbibliography[title=参考文献, heading=bibintoc]
 

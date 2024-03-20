@@ -21,9 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      
+
     steps:
-    
     - name: Get tag name
       id: get_tag_name
       run: |
@@ -34,13 +33,13 @@ jobs:
           echo "On push"
           echo "TAG_NAME=${{ github.ref_name }}" >> $GITHUB_OUTPUT
         fi
-        
+
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
         ref: ${{ steps.get_tag_name.outputs.TAG_NAME }}
-   
+
     - name: Set release name
       id: set_release_name
       run: |
@@ -55,7 +54,7 @@ jobs:
       id: get_tag_message
       run: |
         echo "TAG_MESSAGE=$(git tag -l --format='%(subject)' ${GITHUB_REF#refs/tags/})" >> $GITHUB_OUTPUT
-    
+
     - name: Set body
       id: set_body
       run: |
@@ -66,6 +65,7 @@ jobs:
           echo "On push"
           echo "BODY=${{ steps.get_tag_message.outputs.TAG_MESSAGE }}" >> $GITHUB_OUTPUT
         fi
+
     - name: Build with Docker
       run: |
         mkdir output
@@ -73,7 +73,7 @@ jobs:
         docker compose -f ./.devcontainer/docker-compose.yml up -d
         docker exec $(docker ps -q --filter name=latex) sh -c "cd /home/src && llmk"
         docker cp $(docker ps -q --filter name=latex):/home/src/main.pdf ./output/main.pdf
-    
+
     - name: Upload release asset
       uses: softprops/action-gh-release@v2.0.2
       with:

@@ -46,3 +46,31 @@
 \(\apply{\forall \obj{x}}{\obj{x} \obj{\ast} \obj{e} = \obj{x}}\)は\(\symcal{L}_1\)論理式ではない．
 \(\apply{\forall \obj{x}}{\obj{x} = \obj{x}}\)については，1文字目が開きカッコ「\(\lparen\)」でも
 関係記号でもないことから\(\symcal{L}_1\)論理式でないことが従う．
+
+\subsection*{\Cref{Que:invalidtheory}}
+
+2つ目の\(\symcal{L}\)論理式からは，\(\obj{e}\)が変数記号であることが伺える．
+しかしそうだとすると最後の\(\symcal{L}\)論理式
+\[
+	\forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} = \obj{e}}
+\]
+が\(\symcal{L}\)閉論理式にならない．問題文で挙げた3つの論理式からなる集合が
+\(\symcal{L}\)理論になっていないという意味で構文的に不適切である．
+
+最後の\(\symcal{L}\)論理式を
+\[
+	\exists \obj{e} \forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} = \obj{e}}
+\]
+としてしまえば\(\symcal{L}\)閉論理式になるので，問題文で挙げた3つの\(\symcal{L}\)論理式のうち
+3つ目だけをこちらに置き換えたものは\(\symcal{L}\)理論となる．
+しかし，この\(\symcal{L}\)理論は「群論の公理化」としては不適切であって，
+2つ目と3つ目の\(\symcal{L}\)論理式をまとめて
+\[
+	\exists \obj{e} \paren{
+		\forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} = \obj{x}}
+		\land \forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} = \obj{e}}
+	}
+\]
+とするのが正しい．
+なぜそうしなければならないのか，
+そしてなぜそうすれば「よい」のかについては，この段階ではわからない．

@@ -4,4 +4,45 @@
 
 \subsection*{\Cref{Que:termexample}} \label{answer:termexample}
 
-hogehoge
+\(\obj{e}\)は変数記号，\(\obj{x}\)は変数記号なので，どちらも\(\symcal{L}_1\)項である．
+これと\(\obj{\ast}\)がアリティ2の関数記号であることにより，\(\apply{\obj{\ast}}{\obj{e}, \obj{x}}\)が
+\(\symcal{L}_1\)項であることがわかる．
+\(\obj{y}\)も変数記号であり\(\symcal{L_1}\)項なので，
+\(\apply{\obj{\ast}}{\apply{\obj{\ast}}{\obj{e}, \obj{x}}, \obj{y}}\)は\(\symcal{L}_1\)項である．
+
+また，\(\obj{e}\apply{\mathord{\obj{\ast}}}{\obj{e}, \obj{e}}\)は変数記号でも定数記号でもないため，
+これが\(\symcal{L}_1\)項であるためには
+\cref{Def:term}における3番目の規則を最後に適用していなければならない．
+このとき最初の文字は関数記号である必要があるが，\(\obj{e}\)は定数記号であり関数記号ではない．
+従って，\(\obj{e}\apply{\mathord{\obj{\ast}}}{\obj{e}, \obj{e}}\)は\(\symcal{L}_1\)項ではない．
+
+\subsection*{\Cref{Que:logicalexpression}}
+
+\(\obj{x}, \obj{y}\)は変数記号であり，従って\(\symcal{L}_1\)項である．
+また，\(\obj{\ast}\)がアリティ2の関数記号であることから，
+\(\apply{\mathord{\obj{\ast}}}{\obj{x}, \obj{y}}\)と
+\(\apply{\mathord{\obj{\ast}}}{\obj{y}, \obj{x}}\)はいずれも\(\symcal{L}_1\)項である．
+よって，
+\(\paren{\apply{\mathord{\obj{\ast}}}{\obj{y}, \obj{x}} = \apply{\mathord{\obj{\ast}}}{\obj{y}, \obj{x}}}\)
+は\(\symcal{L}_1\)論理式である．
+
+\(\obj{\leq}\)がアリティ2の関係記号であることから，
+\(\apply{\mathord{\obj{\leq}}}{\obj{x}, \obj{y}}\)は\(\symcal{L}_2\)論理式である．
+ゆえに，\(\paren{\forall \obj{y}\apply{\mathord{\obj{\leq}}}{\obj{x}, \obj{y}}}\)
+は\(\symcal{L}_2\)論理式である．
+このことから\(\paren{\forall \obj{x}\paren{\forall \obj{y}\apply{\mathord{\obj{\leq}}}{\obj{x}, \obj{y}}}}\)
+が\(\symcal{L}_2\)論理式であることも従う．
+
+さて，\(\paren{\apply{\exists \obj{x}}{\obj{x}}}\)が\(\symcal{L}\)論理式であるとすれば，
+\(\obj{x}\)は\(\symcal{L}\)論理式でなければならない．しかし，変数記号が論理式であることはないので
+\(\paren{\apply{\exists \obj{x}}{\obj{x}}}\)は\(\symcal{L}\)論理式ではない．
+一方で，\(\paren{\obj{x} = \obj{x}}\)は\(\symcal{L}\)論理式であるから
+\(\paren{\apply{\exists \obj{x}}{\obj{x} = \obj{x}}}\)は\(\symcal{L}\)論理式である．
+
+\(\apply{\forall \obj{x}}{\obj{x} \obj{\ast} \obj{e} = \obj{x}}\)が\(\symcal{L}_1\)論理式であるとすれば，
+これまでの議論と同様にして\(\obj{x} \obj{\ast} \obj{e}\)が\(\symcal{L}_1\)項でなければならないことがわかる．
+しかし，\(\obj{\ast}\)の次の文字が開きカッコ「\(\lparen\)」ではないので
+これは\(\symcal{L}_1\)項とはなりえない．よって，
+\(\apply{\forall \obj{x}}{\obj{x} \obj{\ast} \obj{e} = \obj{x}}\)は\(\symcal{L}_1\)論理式ではない．
+\(\apply{\forall \obj{x}}{\obj{x} = \obj{x}}\)については，1文字目が開きカッコ「\(\lparen\)」でも
+関係記号でもないことから\(\symcal{L}_1\)論理式でないことが従う．

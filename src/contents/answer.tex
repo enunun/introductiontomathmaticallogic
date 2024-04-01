@@ -74,3 +74,56 @@
 とするのが正しい．
 なぜそうしなければならないのか，
 そしてなぜそうすれば「よい」のかについては，この段階ではわからない．
+
+\subsection*{\Cref{Que:sequent}}
+
+\(\varphi \to \psi \sequent \lnot \varphi \lor \psi\)の導出：
+\begin{enumerate}
+	\item \(\varphi \to \psi \sequent \varphi \to \psi\)\quad (ID)
+	\item \(\lnot \paren{\lnot \varphi \lor \psi} \sequent \lnot \paren{\lnot \varphi \lor \psi}\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\varphi, {\varphi \to \psi} \sequent \psi\)\quad （1,3から(\(\to\)E)による）
+	\item \(\varphi, {\varphi \to \psi} \sequent \lnot \varphi \lor \psi\)\quad （4から(\(\lor\)I)による）
+	\item \(\varphi, {\varphi \to \psi}, \lnot \paren{\lnot \varphi \lor \psi} \sequent \bot\)\quad （2, 5から(w), (e), (\(\lnot\)E)による）
+	\item \(\varphi \to \psi, \lnot \paren{\lnot \varphi \lor \psi} \sequent \lnot \varphi\)\quad （6から(\(\lnot\)I)による）
+	\item \(\varphi \to \psi, \lnot \paren{\lnot \varphi \lor \psi} \sequent \lnot \varphi \lor \psi\)\quad （7から(\(\lor\)I)による）
+	\item \(\varphi \to \psi, \lnot \paren{\lnot \varphi \lor \psi} \sequent \bot\)\quad （2, 8から(w), (\(\lnot\)E)による）
+	\item \(\varphi \to \psi \sequent \lnot \lnot \paren{\lnot \varphi \lor \psi}\)\quad （9から(e), (\(\lnot\)E)による）
+	\item \(\varphi \to \psi \sequent \lnot \varphi \lor \psi\)\quad （10から(DNF)による）
+\end{enumerate}
+
+\(\lnot \varphi \lor \psi \sequent \varphi \to \psi\)の導出：
+\begin{enumerate}
+	\item \(\lnot \varphi \lor \psi \sequent \lnot \varphi \lor \psi\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\lnot \varphi \sequent \lnot \varphi\)\quad (ID)
+	\item \(\lnot \psi, \varphi, \lnot \varphi \sequent \bot\)\quad （2, 3から(w), (e), (\(\lnot\)E)による）
+	\item \(\varphi, \lnot \varphi \sequent \lnot \lnot \psi\)\quad （4から(\(\lnot\)I)による）
+	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNF)による）
+	\item \(\psi \sequent \psi\)\quad (ID)
+	\item \(\lnot \varphi \lor \psi, \varphi \sequent \psi\)\quad （1, 6, 7から(\(\lor\)E), (c)による）
+	\item \(\lnot \varphi \lor \psi \sequent \varphi \to \psi\)\quad （8から(e), (\(\to\)I)による）
+\end{enumerate}
+
+\(\lnot \paren{\varphi \lor \psi} \sequent \lnot \varphi \land \lnot \psi\)の導出：
+\begin{enumerate}
+	\item \(\lnot \paren{\varphi \lor \psi} \sequent \lnot \paren{\varphi \lor \psi}\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\varphi \sequent \varphi \lor \psi\)\quad （2から(\(\lor\)I)による）
+	\item \(\varphi, \lnot \paren{\varphi \lor \psi} \sequent \bot\)\quad （1, 3から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \paren{\varphi \lor \psi} \sequent \lnot \varphi\)\quad （4から(\(\lnot\)I)による）
+	\item \(\lnot \paren{\varphi \lor \psi} \sequent \lnot \psi\)\quad （上と同様にして導出できるので省略）
+	\item \(\lnot \paren{\varphi \lor \psi} \sequent \lnot \varphi \land \lnot \psi\)\quad （5, 6から(\(\land\)I)による）
+\end{enumerate}
+
+\(\lnot \varphi \land \lnot \psi \sequent \lnot \paren{\varphi \lor \psi}\)の導出：
+\begin{enumerate}
+	\item \(\lnot \varphi \land \lnot \psi\)\quad (ID)
+	\item \(\varphi \lor \psi\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\lnot \varphi \land \lnot \psi \sequent \lnot \varphi\)\quad （1から(\(\land\)E)による）
+	\item \(\varphi, \lnot \varphi \land \lnot \psi \sequent \bot\)\quad （3, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\psi, \lnot \varphi \land \lnot \psi \sequent \bot\)\quad （上と同様にして導出できるので省略）
+	\item \(\varphi \lor \psi, \lnot \varphi \land \lnot \psi \sequent \bot\)\quad （2, 5, 6から(\(\lor\)E), (c)による）
+	\item \(\lnot \varphi \land \lnot \psi \sequent \lnot \paren{\varphi \lor \psi}\)\quad （7から(\(\lnot\)I)による）
+\end{enumerate}

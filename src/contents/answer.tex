@@ -127,3 +127,31 @@
 	\item \(\varphi \lor \psi, \lnot \varphi \land \lnot \psi \sequent \bot\)\quad （2, 5, 6から(\(\lor\)E), (c)による）
 	\item \(\lnot \varphi \land \lnot \psi \sequent \lnot \paren{\varphi \lor \psi}\)\quad （7から(\(\lnot\)I)による）
 \end{enumerate}
+
+\(\lnot \paren{\varphi \land \psi} \sequent \lnot \varphi \lor \lnot \psi\)の導出：
+\begin{enumerate}
+	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \paren{\varphi \land \psi}\)\quad (ID)
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \lnot \paren{\lnot \varphi \lor \lnot \psi}\)\quad (ID)
+	\item \(\lnot \varphi \sequent \lnot \varphi\)\quad (ID)
+	\item \(\lnot \varphi \sequent \lnot \varphi \lor \lnot \psi\)\quad （3から(\(\lor\)I)による）
+	\item \(\lnot \varphi, \lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \lnot \lnot \varphi\)\quad （5から(\(\lnot\)I)による）
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \varphi\)\quad （6から(DNF)による）
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \psi\)\quad （上と同様にして導けるので省略）
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \varphi \land \psi\)\quad （7, 8から(\(\land\)I), (c)による）
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi}, \lnot \paren{\varphi \land \psi} \sequent \bot\)\quad （1, 9から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \lnot \paren{\lnot \varphi \lor \lnot \psi}\)\quad （10から(\(\lnot\)I)による）
+	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \varphi \lor \lnot \psi\)\quad （11から(DNF)による）
+\end{enumerate}
+
+\(\lnot \varphi \lor \lnot \psi \sequent \lnot \paren{\varphi \land \psi}\)の導出：
+\begin{enumerate}
+	\item \(\lnot \varphi \lor \lnot \psi \sequent \lnot \varphi \lor \lnot \psi\)\quad (ID)
+	\item \(\varphi \land \psi \sequent \varphi \land \psi\)\quad (ID)
+	\item \(\lnot \varphi \sequent \lnot \varphi\)\quad (ID)
+	\item \(\varphi \land \psi \sequent \varphi\)\quad （2から(\(\land\)E)による）
+	\item \(\lnot \varphi, \varphi \land \psi \sequent \bot\)\quad （3, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \psi, \varphi \land \psi \sequent \bot\)\quad （上と同様にして導けるので省略）
+	\item \(\varphi \land \varphi, \lnot \varphi \lor \lnot \psi \sequent \bot\)\quad （1, 5, 6から(w), (e), (\(\land\)E), (c)による）
+	\item \(\lnot \varphi \lor \lnot \psi \sequent \lnot \paren{\varphi \land \varphi}\)\quad （7から(\(\lnot\)I)による）
+\end{enumerate}

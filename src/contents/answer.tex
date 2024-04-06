@@ -118,8 +118,8 @@
 
 \(\lnot \varphi \land \lnot \psi \sequent \lnot \paren{\varphi \lor \psi}\)の導出：
 \begin{enumerate}
-	\item \(\lnot \varphi \land \lnot \psi\)\quad (ID)
-	\item \(\varphi \lor \psi\)\quad (ID)
+	\item \(\lnot \varphi \land \lnot \psi \sequent \lnot \varphi \land \lnot \psi\)\quad (ID)
+	\item \(\varphi \lor \psi \sequent \varphi \lor \psi\)\quad (ID)
 	\item \(\varphi \sequent \varphi\)\quad (ID)
 	\item \(\lnot \varphi \land \lnot \psi \sequent \lnot \varphi\)\quad （1から(\(\land\)E)による）
 	\item \(\varphi, \lnot \varphi \land \lnot \psi \sequent \bot\)\quad （3, 4から(w), (e), (\(\lnot\)E)による）

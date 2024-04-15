@@ -155,3 +155,29 @@
 	\item \(\varphi \land \varphi, \lnot \varphi \lor \lnot \psi \sequent \bot\)\quad （1, 5, 6から(w), (e), (\(\land\)E), (c)による）
 	\item \(\lnot \varphi \lor \lnot \psi \sequent \lnot \paren{\varphi \land \varphi}\)\quad （7から(\(\lnot\)I)による）
 \end{enumerate}
+
+\(\lnot \forall x \varphi \sequent \exists x \lnot \varphi\)の導出：
+\begin{enumerate}
+	\item \(\lnot \forall x \varphi \sequent \lnot \forall x \varphi\)\quad (ID)
+	\item \(\lnot \exists x \lnot \varphi \sequent \lnot \exists x \lnot \varphi\)\quad (ID)
+	\item \(\lnot \subst{\varphi}{a/x} \sequent \lnot \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\lnot \subst{\varphi}{a/x} \sequent \exists x \lnot \varphi\)\quad （3から(\(\exists\)E)による）
+	\item \(\lnot \subst{\varphi}{a/x}, \lnot \exists x \lnot \varphi \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \exists x \lnot \varphi \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （5から(\(\lnot\)I)による）
+	\item \(\lnot \exists x \lnot \varphi \sequent \subst{\varphi}{a/x}\)\quad （6から(DNF)による）
+	\item \(\lnot \exists x \lnot \varphi \sequent \forall x \varphi\)\quad （7から(\(\forall\)I)による）
+	\item \(\lnot \exists x \lnot \varphi, \lnot \forall x \varphi \sequent \bot\)\quad （1, 8から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \forall x \varphi \sequent \lnot \lnot \exists x \lnot \varphi\)\quad （9から(\(\lnot\)E)による）
+	\item \(\lnot \forall x \varphi \sequent \exists x \lnot \varphi\)\quad （10から(DNF)による）
+\end{enumerate}
+
+\(\exists x \lnot \varphi \sequent \lnot \forall x \varphi\)の導出：
+\begin{enumerate}
+	\item \(\exists x \lnot \varphi \sequent \exists x \lnot \varphi\)\quad (ID)
+	\item \(\forall x \varphi \sequent \forall x \varphi\)\quad (ID)
+	\item \(\lnot \subst{\varphi}{a/x} \sequent \lnot \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\forall x \varphi \sequent \subst{\varphi}{a/x}\)\quad （2から(\(\forall\)E)による）
+	\item \(\lnot \subst{\varphi}{a/x}, \forall x \varphi \sequent \bot\)\quad （3, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\exists x \lnot \varphi, \forall x \varphi \sequent \bot\)\quad （1, 5から(\(\exists\)E)による）
+	\item \(\exists x \lnot \varphi \sequent \lnot \forall x \varphi\)\quad （6から(e), (\(\lnot\)I)による）
+\end{enumerate}

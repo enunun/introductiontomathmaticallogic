@@ -181,3 +181,21 @@
 	\item \(\exists x \lnot \varphi, \forall x \varphi \sequent \bot\)\quad （1, 5から(\(\exists\)E)による）
 	\item \(\exists x \lnot \varphi \sequent \lnot \forall x \varphi\)\quad （6から(e), (\(\lnot\)I)による）
 \end{enumerate}
+
+\(\lnot \exists x \varphi \sequent \forall x \lnot \varphi\)の導出：
+\begin{enumerate}
+	\item \(\lnot \exists x \varphi \sequent \lnot \exists x \varphi\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\varphi}{a/x} \sequent \exists x \varphi\)\quad （3から(\(\exists\)I)による）
+	\item \(\subst{\varphi}{a/x}, \lnot \exists x \varphi \sequent \bot\)\quad （1, 3から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \exists x \varphi \sequent \lnot \subst{\varphi}{a/x}\)\quad （4から(\(\lnot\)I)による）
+	\item \(\lnot \exists x \varphi \sequent \forall x \lnot \varphi\)\quad （5から(\(\forall\)I)による）
+\end{enumerate}
+
+\(\forall x \lnot \varphi \sequent \lnot \exists x \varphi\)の導出：
+\begin{enumerate}
+	\item \(\forall x \lnot \varphi \sequent \forall x \lnot \varphi\)\quad (ID)
+	\item \(\exists x \varphi \sequent \exists x \varphi\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\forall x \lnot \varphi \sequent \lnot \subst{\varphi}{a/x}\)\quad （1から(\(\forall\)E)による）
+\end{enumerate}

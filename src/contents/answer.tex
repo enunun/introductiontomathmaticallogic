@@ -259,3 +259,15 @@
 	\item \(\chi, \varphi \land \paren{\psi \lor \chi} \sequent \paren{\varphi \land \psi} \lor \paren{\varphi \land \chi}\)\quad （上と同様にして導けるので省略）
 	\item \(\varphi \land \paren{\psi \lor \chi} \sequent \paren{\varphi \land \psi} \lor \paren{\varphi \land \chi}\)\quad （3, 7, 8から(\(\lor\)E), (c)による）
 \end{enumerate}
+
+\(\paren{\varphi \land \psi} \lor \paren{\varphi \land \chi} \sequent \varphi \land \paren{\psi \lor \chi}\)の導出：
+\begin{enumerate}
+	\item \(\paren{\varphi \land \psi} \lor \paren{\varphi \land \chi} \sequent \paren{\varphi \land \psi} \lor \paren{\varphi \land \chi}\)\quad (ID)
+	\item \(\varphi \land \psi \sequent \varphi \land \psi\)\quad (ID)
+	\item \(\varphi \land \psi \sequent \varphi\)\quad （2から(\(\land\)E)による）
+	\item \(\varphi \land \psi \sequent \psi\)\quad （2から(\(\land\)E)による）
+	\item \(\varphi \land \psi \sequent \psi \lor \chi\)\quad （4から(\(\lor\)I)による）
+	\item \(\varphi \land \psi \sequent \varphi \land \paren{\psi \lor \chi}\)\quad （3, 5から(\(\land\)I), (c)による）
+	\item \(\varphi \land \chi \sequent \varphi \land \paren{\psi \lor \chi}\)\quad （上と同様にして導けるので省略）
+	\item \(\paren{\varphi \land \psi} \lor \paren{\varphi \land \chi} \sequent \varphi \land \paren{\psi \lor \chi}\)\quad （1, 6, 7から(\(\lor\)E), (c)による）
+\end{enumerate}

@@ -4,8 +4,8 @@ services:
       context: ../
       dockerfile: .devcontainer/Dockerfile
     volumes:
-      - fontcache:/usr/local/texlive/2022/texmf-var/lualatex-cache
-      - ../src:/home/src
+      - fontcache:/usr/local/texlive/2023/texmf-var/lualatex-cache
+      - ../:/home/
     stdin_open: true
     tty: true
 

@@ -329,7 +329,7 @@
 \(\exists x \paren{\varphi \land \lnot \psi} \sequent \lnot \forall x \paren{\varphi \to \psi}\)の導出：
 \begin{enumerate}
 	\item \(\exists x \paren{\varphi \land \lnot \psi} \sequent \exists x \lnot \paren{\varphi \land \lnot \psi}\)\quad (ID)
-	\item \(\subst{\paren{\varphi \land \lnot \psi}}{a/x} \sequent \subst{\paren{\lnot \paren{\varphi \to \psi}}}{a/x}\)\quad （\Cref{Que:sequent}の12つ目，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\paren{\varphi \land \lnot \psi}}{a/x} \sequent \subst{\paren{\lnot \paren{\varphi \to \psi}}}{a/x}\)\quad （\Cref{Que:sequent}の12個目，ただし\(a\)は新しい変数記号）
 	\item \(\subst{\paren{\varphi \land \lnot \psi}}{a/x} \sequent \exists x \lnot \paren{\varphi \to \psi}\)\quad （2から(\(\exists\)I)による）
 	\item \(\exists x \paren{\varphi \land \lnot \psi} \sequent \exists x \lnot \paren{\varphi \to \psi}\)\quad （1, 3から(\(\exists\)E)による）
 	\item \(\exists x \lnot \paren{\varphi \to \psi} \sequent \lnot \forall x \paren{\varphi \to \psi}\)\quad （\Cref{Que:sequent}の4つ目）
@@ -386,4 +386,23 @@
 \begin{enumerate}
 	\item \(\forall x \paren{\varphi \to \psi} \sequent \forall x \paren{\varphi \to \psi}\)\quad (ID)
 	\item \(\exists x \varphi \sequent \exists x \varphi\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\forall x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x} \to \psi\)\quad （1から(\(\forall\)E)による）
+	\item \(\subst{\varphi}{a/x}, \forall x \paren{\varphi \to \psi} \sequent \psi\)\quad （3, 4から(\(\to\)E)による）
+	\item \(\exists x \varphi, \forall x \paren{\varphi \to \psi} \sequent \psi\)\quad （2, 5から(\(\exists\)E)による）
+	\item \(\forall x \paren{\varphi \to \psi} \sequent \exists x \varphi \to \psi\)\quad （6から(\(\to\)I)による）
 \end{enumerate}
+ここで，4の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \to \psi\)が同じ論理式であることを用いた．
+
+\(\exists x \varphi \to \psi \sequent \forall x \paren{\varphi \to \psi}\)の導出：
+\begin{enumerate}
+	\item \(exists x \varphi \to \psi \sequent \exists x \varphi \to \psi\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\varphi}{a/x} \sequent \exists x \varphi\)\quad （2から(\(\exists\)I)による）
+	\item \(\subst{\varphi}{a/x}, \exists x \varphi \to \psi \sequent \psi\)\quad （1, 3から(\(\to\)E)による）
+	\item \(\exists x \varphi \to \psi \sequent \subst{\varphi}{a/x} \to \psi\)\quad （4から(\(\to\)I)による）
+	\item \(\exists x \varphi \to \psi \sequent \forall x \paren{\varphi \to \psi}\)\quad （5から(\(\forall\)I)による）
+\end{enumerate}
+ここで，6の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \to \psi\)が同じ論理式であることを用いた．

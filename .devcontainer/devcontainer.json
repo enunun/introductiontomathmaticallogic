@@ -7,8 +7,7 @@
 		"vscode": {
 			"extensions": [
 				"efoerster.texlab",
-				"mhutchie.git-graph",
-				"eamodio.gitlens"
+				"mhutchie.git-graph"
 			]
 		}
 	}

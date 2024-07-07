@@ -397,7 +397,7 @@
 
 \(\exists x \varphi \to \psi \sequent \forall x \paren{\varphi \to \psi}\)の導出：
 \begin{enumerate}
-	\item \(exists x \varphi \to \psi \sequent \exists x \varphi \to \psi\)\quad (ID)
+	\item \(\exists x \varphi \to \psi \sequent \exists x \varphi \to \psi\)\quad (ID)
 	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
 	\item \(\subst{\varphi}{a/x} \sequent \exists x \varphi\)\quad （2から(\(\exists\)I)による）
 	\item \(\subst{\varphi}{a/x}, \exists x \varphi \to \psi \sequent \psi\)\quad （1, 3から(\(\to\)E)による）
@@ -405,4 +405,42 @@
 	\item \(\exists x \varphi \to \psi \sequent \forall x \paren{\varphi \to \psi}\)\quad （5から(\(\forall\)I)による）
 \end{enumerate}
 ここで，6の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \to \psi\)が同じ論理式であることを用いた．
+
+\(\exists x \paren{\varphi \to \psi} \sequent \forall x \varphi \to \psi\)の導出：
+\begin{enumerate}
+	\item \(\exists x \paren{\varphi \to \psi} \sequent \exists x \paren{\varphi \to \psi}\)\quad (ID)
+	\item \(\forall x \varphi \sequent \forall x \varphi\)\quad (ID)
+	\item \(\subst{\paren{\varphi \to \psi}}{a/x} \sequent \subst{\paren{\varphi \to \psi}}{a/x}\)\quad (ID)
+	\item \(\forall x \varphi \sequent \subst{\varphi}{a/x}\)\quad （2から(\(\forall\)E)による，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\paren{\varphi \to \psi}}{a/x}, \forall x \varphi \sequent \psi\)\quad （3, 4から(\(\to\)E), (e)による）
+	\item \(\forall x \varphi, \exists x \paren{\varphi \to \psi} \sequent \psi\)\quad （1, 5から(\(\exists\)E), (e)による）
+	\item \(\exists x \paren{\varphi \to \psi} \sequent \forall x \to \psi\)\quad （6から(\(\to\)I)による）
+\end{enumerate}
+ここで，5の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \to \psi\)が同じ論理式であることを用いた．
+
+\(\forall x \varphi \to \psi \sequent \exists x \paren{\varphi \to \psi}\)の導出：
+\begin{enumerate}
+	\item \(\forall x \varphi \to \psi \sequent \forall x \varphi \to \psi\)\quad (ID)
+	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \lnot \exists x \paren{\varphi \to \psi}\)\quad (ID)
+	\item \(\lnot \subst{\varphi}{a/x} \sequent \lnot \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad (ID)
+	\item \(\lnot \psi, \subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \bot\)\quad （3, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \lnot \lnot \psi\)\quad （5から(\(\lnot\)I)による）
+	\item \(\subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \psi\)\quad （6から(DNF)による）
+	\item \(\lnot \subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x} \to \psi\)\quad （7から(\(\to\)I)による）
+	\item \(\lnot \subst{\varphi}{a/x} \sequent \exists x \paren{\varphi \to \psi}\)\quad （8から(\(\exists\)I)による）
+	\item \(\lnot \subst{\varphi}{a/x}, \lnot \exists x \paren{\varphi \to \psi} \sequent \bot\)\quad （2, 9から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （10から(\(\lnot\)I)による）
+	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x}\)\quad （11から(DNF)による）
+	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \forall x \varphi\)\quad （12から(\(\forall\)I)による）
+	\item \(\subst{\varphi}{a/x}, \forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \psi\)\quad （1, 13から(\(\to\)E), (w)による）
+	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x} \to \psi\)\quad （14から(\(\to\)I)による）
+	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \exists x \paren{\varphi \to \psi}\)\quad （15から(\(\exists\)I)による）
+	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \bot\)\quad （2, 16から(w), (\(\lnot\)E)による）
+	\item \(\forall x \varphi \to \psi \sequent \lnot \lnot \exists x \paren{\varphi \to \psi}\)\quad （17から(e), (\(\lnot\)I)による）
+	\item \(\forall x \varphi \to \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （18から(DNF)による）
+\end{enumerate}
+ここで，9と15の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
 \(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \to \psi\)が同じ論理式であることを用いた．

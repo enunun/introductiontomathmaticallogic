@@ -444,3 +444,27 @@
 \end{enumerate}
 ここで，9と15の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
 \(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \to \psi\)が同じ論理式であることを用いた．
+
+\(\forall x \paren{\varphi \to \psi} \sequent \varphi \to \forall x \psi\)の導出：
+\begin{enumerate}
+	\item \(\forall x \paren{\varphi \to \psi} \sequent \forall x \paren{\varphi \to \psi}\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\forall x \paren{\varphi \to \psi} \sequent \varphi \to \subst{\psi}{a/x}\)\quad （1から(\(\forall\)E)による，ただし\(a\)は新しい変数記号）
+	\item \(\varphi, \forall x \paren{\varphi \to \psi} \sequent \subst{\psi}{a/x}\)\quad （2, 3から(\(\to\)E)による）
+	\item \(\varphi, \forall x \paren{\varphi \to \psi} \sequent \forall x \psi\)\quad （4から(\(\forall\)I)による）
+	\item \(\forall x \paren{\varphi \to \psi} \sequent \varphi \to \forall x \psi\)\quad （5から(\(\to\)I)による）
+\end{enumerate}
+ここで，3の導出にあたっては，\(\varphi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\varphi \to \subst{\psi}{a/x}\)が同じ論理式であることを用いた．
+
+\(\varphi \to \forall x \psi \sequent \forall x \paren{\varphi \to \psi}\)の導出：
+\begin{enumerate}
+	\item \(\varphi \to \forall x \psi \sequent \varphi \to \forall x \psi\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\varphi, \varphi \to \forall x \psi \sequent \forall x \psi\)\quad （1, 2から(\(\to\)E)による）
+	\item \(\varphi, \varphi \to \forall x \psi \sequent \subst{\psi}{a/x}\)\quad （3から(\(\forall\)E)による）
+	\item \(\varphi \to \forall x \psi \sequent \paren{\varphi \to \psi}{a/x}\)\quad （4から(\(\to\)I)による）
+	\item \(\varphi \to \forall x \psi \sequent \forall x \paren{\varphi \to \psi}\)\quad （5から(\(\forall\)I)による）
+\end{enumerate}
+ここで，4の導出にあたっては，\(\varphi\)に\(x\)が自由出現しないことにより
+\(\varphi \to \subst{\psi}{a/x}\)と\(\subst{\varphi \to \psi}{a/x}\)が同じ論理式であることを用いた．

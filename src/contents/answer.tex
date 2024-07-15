@@ -586,3 +586,29 @@
 \end{enumerate}
 ここで，5の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
 \(\subst{\paren{\varphi \lor \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \lor \psi\)が同じ論理式であることを用いた．
+
+\(\exists x \paren{\varphi \land \psi} \sequent \exists x \varphi \land \psi\)の導出：
+\begin{enumerate}
+	\item \(\exists x \paren{\varphi \land \psi} \sequent \exists x \paren{\varphi \land \psi}\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \land \psi \sequent \subst{\varphi}{a/x} \land \psi\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\varphi}{a/x} \land \psi \sequent \subst{\varphi}{a/x}\)\quad （2から(\(\land\)E)による）
+	\item \(\subst{\varphi}{a/x} \land \psi \sequent \exists x \varphi\)\quad （3から(\(\exists\)I)による）
+	\item \(\subst{\varphi}{a/x} \land \psi \sequent \psi\)\quad （2から(\(\land\)E)による）
+	\item \(\subst{\varphi}{a/x} \land \psi \sequent \exists x \varphi \land \psi\)\quad （4, 5から(\(\land\)I), (c)による）
+	\item \(\exists x \paren{\varphi \land \psi} \sequent \exists x \varphi \land \psi\)\quad （6から(\(\exists\)E)による）
+\end{enumerate}
+ここで，7の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \land \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \land \psi\)が同じ論理式であることを用いた．
+
+\(\exists x \varphi \land \psi \sequent \exists x \paren{\varphi \land \psi}\)の導出：
+\begin{enumerate}
+	\item \(\exists x \varphi \land \psi \sequent \exists x \varphi \land \psi\)\quad (ID)
+	\item \(\exists x \varphi \land \psi \sequent \psi\)\quad （2から(\(\land\)E)による）
+	\item \(\exists x \varphi \land \psi \sequent \exists x \varphi\)\quad （1から(\(\land\)E)による）
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\varphi}{a/x}, \exists x \varphi \land \psi \sequent \subst{\varphi}{a/x} \land \psi\)\quad （2, 4から(\(\land\)I)による）
+	\item \(\subst{\varphi}{a/x}, \exists x \varphi \land \psi \sequent \exists x \paren{\varphi \land \psi}\)\quad （5から(\(\exists\)I)による）
+	\item \(\exists x \varphi \land \psi \sequent \exists x \paren{\varphi \land \psi}\)\quad （3, 6から(\(\exists\)E), (c)による）
+\end{enumerate}
+ここで，6の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \land \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \land \psi\)が同じ論理式であることを用いた．

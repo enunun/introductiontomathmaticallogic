@@ -612,3 +612,20 @@
 \end{enumerate}
 ここで，6の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
 \(\subst{\paren{\varphi \land \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \land \psi\)が同じ論理式であることを用いた．
+
+
+\subsection*{\Cref{Que:peirce}}
+
+\begin{enumerate}
+	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \paren{\varphi \to \psi} \to \varphi\)\quad (ID)
+	\item \(\lnot \varphi \sequent \lnot \varphi\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\lnot \psi, \varphi, \lnot \varphi \sequent \bot\)\quad （2, 3から(w), (e), (\(\lnot\)E)による）
+	\item \(\varphi, \lnot \varphi \sequent \lnot \lnot \psi\)\quad （4から(\(\lnot\)I)による）
+	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNF)による）
+	\item \(\lnot \varphi \sequent \varphi \to \psi\)\quad （6から(\(\to\)I)による）
+	\item \(\lnot \varphi, \paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （1, 7から(\(\to\)E)による）
+	\item \(\lnot \varphi, \paren{\varphi \to \psi} \to \varphi \sequent \bot\)\quad （2, 8から(w), (e), (\(\lnot\)E)による）
+	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \lnot \lnot \varphi\)\quad （9から(\(\lnot\)I)による）
+	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （10から(DNF)による）
+\end{enumerate}

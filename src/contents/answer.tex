@@ -525,3 +525,26 @@
 	\item \(\forall x \varphi \land \forall x \psi \sequent \subst{\varphi}{a/x} \land \subst{\psi}{a/x}\)\quad （3, 4から(\(\land\)I), (c)による）
 	\item \(\forall x \varphi \land \forall x \psi \sequent \forall x \paren{\varphi \land \psi}\)\quad （5から(\(\forall\)I)による）
 \end{enumerate}
+
+\(\exists x \paren{\varphi \lor \psi} \sequent \exists x \varphi \lor \exists x \psi\)の導出：
+\begin{enumerate}
+	\item \(\exists x \paren{\varphi \lor \psi} \sequent \exists x \paren{\varphi \lor \psi}\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \lor \subst{\psi}{a/x} \sequent \subst{\varphi}{a/x} \lor \subst{\psi}{a/x}\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \exists x \varphi\)\quad （3から(\(\exists\)I)による）
+	\item \(\subst{\varphi}{a/x} \sequent \exists x \varphi \lor \exists x \psi\)\quad （4から(\(\lor\)I)による）
+	\item \(\subst{\psi}{a/x} \sequent \exists x \varphi \lor \exists x \psi\)\quad （上と同様にして導けるので省略）
+	\item \(\subst{\varphi}{a/x} \lor \subst{\psi}{a/x} \sequent \exists x \varphi \lor \exists x \psi\)\quad （2, 5, 6から(\(\lor\)E)による）
+	\item \(\exists x \paren{\varphi \lor \psi} \sequent \exists x \varphi \lor \exists x \psi\)\quad （1, 7から(\(\exists\)E)による）
+\end{enumerate}
+
+\(\exists x \varphi \lor \exists x \psi \sequent \exists x \paren{\varphi \lor \psi}\)の導出：
+\begin{enumerate}
+	\item \(\exists x \varphi \lor \exists x \psi \sequent \exists x \varphi \lor \exists x \psi\)\quad (ID)
+	\item \(\exists x \varphi \sequent \exists x \varphi\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x} \lor \subst{\psi}{a/x}\)\quad （3から(\(\lor\)I)による）
+	\item \(\exists x \varphi \sequent \exists x \paren{\varphi \lor \psi}\)\quad （2, 4から(\(\exists\)E)による）
+	\item \(\exists x \psi \sequent \exists x \paren{\varphi \lor \psi}\)\quad （上と同様にして導けるので省略）
+	\item \(\exists x \varphi \lor \exists x \psi \sequent \exists x \paren{\varphi \lor \psi}\)\quad （1, 5, 6から(\(\lor\)E)による）
+\end{enumerate}

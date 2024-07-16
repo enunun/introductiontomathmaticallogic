@@ -102,12 +102,12 @@
 		\begin{prooftree}
 			\AxiomC{}
 			\LeftLabel{(REFL)}
-			\UnaryInfC{\(t = t\)}
+			\UnaryInfC{\(\sequent t = t\)}
 		\end{prooftree}
 	\end{multicols}
 \end{Def}
 
-推論規則名になっている「ID」と「REFL」は同一律（law of identity）と反射律（reflexive law）に由来する．
+推論規則名になっている「ID」と「REFL」はそれぞれ同一律（law of identity）と反射律（reflexive law）に由来する．
 
 推論規則の数はそれなりに多いので，いくつかのグループに分けて述べる．
 なお，\cref{Def:structuralrule}における推論規則名「w」「e」「c」はそれぞれ
@@ -216,7 +216,7 @@
 	\end{multicols}
 	\begin{multicols}{2}
 		\begin{prooftree}
-			\AxiomC{\(\Gamma \sequent \subst{\varphi}{a}{x}\)}
+			\AxiomC{\(\Gamma \sequent \subst{\varphi}{a/x}\)}
 			\LeftLabel{(\(\exists\)I)}
 			\UnaryInfC{\(\Gamma \sequent \exists x \varphi\)}
 		\end{prooftree}
@@ -257,10 +257,10 @@
 	\(\varphi\)を論理式，\(x\)を変数記号，\(s,t\)を\(\varphi\)中の\(x\)に代入可能な項とするとき，
 	以下は自然演繹式シークエント計算における推論規則である．
 	\begin{prooftree}
-		\AxiomC{\(s = t\)}
-		\AxiomC{\(\subst{\varphi}{t / x}\)}
+		\AxiomC{\(\Gamma \sequent s = t\)}
+		\AxiomC{\(\Delta \sequent \subst{\varphi}{t / x}\)}
 		\LeftLabel{(SUBST)}
-		\BinaryInfC{\(\subst{\varphi}{s / x}\)}
+		\BinaryInfC{\(\Gamma, \Delta \sequent \subst{\varphi}{s / x}\)}
 	\end{prooftree}
 \end{Def}
 
@@ -386,7 +386,7 @@
 		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \lnot \paren{\varphi \lor \lnot \varphi}\)\quad (ID)
 		\item \(\varphi \sequent \varphi\)\quad (ID)
 		\item \(\varphi \sequent \varphi \lor \lnot \varphi\)\quad （2から(\(\lor\)I)による）
-		\item \(\varphi, \lnot \paren{\varphi, \lnot \varphi} \sequent \lnot \paren{\varphi \lor \lnot \varphi}\)\quad （1から(w)による）
+		\item \(\varphi, \lnot \paren{\varphi \lor \lnot \varphi} \sequent \lnot \paren{\varphi \lor \lnot \varphi}\)\quad （1から(w)による）
 		\item \(\lnot \paren{\varphi \lor \lnot \varphi}, \varphi \sequent \varphi \lor \lnot \varphi\)\quad （3から(w)による）
 		\item \(\varphi,\lnot \paren{\varphi \lor \lnot \varphi} \sequent \varphi \lor \lnot \varphi\)\quad （4から(e)による）
 		\item \(\varphi, \lnot \paren{\varphi \lor \lnot \varphi} \sequent \bot\)\quad （\(4,6\)から(\(\lnot\)E)による）
@@ -420,7 +420,7 @@
 \Cref{Thm:lawofexcludedmiddle}と同じように考えれば，
 数学における論理でよく知られてきた結果がこの自然演繹式シークエント計算においても導くことができる．
 
-\begin{Thm} \label[Def]{Thm:equivlogicalexpression}
+\begin{Thm} \label[Thm]{Thm:equivlogicalexpression}
 	\(\varphi, \psi, \chi\)を論理式，\(x\)を変数記号とする．
 	以下に述べる論理式のペアは，それぞれを左辺，右辺とするシークエントと
 	その左右を入れ替えたシークエントのいずれも導出可能である．
@@ -479,8 +479,8 @@
 \begin{Thm} \label[Thm]{Thm:equalsignrelation}
 	\(s, t, u\)を項とするとき，シークエント
 	\begin{align}
-		s = t \sequent t = s \\
-		\paren{s = t} \land \paren{t = u} \sequent s = u
+		s = t \sequent t = s \label{eq:equalsignsymmetry} \\
+		\paren{s = t} \land \paren{t = u} \sequent s = u \label{eq:equalsigntransitivity}
 	\end{align}
 	は導出可能である．
 \end{Thm}

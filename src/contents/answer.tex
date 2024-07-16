@@ -74,3 +74,620 @@
 とするのが正しい．
 なぜそうしなければならないのか，
 そしてなぜそうすれば「よい」のかについては，この段階ではわからない．
+
+\subsection*{\Cref{Que:sequent}}
+
+\(\varphi \to \psi \sequent \lnot \varphi \lor \psi\)の導出：
+\begin{enumerate}
+	\item \(\varphi \to \psi \sequent \varphi \to \psi\)\quad (ID)
+	\item \(\lnot \paren{\lnot \varphi \lor \psi} \sequent \lnot \paren{\lnot \varphi \lor \psi}\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\varphi, {\varphi \to \psi} \sequent \psi\)\quad （1,3から(\(\to\)E)による）
+	\item \(\varphi, {\varphi \to \psi} \sequent \lnot \varphi \lor \psi\)\quad （4から(\(\lor\)I)による）
+	\item \(\varphi, {\varphi \to \psi}, \lnot \paren{\lnot \varphi \lor \psi} \sequent \bot\)\quad （2, 5から(w), (e), (\(\lnot\)E)による）
+	\item \(\varphi \to \psi, \lnot \paren{\lnot \varphi \lor \psi} \sequent \lnot \varphi\)\quad （6から(\(\lnot\)I)による）
+	\item \(\varphi \to \psi, \lnot \paren{\lnot \varphi \lor \psi} \sequent \lnot \varphi \lor \psi\)\quad （7から(\(\lor\)I)による）
+	\item \(\varphi \to \psi, \lnot \paren{\lnot \varphi \lor \psi} \sequent \bot\)\quad （2, 8から(w), (\(\lnot\)E)による）
+	\item \(\varphi \to \psi \sequent \lnot \lnot \paren{\lnot \varphi \lor \psi}\)\quad （9から(e), (\(\lnot\)E)による）
+	\item \(\varphi \to \psi \sequent \lnot \varphi \lor \psi\)\quad （10から(DNF)による）
+\end{enumerate}
+
+\(\lnot \varphi \lor \psi \sequent \varphi \to \psi\)の導出：
+\begin{enumerate}
+	\item \(\lnot \varphi \lor \psi \sequent \lnot \varphi \lor \psi\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\lnot \varphi \sequent \lnot \varphi\)\quad (ID)
+	\item \(\lnot \psi, \varphi, \lnot \varphi \sequent \bot\)\quad （2, 3から(w), (e), (\(\lnot\)E)による）
+	\item \(\varphi, \lnot \varphi \sequent \lnot \lnot \psi\)\quad （4から(\(\lnot\)I)による）
+	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNF)による）
+	\item \(\psi \sequent \psi\)\quad (ID)
+	\item \(\lnot \varphi \lor \psi, \varphi \sequent \psi\)\quad （1, 6, 7から(e), (\(\lor\)E), (c)による）
+	\item \(\lnot \varphi \lor \psi \sequent \varphi \to \psi\)\quad （8から(e), (\(\to\)I)による）
+\end{enumerate}
+
+\(\lnot \paren{\varphi \lor \psi} \sequent \lnot \varphi \land \lnot \psi\)の導出：
+\begin{enumerate}
+	\item \(\lnot \paren{\varphi \lor \psi} \sequent \lnot \paren{\varphi \lor \psi}\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\varphi \sequent \varphi \lor \psi\)\quad （2から(\(\lor\)I)による）
+	\item \(\varphi, \lnot \paren{\varphi \lor \psi} \sequent \bot\)\quad （1, 3から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \paren{\varphi \lor \psi} \sequent \lnot \varphi\)\quad （4から(\(\lnot\)I)による）
+	\item \(\lnot \paren{\varphi \lor \psi} \sequent \lnot \psi\)\quad （上と同様にして導出できるので省略）
+	\item \(\lnot \paren{\varphi \lor \psi} \sequent \lnot \varphi \land \lnot \psi\)\quad （5, 6から(\(\land\)I), (c)による）
+\end{enumerate}
+
+\(\lnot \varphi \land \lnot \psi \sequent \lnot \paren{\varphi \lor \psi}\)の導出：
+\begin{enumerate}
+	\item \(\lnot \varphi \land \lnot \psi \sequent \lnot \varphi \land \lnot \psi\)\quad (ID)
+	\item \(\varphi \lor \psi \sequent \varphi \lor \psi\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\lnot \varphi \land \lnot \psi \sequent \lnot \varphi\)\quad （1から(\(\land\)E)による）
+	\item \(\varphi, \lnot \varphi \land \lnot \psi \sequent \bot\)\quad （3, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\psi, \lnot \varphi \land \lnot \psi \sequent \bot\)\quad （上と同様にして導出できるので省略）
+	\item \(\varphi \lor \psi, \lnot \varphi \land \lnot \psi \sequent \bot\)\quad （2, 5, 6から(\(\lor\)E), (c)による）
+	\item \(\lnot \varphi \land \lnot \psi \sequent \lnot \paren{\varphi \lor \psi}\)\quad （7から(\(\lnot\)I)による）
+\end{enumerate}
+
+\(\lnot \paren{\varphi \land \psi} \sequent \lnot \varphi \lor \lnot \psi\)の導出：
+\begin{enumerate}
+	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \paren{\varphi \land \psi}\)\quad (ID)
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \lnot \paren{\lnot \varphi \lor \lnot \psi}\)\quad (ID)
+	\item \(\lnot \varphi \sequent \lnot \varphi\)\quad (ID)
+	\item \(\lnot \varphi \sequent \lnot \varphi \lor \lnot \psi\)\quad （3から(\(\lor\)I)による）
+	\item \(\lnot \varphi, \lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \lnot \lnot \varphi\)\quad （5から(\(\lnot\)I)による）
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \varphi\)\quad （6から(DNF)による）
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \psi\)\quad （上と同様にして導けるので省略）
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \varphi \land \psi\)\quad （7, 8から(\(\land\)I), (c)による）
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi}, \lnot \paren{\varphi \land \psi} \sequent \bot\)\quad （1, 9から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \lnot \paren{\lnot \varphi \lor \lnot \psi}\)\quad （10から(\(\lnot\)I)による）
+	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \varphi \lor \lnot \psi\)\quad （11から(DNF)による）
+\end{enumerate}
+
+\(\lnot \varphi \lor \lnot \psi \sequent \lnot \paren{\varphi \land \psi}\)の導出：
+\begin{enumerate}
+	\item \(\lnot \varphi \lor \lnot \psi \sequent \lnot \varphi \lor \lnot \psi\)\quad (ID)
+	\item \(\varphi \land \psi \sequent \varphi \land \psi\)\quad (ID)
+	\item \(\lnot \varphi \sequent \lnot \varphi\)\quad (ID)
+	\item \(\varphi \land \psi \sequent \varphi\)\quad （2から(\(\land\)E)による）
+	\item \(\lnot \varphi, \varphi \land \psi \sequent \bot\)\quad （3, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \psi, \varphi \land \psi \sequent \bot\)\quad （上と同様にして導けるので省略）
+	\item \(\varphi \land \varphi, \lnot \varphi \lor \lnot \psi \sequent \bot\)\quad （1, 5, 6から(w), (e), (\(\land\)E), (c)による）
+	\item \(\lnot \varphi \lor \lnot \psi \sequent \lnot \paren{\varphi \land \varphi}\)\quad （7から(\(\lnot\)I)による）
+\end{enumerate}
+
+\(\lnot \forall x \varphi \sequent \exists x \lnot \varphi\)の導出：
+\begin{enumerate}
+	\item \(\lnot \forall x \varphi \sequent \lnot \forall x \varphi\)\quad (ID)
+	\item \(\lnot \exists x \lnot \varphi \sequent \lnot \exists x \lnot \varphi\)\quad (ID)
+	\item \(\lnot \subst{\varphi}{a/x} \sequent \lnot \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\lnot \subst{\varphi}{a/x} \sequent \exists x \lnot \varphi\)\quad （3から(\(\exists\)E)による）
+	\item \(\lnot \subst{\varphi}{a/x}, \lnot \exists x \lnot \varphi \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \exists x \lnot \varphi \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （5から(\(\lnot\)I)による）
+	\item \(\lnot \exists x \lnot \varphi \sequent \subst{\varphi}{a/x}\)\quad （6から(DNF)による）
+	\item \(\lnot \exists x \lnot \varphi \sequent \forall x \varphi\)\quad （7から(\(\forall\)I)による）
+	\item \(\lnot \exists x \lnot \varphi, \lnot \forall x \varphi \sequent \bot\)\quad （1, 8から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \forall x \varphi \sequent \lnot \lnot \exists x \lnot \varphi\)\quad （9から(\(\lnot\)E)による）
+	\item \(\lnot \forall x \varphi \sequent \exists x \lnot \varphi\)\quad （10から(DNF)による）
+\end{enumerate}
+
+\(\exists x \lnot \varphi \sequent \lnot \forall x \varphi\)の導出：
+\begin{enumerate}
+	\item \(\exists x \lnot \varphi \sequent \exists x \lnot \varphi\)\quad (ID)
+	\item \(\forall x \varphi \sequent \forall x \varphi\)\quad (ID)
+	\item \(\lnot \subst{\varphi}{a/x} \sequent \lnot \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\forall x \varphi \sequent \subst{\varphi}{a/x}\)\quad （2から(\(\forall\)E)による）
+	\item \(\lnot \subst{\varphi}{a/x}, \forall x \varphi \sequent \bot\)\quad （3, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\exists x \lnot \varphi, \forall x \varphi \sequent \bot\)\quad （1, 5から(\(\exists\)E)による）
+	\item \(\exists x \lnot \varphi \sequent \lnot \forall x \varphi\)\quad （6から(e), (\(\lnot\)I)による）
+\end{enumerate}
+
+\(\lnot \exists x \varphi \sequent \forall x \lnot \varphi\)の導出：
+\begin{enumerate}
+	\item \(\lnot \exists x \varphi \sequent \lnot \exists x \varphi\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\varphi}{a/x} \sequent \exists x \varphi\)\quad （3から(\(\exists\)I)による）
+	\item \(\subst{\varphi}{a/x}, \lnot \exists x \varphi \sequent \bot\)\quad （1, 3から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \exists x \varphi \sequent \lnot \subst{\varphi}{a/x}\)\quad （4から(\(\lnot\)I)による）
+	\item \(\lnot \exists x \varphi \sequent \forall x \lnot \varphi\)\quad （5から(\(\forall\)I)による）
+\end{enumerate}
+
+\(\forall x \lnot \varphi \sequent \lnot \exists x \varphi\)の導出：
+\begin{enumerate}
+	\item \(\forall x \lnot \varphi \sequent \forall x \lnot \varphi\)\quad (ID)
+	\item \(\exists x \varphi \sequent \exists x \varphi\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\forall x \lnot \varphi \sequent \lnot \subst{\varphi}{a/x}\)\quad （1から(\(\forall\)E)による）
+	\item \(\subst{\varphi}{a/x}, \forall x \lnot \varphi \sequent \bot\)\quad （3, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\exists x \varphi, \forall x \lnot \varphi \sequent \bot\)\quad （2, 5から(\(\exists\)E)による）
+	\item \(\forall x \lnot \varphi \sequent \lnot \exists x \varphi\)\quad （6から(\(\lnot\)I)による）
+\end{enumerate}
+
+\(\varphi \land \psi \sequent \psi \land \varphi\)の導出（逆向きのシークエントも同様である）：
+\begin{enumerate}
+	\item \(\varphi \land \psi \sequent \varphi \land \psi\)\quad (ID)
+	\item \(\varphi \land \psi \sequent \psi\)\quad （1から(\(\land\)E)による）
+	\item \(\varphi \land \psi \sequent \varphi\)\quad （1から(\(\land\)E)による）
+	\item \(\varphi \land \psi \sequent \psi \land \varphi\)\quad （2, 3から(\(\land\)I), (c)による）
+\end{enumerate}
+
+\(\varphi \lor \psi \sequent \psi \lor \varphi\)の導出（逆向きのシークエントも同様である）：
+\begin{enumerate}
+	\item \(\varphi \lor \psi \sequent \varphi \lor \psi\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\varphi \sequent \psi \lor \varphi\)\quad （2から(\(\lor\)I)による）
+	\item \(\psi \sequent \psi\)\quad (ID)
+	\item \(\psi \sequent \psi \lor \varphi\)\quad （4から(\(\lor\)I)による）
+	\item \(\varphi \lor \psi \sequent \psi \lor \varphi\)\quad （1, 3, 5から(\(\lor\)E), (c)による）
+\end{enumerate}
+
+\(\varphi \land \paren{\psi \land \chi} \sequent \paren{\varphi \land \psi} \land \chi\)の導出（逆向きのシークエントも同様である）：
+\begin{enumerate}
+	\item \(\varphi \land \paren{\psi \land \chi} \sequent \varphi \land \paren{\psi \land \chi}\)\quad (ID)
+	\item \(\varphi \land \paren{\psi \land \chi} \sequent \varphi\)\quad （1から(\(\land\)E)による）
+	\item \(\varphi \land \paren{\psi \land \chi} \sequent \psi \land \chi\)\quad （1から(\(\land\)E)による）
+	\item \(\varphi \land \paren{\psi \land \chi} \sequent \psi\)\quad （3から(\(\land\)E)による）
+	\item \(\varphi \land \paren{\psi \land \chi} \sequent \varphi \land \psi\)\quad （2, 4から(\(\land\)I), (c)による）
+	\item \(\varphi \land \paren{\psi \land \chi} \sequent \chi\)\quad （3から(\(\land\)E)による）
+	\item \(\varphi \land \paren{\psi \land \chi} \sequent \paren{\varphi \land \psi} \land \chi\)\quad （5, 6から(\(\land\)I), (c)による）
+\end{enumerate}
+
+\(\varphi \lor \paren{\psi \lor \chi} \sequent \paren{\varphi \lor \psi} \lor \chi\)の導出（逆向きのシークエントも同様である）：
+\begin{enumerate}
+	\item \(\varphi \lor \paren{\psi \lor \chi} \sequent \varphi \lor \paren{\psi \lor \chi}\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\varphi \sequent \varphi \lor \psi\)\quad （2から(\(\lor\)I)による）
+	\item \(\varphi \sequent \paren{\varphi \lor \psi} \lor \chi\)\quad （3から(\(\lor\)I)による）
+	\item \(\psi \lor \chi \sequent \psi \lor \chi\)\quad (ID)
+	\item \(\psi \sequent \psi\)\quad (ID)
+	\item \(\psi \sequent \varphi \lor \psi\)\quad （6から(\(\lor\)I)による）
+	\item \(\psi \sequent \paren{\varphi \lor \psi} \lor \chi\)\quad （7から(\(\lor\)I)による）
+	\item \(\chi \sequent \chi\)\quad (ID)
+	\item \(\chi \sequent \paren{\varphi \lor \psi} \lor \chi\)\quad （9から(\(\lor\)I)による）
+	\item \(\psi \lor \chi \sequent \paren{\varphi \lor \psi} \lor \chi\)\quad （5, 8, 10から(\(\lor\)E)による）
+	\item \(\varphi \lor \paren{\psi \lor \chi} \sequent \varphi \lor \paren{\psi \lor \chi}\)\quad （1, 4, 11から(\(\lor\)E)による）
+\end{enumerate}
+
+\(\varphi \land \paren{\psi \lor \chi} \sequent \paren{\varphi \land \psi} \lor \paren{\varphi \land \chi}\)の導出：
+\begin{enumerate}
+	\item \(\varphi \land \paren{\psi \lor \chi} \sequent \varphi \land \paren{\psi \lor \chi}\)\quad (ID)
+	\item \(\varphi \land \paren{\psi \lor \chi} \sequent \varphi\)\quad （1から(\(\land\)E)による）
+	\item \(\varphi \land \paren{\psi \lor \chi} \sequent \psi \lor \chi\)\quad （1から(\(\land\)E)による）
+	\item \(\psi \sequent \psi\)\quad (ID)
+	\item \(\psi, \varphi \land \paren{\psi \lor \chi} \sequent \varphi \land \psi\)\quad （2, 4から(w), (e), (\(\land\)I), (c)による）
+	\item \(\psi, \varphi \land \paren{\psi \lor \chi} \sequent \paren{\varphi \land \psi} \lor \paren{\varphi \lor \psi}\)\quad （5から(\(\lor\)I)による）
+	\item \(\chi, \varphi \land \paren{\psi \lor \chi} \sequent \paren{\varphi \land \psi} \lor \paren{\varphi \land \chi}\)\quad （上と同様にして導けるので省略）
+	\item \(\varphi \land \paren{\psi \lor \chi} \sequent \paren{\varphi \land \psi} \lor \paren{\varphi \land \chi}\)\quad （3, 6, 7から(\(\lor\)E), (c)による）
+\end{enumerate}
+
+\(\paren{\varphi \land \psi} \lor \paren{\varphi \land \chi} \sequent \varphi \land \paren{\psi \lor \chi}\)の導出：
+\begin{enumerate}
+	\item \(\paren{\varphi \land \psi} \lor \paren{\varphi \land \chi} \sequent \paren{\varphi \land \psi} \lor \paren{\varphi \land \chi}\)\quad (ID)
+	\item \(\varphi \land \psi \sequent \varphi \land \psi\)\quad (ID)
+	\item \(\varphi \land \psi \sequent \varphi\)\quad （2から(\(\land\)E)による）
+	\item \(\varphi \land \psi \sequent \psi\)\quad （2から(\(\land\)E)による）
+	\item \(\varphi \land \psi \sequent \psi \lor \chi\)\quad （4から(\(\lor\)I)による）
+	\item \(\varphi \land \psi \sequent \varphi \land \paren{\psi \lor \chi}\)\quad （3, 5から(\(\land\)I), (c)による）
+	\item \(\varphi \land \chi \sequent \varphi \land \paren{\psi \lor \chi}\)\quad （上と同様にして導けるので省略）
+	\item \(\paren{\varphi \land \psi} \lor \paren{\varphi \land \chi} \sequent \varphi \land \paren{\psi \lor \chi}\)\quad （1, 6, 7から(\(\lor\)E)による）
+\end{enumerate}
+
+\(\varphi \lor \paren{\psi \land \chi} \sequent \paren{\varphi \lor \psi} \land \paren{\varphi \lor \chi}\)の導出：
+\begin{enumerate}
+	\item \(\varphi \lor \paren{\psi \land \chi} \sequent \varphi \lor \paren{\psi \land \chi}\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\varphi \sequent \varphi \lor \psi\)\quad （2から(\(\lor\)I)による）
+	\item \(\varphi \sequent \varphi \lor \chi\)\quad （2から(\(\lor\)I)による）
+	\item \(\varphi \sequent \paren{\varphi \lor \psi} \land \paren{\varphi \lor \chi}\)\quad （3, 4から(\(\land\)I), (c)による）
+	\item \(\psi \land \chi \sequent \psi \land \chi\)\quad (ID)
+	\item \(\psi \land \chi \sequent \psi\)\quad （6から(\(\land\)E)による）
+	\item \(\psi \land \chi \sequent \varphi \lor \psi\)\quad （7から(\(\lor\)I)による）
+	\item \(\psi \land \chi \sequent \chi\)\quad （6から(\(\land\)E)による）
+	\item \(\psi \land \chi \sequent \varphi \lor \chi\)\quad （9から(\(\lor\)I)による）
+	\item \(\psi \land \chi \sequent \paren{\varphi \lor \psi} \land \paren{\varphi \lor \chi}\)\quad （8, 10から(\(\land\)I), (e)による）
+	\item \(\varphi \lor \paren{\psi \land \chi} \sequent \paren{\varphi \lor \psi} \land \paren{\varphi \lor \chi}\)\quad （1, 5, 11から(\(\lor\)E)による）
+\end{enumerate}
+
+\(\lnot \paren{\varphi \to \psi} \sequent \varphi \land \lnot \psi\)の導出：
+\begin{enumerate}
+	\item \(\lnot \paren{\varphi \to \psi} \sequent \lnot \paren{\varphi \to \psi}\)\quad (ID)
+	\item \(\lnot \varphi \sequent \lnot \varphi\)\quad (ID)
+	\item \(\lnot \varphi \sequent \lnot \varphi \lor \psi\)\quad （2から(\(\lor\)I)による）
+	\item \(\lnot \varphi \lor \psi \sequent \varphi \to \psi\)\quad （\Cref{Que:sequent}の1つ目）
+	\item \(\sequent \lnot \varphi \lor \psi \to \paren{\varphi \to \psi}\)\quad （4から(\(\to\)I)による）
+	\item \(\lnot \varphi \sequent \varphi \to \psi\)\quad （3, 5から(\(\to\)E)による）
+	\item \(\lnot \varphi, \lnot \paren{\varphi \to \psi} \sequent \bot\)\quad （1, 6から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \paren{\varphi \to \psi} \sequent \lnot \lnot \varphi\)\quad （7から(\(\lnot\)I)による）
+	\item \(\lnot \paren{\varphi \to \psi} \sequent \varphi\)\quad （8から(DNF)による）
+	\item \(\psi \sequent \psi\)\quad (ID)
+	\item \(\varphi, \psi \sequent \psi\)\quad (10から(w)による)
+	\item \(\psi \sequent \varphi \to \psi\)\quad (11から(\(\to\)I)による)
+	\item \(\psi, \lnot \paren{\varphi \to \psi} \sequent \bot\)\quad （1, 12から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \paren{\varphi \to \psi} \sequent \lnot \psi\)\quad （13から(\(\lnot\)I)による）
+	\item \(\lnot \paren{\varphi \to \psi} \sequent \varphi \land \lnot \psi\)\quad （9, 14から(\(\land\)I), (c)による）
+\end{enumerate}
+
+\(\varphi \land \lnot \psi \sequent \lnot \paren{\varphi \to \psi}\)の導出：
+\begin{enumerate}
+	\item \(\varphi \land \lnot \psi \sequent \varphi \land \lnot \psi\)\quad (ID)
+	\item \(\varphi \to \psi \sequent \varphi \to \psi\)\quad (ID)
+	\item \(\varphi \land \lnot \psi \sequent \varphi\)\quad （1から(\(\land\)E)による）
+	\item \(\varphi \to \psi, \varphi \land \lnot \psi \sequent \psi\)\quad （2, 3から(\(\to\)E)による）
+	\item \(\varphi \land \lnot \psi \sequent \lnot \psi\)\quad （1から(\(\land\)E)による）
+	\item \(\varphi \to \psi, \varphi \land \lnot \psi \sequent \bot\)\quad （4, 5から(w), (\(\lnot\)E)による）
+	\item \(\varphi \land \lnot \psi \sequent \lnot \paren{\varphi \to \psi}\)\quad （6から(\(\lnot\)I)による）
+\end{enumerate}
+
+\(\lnot \forall x \paren{\varphi \to \psi} \sequent \exists x \paren{\varphi \land \lnot \psi}\)の導出：
+\begin{enumerate}
+	\item \(\lnot \forall x \paren{\varphi \to \psi} \sequent \exists x \lnot \paren{\varphi \to \psi}\)\quad （\Cref{Que:sequent}の4つ目）
+	\item \(\subst{\paren{\lnot \paren{\varphi \to \psi}}}{a/x} \sequent \subst{\paren{\varphi \land \lnot \psi}}{a/x}\)\quad （\Cref{Que:sequent}の12個目，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\paren{\lnot \paren{\varphi \to \psi}}}{a/x} \sequent \exists x \paren{\varphi \land \lnot \psi}\)\quad （2から(\(\exists\)I)による）
+	\item \(\lnot \forall x \paren{\varphi \to \psi} \sequent \exists x \paren{\varphi \land \lnot \psi}\)\quad （1, 3から(\(\exists\)E)による）
+\end{enumerate}
+
+\(\exists x \paren{\varphi \land \lnot \psi} \sequent \lnot \forall x \paren{\varphi \to \psi}\)の導出：
+\begin{enumerate}
+	\item \(\exists x \paren{\varphi \land \lnot \psi} \sequent \exists x \lnot \paren{\varphi \land \lnot \psi}\)\quad (ID)
+	\item \(\subst{\paren{\varphi \land \lnot \psi}}{a/x} \sequent \subst{\paren{\lnot \paren{\varphi \to \psi}}}{a/x}\)\quad （\Cref{Que:sequent}の12個目，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\paren{\varphi \land \lnot \psi}}{a/x} \sequent \exists x \lnot \paren{\varphi \to \psi}\)\quad （2から(\(\exists\)I)による）
+	\item \(\exists x \paren{\varphi \land \lnot \psi} \sequent \exists x \lnot \paren{\varphi \to \psi}\)\quad （1, 3から(\(\exists\)E)による）
+	\item \(\exists x \lnot \paren{\varphi \to \psi} \sequent \lnot \forall x \paren{\varphi \to \psi}\)\quad （\Cref{Que:sequent}の4つ目）
+	\item \(\sequent \exists x \lnot \paren{\varphi \to \psi} \to \lnot \forall x \paren{\varphi \to \psi}\)\quad （5から(\(\to\)I)による）
+	\item \(\exists x \paren{\varphi \land \lnot \psi} \sequent \lnot \forall x \paren{\varphi \to \psi}\)\quad （4, 6から(\(\to\)E)による）
+\end{enumerate}
+
+\(\varphi \to \psi \sequent \lnot \psi \to \lnot \varphi\)の導出：
+\begin{enumerate}
+	\item \(\varphi \to \psi \sequent \varphi \to \psi\)\quad (ID)
+	\item \(\lnot \psi \sequent \lnot \psi\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\varphi, \varphi \to \psi \sequent \psi\)\quad (1, 3から(\(\to\)E)による)
+	\item \(\varphi, \lnot \psi, \varphi \to \psi \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \psi, \varphi \to \psi \sequent \lnot \varphi\)\quad （5から(\(\lnot\)I)による）
+	\item \(\varphi \to \psi \sequent \lnot \psi \to \lnot \varphi\)\quad （6から(\(\to\)I)による）
+\end{enumerate}
+
+\(\lnot \psi \to \lnot \varphi \sequent \varphi \to \psi\)の導出：
+\begin{enumerate}
+	\item \(\lnot \psi \to \lnot \varphi \sequent \lnot \psi \to \lnot \varphi\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\lnot \psi \sequent \lnot \psi\)\quad (ID)
+	\item \(\lnot \psi, \lnot \psi \to \lnot \varphi \sequent \lnot \varphi\)\quad （1, 3から(\(\to\)E)による）
+	\item \(\lnot \psi, \varphi \lnot \psi \to \lnot \varphi \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\varphi, \lnot \psi \to \lnot\varphi \sequent \lnot \lnot \psi\)\quad （5から(\(\lnot\)I)による）
+	\item \(\varphi, \lnot \psi \to \lnot \varphi \sequent \psi\)\quad （6から(DNF)による）
+	\item \(\lnot \psi \to \lnot \varphi \sequent \varphi \to \psi\)\quad （7から(\(\to\)I)による）
+\end{enumerate}
+
+\(\varphi \to \paren{\psi \to \chi} \sequent \varphi \land \psi \to \chi\)の導出：
+\begin{enumerate}
+	\item \(\varphi \to \paren{\psi \to \chi} \sequent \varphi \to \paren{\psi \to \chi}\)\quad (ID)
+	\item \(\varphi \land \psi\)\quad (ID)
+	\item \(\varphi \land \psi \sequent \varphi\)\quad （2から(\(\land\)E)による）
+	\item \(\varphi \land \psi \sequent \psi\)\quad （2から(\(\land\)E)による）
+	\item \(\varphi \land \psi, \varphi \to \paren{\psi \to \chi} \sequent \psi \to \chi\)\quad （1, 3から(\(\to\)E)による）
+	\item \(\varphi \land \psi, \varphi \to \paren{\psi \to \chi} \sequent \chi\)\quad （4, 5から(\(\to\)E), (c)による）
+	\item \(\varphi \to \paren{\psi \to \chi} \sequent \varphi \land \psi\)\quad （6から(\(\to\)I)による）
+\end{enumerate}
+
+\(\varphi \land \psi \to \chi \sequent \varphi \to \paren{\phi \to \chi}\)の導出：
+\begin{enumerate}
+	\item \(\varphi \land \psi \to \chi \sequent \varphi \land \psi \to \chi\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\psi \sequent \psi\)\quad (ID)
+	\item \(\psi, \varphi \sequent \varphi \land \psi\)\quad （2, 3から(\(\land\)I), (e)による）
+	\item \(\psi, \varphi, \varphi \land \psi \to \chi \sequent \chi\)\quad （1, 4から(\(\to\)E)による）
+	\item \(\varphi, \varphi \land \psi \to \chi \sequent \psi \to \chi\)\quad （5から(\(\to\)I)による）
+	\item \(\varphi \land \psi \to \chi \sequent \varphi \to \paren{\psi \to \chi}\)\quad （6から(\(\to\)I)による）
+\end{enumerate}
+
+\(\forall x \paren{\varphi \to \psi} \sequent \exists x \varphi \to \psi\)の導出：
+\begin{enumerate}
+	\item \(\forall x \paren{\varphi \to \psi} \sequent \forall x \paren{\varphi \to \psi}\)\quad (ID)
+	\item \(\exists x \varphi \sequent \exists x \varphi\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\forall x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x} \to \psi\)\quad （1から(\(\forall\)E)による）
+	\item \(\subst{\varphi}{a/x}, \forall x \paren{\varphi \to \psi} \sequent \psi\)\quad （3, 4から(\(\to\)E)による）
+	\item \(\exists x \varphi, \forall x \paren{\varphi \to \psi} \sequent \psi\)\quad （2, 5から(\(\exists\)E)による）
+	\item \(\forall x \paren{\varphi \to \psi} \sequent \exists x \varphi \to \psi\)\quad （6から(\(\to\)I)による）
+\end{enumerate}
+ここで，4の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \to \psi\)が同じ論理式であることを用いた．
+
+\(\exists x \varphi \to \psi \sequent \forall x \paren{\varphi \to \psi}\)の導出：
+\begin{enumerate}
+	\item \(\exists x \varphi \to \psi \sequent \exists x \varphi \to \psi\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\varphi}{a/x} \sequent \exists x \varphi\)\quad （2から(\(\exists\)I)による）
+	\item \(\subst{\varphi}{a/x}, \exists x \varphi \to \psi \sequent \psi\)\quad （1, 3から(\(\to\)E)による）
+	\item \(\exists x \varphi \to \psi \sequent \subst{\varphi}{a/x} \to \psi\)\quad （4から(\(\to\)I)による）
+	\item \(\exists x \varphi \to \psi \sequent \forall x \paren{\varphi \to \psi}\)\quad （5から(\(\forall\)I)による）
+\end{enumerate}
+ここで，6の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \to \psi\)が同じ論理式であることを用いた．
+
+\(\exists x \paren{\varphi \to \psi} \sequent \forall x \varphi \to \psi\)の導出：
+\begin{enumerate}
+	\item \(\exists x \paren{\varphi \to \psi} \sequent \exists x \paren{\varphi \to \psi}\)\quad (ID)
+	\item \(\forall x \varphi \sequent \forall x \varphi\)\quad (ID)
+	\item \(\subst{\paren{\varphi \to \psi}}{a/x} \sequent \subst{\paren{\varphi \to \psi}}{a/x}\)\quad (ID)
+	\item \(\forall x \varphi \sequent \subst{\varphi}{a/x}\)\quad （2から(\(\forall\)E)による，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\paren{\varphi \to \psi}}{a/x}, \forall x \varphi \sequent \psi\)\quad （3, 4から(\(\to\)E), (e)による）
+	\item \(\forall x \varphi, \exists x \paren{\varphi \to \psi} \sequent \psi\)\quad （1, 5から(\(\exists\)E), (e)による）
+	\item \(\exists x \paren{\varphi \to \psi} \sequent \forall x \to \psi\)\quad （6から(\(\to\)I)による）
+\end{enumerate}
+ここで，5の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \to \psi\)が同じ論理式であることを用いた．
+
+\(\forall x \varphi \to \psi \sequent \exists x \paren{\varphi \to \psi}\)の導出：
+\begin{enumerate}
+	\item \(\forall x \varphi \to \psi \sequent \forall x \varphi \to \psi\)\quad (ID)
+	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \lnot \exists x \paren{\varphi \to \psi}\)\quad (ID)
+	\item \(\lnot \subst{\varphi}{a/x} \sequent \lnot \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad (ID)
+	\item \(\lnot \psi, \subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \bot\)\quad （3, 4から(w), (e), (\(\lnot\)E)による）
+	\item \(\subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \lnot \lnot \psi\)\quad （5から(\(\lnot\)I)による）
+	\item \(\subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \psi\)\quad （6から(DNF)による）
+	\item \(\lnot \subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x} \to \psi\)\quad （7から(\(\to\)I)による）
+	\item \(\lnot \subst{\varphi}{a/x} \sequent \exists x \paren{\varphi \to \psi}\)\quad （8から(\(\exists\)I)による）
+	\item \(\lnot \subst{\varphi}{a/x}, \lnot \exists x \paren{\varphi \to \psi} \sequent \bot\)\quad （2, 9から(w), (e), (\(\lnot\)E)による）
+	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （10から(\(\lnot\)I)による）
+	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x}\)\quad （11から(DNF)による）
+	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \forall x \varphi\)\quad （12から(\(\forall\)I)による）
+	\item \(\subst{\varphi}{a/x}, \forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \psi\)\quad （1, 13から(\(\to\)E), (w)による）
+	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x} \to \psi\)\quad （14から(\(\to\)I)による）
+	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \exists x \paren{\varphi \to \psi}\)\quad （15から(\(\exists\)I)による）
+	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \bot\)\quad （2, 16から(w), (\(\lnot\)E)による）
+	\item \(\forall x \varphi \to \psi \sequent \lnot \lnot \exists x \paren{\varphi \to \psi}\)\quad （17から(e), (\(\lnot\)I)による）
+	\item \(\forall x \varphi \to \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （18から(DNF)による）
+\end{enumerate}
+ここで，9と15の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \to \psi\)が同じ論理式であることを用いた．
+
+\(\forall x \paren{\varphi \to \psi} \sequent \varphi \to \forall x \psi\)の導出：
+\begin{enumerate}
+	\item \(\forall x \paren{\varphi \to \psi} \sequent \forall x \paren{\varphi \to \psi}\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\forall x \paren{\varphi \to \psi} \sequent \varphi \to \subst{\psi}{a/x}\)\quad （1から(\(\forall\)E)による，ただし\(a\)は新しい変数記号）
+	\item \(\varphi, \forall x \paren{\varphi \to \psi} \sequent \subst{\psi}{a/x}\)\quad （2, 3から(\(\to\)E)による）
+	\item \(\varphi, \forall x \paren{\varphi \to \psi} \sequent \forall x \psi\)\quad （4から(\(\forall\)I)による）
+	\item \(\forall x \paren{\varphi \to \psi} \sequent \varphi \to \forall x \psi\)\quad （5から(\(\to\)I)による）
+\end{enumerate}
+ここで，3の導出にあたっては，\(\varphi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\varphi \to \subst{\psi}{a/x}\)が同じ論理式であることを用いた．
+
+\(\varphi \to \forall x \psi \sequent \forall x \paren{\varphi \to \psi}\)の導出：
+\begin{enumerate}
+	\item \(\varphi \to \forall x \psi \sequent \varphi \to \forall x \psi\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\varphi, \varphi \to \forall x \psi \sequent \forall x \psi\)\quad （1, 2から(\(\to\)E)による）
+	\item \(\varphi, \varphi \to \forall x \psi \sequent \subst{\psi}{a/x}\)\quad （3から(\(\forall\)E)による，ただし\(a\)は新しい変数記号）
+	\item \(\varphi \to \forall x \psi \sequent \paren{\varphi \to \psi}{a/x}\)\quad （4から(\(\to\)I)による）
+	\item \(\varphi \to \forall x \psi \sequent \forall x \paren{\varphi \to \psi}\)\quad （5から(\(\forall\)I)による）
+\end{enumerate}
+ここで，4の導出にあたっては，\(\varphi\)に\(x\)が自由出現しないことにより
+\(\varphi \to \subst{\psi}{a/x}\)と\(\subst{\varphi \to \psi}{a/x}\)が同じ論理式であることを用いた．
+
+\(\exists x \paren{\varphi \to \psi} \sequent \varphi \to \exists x \psi\)の導出：
+\begin{enumerate}
+	\item \(\exists x \paren{\varphi \to \psi} \sequent \exists x \paren{\varphi \to \psi}\)\quad (ID)
+	\item \(\varphi \to \varphi\)\quad (ID)
+	\item \(\varphi \to \subst{\psi}{a/x} \sequent \varphi \to \subst{\psi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\varphi, \varphi \to \subst{\psi}{a/x} \sequent \subst{\psi}{a/x}\)\quad （2, 3から(\(\to\)E)による）
+	\item \(\varphi, \varphi \to \subst{\psi}{a/x} \sequent \exists x \psi\)\quad （4から(\(\exists\)I)による）
+	\item \(\varphi \to \subst{\psi}{a/x} \sequent \varphi \to \exists x \psi\)\quad （5から(\(\to\)I)による）
+	\item \(\exists x \paren{\varphi \to \psi} \sequent \varphi \to \exists x \psi\)\quad （1, 6から(\(\exists\)E)による）
+\end{enumerate}
+ここで，7の導出にあたっては，\(\varphi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\varphi \to \subst{\psi}{a/x}\)が同じ論理式であることを用いた．
+
+\(\varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)の導出：
+\begin{enumerate}
+	\item \(\varphi \to \exists x \psi \sequent \varphi \to \exists x \psi\)\quad (ID)
+	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \lnot \exists x \paren{\varphi \to \psi}\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\varphi, \varphi \to \exists x \psi \sequent \exists x \psi\)\quad （1, 3から(\(\to\)E)による）
+	\item \(\subst{\psi}{a/x} \sequent \subst{\psi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\varphi, \subst{\psi}{a/x} \sequent \subst{\psi}{a/x}\)\quad （5から(w)による）
+	\item \(\subst{\psi}{a/x} \sequent \varphi \to \subst{\psi}{a/x}\)\quad （6から(\(\to\)I)による）
+	\item \(\subst{\psi}{a/x} \sequent \exists x \paren{\varphi \to \psi}\)\quad （7から(\(\exists\)I)による）
+	\item \(\varphi, \varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （4, 8から(\(\exists\)E)による）
+	\item \(\lnot \subst{\psi}{b/x}, \varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \bot\)\quad （2, 9から(w), (e), (\(\lnot\)E)による，ただし\(b\)は新しい変数記号）
+	\item \(\varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \lnot \lnot \subst{\psi}{b/x}\)\quad （10から(\(\lnot\)I)による）
+	\item \(\varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \subst{\psi}{b/x}\)\quad （11から(DNF)による）
+	\item \(\lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \varphi \to \subst{\psi}{b/x}\)\quad （12から(\(\to\)I)による）
+	\item \(\lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （13から(\(\exists\)I)による）
+	\item \(\lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \bot\)\quad （2, 14から(w), (e), (\(\lnot\)I)による）
+	\item \(\varphi \to \exists x \psi \sequent \lnot \lnot \exists x \paren{\varphi \to \psi}\)\quad （15から(\(\lnot\)I)による）
+	\item \(\varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （16から(DNF)による）
+\end{enumerate}
+ここで，8, 14の導出にあたっては，\(\varphi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \to \psi}}{a/x}, \subst{\paren{\varphi \to \psi}}{b/x}\)がそれぞれ
+\(\varphi \to \subst{\psi}{a/x}, \varphi \to \subst{\psi}{b/x}\)と同じ論理式であることを用いた．
+
+\(\forall x \paren{\varphi \land \psi} \sequent \forall x \varphi \land \forall x \psi\)の導出：
+\begin{enumerate}
+	\item \(\forall x \paren{\varphi \land \psi} \sequent \forall x \paren{\varphi \land \psi}\)\quad (ID)
+	\item \(\forall x \paren{\varphi \land \psi} \sequent \subst{\varphi}{a/x} \land \subst{\psi}{a/x}\)\quad （1から(\(\forall\)E)による，ただし\(a\)は新しい変数記号）
+	\item \(\forall x \paren{\varphi \land \psi} \sequent \subst{\varphi}{a/x}\)\quad （2から(\(\land\)E)による）
+	\item \(\forall x \paren{\varphi \land \psi} \sequent \forall x \varphi\)\quad （3から(\(\forall\)I)による）
+	\item \(\forall x \paren{\varphi \land \psi} \sequent \forall x \psi\)\quad （上と同様にして導けるので省略）
+	\item \(\forall x \paren{\varphi \land \psi} \sequent \forall x \varphi \land \forall x \psi\)\quad （4, 5から(\(\land\)I), (c)による）
+\end{enumerate}
+
+\(\forall x \varphi \land \forall x \psi \sequent \forall x \paren{\varphi \land \psi}\)の導出：
+\begin{enumerate}
+	\item \(\forall x \varphi \land \forall x \psi \sequent \forall x \varphi \land \forall x \psi\)\quad (ID)
+	\item \(\forall x \varphi \land \forall x \psi \sequent \forall x \varphi\)\quad （1から(\(\land\)E)による）
+	\item \(\forall x \varphi \land \forall x \psi \sequent \subst{\varphi}{a/x}\)\quad （2から(\(\forall\)E)による，ただし\(a\)は新しい変数記号）
+	\item \(\forall x \varphi \land \forall x \psi \sequent \subst{\psi}{a/x}\)\quad （上と同様にして導けるので省略）
+	\item \(\forall x \varphi \land \forall x \psi \sequent \subst{\varphi}{a/x} \land \subst{\psi}{a/x}\)\quad （3, 4から(\(\land\)I), (c)による）
+	\item \(\forall x \varphi \land \forall x \psi \sequent \forall x \paren{\varphi \land \psi}\)\quad （5から(\(\forall\)I)による）
+\end{enumerate}
+
+\(\exists x \paren{\varphi \lor \psi} \sequent \exists x \varphi \lor \exists x \psi\)の導出：
+\begin{enumerate}
+	\item \(\exists x \paren{\varphi \lor \psi} \sequent \exists x \paren{\varphi \lor \psi}\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \lor \subst{\psi}{a/x} \sequent \subst{\varphi}{a/x} \lor \subst{\psi}{a/x}\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \exists x \varphi\)\quad （3から(\(\exists\)I)による）
+	\item \(\subst{\varphi}{a/x} \sequent \exists x \varphi \lor \exists x \psi\)\quad （4から(\(\lor\)I)による）
+	\item \(\subst{\psi}{a/x} \sequent \exists x \varphi \lor \exists x \psi\)\quad （上と同様にして導けるので省略）
+	\item \(\subst{\varphi}{a/x} \lor \subst{\psi}{a/x} \sequent \exists x \varphi \lor \exists x \psi\)\quad （2, 5, 6から(\(\lor\)E)による）
+	\item \(\exists x \paren{\varphi \lor \psi} \sequent \exists x \varphi \lor \exists x \psi\)\quad （1, 7から(\(\exists\)E)による）
+\end{enumerate}
+
+\(\exists x \varphi \lor \exists x \psi \sequent \exists x \paren{\varphi \lor \psi}\)の導出：
+\begin{enumerate}
+	\item \(\exists x \varphi \lor \exists x \psi \sequent \exists x \varphi \lor \exists x \psi\)\quad (ID)
+	\item \(\exists x \varphi \sequent \exists x \varphi\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x} \lor \subst{\psi}{a/x}\)\quad （3から(\(\lor\)I)による）
+	\item \(\exists x \varphi \sequent \exists x \paren{\varphi \lor \psi}\)\quad （2, 4から(\(\exists\)E)による）
+	\item \(\exists x \psi \sequent \exists x \paren{\varphi \lor \psi}\)\quad （上と同様にして導けるので省略）
+	\item \(\exists x \varphi \lor \exists x \psi \sequent \exists x \paren{\varphi \lor \psi}\)\quad （1, 5, 6から(\(\lor\)E)による）
+\end{enumerate}
+
+\(\forall x \paren{\varphi \lor \psi} \sequent \forall x \varphi \lor \psi\)の導出：
+\begin{enumerate}
+	\item \(\forall x \paren{\varphi \lor \psi} \sequent \forall x \paren{\varphi \lor \psi}\)\quad (ID)
+	\item \(\lnot \paren{\forall x \varphi \lor \psi} \sequent \lnot \paren{\forall x \varphi \lor \psi}\)\quad (ID)
+	\item \(\forall x \paren{\varphi \lor \psi} \sequent \subst{\varphi}{a/x} \lor \psi\)\quad （1から(\(\forall\)E)による，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad (ID)
+	\item \(\psi \sequent \psi\)\quad (ID)
+	\item \(\lnot \psi \sequent \lnot \psi\)\quad (ID)
+	\item \(\lnot \subst{\varphi}{a/x}, \psi, \lnot \psi \sequent \bot\)\quad （5, 6から(w), (e), (\(\lnot\)E)による）
+	\item \(\psi, \lnot \psi \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （7から(\(\lnot\)I)による）
+	\item \(\psi, \lnot \psi \sequent \subst{\varphi}{a/x}\)\quad （8から(DNF)による）
+	\item \(\forall x \paren{\varphi \lor \psi}, \lnot \psi \sequent \subst{\varphi}{a/x}\)\quad （3, 4, 9から(\(\lor\)E)による）
+	\item \(\forall x \paren{\varphi \lor \psi}, \lnot \psi \sequent \forall x \varphi\)\quad （10から(\(\forall\)I)による）
+	\item \(\forall x \paren{\varphi \lor \psi}, \lnot \psi \sequent \forall x \varphi \lor \psi\)\quad （11から(\(\lor\)I)による）
+	\item \(\lnot \psi, \lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \bot\)\quad （2, 12から(\(\lnot\)E)による）
+	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \lnot \lnot \psi\)\quad （13から(\(\lnot\)I)による）
+	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \psi\)\quad （14から(DNF)による）
+	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \forall x \varphi \lor \psi\)\quad （15から(\(\lor\)I)による）
+	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \bot\)\quad （2, 16から(w), (e), (\(\lnot\)E)による）
+	\item \(\forall x \paren{\varphi \lor \psi} \sequent \lnot \lnot \paren{\forall x \varphi \lor \psi}\)\quad （17から(\(\lnot\)I)による）
+	\item \(\forall x \paren{\varphi \lor \psi} \sequent \forall x \varphi \lor \psi\)\quad （18から(DNF)による）
+\end{enumerate}
+ここで，3の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \lor \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \lor \psi\)が同じ論理式であることを用いた．
+
+\(\forall x \varphi \lor \psi \sequent \forall x \paren{\varphi \lor \psi}\)の導出：
+\begin{enumerate}
+	\item \(\forall x \varphi \lor \psi \sequent \forall x \varphi \lor \psi\)\quad (ID)
+	\item \(\forall x \varphi \sequent \forall x \varphi\)\quad (ID)
+	\item \(\forall x \varphi \sequent \subst{\varphi}{a/x}\)\quad （2から(\(\forall\)E)による，ただし\(a\)は新しい変数記号）
+	\item \(\forall x \varphi \sequent \subst{\varphi}{a/x} \lor \psi\)\quad （3から(\(\lor\)I)による）
+	\item \(\forall x \varphi \sequent \forall x \paren{\varphi \lor \psi}\)\quad （4から(\(\forall\)I)による）
+	\item \(\psi \sequent \forall x \paren{\varphi \lor \psi}\)\quad （上と同様にして導けるので省略）
+	\item \(\forall x \varphi \lor \psi \sequent \forall x \paren{\varphi \lor \psi}\)\quad （1, 5, 6から(\(\lor\)E)による）
+\end{enumerate}
+ここで，5の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \lor \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \lor \psi\)が同じ論理式であることを用いた．
+
+\(\exists x \paren{\varphi \land \psi} \sequent \exists x \varphi \land \psi\)の導出：
+\begin{enumerate}
+	\item \(\exists x \paren{\varphi \land \psi} \sequent \exists x \paren{\varphi \land \psi}\)\quad (ID)
+	\item \(\subst{\varphi}{a/x} \land \psi \sequent \subst{\varphi}{a/x} \land \psi\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\varphi}{a/x} \land \psi \sequent \subst{\varphi}{a/x}\)\quad （2から(\(\land\)E)による）
+	\item \(\subst{\varphi}{a/x} \land \psi \sequent \exists x \varphi\)\quad （3から(\(\exists\)I)による）
+	\item \(\subst{\varphi}{a/x} \land \psi \sequent \psi\)\quad （2から(\(\land\)E)による）
+	\item \(\subst{\varphi}{a/x} \land \psi \sequent \exists x \varphi \land \psi\)\quad （4, 5から(\(\land\)I), (c)による）
+	\item \(\exists x \paren{\varphi \land \psi} \sequent \exists x \varphi \land \psi\)\quad （6から(\(\exists\)E)による）
+\end{enumerate}
+ここで，7の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \land \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \land \psi\)が同じ論理式であることを用いた．
+
+\(\exists x \varphi \land \psi \sequent \exists x \paren{\varphi \land \psi}\)の導出：
+\begin{enumerate}
+	\item \(\exists x \varphi \land \psi \sequent \exists x \varphi \land \psi\)\quad (ID)
+	\item \(\exists x \varphi \land \psi \sequent \psi\)\quad （2から(\(\land\)E)による）
+	\item \(\exists x \varphi \land \psi \sequent \exists x \varphi\)\quad （1から(\(\land\)E)による）
+	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad （(ID)，ただし\(a\)は新しい変数記号）
+	\item \(\subst{\varphi}{a/x}, \exists x \varphi \land \psi \sequent \subst{\varphi}{a/x} \land \psi\)\quad （2, 4から(\(\land\)I)による）
+	\item \(\subst{\varphi}{a/x}, \exists x \varphi \land \psi \sequent \exists x \paren{\varphi \land \psi}\)\quad （5から(\(\exists\)I)による）
+	\item \(\exists x \varphi \land \psi \sequent \exists x \paren{\varphi \land \psi}\)\quad （3, 6から(\(\exists\)E), (c)による）
+\end{enumerate}
+ここで，6の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
+\(\subst{\paren{\varphi \land \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \land \psi\)が同じ論理式であることを用いた．
+
+
+\subsection*{\Cref{Que:peirce}}
+
+\begin{enumerate}
+	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \paren{\varphi \to \psi} \to \varphi\)\quad (ID)
+	\item \(\lnot \varphi \sequent \lnot \varphi\)\quad (ID)
+	\item \(\varphi \sequent \varphi\)\quad (ID)
+	\item \(\lnot \psi, \varphi, \lnot \varphi \sequent \bot\)\quad （2, 3から(w), (e), (\(\lnot\)E)による）
+	\item \(\varphi, \lnot \varphi \sequent \lnot \lnot \psi\)\quad （4から(\(\lnot\)I)による）
+	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNF)による）
+	\item \(\lnot \varphi \sequent \varphi \to \psi\)\quad （6から(\(\to\)I)による）
+	\item \(\lnot \varphi, \paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （1, 7から(\(\to\)E)による）
+	\item \(\lnot \varphi, \paren{\varphi \to \psi} \to \varphi \sequent \bot\)\quad （2, 8から(w), (e), (\(\lnot\)E)による）
+	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \lnot \lnot \varphi\)\quad （9から(\(\lnot\)I)による）
+	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （10から(DNF)による）
+\end{enumerate}
+
+\subsection*{\Cref{Que:equalsignrelation}}
+
+まずは\cref{Thm:equalsign}を示す．
+\(s_i, t_i\)に登場しない，つまり\(\apply{\FV}{s_i}, \apply{\FV}{t_i}, \apply{\BV}{s_i}, \apply{\BV}{t_i}\)のいずれの元でもない変数記号\(x\)をとり，
+論理式
+\begin{equation*}
+	\apply{f}{s_1, s_2, \dots, s_i, \dots, s_n} = \apply{f}{s_1, s_2, \dots, x, \dots, s_n}
+\end{equation*}
+を\(\varphi\)とすると，\(\varphi\)中の\(x\)に\(s_i, t_i\)は代入可能である．このとき，論理式
+\begin{equation*}
+	\apply{f}{s_1, s_2, \dots, s_i, \dots, s_n} = \apply{f}{s_1, s_2, \dots, s_i, \dots, s_n}
+\end{equation*}
+は\(\subst{\varphi}{s_i /x}\)
+と書きかえられ，論理式\(\subst{\varphi}{t_i / x}\)は
+\begin{equation*}
+	\apply{f}{s_1, s_2, \dots, s_i, \dots, s_n} = \apply{f}{s_1, s_2, \dots, t_i, \dots, s_n}
+\end{equation*}
+を意味する．
+よって，シークエント
+\begin{equation*}
+	s_i = t_i \sequent \subst{\varphi}{t_i / x}
+\end{equation*}
+を導出すれば定理の証明は完了する．
+シークエント\(\sequent \subst{\varphi}{s_i / x}\)は(REFL)によって導出可能であることに注意しよう．
+目的のシークエントの導出は下記で与えられる：
+\begin{enumerate}
+	\item \(s_i = t_i \sequent s_i = t_i\)\quad (ID)
+	\item \(\sequent \subst{\varphi}{s_i / x}\)\quad (REFL)
+	\item \(s_i = t_i \sequent \subst{\varphi}{t_i / x}\)\quad （1, 2から(SUBST)による）
+\end{enumerate}
+
+次に\cref{Thm:equalsignrelation}を示そう．まずは\cref{eq:equalsignsymmetry}を導出する．
+ここで\(s, t\)のどちらにも登場しない変数記号\(x\)をとり，論理式\(x = s\)
+を\(\varphi\)とすると，\cref{eq:equalsignsymmetry}は
+\begin{equation*}
+	s = t \sequent \subst{\varphi}{t / x}
+\end{equation*}
+と書きかえられる．
+このシークエントは以下のように導出される：
+\begin{enumerate}
+	\item \(s = t \sequent s = t\)\quad (ID)
+	\item \(\sequent \subst{\varphi}{s/x}\)\quad (REFL)
+	\item \(s = t \sequent \subst{\varphi}{t/x}\)\quad （1, 2から(SUBST)による）
+\end{enumerate}
+
+最後に\cref{eq:equalsigntransitivity}を導出しよう．
+ここでは，\(s, t, u\)のいずれにも登場しない変数記号\(x\)をとり，論理式\(x = u\)を\(\varphi\)で表す．
+すると，\cref{eq:equalsigntransitivity}は
+\begin{equation*}
+	\paren{s = t} \land \paren{t = u} \sequent \subst{\varphi}{s/x}
+\end{equation*}
+と書きかえられる．
+このシークエントは以下のように導出される：
+\begin{enumerate}
+	\item \(\paren{s = t} \land \paren{t = u} \sequent \paren{s = t} \land \paren{t = u}\)\quad (ID)
+	\item \(\paren{s = t} \land \paren{t = u} \sequent s = t\)\quad （1から(\(\land\)E)による）
+	\item \(\sequent s = t \to t = s\)\quad （\Cref{eq:equalsignsymmetry}と(\(\to\)I)による）
+	\item \(\paren{s = t} \land \paren{t = u} \sequent t = s\)\quad （2, 3から(\(\to\)E)による）
+	\item \(\paren{s = t} \land \paren{t = u} \sequent \subst{\varphi}{t/x}\)\quad （1から(\(\land\)E)による）
+	\item \(\paren{s = t} \land \paren{t = u} \sequent \subst{\varphi}{s/x}\)\quad （4, 5から(SUBST)による）
+\end{enumerate}

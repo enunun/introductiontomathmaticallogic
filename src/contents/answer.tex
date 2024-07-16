@@ -629,3 +629,65 @@
 	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \lnot \lnot \varphi\)\quad （9から(\(\lnot\)I)による）
 	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （10から(DNF)による）
 \end{enumerate}
+
+\subsection*{\Cref{Que:equalsignrelation}}
+
+まずは\cref{Thm:equalsign}を示す．
+\(s_i, t_i\)に登場しない，つまり\(\apply{\FV}{s_i}, \apply{\FV}{t_i}, \apply{\BV}{s_i}, \apply{\BV}{t_i}\)のいずれの元でもない変数記号\(x\)をとり，
+論理式
+\begin{equation*}
+	\apply{f}{s_1, s_2, \dots, s_i, \dots, s_n} = \apply{f}{s_1, s_2, \dots, x, \dots, s_n}
+\end{equation*}
+を\(\varphi\)とすると，\(\varphi\)中の\(x\)に\(s_i, t_i\)は代入可能である．このとき，論理式
+\begin{equation*}
+	\apply{f}{s_1, s_2, \dots, s_i, \dots, s_n} = \apply{f}{s_1, s_2, \dots, s_i, \dots, s_n}
+\end{equation*}
+は\(\subst{\varphi}{s_i /x}\)
+と書きかえられ，論理式\(\subst{\varphi}{t_i / x}\)は
+\begin{equation*}
+	\apply{f}{s_1, s_2, \dots, s_i, \dots, s_n} = \apply{f}{s_1, s_2, \dots, t_i, \dots, s_n}
+\end{equation*}
+を意味する．
+よって，シークエント
+\begin{equation*}
+	s_i = t_i \sequent \subst{\varphi}{t_i / x}
+\end{equation*}
+を導出すれば定理の証明は完了する．
+シークエント\(\sequent \subst{\varphi}{s_i / x}\)は(REFL)によって導出可能であることに注意しよう．
+目的のシークエントの導出は下記で与えられる：
+\begin{enumerate}
+	\item \(s_i = t_i \sequent s_i = t_i\)\quad (ID)
+	\item \(\sequent \subst{\varphi}{s_i / x}\)\quad (REFL)
+	\item \(s_i = t_i \sequent \subst{\varphi}{t_i / x}\)\quad （1, 2から(SUBST)による）
+\end{enumerate}
+
+次に\cref{Thm:equalsignrelation}を示そう．まずは\cref{eq:equalsignsymmetry}を導出する．
+ここで\(s, t\)のどちらにも登場しない変数記号\(x\)をとり，論理式\(x = s\)
+を\(\varphi\)とすると，\cref{eq:equalsignsymmetry}は
+\begin{equation*}
+	s = t \sequent \subst{\varphi}{t / x}
+\end{equation*}
+と書きかえられる．
+このシークエントは以下のように導出される：
+\begin{enumerate}
+	\item \(s = t \sequent s = t\)\quad (ID)
+	\item \(\sequent \subst{\varphi}{s/x}\)\quad (REFL)
+	\item \(s = t \sequent \subst{\varphi}{t/x}\)\quad （1, 2から(SUBST)による）
+\end{enumerate}
+
+最後に\cref{eq:equalsigntransitivity}を導出しよう．
+ここでは，\(s, t, u\)のいずれにも登場しない変数記号\(x\)をとり，論理式\(x = u\)を\(\varphi\)で表す．
+すると，\cref{eq:equalsigntransitivity}は
+\begin{equation*}
+	\paren{s = t} \land \paren{t = u} \sequent \subst{\varphi}{s/x}
+\end{equation*}
+と書きかえられる．
+このシークエントは以下のように導出される：
+\begin{enumerate}
+	\item \(\paren{s = t} \land \paren{t = u} \sequent \paren{s = t} \land \paren{t = u}\)\quad (ID)
+	\item \(\paren{s = t} \land \paren{t = u} \sequent s = t\)\quad （1から(\(\land\)E)による）
+	\item \(\sequent s = t \to t = s\)\quad （\Cref{eq:equalsignsymmetry}と(\(\to\)I)による）
+	\item \(\paren{s = t} \land \paren{t = u} \sequent t = s\)\quad （2, 3から(\(\to\)E)による）
+	\item \(\paren{s = t} \land \paren{t = u} \sequent \subst{\varphi}{t/x}\)\quad （1から(\(\land\)E)による）
+	\item \(\paren{s = t} \land \paren{t = u} \sequent \subst{\varphi}{s/x}\)\quad （4, 5から(SUBST)による）
+\end{enumerate}

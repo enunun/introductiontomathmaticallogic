@@ -257,10 +257,10 @@
 	\(\varphi\)を論理式，\(x\)を変数記号，\(s,t\)を\(\varphi\)中の\(x\)に代入可能な項とするとき，
 	以下は自然演繹式シークエント計算における推論規則である．
 	\begin{prooftree}
-		\AxiomC{\(s = t\)}
-		\AxiomC{\(\subst{\varphi}{t / x}\)}
+		\AxiomC{\(\Gamma \sequent s = t\)}
+		\AxiomC{\(\Delta \sequent \subst{\varphi}{t / x}\)}
 		\LeftLabel{(SUBST)}
-		\BinaryInfC{\(\subst{\varphi}{s / x}\)}
+		\BinaryInfC{\(\Gamma, \Delta \sequent \subst{\varphi}{s / x}\)}
 	\end{prooftree}
 \end{Def}
 

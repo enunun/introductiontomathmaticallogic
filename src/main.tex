@@ -54,7 +54,7 @@
 \usepackage{multicol}
 \usepackage{framed}
 
-\delimitershortfall=-.3pt
+%\delimitershortfall=-.3pt
 
 \graphicspath{{./fig/}}
 
@@ -111,6 +111,29 @@
 \NewDocumentCommand{\provable}{}{\vdash}
 \NewDocumentCommand{\interderivable}{}{\dashv\vdash}
 
+\NewDocumentCommand{\KleeneClosure}{m}{{#1}^{\ast}}
+
+\NewDocumentCommand{\vertbracket}{sm}{%
+	\IfBooleanTF{#1}{%
+		\mathopen{} \lvert #2\rvert \mathclose{}%
+	}%
+	{%
+		\mathopen{} \left\lvert #2 \right\rvert \mathclose{}%
+	}%
+}
+
+\NewDocumentCommand{\length}{sm}{%
+	\IfBooleanTF{#1}{%
+		\vertbracket*{#2}
+	}%
+	{%
+		\vertbracket{#2}%
+	}%
+}
+
+\NewDocumentCommand{\emptystring}{}{\varepsilon}
+
+\NewDocumentCommand{\restriction}{}{\upharpoonright}
 %
 %%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
 %

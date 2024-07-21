@@ -293,3 +293,206 @@
 メタ側での記号は通常通り「%
 \index[sidx]{\(x\)：メタ側の記号}%
 \(x\)」のようにイタリック体で表す．
+
+\section{整礎な半順序と整礎帰納法}
+
+ここで少し話題を変えて，数学的準備として整礎な半順序と整礎帰納法について述べておく．
+以後，\(x, y\)からなる順序対\(\Set{\Set{x}, \Set{x, y}}\)を
+\(\pair{x, y}\)と表すことにする．
+
+\begin{Def} \label{Def:preorderedset}
+	\(X\)を集合，\(\mathord{\prec} \subset X \times X\)を\(X\)上の二項関係とする．
+	\(\pair{x, y} \in \mathord{\prec}\)であることを\(x \prec y\)と表記する．
+	このとき，\(\mathord{\prec}\)が\(X\)上の%
+	\index[widx]{はんじゅんじょ@半順序}%
+	\term{半順序}であるとは，
+	以下の条件がすべて満たされることをいう：
+	\begin{enumerate}
+		\item すべての\(x \in X\)に対して\(x \not \prec x\)である．ただし，\(x \not \prec x\)とは\(x \prec x\)が成り立たないことをいう．
+		\item すべての\(x, y, z \in X\)に対して，\(x \prec y\)かつ\(y \prec z\)ならば\(x \prec z\)である．
+	\end{enumerate}
+\end{Def}
+
+\begin{Def} \label{Def:well-foundedset}
+	\(X\)を集合，\(\mathord{\prec}\)を\(X\)上の半順序とする．
+	このとき，\(A \subset X\)について，\(A\)の元\(a\)が\(A\)の%
+	\index[widx]{きょくしょうげん@極小元}%
+	\term{極小元}であるとは，
+	\(x \prec a\)となる\(x \in A\)が存在しないことをいう．
+	また，\(\prec\)が\(X\)上で%
+	\index[widx]{せいそ@整礎}%
+	\term{整礎}であるとは，\(X\)の空でない任意の部分集合\(A\)が必ず極小元\(a \in A\)をもつことをいう．
+\end{Def}
+
+整礎な二項関係においては，以下に述べる整礎帰納法が重要である．
+
+\begin{Thm}[整礎帰納法] \label[Thm]{Thm:well-foundedinduction}
+	\(X\)を集合，\(\mathord{\prec}\)を\(X\)上の整礎な半順序であるとする．
+	このとき，\(A \subset X\)が
+	「\(x \in X\)を1つとるとき，\(y \prec x\)を満たすすべての\(y \in X\)に対して\(y \in A\)を満たすのであれば\(x \in A\)である」
+	という条件を満たすのであれば\(A = X\)である．
+\end{Thm}
+
+\begin{proof}
+	定理の主張が成り立たない，すなわち
+	「\(x \in X\)を1つとるとき，\(y \prec x\)を満たすすべての\(y \in X\)に対して\(y \in A\)を満たすのであれば\(x \in A\)である」
+	という条件を満たすにもかかわらず\(A \neq X\)であるとする．
+	このとき，差集合\(X \setminus A\)は空でないため，その極小元\(x \in X \setminus A\)がとれる．
+	\(x\)が\(X \setminus A\)の極小元であることから，\(y \prec x\)を満たす\(y\)はすべて\(A\)の元である．
+	よって\(x \in A\)でなければならないが，これは\(x \in X \setminus A\)に矛盾する．
+\end{proof}
+
+\Cref{Thm:well-foundedinduction}において，集合\(A\)を「\(x \in X\)が与えられた性質を満たすときに\(x \in A\)とする」
+のように決めておけば，\cref{Thm:well-foundedinduction}は\(X\)の元に関する何らかの性質の証明に活用することができる．
+
+帰納法とくれば次はもちろん帰納的定義である．
+
+\index[widx]{きのうてきていぎ@（整礎な半順序における）帰納的定義}
+\begin{Thm}[帰納的定義] \label[Thm]{Thm:inductivedifinition}
+	集合\(X, Y\)と\(X\)上の整礎な半順序\(\prec\)が与えられ，さらに
+	写像\(G \colon \bigcup _{x \in X} Y^{\Set{y | y \prec x}}\)が与えられたとする．
+	このとき，写像\(f \colon X \to Y\)で任意\(x \in X\)に対して
+	\begin{equation}
+		\apply{f}{x} = \apply{G}{f \restriction \Set{y | y \prec x}}
+		\label{eq:inductivedifinition}
+	\end{equation}
+	を満たすものがただ1つ存在する．
+\end{Thm}
+
+\section{形式言語} \label{sec:formallanguage}
+
+\Cref{sec:symbolicLogic}で述べたように，
+今後我々が議論の対象とするのは「意味」をもたない形式的な記号列である．
+まずはこの「形式的な記号列」の数学的定式化を述べておく．
+以後，「自然数」といえば0も含むので注意されたい．
+
+\begin{Def} \label{Def:formallanguage}
+	記号の集合\(\Sigma\)が与えられたとする．\(w\)が\(\Sigma\)上の%
+	\index[widx]{もじれつ@文字列|see{記号列}}%
+	\term{文字列}%
+	，あるいは%
+	\index[widx]{きごうれつ@記号列}%
+	\term{記号列}%
+	であるとは，自然数\(n\)が存在して，\(w\)が
+	集合\(\Set{0, 1, \dots, n-1}\)から\(\Sigma\)への写像であることをいう%
+	\footnote{%
+		集合\(\Set{0,1,\dots, n-1}\)は，集合論的には自然数\(n\)そのものである．
+	}%
+	．
+	ただし，\(w\)が\(\Sigma\)への空写像%
+	\footnote{%
+		任意の集合\(A\)に対して，始集合が空集合\(\emptyset\)で終集合が\(A\)であるような
+		写像\(f \colon \emptyset \to A\)はただひとつ存在する．
+		この写像\(f\)を\(A\)への空写像と呼ぶ．
+	}%
+	である場合も含むものとする（このとき，上でいう自然数\(n\)は0とする）．
+	このような自然数\(n\)は存在すれば一意である．
+
+	また，記号列\(w \colon \Set{0, 1, \dots, n-1} \to \Sigma\)について，\(n\)を\(w\)の%
+	\index[widx]{ながさ@（記号列の）長さ}%
+	\term{長さ}%
+	といい，%
+	\index[sidx]{\(\length{w}\)：（記号列の）長さ}%
+	\begin{equation}
+		\length{w}
+		\label{eq:lengthforstring}
+	\end{equation}
+	と表す．
+	\(\Sigma\)上の長さ\(n\)の記号列\(w\)が
+	\(\apply{w}{0} = s_0, \apply{w}{1} = s_1, \dots, \apply{w}{n-1} = s_{n-1}\)
+	と定義されている場合，\(w\)を\(s_0, s_1, \dots, s_{n-1}\)を書き並べて%
+	\index[sidx]{\(s_0 s_1 \dots s_{n-1}\)：記号列の表記}%
+	\begin{equation}
+		s_0 s_1 \dots s_{n-1}
+	\end{equation}
+	と表すことが多い．
+	\(n = 0\)の場合，この表記法では何も書けないが，便宜上%
+	\index[sidx]{\(\emptystring\)：長さ0の記号列}%
+	\begin{equation}
+		\emptystring
+		\label{eq:emptystring}
+	\end{equation}
+	と表記することとする．
+
+	さらに，\(\Sigma\)上の記号列の全体\(\bigcup_{n \in \Natural} \Sigma^{\Set{0,1,\dots, n-1}}\)を
+	\(\Sigma\)の%
+	\index[widx]{Kleeneへいほう@Kleene閉包}%
+	\term{Kleene閉包}%
+	といい，%
+	\index[sidx]{\(\KleeneClosure{\Sigma}\)：Kleene閉包}%
+	\begin{equation}
+		\KleeneClosure{\Sigma}
+		\label{eq:KleeneClosure}
+	\end{equation}
+	と表す．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:formalstring}
+	\(\Sigma\)を以下の3つからなる集合とする：
+	\begin{enumerate}
+		\item 数字：\(\obj{0}, \obj{1}, \obj{2}, \dots\)
+		\item 加法を表す演算子記号：「\(\mathord{\obj{+}}\)」
+		\item 左カッコと右カッコ：「\(\lparen\)」「\(\rparen\)」
+	\end{enumerate}
+	このとき，以下はすべて\(\Sigma\)上の記号列である：
+	\begin{align*}
+		\obj{0},                                                                 \\
+		\obj{\lparen 1 + 2 \rparen},                                             \\
+		\obj{\lparen \lparen \lparen 4 \obj+ 1 \rparen + 5 \rparen + 6 \rparen}, \\
+		\obj{\rparen 4 + + \lparen \rparen 4 5 \lparen +}
+	\end{align*}
+\end{Ex}
+
+\Cref{Ex:formalstring}からもわかるように，
+単に「記号列」といっただけでは数学的に何らかの意味をもつと期待されるような記号列以外の記号列も含む．
+そのため，数学における「論理」を対象に議論する際には単に使う記号を列挙するだけでは不十分で，
+どのような記号列を「認める」のかを宣言する必要がある．
+要するに，用意した記号に対して「文法」を定義して議論の対象となる文字列を確定させる必要がある．
+このときによく使われる手法が帰納的定義である．例を挙げよう．
+
+\begin{Ex} \label[Ex]{Ex:recursivedefinition}
+	\(\Sigma\)を\cref{Ex:formalstring}で述べた記号の集合とする．
+	このとき，「数式」を以下のように定義する：
+	\begin{enumerate}
+		\item \(\Sigma\)の元のうち，数字はすべて「数式」である．
+		\item \(t_1, t_2\)が数式であるならば，記号列
+		      \begin{equation*}
+			      \obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}
+		      \end{equation*}
+		      は「数式」である．
+		\item 以上の規則を有限回適用して得られるもののみが「数式」である．
+	\end{enumerate}
+	このとき，\cref{Ex:formalstring}で述べた記号列のうち1つ目から3つ目までは「数式」であるが，4つ目は「数式」ではない．
+\end{Ex}
+
+\Cref{Ex:recursivedefinition}で特徴的なのは，『「数式」とは〇〇であるものをいう』などのような直接的な定義ではなく
+『\(\Sigma\)に属する数字からどのようにして「数式」全体が得られるか』という構成方法を述べていることである．
+何が「数式」で何が「数式」でないかが明確に定まっているため，この定義は定義として正当なものである．
+\Cref{Ex:recursivedefinition}で行ったような「ベースとなる対象から定義したい対象がどのように構成されるかを述べる」
+形式でなされる定義を%
+\index[widx]{きのうてきていぎ@帰納的定義}%
+\term{帰納的定義}，
+あるいは%
+\index[widx]{さいきてきていぎ@再帰的定義|see{帰納的定義}}%
+\term{再帰的定義}という．
+最後に「以上の規則を有限回適用して得られるもののみが」と宣言することで，
+上記の手続きで得られないものはすべてその定義からは外れていることを宣言し，
+対象の範囲を確定させている．この宣言がないと，
+実際に定義したいものよりも広い範囲の対象が定義から外れることが明文化されない
+\footnote{%
+	例えば，偶数全体の集合\(A\)を「\(0 \in A\)であり，\(n \in A\)ならば\(n + 2 \in A\)かつ\(n - 2 \in A\)である」などとして
+	定義しようとしたとき，整数全体の集合\(\Zahlen\)もカギカッコ内の条件自体は満たしている．
+}%
+．
+とはいえ，帰納的定義を行う上でこの宣言が必要なくなることはありえないので，自明であるとして省略されることも多い．
+
+\begin{Que} \label{Que:recursivedefinition}
+	\Cref{Ex:recursivedefinition}で述べた「数式」の定義を集合論のことばで正当化してみよう．
+	次のような集合\(L \subset \KleeneClosure{\Sigma}\)の存在を示せば十分である：
+	\begin{enumerate}
+		\item \(t \in \Sigma\)が数字ならば\(t \in L\)である．
+		\item 任意の\(t_1, t_2 \in L\)に対して\(\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen} \in L\)である．
+		\item \(L\)は上記の性質を満たす\(\KleeneClosure{\Sigma}\)の部分集合として包含関係に関して最小のものである．
+	\end{enumerate}
+	1, 2, 3をすべて満たす集合\(L\)の存在を示せ．
+\end{Que}

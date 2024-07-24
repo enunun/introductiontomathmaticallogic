@@ -54,7 +54,7 @@
 \usepackage{multicol}
 \usepackage{framed}
 
-\delimitershortfall=-.3pt
+%\delimitershortfall=-.3pt
 
 \graphicspath{{./fig/}}
 
@@ -86,7 +86,7 @@
 
 \NewDocumentCommand{\obj}{m}{\symtt{#1}}
 
-\NewDocumentCommand{\Natural}{}{\symbb{N}}
+\NewDocumentCommand{\Natural}{}{\omega}
 
 \NewDocumentCommand{\Zahlen}{}{\symbb{Z}}
 
@@ -111,6 +111,31 @@
 \NewDocumentCommand{\provable}{}{\vdash}
 \NewDocumentCommand{\interderivable}{}{\dashv\vdash}
 
+\NewDocumentCommand{\KleeneClosure}{m}{{#1}^{\ast}}
+
+\NewDocumentCommand{\vertbracket}{sm}{%
+	\IfBooleanTF{#1}{%
+		\mathopen{} \lvert #2\rvert \mathclose{}%
+	}%
+	{%
+		\mathopen{} \left\lvert #2 \right\rvert \mathclose{}%
+	}%
+}
+
+\NewDocumentCommand{\length}{sm}{%
+	\IfBooleanTF{#1}{%
+		\vertbracket*{#2}
+	}%
+	{%
+		\vertbracket{#2}%
+	}%
+}
+
+\NewDocumentCommand{\emptystring}{}{\varepsilon}
+
+\NewDocumentCommand{\restriction}{}{\upharpoonright}
+
+\NewDocumentCommand{\objeq}{}{\equiv}
 %
 %%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
 %
@@ -126,6 +151,7 @@
 \newtheorem{Thm}[Def]{定理}
 \newtheorem{Ex}[Def]{例}
 \newtheorem{Que}{演習}[chapter]
+\newtheorem{Lemma}[Def]{補題}
 \newtheorem{Note}[Def]{注意}
 %
 %
@@ -178,6 +204,8 @@
 \Crefname{table}{表}{表}
 \Crefname{Que}{演習}{演習}
 \crefname{Que}{演習}{演習}
+\Crefname{Lemma}{補題}{補題}
+\crefname{Lemma}{補題}{補題}
 \crefname{section}{\presectionname}{\presectionname}
 \Crefname{section}{\presectionname}{\presectionname}
 \crefname{subsection}{\presubsectionname}{\presubsectionname}

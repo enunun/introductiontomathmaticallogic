@@ -102,7 +102,7 @@
 		\begin{prooftree}
 			\AxiomC{}
 			\LeftLabel{(REFL)}
-			\UnaryInfC{\(\sequent t = t\)}
+			\UnaryInfC{\(\sequent t \objeq t\)}
 		\end{prooftree}
 	\end{multicols}
 \end{Def}
@@ -177,14 +177,14 @@
 		\begin{prooftree}
 			\AxiomC{\(\Gamma \sequent \varphi_1 \land \varphi_2\)}
 			\LeftLabel{(\(\land\)E)}
-			\RightLabel{(\(i \equiv 1,2\))}
+			\RightLabel{(\(i = 1,2\))}
 			\UnaryInfC{\(\Gamma \sequent \varphi_i\)}
 		\end{prooftree}
 	\end{multicols}
 	\begin{prooftree}
 		\AxiomC{\(\Gamma \sequent \varphi_i\)}
 		\LeftLabel{(\(\lor\)I)}
-		\RightLabel{(\(i \equiv 1,2\))}
+		\RightLabel{(\(i = 1,2\))}
 		\UnaryInfC{\(\Gamma \sequent \varphi_1 \lor \varphi_2\)}
 	\end{prooftree}
 	\begin{prooftree}
@@ -257,7 +257,7 @@
 	\(\varphi\)を論理式，\(x\)を変数記号，\(s,t\)を\(\varphi\)中の\(x\)に代入可能な項とするとき，
 	以下は自然演繹式シークエント計算における推論規則である．
 	\begin{prooftree}
-		\AxiomC{\(\Gamma \sequent s = t\)}
+		\AxiomC{\(\Gamma \sequent s \objeq t\)}
 		\AxiomC{\(\Delta \sequent \subst{\varphi}{t / x}\)}
 		\LeftLabel{(SUBST)}
 		\BinaryInfC{\(\Gamma, \Delta \sequent \subst{\varphi}{s / x}\)}
@@ -306,6 +306,52 @@
 	\term{証明可能}であるという．
 \end{Def}
 
+いま定義したのは論理式単体での証明可能性である．
+通常，証明を行う際には何らかの仮定が設定されていることが多い．
+この場合の証明可能性は次のように定式化できる．
+
+\begin{Def} \label[Def]{Def:provablewithaxiom}
+	\(\Gamma\)を論理式からなる集合（有限集合でも無限集合でもよい）とし，\(\varphi\)を論理式とする．
+	このとき，\(\Gamma\)の有限個の元\(\varphi_1, \varphi_2, \dots, \varphi_n\)でシークエント
+	\begin{equation}
+		\varphi_1, \varphi_2, \dots, \varphi_n \sequent \varphi
+	\end{equation}
+	が導出可能であるものが存在するとき，%
+	\index[sidx]{\(\Gamma \provable \varphi\)：公理からの証明可能性}%
+	\begin{equation}
+		\Gamma \provable \varphi
+		\label{eq:provablewithaxiom}
+	\end{equation}
+	と表す%
+	\footnote{%
+		この記号はターンスタイル記号だとかト記号だとか呼ばれるようである．
+	}%
+	．\(\Gamma\)は集合だが，集合を表す「\(\Set{\dots}\)」は省略して書くことも多い．
+	とくに，\(\Gamma\)が空集合のときには「\(\emptyset \provable \varphi\)」の代わりに
+	\begin{equation}
+		\provable \varphi
+	\end{equation}
+	と書かれることが多い．
+	また，\(\varphi, \psi\)を論理式とするとき，\(\varphi \provable \psi\)かつ\(\psi \provable \varphi\)であることを%
+	\index[sidx]{\(\varphi \interderivable \psi\)：互いに証明可能}%
+	\begin{equation}
+		\varphi \interderivable \psi
+		\label{eq:interderivable}
+	\end{equation}
+	と表す%
+	\footnote{%
+		記号「\(\interderivable\)」は，「\(\provable\)」と比べてあまり使われないマイナーな表記なようである．%
+	}%
+	．
+\end{Def}
+
+\begin{Note}
+	\Cref{Def:sequent}でシークエント「\(\Gamma \sequent \varphi\)」を定義した際には\(\Gamma\)は論理式の有限列であったが
+	\cref{Def:provable}で「\(\Gamma \provable \varphi\)」という記法を定義した際には\(\Gamma\)は論理式からなる集合であり，
+	有限集合でも無限集合でもよいという違いがあった．
+	このうち「有限集合でも無限集合でもよい」という部分は重要で，無限個の公理をもつ理論に対しても証明可能性が定義できるようになっている．
+\end{Note}
+
 
 ここで定義した体系が我々の素朴的直観における「証明」を模倣できているかどうかは，
 ここから導かれるさまざまな結果を見るよりほかはない．
@@ -334,7 +380,12 @@
 
 \begin{Thm} \label[Thm]{Thm:DNFsequent}
 	\(\varphi\)を論理式とするとき，シークエント\(\lnot \lnot \varphi \sequent \varphi\)と
-	\(\varphi \sequent \lnot \lnot \varphi\)はいずれも導出可能である．
+	\(\varphi \sequent \lnot \lnot \varphi\)はいずれも導出可能である，すなわち
+	\begin{equation}
+		\varphi \interderivable \lnot \lnot \varphi
+		\label{eq:DNFinterderivable}
+	\end{equation}
+	が成り立つ．
 \end{Thm}
 
 \begin{proof}
@@ -359,8 +410,8 @@
 		\LeftLabel{(\(\lnot\)I)}
 		\UnaryInfC{\(\varphi \sequent \lnot \lnot \varphi\)}
 	\end{prooftree}
-	よって，シークエント\(\lnot \lnot \varphi \sequent \varphi\)と
-	\(\varphi \sequent \lnot \lnot \varphi\)はいずれも導出可能である．
+	よって，
+	\cref{eq:DNFinterderivable}が成り立つ．
 \end{proof}
 
 シークエントの導出過程を示すとき，\cref{Thm:RAA}の証明のように各推論規則の適用過程を
@@ -376,7 +427,11 @@
 	\begin{equation}
 		\varphi \lor \lnot \varphi
 	\end{equation}
-	は証明可能である．
+	は証明可能である．すなわち
+	\begin{equation}
+		\provable \varphi \lor \lnot \varphi
+	\end{equation}
+	が成り立つ．
 \end{Thm}
 
 \begin{proof}
@@ -422,35 +477,55 @@
 
 \begin{Thm} \label[Thm]{Thm:equivlogicalexpression}
 	\(\varphi, \psi, \chi\)を論理式，\(x\)を変数記号とする．
-	以下に述べる論理式のペアは，それぞれを左辺，右辺とするシークエントと
-	その左右を入れ替えたシークエントのいずれも導出可能である．
-	（「\(\varphi\)と\(\psi\)」と書かれていれば
-	\(\varphi \sequent \psi\)と\(\psi \sequent \varphi\)の両方が導出可能である．）
-	\begin{enumerate}
-		\item \(\varphi \to \psi\)と\(\lnot \varphi \lor \psi\)
-		\item \(\lnot \paren{\varphi \lor \psi}\)と\(\lnot \varphi \land \lnot \psi\)
-		\item \(\lnot \paren{\varphi \land \psi}\)と\(\lnot \varphi \lor \lnot \psi\)
-		\item \(\lnot \forall x \varphi\)と\(\exists x \lnot \varphi\)
-		\item \(\lnot \exists x \varphi\)と\(\forall x \lnot \varphi\)
-		\item \(\varphi \land \psi\)と\(\psi \land \varphi\)
-		\item \(\varphi \lor \psi\)と\(\psi \lor \varphi\)
-		\item \(\varphi \land \paren{\psi \land \chi}\)と\(\paren{\varphi \land \psi} \land \chi\)
-		\item \(\varphi \lor \paren{\psi \lor \chi}\)と\(\paren{\varphi \lor \psi} \lor \chi\)
-		\item \(\varphi \land \paren{\psi \lor \chi }\)と\(\paren{\varphi \land \psi} \lor \paren{\varphi \land \chi}\)
-		\item \(\varphi \lor \paren{\psi \land \chi }\)と\(\paren{\varphi \lor \psi} \land \paren{\varphi \lor \chi}\)
-		\item \(\lnot \paren{\varphi \to \psi}\)と\(\varphi \land \lnot \psi\)
-		\item \(\lnot \forall x \paren{\varphi \to \psi}\)と\(\exists x \paren{\varphi \land \lnot \psi}\)
-		\item \(\varphi \to \psi\)と\(\lnot \psi \to \lnot \varphi\)
-		\item \(\varphi \to \paren{\psi \to \chi}\)と\(\varphi \land \psi \to \chi\)
-		\item \(\forall x \paren{\varphi \to \psi}\)と\(\exists x \varphi \to \psi\)（ただし\(x\)は\(\psi\)には自由出現しないものとする）
-		\item \(\exists x \paren{\varphi \to \psi}\)と\(\forall x \varphi \to \psi\)（ただし\(x\)は\(\psi\)には自由出現しないものとする）
-		\item \(\forall x \paren{\varphi \to \psi}\)と\(\varphi \to \forall x \psi\)（ただし\(x\)は\(\varphi\)には自由出現しないものとする）
-		\item \(\exists x \paren{\varphi \to \psi}\)と\(\varphi \to \exists x \psi\)（ただし\(x\)は\(\varphi\)には自由出現しないものとする）
-		\item \(\forall x \paren{\varphi \land \psi}\)と\(\forall x \varphi \land \forall x \psi\)
-		\item \(\exists x \paren{\varphi \lor \psi}\)と\(\exists x \varphi \lor \exists x \psi\)
-		\item \(\forall x \paren{\varphi \lor \psi}\)と\(\forall x \varphi \lor \psi\)（ただし\(x\)は\(\psi\)には自由出現しないものとする）
-		\item \(\exists x \paren{\varphi \land \psi}\)と\(\exists x \varphi \land \psi\)（ただし\(x\)は\(\psi\)には自由出現しないものとする）
-	\end{enumerate}
+	このとき，以下が成り立つ：
+	\begin{align}
+		\varphi \to \psi                         & \interderivable \lnot \varphi \lor \psi,
+		\label{eq:todisjunctivenormalform}                                                                                                         \\
+		\lnot \paren{\varphi \lor \psi}          & \interderivable \lnot \varphi \land \lnot \psi,
+		\label{eq:lordemorgan}                                                                                                                     \\
+		\lnot \paren{\varphi \land \psi}         & \interderivable \lnot \varphi \lor \lnot \psi,
+		\label{eq:landdemorgan}                                                                                                                    \\
+		\lnot \forall x \varphi                  & \interderivable \exists x \lnot \varphi,
+		\label{eq:foralldemorgan}                                                                                                                  \\
+		\lnot \exists x \varphi                  & \interderivable \forall x \lnot \varphi,
+		\label{eq:existsdemorgan}                                                                                                                  \\
+		\varphi \land \psi                       & \interderivable \psi \land \varphi,
+		\label{eq:landcommunitativelaw}                                                                                                            \\
+		\varphi \lor \psi                        & \interderivable \psi \lor \varphi,
+		\label{eq:lorcommunitativelaw}                                                                                                             \\
+		\varphi \land \paren{\psi \land \chi}    & \interderivable \paren{\varphi \land \psi} \land \chi,
+		\label{eq:landassociativelaw}                                                                                                              \\
+		\varphi \lor \paren{\psi \lor \chi}      & \interderivable \paren{\varphi \lor \psi} \lor \chi,
+		\label{eq:lorassociativelaw}                                                                                                               \\
+		\varphi \land \paren{\psi \lor \chi }    & \interderivable \paren{\varphi \land \psi} \lor \paren{\varphi \land \chi},
+		\label{eq:landdistributivelaw}                                                                                                             \\
+		\varphi \lor \paren{\psi \land \chi }    & \interderivable \paren{\varphi \lor \psi} \land \paren{\varphi \lor \chi},
+		\label{eq:lordistributivelaw}                                                                                                              \\
+		\lnot \paren{\varphi \to \psi}           & \interderivable \varphi \land \lnot \psi,
+		\label{eq:lnotto}                                                                                                                          \\
+		\lnot \forall x \paren{\varphi \to \psi} & \interderivable \exists x \paren{\varphi \land \lnot \psi},
+		\label{eq:lnotforallto}                                                                                                                    \\
+		\varphi \to \psi                         & \interderivable \lnot \psi \to \lnot \varphi,
+		\label{eq:contraposition}                                                                                                                  \\
+		\varphi \to \paren{\psi \to \chi}        & \interderivable \varphi \land \psi \to \chi,
+		\label{eq:nestedto}                                                                                                                        \\
+		\forall x \paren{\varphi \to \psi}       & \interderivable \exists x \varphi \to \psi, \quad \text{（ただし\(x \notin \apply{\FV}{\psi}\)）}
+		\label{eq:forallinfrontx}                                                                                                                  \\
+		\exists x \paren{\varphi \to \psi}       & \interderivable \forall x \varphi \to \psi, \quad \text{（ただし\(x \notin \apply{\FV}{\psi}\)）}
+		\label{eq:existsinfrontx}                                                                                                                  \\
+		\forall x \paren{\varphi \to \psi}       & \interderivable \varphi \to \forall x \psi, \quad \text{（ただし\(x \notin \apply{\FV}{\varphi}\)）}
+		\label{eq:forallbehindx}                                                                                                                   \\
+		\exists x \paren{\varphi \to \psi}       & \interderivable \varphi \to \exists x \psi, \quad \text{（ただし\(x \notin \apply{\FV}{\varphi}\)）}
+		\label{eq:existsbehindx}                                                                                                                   \\
+		\forall x \paren{\varphi \land \psi}     & \interderivable \forall x \varphi \land \forall x \psi,
+		\label{eq:foralldistributivelaw}                                                                                                           \\
+		\exists x \paren{\varphi \lor \psi}      & \interderivable \exists x \varphi \lor \exists x \psi,
+		\label{eq:existsdistributivelaw}                                                                                                           \\
+		\forall x \paren{\varphi \lor \psi}      & \interderivable \forall x \varphi \lor \psi, \quad \text{（ただし\(x \notin \apply{\FV}{\psi}\)）}
+		\label{eq:foralldistributivelawoinfrontx}                                                                                                  \\
+		\exists x \paren{\varphi \land \psi}     & \interderivable \exists x \varphi \land \psi. \quad \text{（ただし\(x \notin \apply{\FV}{\psi}\)）}
+		\label{eq:existsdistributivelawinfrontx}
+	\end{align}
 \end{Thm}
 
 \begin{Que} \label[Que]{Que:sequent}
@@ -462,27 +537,40 @@
 	\begin{equation}
 		\paren{\varphi \to \psi} \to \varphi \sequent \varphi
 	\end{equation}
-	を導出せよ．
+	を導出せよ．このことから
+	\begin{equation}
+		\paren{\varphi \to \psi} \to \varphi \provable \varphi
+	\end{equation}
+	が成り立つことがわかる．
 \end{Que}
 
 等号についてもいろいろなシークエントを導くことができる．
 
 \begin{Thm} \label[Thm]{Thm:equalsign}
 	\(f\)をアリティ\(n\)の関数記号，\(s_1, s_2, \dotsc s_n, t_1, t_2, \dotsc, t_n\)を項とする．
-	\(i \equiv 1, 2, \dotsc, n\)に対して，シークエント
+	\(i = 1, 2, \dotsc, n\)に対して，シークエント
 	\begin{equation}
-		s_i = t_i \sequent \apply{f}{s_1, s_2, \dotsc, s_i, \dotsc, s_n} = \apply{f}{s_1, s_2, \dotsc, t_i, \dotsc, s_n}
+		s_i \objeq t_i \sequent \apply{f}{s_1, s_2, \dotsc, s_i, \dotsc, s_n} \objeq \apply{f}{s_1, s_2, \dotsc, t_i, \dotsc, s_n}
 	\end{equation}
-	は導出可能である．
+	は導出可能である．すなわち
+	\begin{equation}
+		s_i \objeq t_i \provable \apply{f}{s_1, s_2, \dotsc, s_i, \dotsc, s_n} \objeq \apply{f}{s_1, s_2, \dotsc, t_i, \dotsc, s_n}
+	\end{equation}
+	が成り立つ．
 \end{Thm}
 
 \begin{Thm} \label[Thm]{Thm:equalsignrelation}
 	\(s, t, u\)を項とするとき，シークエント
 	\begin{align}
-		s = t \sequent t = s \label{eq:equalsignsymmetry} \\
-		\paren{s = t} \land \paren{t = u} \sequent s = u \label{eq:equalsigntransitivity}
+		s \objeq t \sequent t \objeq s, \label{eq:equalsignsymmetry} \\
+		\paren{s \objeq t} \land \paren{t \objeq u} \sequent s \objeq u \label{eq:equalsigntransitivity}
 	\end{align}
-	は導出可能である．
+	は導出可能である．すなわち
+	\begin{align}
+		s \objeq t \provable t \objeq s, \\
+		\paren{s \objeq t} \land \paren{t \objeq u} \provable s \objeq u
+	\end{align}
+	が成り立つ．
 \end{Thm}
 
 \begin{Que} \label[Que]{Que:equalsignrelation}

@@ -86,7 +86,7 @@
 
 \NewDocumentCommand{\obj}{m}{\symtt{#1}}
 
-\NewDocumentCommand{\Natural}{}{\symbb{N}}
+\NewDocumentCommand{\Natural}{}{\omega}
 
 \NewDocumentCommand{\Zahlen}{}{\symbb{Z}}
 
@@ -134,6 +134,8 @@
 \NewDocumentCommand{\emptystring}{}{\varepsilon}
 
 \NewDocumentCommand{\restriction}{}{\upharpoonright}
+
+\NewDocumentCommand{\objeq}{}{\equiv}
 %
 %%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
 %
@@ -149,6 +151,7 @@
 \newtheorem{Thm}[Def]{定理}
 \newtheorem{Ex}[Def]{例}
 \newtheorem{Que}{演習}[chapter]
+\newtheorem{Lemma}[Def]{補題}
 \newtheorem{Note}[Def]{注意}
 %
 %
@@ -201,6 +204,8 @@
 \Crefname{table}{表}{表}
 \Crefname{Que}{演習}{演習}
 \crefname{Que}{演習}{演習}
+\Crefname{Lemma}{補題}{補題}
+\crefname{Lemma}{補題}{補題}
 \crefname{section}{\presectionname}{\presectionname}
 \Crefname{section}{\presectionname}{\presectionname}
 \crefname{subsection}{\presubsectionname}{\presubsectionname}

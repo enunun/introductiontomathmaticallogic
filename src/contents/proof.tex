@@ -102,7 +102,7 @@
 		\begin{prooftree}
 			\AxiomC{}
 			\LeftLabel{(REFL)}
-			\UnaryInfC{\(\sequent t = t\)}
+			\UnaryInfC{\(\sequent t \objeq t\)}
 		\end{prooftree}
 	\end{multicols}
 \end{Def}
@@ -177,14 +177,14 @@
 		\begin{prooftree}
 			\AxiomC{\(\Gamma \sequent \varphi_1 \land \varphi_2\)}
 			\LeftLabel{(\(\land\)E)}
-			\RightLabel{(\(i \equiv 1,2\))}
+			\RightLabel{(\(i = 1,2\))}
 			\UnaryInfC{\(\Gamma \sequent \varphi_i\)}
 		\end{prooftree}
 	\end{multicols}
 	\begin{prooftree}
 		\AxiomC{\(\Gamma \sequent \varphi_i\)}
 		\LeftLabel{(\(\lor\)I)}
-		\RightLabel{(\(i \equiv 1,2\))}
+		\RightLabel{(\(i = 1,2\))}
 		\UnaryInfC{\(\Gamma \sequent \varphi_1 \lor \varphi_2\)}
 	\end{prooftree}
 	\begin{prooftree}
@@ -257,7 +257,7 @@
 	\(\varphi\)を論理式，\(x\)を変数記号，\(s,t\)を\(\varphi\)中の\(x\)に代入可能な項とするとき，
 	以下は自然演繹式シークエント計算における推論規則である．
 	\begin{prooftree}
-		\AxiomC{\(\Gamma \sequent s = t\)}
+		\AxiomC{\(\Gamma \sequent s \objeq t\)}
 		\AxiomC{\(\Delta \sequent \subst{\varphi}{t / x}\)}
 		\LeftLabel{(SUBST)}
 		\BinaryInfC{\(\Gamma, \Delta \sequent \subst{\varphi}{s / x}\)}
@@ -548,13 +548,13 @@
 
 \begin{Thm} \label[Thm]{Thm:equalsign}
 	\(f\)をアリティ\(n\)の関数記号，\(s_1, s_2, \dotsc s_n, t_1, t_2, \dotsc, t_n\)を項とする．
-	\(i \equiv 1, 2, \dotsc, n\)に対して，シークエント
+	\(i = 1, 2, \dotsc, n\)に対して，シークエント
 	\begin{equation}
-		s_i = t_i \sequent \apply{f}{s_1, s_2, \dotsc, s_i, \dotsc, s_n} = \apply{f}{s_1, s_2, \dotsc, t_i, \dotsc, s_n}
+		s_i \objeq t_i \sequent \apply{f}{s_1, s_2, \dotsc, s_i, \dotsc, s_n} \objeq \apply{f}{s_1, s_2, \dotsc, t_i, \dotsc, s_n}
 	\end{equation}
 	は導出可能である．すなわち
 	\begin{equation}
-		s_i = t_i \provable \apply{f}{s_1, s_2, \dotsc, s_i, \dotsc, s_n} = \apply{f}{s_1, s_2, \dotsc, t_i, \dotsc, s_n}
+		s_i \objeq t_i \provable \apply{f}{s_1, s_2, \dotsc, s_i, \dotsc, s_n} \objeq \apply{f}{s_1, s_2, \dotsc, t_i, \dotsc, s_n}
 	\end{equation}
 	が成り立つ．
 \end{Thm}
@@ -562,13 +562,13 @@
 \begin{Thm} \label[Thm]{Thm:equalsignrelation}
 	\(s, t, u\)を項とするとき，シークエント
 	\begin{align}
-		s = t \sequent t = s, \label{eq:equalsignsymmetry} \\
-		\paren{s = t} \land \paren{t = u} \sequent s = u \label{eq:equalsigntransitivity}
+		s \objeq t \sequent t \objeq s, \label{eq:equalsignsymmetry} \\
+		\paren{s \objeq t} \land \paren{t \objeq u} \sequent s \objeq u \label{eq:equalsigntransitivity}
 	\end{align}
 	は導出可能である．すなわち
 	\begin{align}
-		s = t \provable t = s, \\
-		\paren{s = t} \land \paren{t = u} \provable s = u
+		s \objeq t \provable t \objeq s, \\
+		\paren{s \objeq t} \land \paren{t \objeq u} \provable s \objeq u
 	\end{align}
 	が成り立つ．
 \end{Thm}

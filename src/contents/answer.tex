@@ -4,7 +4,7 @@
 
 \subsection*{\Cref{que:transitiveclosure}}
 
-\(X\)上の二項関係として直積集合\(X \times X\)を考えると，\(X \times X\)\(\prec\)を含む推移的な二項関係である．
+\(X\)上の二項関係として直積集合\(X \times X\)を考えると，\(X \times X\)は\(\prec\)を含む推移的な\(X\)上の二項関係である．
 よって，\(\prec\)を含む推移的な\(X\)上の二項関係の全体を\(\symcal{R}\)とおくと，\(\symcal{R}\)は空でない．
 \(\mathord{\prec'} = \bigcap \symcal{R}\)は，\(\prec\)を含む推移的な\(X\)上の二項関係で包含関係に対して最小のものである．
 
@@ -13,7 +13,34 @@
 一意性について：
 任意の\(x \in X\)に対して\cref{eq:inductivedifinition}を満たす写像\(f, g \colon X \to Y\)がとれたとして，
 すべての\(x \in X\)に対して\(\apply{f}{x} = \apply{g}{x}\)が成り立つことを整礎帰納法によって示す．
+（\Cref{Thm:well-foundedinduction}を直接適用できるような形にしたければ，
+\(A = \Set{x \in X | \apply{f}{x} = \apply{g}{x}}\)とおき，\(A = X\)を示せばよい．）
+\(x \in X\)を1つとり，\(y \prec x\)を満たす任意の\(y \in X\)に対して\(\apply{f}{y} = \apply{g}{y}\)が成り立つと仮定する．
+このとき，\(\Set{y | y \prec x}\)上ではつねに\(\apply{f}{y} = \apply{g}{y}\)だから
+\(f \restriction \Set{y | y \prec x} = g \restriction \Set{y | y \prec x}\)であり，
+さらに\(f,g\)はともに\cref{eq:inductivedifinition}を満たすことから
+\[
+	\apply{f}{x} = \apply{G}{f \restriction \Set{y | y \prec x}} = \apply{G}{ g \restriction \Set{y | y \prec x}} = \apply{g}{x}
+\]
+となることから\(\apply{f}{x} = \apply{g}{x}\)が成り立つ．よって\cref{Thm:well-foundedinduction}によって
+すべての\(x \in X\)に対して\(\apply{f}{x} = \apply{g}{x}\)が成り立つので\(f = g\)が従う．
 
+存在性について：
+\Cref{Thm:inductivedifinition}の証明で精密化されていないのは，
+任意の\(x \in X\)に対して「写像\(f \colon \Set{y | y \prec x} \to Y \)で\(y \prec x\)となる任意の\(y \in X\)に対して
+\(\apply{f}{y} = \apply{G}{f \restriction \Set{z | z \prec y}}\)となるものが存在する」
+ことが成り立つことの証明である．これを整礎帰納法によって示す．
+\(w \prec x\)なる任意の\(w\)においてはこの主張が成り立つものとする．
+このとき，一意性の証明とまったく同様にして各\(w\)に対してこの主張を成り立たせる
+写像\(f\)がただ1つであることがわかる．これを\(f_w\)と表すことにする．
+写像\(f_x \colon \Set{y | y \prec x} \to Y\)を以下のように定める：
+各\(y \in \Set{z | z \prec x}\)に対し，\(y \prec z\)かつ\(z \prec x\)となる\(z \in X\)が存在するならば
+\(X\)の空でない部分集合
+\(\Set{z \in X | \text{\(y \prec z\)かつ\(z \prec x\)}}\)の極小元を\(m\)として
+\(\apply{f}{y} = \apply{f_m}{y}\)とする．
+そのような\(z\)が存在しないならば\(\apply{f_x}{y} = \apply{G}{f_y}\)とする．
+この\(f_x\)は\(y \prec x\)となるすべての\(y \in X\)に対して\(\apply{f}{y} = \apply{G}{f \restriction \Set{z | z \prec y}}\)
+を満たす．
 
 
 \subsection*{\Cref{Que:recursivedefinition}}

@@ -2,6 +2,116 @@
 
 \section*{\Cref{chap:formulize}}
 
+\subsection*{\Cref{que:transitiveclosure}}
+
+\(X\)上の二項関係として直積集合\(X \times X\)を考えると，\(X \times X\)\(\prec\)を含む推移的な二項関係である．
+よって，\(\prec\)を含む推移的な\(X\)上の二項関係の全体を\(\symcal{R}\)とおくと，\(\symcal{R}\)は空でない．
+\(\mathord{\prec'} = \bigcap \symcal{R}\)は，\(\prec\)を含む推移的な\(X\)上の二項関係で包含関係に対して最小のものである．
+
+\subsection*{\Cref{que:proofinductivedefinition}}
+
+一意性について：
+任意の\(x \in X\)に対して\cref{eq:inductivedifinition}を満たす写像\(f, g \colon X \to Y\)がとれたとして，
+すべての\(x \in X\)に対して\(\apply{f}{x} = \apply{g}{x}\)が成り立つことを整礎帰納法によって示す．
+（\Cref{Thm:well-foundedinduction}を直接適用できるような形にしたければ，
+\(A = \Set{x \in X | \apply{f}{x} = \apply{g}{x}}\)とおき，\(A = X\)を示せばよい．）
+\(x \in X\)を1つとり，\(y \prec x\)を満たす任意の\(y \in X\)に対して\(\apply{f}{y} = \apply{g}{y}\)が成り立つと仮定する．
+このとき，\(\Set{y | y \prec x}\)上ではつねに\(\apply{f}{y} = \apply{g}{y}\)だから
+\(f \restriction \Set{y | y \prec x} = g \restriction \Set{y | y \prec x}\)であり，
+さらに\(f,g\)はともに\cref{eq:inductivedifinition}を満たすことから
+\[
+	\apply{f}{x} = \apply{G}{f \restriction \Set{y | y \prec x}} = \apply{G}{ g \restriction \Set{y | y \prec x}} = \apply{g}{x}
+\]
+となることから\(\apply{f}{x} = \apply{g}{x}\)が成り立つ．よって\cref{Thm:well-foundedinduction}によって
+すべての\(x \in X\)に対して\(\apply{f}{x} = \apply{g}{x}\)が成り立つので\(f = g\)が従う．
+
+存在性について：
+\Cref{Thm:inductivedifinition}の証明で精密化されていないのは，
+任意の\(x \in X\)に対して「写像\(f \colon \Set{y | y \prec x} \to Y \)で\(y \prec x\)となる任意の\(y \in X\)に対して
+\(\apply{f}{y} = \apply{G}{f \restriction \Set{z | z \prec y}}\)となるものが存在する」
+ことが成り立つことの証明である．これを整礎帰納法によって示す．
+\(w \prec x\)なる任意の\(w\)においてはこの主張が成り立つものとする．
+このとき，一意性の証明とまったく同様にして各\(w\)に対してこの主張を成り立たせる
+写像\(f\)がただ1つであることがわかる．これを\(f_w\)と表すことにする．
+写像\(f_x \colon \Set{y | y \prec x} \to Y\)を以下のように定める：
+各\(y \in \Set{z | z \prec x}\)に対し，\(y \prec z\)かつ\(z \prec x\)となる\(z \in X\)が存在するならば
+\(X\)の空でない部分集合
+\(\Set{z \in X | \text{\(y \prec z\)かつ\(z \prec x\)}}\)の極小元を\(m\)として
+\(\apply{f}{y} = \apply{f_m}{y}\)とする．
+そのような\(z\)が存在しないならば\(\apply{f_x}{y} = \apply{G}{f_y}\)とする．
+この\(f_x\)は\(y \prec x\)となるすべての\(y \in X\)に対して\(\apply{f}{y} = \apply{G}{f \restriction \Set{z | z \prec y}}\)
+を満たす．
+
+
+\subsection*{\Cref{Que:recursivedefinition}}
+
+\(\Sigma\)のKleene閉包\(\KleeneClosure{\Sigma}\)は，1, 2を満たす．
+よって，\(\KleeneClosure{\Sigma}\)の部分集合で1, 2を満たすものの全体を
+\(\symcal{S}\)とおくと，\(\symcal{S}\)は空でない．
+\(L = \bigcap \symcal{S}\)とおくと\(L\)は1, 2を満たす\(\KleeneClosure{\Sigma}\)
+の部分集合で包含関係に対して最小のものである．
+
+\subsection*{\Cref{Que:well-foundedexample}}
+
+任意の\(t_1, t_2 \in L\)に対して\(\length{t_1} < \length{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}}\)
+かつ
+\(\length{t_2} < \length{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}}\)
+が成り立つので，すべての\(t \in L\)に対して\(t \not\prec' t\)が成り立つ．よって\(\prec'\)は非反射的である．
+\(\prec'\)は\(\prec\)の推移閉包なので推移的であり，\(\prec'\)が半順序であることが従う．
+
+\(\prec'\)が整礎であることを示そう．まず，すべての自然数\(n\)に対して
+「\(L'\)が（記号列としての）長さ\(n\)以下の元をもつならば，\(L'\)は（\(L\)上の二項関係\(\prec'\)に関する）極小元をもつ」
+という主張が成り立つことを自然数に関する数学的帰納法によって示す：
+\(n=0\)のとき，\(L'\)は長さ0の文字列\(\emptystring\)を元にもつ．
+\(x \prec' y\)を満たす任意の\(x, y \in L\)に対して\(\length{x} < \length{y}\)が成り立つので，
+\(\emptystring\)は\(L'\)の極小元である．
+\(L'\)が長さ\(n\)以下の元をもつときに\(L'\)が極小元をもつと仮定して，
+\(L'\)が長さ\(n + 1\)以下の元\(t\)を持つ場合を考える．\(t\)が極小元ならば，
+\(L'\)は極小元\(t\)をもつ．\(t\)が極小元でないならば，
+\(t = \obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}\)なる\(t_1, t_2 \in L'\)が存在する．
+このとき，\(\length{t_1} < \length{t}\)かつ\(\length{t_2} < \length{t}\)なので
+\(t_1, t_2\)の長さは\(n\)以下であり，\(L'\)は長さ\(n\)以下の元\(t_1, t_2\)をもつことがわかる．
+よって帰納法の仮定により，\(L'\)は極小元をもつ．
+以上の議論により「\(L'\)が（記号列としての）長さ\(n\)以下の元をもつならば，\(L'\)は（\(L\)上の二項関係\(\prec'\)に関する）極小元をもつ」
+という主張がすべての自然数\(n\)に対して成り立つことがわかった．
+
+さて，\(L'\)を\(L\)の空でない部分集合とし，その元\(t\)をとる．
+すると，\(L'\)は長さ\(\length{t}\)以下の元をもつので
+\(L'\)は極小元をもつ．従って，\(\prec'\)は整礎な半順序である．
+
+\subsection*{\Cref{Que:inductivedifinition}}
+
+\Cref{Que:well-foundedexample}の結果により，\(\prec\)の推移閉包\(\prec'\)は整礎な半順序である．
+そこで，
+写像\(G \colon \bigcup_{t \in L} \Natural^{\Set{s \in L | s \prec' t }} \to \Natural\)を次のように定める：
+\(f \in \bigcup_{t \in L} \Natural^{\Set{s \in | s \prec' t}}\)をとると，
+\(f\)はある\(t \in L\)についての\(\Set{s \in | s \prec' t}\)から\(\Natural\)への写像である．
+\(t\)が極小元である場合，すなわち\(f\)が空写像である場合は
+\[
+	\apply{G}{f} = 0
+\]
+とする．
+なお，\(L\)の極小元は数字に限る．
+\(t\)が極小元でない場合，\(t' \prec' t\)となる\(t' \in L\)が存在する．
+このとき，\(t_1 \prec t\)となる\(t_1 \in L\)もとれるので\(t_2 \prec t\)となる\(t_2 \in L\)
+もとれる．このような\(t_1, t_2\)の組は一意に定まるので，
+\[
+	\apply{G}{f} = \max \Set{\apply{f}{t_1}, \apply{f}{t_2}} + 1
+\]
+とする．
+\begingroup
+\NewDocumentCommand{\Comp}{}{\mathop{\symup{Comp}}}
+このとき，\cref{Thm:inductivedifinition}により，写像\({\Comp} \colon L \to \Natural\)
+で任意の\(t \in L\)に対して
+\[
+	\apply{\Comp}{t} = \apply{G}{ \Comp \restriction \Set{s \in L | s \prec' t}}
+\]
+を満たすものがただ1つ定まる．
+この\(\Comp\)が\cref{Que:inductivedifinition}で定義しようとした数式の複雑さを表す写像にほかならない．
+\endgroup
+
+\section*{\Cref{chap:syntax}}
+
 \subsection*{\Cref{Que:termexample}} \label{answer:termexample}
 
 \(\obj{e}\)は変数記号，\(\obj{x}\)は変数記号なので，どちらも\(\symcal{L}_1\)項である．
@@ -23,7 +133,7 @@
 \(\apply{\mathord{\obj{\ast}}}{\obj{x}, \obj{y}}\)と
 \(\apply{\mathord{\obj{\ast}}}{\obj{y}, \obj{x}}\)はいずれも\(\symcal{L}_1\)項である．
 よって，
-\(\paren{\apply{\mathord{\obj{\ast}}}{\obj{y}, \obj{x}} = \apply{\mathord{\obj{\ast}}}{\obj{y}, \obj{x}}}\)
+\(\paren{\apply{\mathord{\obj{\ast}}}{\obj{y}, \obj{x}} \objeq \apply{\mathord{\obj{\ast}}}{\obj{y}, \obj{x}}}\)
 は\(\symcal{L}_1\)論理式である．
 
 \(\obj{\leq}\)がアリティ2の関係記号であることから，
@@ -36,15 +146,15 @@
 さて，\(\paren{\apply{\exists \obj{x}}{\obj{x}}}\)が\(\symcal{L}\)論理式であるとすれば，
 \(\obj{x}\)は\(\symcal{L}\)論理式でなければならない．しかし，変数記号が論理式であることはないので
 \(\paren{\apply{\exists \obj{x}}{\obj{x}}}\)は\(\symcal{L}\)論理式ではない．
-一方で，\(\paren{\obj{x} = \obj{x}}\)は\(\symcal{L}\)論理式であるから
-\(\paren{\apply{\exists \obj{x}}{\obj{x} = \obj{x}}}\)は\(\symcal{L}\)論理式である．
+一方で，\(\paren{\obj{x} \objeq \obj{x}}\)は\(\symcal{L}\)論理式であるから
+\(\paren{\apply{\exists \obj{x}}{\obj{x} \objeq \obj{x}}}\)は\(\symcal{L}\)論理式である．
 
-\(\apply{\forall \obj{x}}{\obj{x} \obj{\ast} \obj{e} = \obj{x}}\)が\(\symcal{L}_1\)論理式であるとすれば，
+\(\apply{\forall \obj{x}}{\obj{x} \obj{\ast} \obj{e} \objeq \obj{x}}\)が\(\symcal{L}_1\)論理式であるとすれば，
 これまでの議論と同様にして\(\obj{x} \obj{\ast} \obj{e}\)が\(\symcal{L}_1\)項でなければならないことがわかる．
 しかし，\(\obj{\ast}\)の次の文字が開きカッコ「\(\lparen\)」ではないので
 これは\(\symcal{L}_1\)項とはなりえない．よって，
-\(\apply{\forall \obj{x}}{\obj{x} \obj{\ast} \obj{e} = \obj{x}}\)は\(\symcal{L}_1\)論理式ではない．
-\(\apply{\forall \obj{x}}{\obj{x} = \obj{x}}\)については，1文字目が開きカッコ「\(\lparen\)」でも
+\(\apply{\forall \obj{x}}{\obj{x} \obj{\ast} \obj{e} \objeq \obj{x}}\)は\(\symcal{L}_1\)論理式ではない．
+\(\apply{\forall \obj{x}}{\obj{x} \objeq \obj{x}}\)については，1文字目が開きカッコ「\(\lparen\)」でも
 関係記号でもないことから\(\symcal{L}_1\)論理式でないことが従う．
 
 \subsection*{\Cref{Que:invalidtheory}}
@@ -52,14 +162,14 @@
 2つ目の\(\symcal{L}\)論理式からは，\(\obj{e}\)が変数記号であることが伺える．
 しかしそうだとすると最後の\(\symcal{L}\)論理式
 \[
-	\forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} = \obj{e}}
+	\forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} \objeq \obj{e}}
 \]
 が\(\symcal{L}\)閉論理式にならない．問題文で挙げた3つの論理式からなる集合が
 \(\symcal{L}\)理論になっていないという意味で構文的に不適切である．
 
 最後の\(\symcal{L}\)論理式を
 \[
-	\exists \obj{e} \forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} = \obj{e}}
+	\exists \obj{e} \forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} \objeq \obj{e}}
 \]
 としてしまえば\(\symcal{L}\)閉論理式になるので，問題文で挙げた3つの\(\symcal{L}\)論理式のうち
 3つ目だけをこちらに置き換えたものは\(\symcal{L}\)理論となる．
@@ -67,8 +177,8 @@
 2つ目と3つ目の\(\symcal{L}\)論理式をまとめて
 \[
 	\exists \obj{e} \paren{
-		\forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} = \obj{x}}
-		\land \forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} = \obj{e}}
+		\forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} \objeq \obj{x}}
+		\land \forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} \objeq \obj{e}}
 	}
 \]
 とするのが正しい．
@@ -636,58 +746,58 @@
 \(s_i, t_i\)に登場しない，つまり\(s_i, t_i\)に自由出現も束縛出現もしない変数記号\(x\)をとる．
 論理式
 \begin{equation*}
-	\apply{f}{s_1, s_2, \dots, s_i, \dots, s_n} = \apply{f}{s_1, s_2, \dots, x, \dots, s_n}
+	\apply{f}{s_1, s_2, \dots, s_i, \dots, s_n} \objeq \apply{f}{s_1, s_2, \dots, x, \dots, s_n}
 \end{equation*}
 を\(\varphi\)とすると，\(\varphi\)中の\(x\)に\(s_i, t_i\)は代入可能である．このとき，論理式
 \begin{equation*}
-	\apply{f}{s_1, s_2, \dots, s_i, \dots, s_n} = \apply{f}{s_1, s_2, \dots, s_i, \dots, s_n}
+	\apply{f}{s_1, s_2, \dots, s_i, \dots, s_n} \objeq \apply{f}{s_1, s_2, \dots, s_i, \dots, s_n}
 \end{equation*}
 は\(\subst{\varphi}{s_i /x}\)
 と書きかえられ，論理式\(\subst{\varphi}{t_i / x}\)は
 \begin{equation*}
-	\apply{f}{s_1, s_2, \dots, s_i, \dots, s_n} = \apply{f}{s_1, s_2, \dots, t_i, \dots, s_n}
+	\apply{f}{s_1, s_2, \dots, s_i, \dots, s_n} \objeq \apply{f}{s_1, s_2, \dots, t_i, \dots, s_n}
 \end{equation*}
 を意味する．
 よって，シークエント
 \begin{equation*}
-	s_i = t_i \sequent \subst{\varphi}{t_i / x}
+	s_i \objeq t_i \sequent \subst{\varphi}{t_i / x}
 \end{equation*}
 を導出すれば定理の証明は完了する．
 シークエント\(\sequent \subst{\varphi}{s_i / x}\)は(REFL)によって導出可能であることに注意しよう．
 目的のシークエントの導出は下記で与えられる：
 \begin{enumerate}
-	\item \(s_i = t_i \sequent s_i = t_i\)\quad (ID)
+	\item \(s_i \objeq t_i \sequent s_i \objeq t_i\)\quad (ID)
 	\item \(\sequent \subst{\varphi}{s_i / x}\)\quad (REFL)
-	\item \(s_i = t_i \sequent \subst{\varphi}{t_i / x}\)\quad （1, 2から(SUBST)による）
+	\item \(s_i \objeq t_i \sequent \subst{\varphi}{t_i / x}\)\quad （1, 2から(SUBST)による）
 \end{enumerate}
 
 次に\cref{Thm:equalsignrelation}を示そう．まずは\cref{eq:equalsignsymmetry}を導出する．
-ここで\(s, t\)のどちらにも登場しない変数記号\(x\)をとり，論理式\(x = s\)
+ここで\(s, t\)のどちらにも登場しない変数記号\(x\)をとり，論理式\(x \objeq s\)
 を\(\varphi\)とすると，\cref{eq:equalsignsymmetry}は
 \begin{equation*}
-	s = t \sequent \subst{\varphi}{t / x}
+	s \objeq t \sequent \subst{\varphi}{t / x}
 \end{equation*}
 と書きかえられる．
 このシークエントは以下のように導出される：
 \begin{enumerate}
-	\item \(s = t \sequent s = t\)\quad (ID)
+	\item \(s \objeq t \sequent s \objeq t\)\quad (ID)
 	\item \(\sequent \subst{\varphi}{s/x}\)\quad (REFL)
-	\item \(s = t \sequent \subst{\varphi}{t/x}\)\quad （1, 2から(SUBST)による）
+	\item \(s \objeq t \sequent \subst{\varphi}{t/x}\)\quad （1, 2から(SUBST)による）
 \end{enumerate}
 
 最後に\cref{eq:equalsigntransitivity}を導出しよう．
-ここでは，\(s, t, u\)のいずれにも登場しない変数記号\(x\)をとり，論理式\(x = u\)を\(\varphi\)で表す．
+ここでは，\(s, t, u\)のいずれにも登場しない変数記号\(x\)をとり，論理式\(x \objeq u\)を\(\varphi\)で表す．
 すると，\cref{eq:equalsigntransitivity}は
 \begin{equation*}
-	\paren{s = t} \land \paren{t = u} \sequent \subst{\varphi}{s/x}
+	\paren{s \objeq t} \land \paren{t \objeq u} \sequent \subst{\varphi}{s/x}
 \end{equation*}
 と書きかえられる．
 このシークエントは以下のように導出される：
 \begin{enumerate}
-	\item \(\paren{s = t} \land \paren{t = u} \sequent \paren{s = t} \land \paren{t = u}\)\quad (ID)
-	\item \(\paren{s = t} \land \paren{t = u} \sequent s = t\)\quad （1から(\(\land\)E)による）
-	\item \(\sequent s = t \to t = s\)\quad （\Cref{eq:equalsignsymmetry}と(\(\to\)I)による）
-	\item \(\paren{s = t} \land \paren{t = u} \sequent t = s\)\quad （2, 3から(\(\to\)E)による）
-	\item \(\paren{s = t} \land \paren{t = u} \sequent \subst{\varphi}{t/x}\)\quad （1から(\(\land\)E)による）
-	\item \(\paren{s = t} \land \paren{t = u} \sequent \subst{\varphi}{s/x}\)\quad （4, 5から(SUBST)による）
+	\item \(\paren{s \objeq t} \land \paren{t \objeq u} \sequent \paren{s \objeq t} \land \paren{t \objeq u}\)\quad (ID)
+	\item \(\paren{s \objeq t} \land \paren{t \objeq u} \sequent s \objeq t\)\quad （1から(\(\land\)E)による）
+	\item \(\sequent s \objeq t \to t \objeq s\)\quad （\Cref{eq:equalsignsymmetry}と(\(\to\)I)による）
+	\item \(\paren{s \objeq t} \land \paren{t \objeq u} \sequent t \objeq s\)\quad （2, 3から(\(\to\)E)による）
+	\item \(\paren{s \objeq t} \land \paren{t \objeq u} \sequent \subst{\varphi}{t/x}\)\quad （1から(\(\land\)E)による）
+	\item \(\paren{s \objeq t} \land \paren{t \objeq u} \sequent \subst{\varphi}{s/x}\)\quad （4, 5から(SUBST)による）
 \end{enumerate}

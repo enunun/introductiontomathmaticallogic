@@ -136,6 +136,18 @@
 \NewDocumentCommand{\restriction}{}{\upharpoonright}
 
 \NewDocumentCommand{\objeq}{}{\equiv}
+
+\NewDocumentCommand{\powerset}{m}{\apply{\symfrak{P}}{#1}}
+
+\NewDocumentCommand{\interpretation}{mm}{{#2}^{#1}}
+
+\NewDocumentCommand{\languagewithname}{mm}{\apply{#1}{#2}}
+
+\NewDocumentCommand{\metaimplies}{}{\implies}
+
+\NewDocumentCommand{\metaequivalent}{}{\iff}
+
+\NewDocumentCommand{\satisfy}{}{\vDash}
 %
 %%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
 %
@@ -293,8 +305,8 @@
 
 \include{contents/formalize}
 \include{contents/syntax}
+\include{contents/semantics}
 \include{contents/proof}
-%\include{contents/semantics}
 %\include{contents/advance}
 
 \backmatter

@@ -10,6 +10,8 @@
 理論のモデルや同型の概念に覚えがある読者は多いだろう．
 普段使っている概念を一歩引いた形で見直すことにより得られるものも多いはずである．
 
+\newpage
+
 \section{モデル} \label[section]{sec:model}
 
 我々は，項や論理式を純粋な形式的記号列として導入し，
@@ -17,3 +19,164 @@
 例として群論や順序の理論を取り扱ったが，通常の数学においては
 これらは集合や写像の言葉で書かれることがほとんどである．
 両者の間の関係を考えよう．
+
+\begin{Def} \label[Def]{Def:structure}
+	\(\symcal{L}\)を言語とする．このとき，空でない集合\(M\)と写像
+	\(F \colon L \to M \cup \bigcup_{n > 0} \paren{\powerset{M^n} \cup M^{M^n}}\)の%
+	\footnote{%
+		集合\(X\)が与えられたとき，\(X\)の部分集合全体からなる集合を\(X\)の
+		\index[sidx]{\(\powerset{X}\)：べき集合}%
+		\index[widx]{べきしゅうごう@べき集合}%
+		\term{べき集合}%
+		といい，\(\powerset{X}\)と表す．
+	}%
+	対\(\symcal{M} = \pair{M, F}\)が\(\symcal{L}\)%
+	\index[widx]{こうぞう@\(\symcal{L}\)構造}%
+	\term{構造}%
+	であるとは，\(F\)が以下の条件をすべて満たすことをいう：
+	\begin{enumerate}
+		\item \(c \in L\)が定数記号ならば\(\apply{F}{c} \in M\)，すなわち\(\apply{F}{c}\)は\(M\)の元である．
+		\item \(f \in L\)がアリティ\(n\)の関数記号ならば\(\apply{F}{f} \in M^{M^n}\)，すなわち\(\apply{F}{f}\)は\(M^n\)から\(M\)への写像である．
+		\item \(r \in L\)がアリティ\(n\)の関係記号ならば\(\apply{F}{r} \in \powerset{M^n}\)，すなわち\(\apply{F}{r}\)は\(M\)上の\(n\)項関係である．
+	\end{enumerate}
+	また\(\xi \in L\)の\(F\)による像\(\apply{F}{\xi}\)を
+	\index[sidx]{\(\interpretation{\symcal{M}}{\xi}\)：解釈}
+	\begin{equation}
+		\interpretation{\symcal{M}}{\xi}
+		\label{eq:interpretation}
+	\end{equation}
+	と表記し，\(\xi\)の\(\symcal{L}\)構造\(\symcal{M}\)による%
+	\index[widx]{かいしゃく@解釈}%
+	\term{解釈}%
+	と呼ぶことが多い．
+\end{Def}
+
+\Cref{Def:structure}は，形式的記号列として与えられる言語\(L\)の元が
+通常の数学においてはどういうものに相当するかを定義するものである．
+項や論理式についても同様の定義をしたいのだが，まずその準備として言語の拡張を定義しておく．
+
+\begin{Def} \label{Def:namelanguage}
+	\(\symcal{L}\)を言語とし，\(\symcal{M} = \pair{M, F}\)を\(\symcal{L}\)構造とする．
+	このとき，集合\(M\)の元\(a\)ごとに定数記号\(c_a\)を用意し，
+	これを\(\symcal{L}\)に付け加えた言語\(\symcal{L} \cup \Set{c_a | a \in M}\)を考えることができる．
+	この言語を%
+	\index[sidx]{\(\languagewithname{\symcal{L}}{\symcal{M}}\)：構造による言語の拡張}%
+	\begin{equation}
+		\languagewithname{\symcal{L}}{\symcal{M}}
+		\label{eq:languagewithname}
+	\end{equation}
+	と表すことにする．各\(a \in M\)に対する\(c_a\)を\(a\)の%
+	\index[sidx]{\(c_a\)：\(a\)の名前}%
+	\index[widx]{名前}%
+	\term{名前}という．
+\end{Def}
+
+\begin{Note}
+	\(\symcal{L}\)を言語とする．
+	\(\symcal{L}\)構造\(\symcal{M}\)は，の元のうち
+	\(a \in M\)の名前\(c_a\)の\(\symcal{M}\)による解釈を
+	\begin{equation}
+		\interpretation{\symcal{M}}{c_a} = a
+		\label{eq:languagewithnameinterpretation}
+	\end{equation}
+	と定めることにより，自然に\(\languagewithname{\symcal{L}}{\symcal{M}}\)構造とみなせる．
+\end{Note}
+
+まずは項に対する解釈を定義しよう．
+
+\begin{Def} \label{Def:interpretationforterm}
+	\(\symcal{L}\)を言語とし，\(\symcal{M}\)を\(\symcal{L}\)構造とする．
+	\(t\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉項として，\(t\)の\(\symcal{M}\)による解釈\(\interpretation{\symcal{M}}{t}\)
+	を以下のように帰納的に定義する：
+	\begin{enumerate}
+		\item \(t\)が定数記号\(c\)であるならば\(\interpretation{\symcal{M}}{t} = \interpretation{\symcal{M}}{c}\)と定める．
+		\item \(t\)がアリティ\(n\)の関数記号\(f\)と\(\symcal{L}\)閉項\(t_1, t_2, \dots, t_n\)を用いて\(\apply{f}{t_1, t_2, \dots, t_n}\)と表されるならば
+		      \begin{equation}
+			      \interpretation{\symcal{M}}{t}
+			      = \apply{\interpretation{\symcal{M}}{f}}{
+				      \interpretation{\symcal{M}}{t_1},
+				      \interpretation{\symcal{M}}{t_2},
+				      \dots,
+				      \interpretation{\symcal{M}}{t_n}
+			      }
+			      \label{eq:terminterpretation}
+		      \end{equation}
+		      と定める．
+	\end{enumerate}
+\end{Def}
+
+論理式においても\cref{Def:structure}や\cref{Def:interpretationforterm}
+と同じような定義をしたい．しかし，与えられた集合の元や写像，関係として定式化できる
+言語や項とは違い，論理式に対応する通常の数学における概念は「数学的な主張」である．
+これはすでにあいまいさなく定式化されているとはいいがたいので，代わりに充足関係と呼ばれる関係を定義する．
+
+\begin{Def} \label{Def:semanticimplies}
+	\(\symcal{L}\)を言語とし，\(\symcal{M} = \pair{M, F}\)を\(\symcal{L}\)構造とする．
+	このとき，\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉論理式\(\varphi\)に対する
+	\index[sidx]{\(\symcal{M} \satisfy \varphi\)：充足関係}
+	\begin{equation}
+		\symcal{M} \satisfy \varphi
+		\label{eq:structuresatisfy}
+	\end{equation}
+	を，以下のように帰納的に定義する：
+	\begin{enumerate}
+		\item \(t_1, t_2\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉項とするとき，
+		      \[
+			      \symcal{M} \satisfy t_1 \objeq t_2                                       \metaequivalent \interpretation{\symcal{M}}{t_1} = \interpretation{\symcal{M}}{t_2}
+		      \]
+		      とする．
+		\item \(r \in \symcal{L}\)をアリティ\(n\)の関係記号，
+		      \(t_1, t_2, \dots, t_n\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉項とするとき，
+		      \(\symcal{M} \satisfy \apply{r}{t_1, t_2, \dots, t_n}
+		      \metaequivalent \pair{
+			      \interpretation{\symcal{M}}{t_1},
+			      \interpretation{\symcal{M}}{t_2},
+			      \dots,
+			      \interpretation{\symcal{M}}{t_n}
+		      } \in \interpretation{\symcal{M}}{r}
+		      \)
+		      とする．
+		\item \(\varphi, \psi\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉論理式とするとき，
+		      \[
+			      \symcal{M} \satisfy \lnot \varphi      \metaequivalent \text{\(\symcal{M} \satisfy \varphi\)でない}
+		      \]
+		      とする．
+		\item \(\varphi, \psi\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉論理式とするとき，
+		      \[
+			      \symcal{M} \satisfy \varphi \lor \psi  \metaequivalent \text{\(\symcal{M} \satisfy \varphi\)または\(\symcal{M} \satisfy \psi\)}
+		      \]
+		      とする．
+		\item \(\varphi, \psi\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉論理式とするとき，
+		      \[
+			      \symcal{M} \satisfy \varphi \land \psi \metaequivalent \text{\(\symcal{M} \satisfy \varphi\)かつ\(\symcal{M} \satisfy \psi\)}
+		      \]
+		      とする．
+		\item \(\varphi, \psi\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉論理式とするとき，
+		      \[
+			      \symcal{M} \satisfy \varphi \to \psi   \metaequivalent \text{\(\symcal{M} \satisfy \varphi\)ならば\(\symcal{M} \satisfy \psi\)}
+		      \]
+		      とする．
+		\item \(\varphi\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)論理式，\(x\)を変数記号とするとき，
+		      \(\exists x \varphi\)が\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉論理式（つまり\(\varphi\)に自由出現する変数記号が\(x\)以外にない）であれば
+		      \[
+			      \symcal{M} \satisfy \exists x \varphi  \metaequivalent \text{\(\symcal{M} \satisfy \subst{\varphi}{c_a/x}\)となる\(a \in M\)が存在する}
+		      \]
+		      とする．ただし，\(c_a\)は\(a \in M\)の名前である．
+		\item \(\varphi\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)論理式，\(x\)を変数記号とするとき，
+		      \(\forall x \varphi\)が\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉論理式（つまり\(\varphi\)に自由出現する変数記号が\(x\)以外にない）であれば
+		      \[
+			      \symcal{M} \satisfy \forall x \varphi  \metaequivalent \text{任意の\(a \in M\)に対して\(\symcal{M} \satisfy \subst{\varphi}{c_a/x}\)となる}
+		      \]
+		      とする．ただし，\(c_a\)は\(a \in M\)の名前である．
+	\end{enumerate}
+
+	\(\symcal{M} \satisfy \varphi\)であるとき，
+	\(\symcal{M}\)は\(\varphi\)を%
+	\index[widx]{じゅうそくする@充足する}%
+	\term{充足する}という．
+\end{Def}
+
+\begin{Note}
+	\(a \in M\)の名前\(c_a\)は\(\apply{\Var}{c_a} = \emptyset\)を満たすので，
+	任意の論理式中の任意の変数記号に代入可能である．
+\end{Note}

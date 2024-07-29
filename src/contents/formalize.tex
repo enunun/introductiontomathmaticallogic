@@ -267,14 +267,13 @@
 一方で，そのような議論の中では自分が今どちらの立場なのか混乱しがちである．
 
 本書では形式的記号列の世界での「集合論」は取り扱わないが，等号「\(=\)」については取り扱う．
-形式的記号列の世界でも等号が登場するので，容易に区別をつけるために我々が普段使っている等号の方を%
-\index[sidx]{\(\equiv\)：メタ側における等号}%
+形式的記号列の世界でも等号が登場するので，容易に区別をつけるために形式的記号列の世界における等号を%
+\index[sidx]{\(\objeq\)：オブジェクト側における等号}%
 \begin{align}
-	\equiv
-	\label{eq:equiv}
+	\objeq
+	\label{eq:objeq}
 \end{align}
-のように書き表しておくこととする．2つの記号列\(s, t\)に対する「\(s \equiv t\)」は
-「\(s\)と\(t\)が（順序も含めて）まったく同じ記号列である」ことを示す．
+のように書き表しておくこととする．
 
 上記のように，議論の対象として登場する理論や言語を%
 \index[widx]{オブジェクト@オブジェクト}%
@@ -293,3 +292,323 @@
 メタ側での記号は通常通り「%
 \index[sidx]{\(x\)：メタ側の記号}%
 \(x\)」のようにイタリック体で表す．
+
+\section{整礎な半順序と整礎帰納法} \label{sec:well-founded}
+
+ここで少し話題を変えて，数学的準備として整礎な半順序と整礎帰納法について述べておく．
+以後，\(x, y\)からなる順序対\(\Set{\Set{x}, \Set{x, y}}\)を%
+\index[sidx]{\(\pair{x, y}\)：順序対}
+\(\pair{x, y}\)と表すことにする．
+
+\begin{Def} \label{Def:preorderedset}
+	\(X\)を集合，\(\mathord{\prec} \subset X \times X\)を\(X\)上の二項関係とする．
+	\(\pair{x, y} \in \mathord{\prec}\)であることを\(x \prec y\)と表記する．
+	このとき，\(\mathord{\prec}\)が\(X\)上の%
+	\index[widx]{はんじゅんじょ@半順序}%
+	\term{半順序}であるとは，
+	以下の条件がすべて満たされることをいう：
+	\begin{enumerate}
+		\item すべての\(x \in X\)に対して\(x \not \prec x\)である．ただし，\(x \not \prec x\)とは\(x \prec x\)が成り立たないことをいう．
+		      この性質を%
+		      \index[widx]{ひはんしゃせい@非反射性}%
+		      \term{非反射性}という．非反射性をもつ二項関係は非反射的であるという．
+		\item すべての\(x, y, z \in X\)に対して，\(x \prec y\)かつ\(y \prec z\)ならば\(x \prec z\)である．
+		      この性質を%
+		      \index[widx]{すいいせい@推移性}%
+		      \term{推移性}という．推移性をもつ二項関係は推移的であるという．
+	\end{enumerate}
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma:transitiveclosure}
+	集合\(X\)上の二項関係\(\prec\)が与えられたとき，\(\prec\)を含む推移的な\(X\)上の二項関係\(\prec'\)で
+	包含関係に対して最小のものが存在する．
+	これを\(\prec\)の%
+	\index[widx]{すいいへいほう@推移閉包}%
+	\term{推移閉包}という．
+\end{Lemma}
+
+\begin{Que} \label[Que]{que:transitiveclosure}
+	\Cref{lemma:transitiveclosure}を証明せよ．
+\end{Que}
+
+\begin{Def} \label{Def:well-foundedset}
+	\(X\)を集合，\(\mathord{\prec}\)を\(X\)上の半順序とする．
+	このとき，\(A \subset X\)について，\(A\)の元\(a\)が\(A\)の%
+	\index[widx]{きょくしょうげん@極小元}%
+	\term{極小元}であるとは，
+	\(x \prec a\)となる\(x \in A\)が存在しないことをいう．
+	また，\(\prec\)が\(X\)上で%
+	\index[widx]{せいそ@整礎}%
+	\term{整礎}であるとは，\(X\)の空でない任意の部分集合\(A\)が必ず極小元\(a \in A\)をもつことをいう．
+\end{Def}
+
+整礎な二項関係においては，以下に述べる整礎帰納法が重要である．
+
+\begin{Thm}[整礎帰納法] \label[Thm]{Thm:well-foundedinduction}
+	\(X\)を集合，\(\mathord{\prec}\)を\(X\)上の整礎な半順序であるとする．
+	このとき，\(A \subset X\)が
+	「\(x \in X\)を1つとるとき，\(y \prec x\)を満たすすべての\(y \in X\)に対して\(y \in A\)を満たすのであれば\(x \in A\)である」
+	という条件を満たすのであれば\(A = X\)である．
+\end{Thm}
+
+\begin{proof}
+	定理の主張が成り立たない，すなわち
+	「\(x \in X\)を1つとるとき，\(y \prec x\)を満たすすべての\(y \in X\)に対して\(y \in A\)を満たすのであれば\(x \in A\)である」
+	という条件を満たすにもかかわらず\(A \neq X\)であるとする．
+	このとき，差集合\(X \setminus A\)は空でないため，その極小元\(x \in X \setminus A\)がとれる．
+	\(x\)が\(X \setminus A\)の極小元であることから，\(y \prec x\)を満たす\(y\)はすべて\(A\)の元である．
+	よって\(x \in A\)でなければならないが，これは\(x \in X \setminus A\)に矛盾する．
+\end{proof}
+
+\Cref{Thm:well-foundedinduction}において，集合\(A\)を「\(x \in X\)が与えられた性質を満たすときに\(x \in A\)とする」
+のように決めておけば，\cref{Thm:well-foundedinduction}は\(X\)の元に関する何らかの性質の証明に活用することができる．
+
+帰納法は性質の証明だけではなく対象の定義にも活用できるというのはよく知られた話である．
+ここで導入した整礎帰納法ももちろんそうである．
+
+\index[widx]{きのうてきていぎ@（整礎な半順序における）帰納的定義}
+\begin{Thm}[帰納的定義] \label[Thm]{Thm:inductivedifinition}
+	集合\(X, Y\)と\(X\)上の整礎な半順序\(\prec\)が与えられ，さらに
+	写像\(G \colon \bigcup _{x \in X} Y^{\Set{y | y \prec x}} \to Y\)が与えられたとする．
+	このとき，写像\(f \colon X \to Y\)で任意\(x \in X\)に対して
+	\begin{equation}
+		\apply{f}{x} = \apply{G}{f \restriction \Set{y | y \prec x}}
+		\label{eq:inductivedifinition}
+	\end{equation}
+	を満たすものがただ1つ存在する%
+	\footnote{%
+		写像\(f \colon X \to Y\)と\(A \subset X\)に対し，%
+		\index[sidx]{\(f \restriction A\)：写像の制限}%
+		\(A\)から\(Y\)への写像\(a \mapsto \apply{f}{a}\)を\(f \restriction A\)で表す．
+	}%
+	．
+\end{Thm}
+
+\begin{proof}
+	長くなるので概要のみ示す．
+
+	一意性については容易に示すことができる．任意の\(x \in X\)に対して\cref{eq:inductivedifinition}を満たす
+	写像\(f, g \colon X \to Y\)を任意にとったとき，任意の\(x \in X\)に対して\(\apply{f}{x} = \apply{g}{x}\)が成り立つことを
+	整礎帰納法によって示せばよい．
+
+	存在性については以下のように示すことができる．まず
+	「写像\(f \colon \Set{y \in X | y \prec x} \to Y\)で任意の\(y \in X\)に対して
+	\(\apply{f}{y} = \apply{G}{f \restriction \Set{z | z \prec y}}\)となるものが
+	存在する」
+	という主張が任意の\(x \in X\)に対して成り立つことを整礎帰納法によって示す．
+	そのような写像は各\(x\)ごとに一意に定まるので，これを\(f_x\)と表すことにする．
+	すると，
+	写像\(f \colon X \to Y\)を以下のように定義できる：
+	各\(x \in X\)に対し，\(x \prec y\)となる\(y \in X\)が存在しなければ
+	\(\apply{f}{x} = \apply{G}{f_x}\)とする．そうでない場合，
+	\(X\)の空でない部分集合\(\Set{y \in X | x \prec y}\)の極小元\(z\)をとり，
+	\(\apply{f}{x} = \apply{f_z}{x}\)とする．
+	この写像\(f\)は任意の\(x \in X\)に対して\cref{eq:inductivedifinition}を満たしている．
+\end{proof}
+
+\Cref{Thm:inductivedifinition}は，整礎な二項関係をもつ集合\(X\)から任意の集合\(Y\)への写像\(f\)を
+定義するとき，各\(x\)に対する\(\apply{f}{x}\)を直接与えるのではなく\(y \prec x\)を満たす\(y \in X\)
+に対する\(\apply{f}{y}\)から\(\apply{f}{x}\)を与える手続きさえ与えておけば，
+それによって\(f\)が定義できることを主張している．
+
+ここで特徴的なのは，\(x \in X\)に対する\(\apply{f}{x}\)を定義するのに別の\(y \in X\)に対する\(\apply{f}{y}\)を使っていることである．
+このような形式でなされる定義を%
+\index[widx]{きのうてきていぎ@帰納的定義}%
+\term{帰納的定義}，
+あるいは%
+\index[widx]{さいきてきていぎ@再帰的定義|see{帰納的定義}}%
+\term{再帰的定義}という%
+\footnote{%
+	\Cref{Thm:inductivedifinition}における再帰的定義では
+	\(x \in X\)に対する\(\apply{f}{x}\)を定義するのに使用される\(\apply{f}{y}\)が
+	\(y \prec x\)なる\(y \in X\)の\(f\)による像に限定されている．
+	このような場合の「再帰的定義」は特に「原始再帰」と呼ばれる．
+	また，本書では「帰納」と「再帰」同じ意味であるとして扱ったが，
+	そうみなさないような文脈もある．
+	「原始再帰」と「再帰」の違いや「帰納」と「再帰」に差異が生じる文脈については本書では取り扱わない．
+}%
+．
+
+形式的な記号列を議論の対象にするうえで，\cref{Thm:well-foundedinduction}や
+\cref{Thm:inductivedifinition}は非常に強力な武器となる．
+具体例は本書全体にわたって現れるが，\cref{sec:formallanguage}においてはていねいに取り上げることとする．
+
+\begin{Que} \label{que:proofinductivedefinition}
+	\Cref{Thm:inductivedifinition}の証明を精密化せよ．
+\end{Que}
+
+\section{形式言語} \label{sec:formallanguage}
+
+\Cref{sec:symbolicLogic}で述べたように，
+今後我々が議論の対象とするのは「意味」をもたない形式的な記号列である．
+まずはこの「形式的な記号列」の数学的定式化を述べておく．
+以後，「自然数」といえば0も含むので注意されたい．%
+\index[sidx]{\(\Natural\)：自然数全体の集合}%
+また，自然数全体の集合を\(\Natural\)と表記する．
+
+\begin{Def} \label{Def:formallanguage}
+	記号の集合\(\Sigma\)が与えられたとする．\(w\)が\(\Sigma\)上の%
+	\index[widx]{もじれつ@文字列|see{記号列}}%
+	\term{文字列}%
+	，あるいは%
+	\index[widx]{きごうれつ@記号列}%
+	\term{記号列}%
+	であるとは，自然数\(n\)が存在して，\(w\)が
+	集合\(\Set{0, 1, \dots, n-1}\)から\(\Sigma\)への写像であることをいう%
+	\footnote{%
+		集合\(\Set{0,1,\dots, n-1}\)は，集合論的には自然数\(n\)そのものである．
+	}%
+	．
+	ただし，\(w\)が\(\Sigma\)への空写像%
+	\footnote{%
+		任意の集合\(A\)に対して，始集合が空集合\(\emptyset\)で終集合が\(A\)であるような
+		写像\(f \colon \emptyset \to A\)はただひとつ存在する．%
+		\index[widx]{くうしゃぞう@空写像}%
+		この写像\(f\)を\(A\)への空写像と呼ぶ．
+	}%
+	である場合も含むものとする（このとき，上でいう自然数\(n\)は0とする）．
+	このような自然数\(n\)は存在すれば一意である．
+
+	また，記号列\(w \colon \Set{0, 1, \dots, n-1} \to \Sigma\)について，\(n\)を\(w\)の%
+	\index[widx]{ながさ@（記号列の）長さ}%
+	\term{長さ}%
+	といい，%
+	\index[sidx]{\(\length{w}\)：（記号列の）長さ}%
+	\begin{equation}
+		\length{w}
+		\label{eq:lengthforstring}
+	\end{equation}
+	と表す．
+	\(\Sigma\)上の長さ\(n\)の記号列\(w\)が
+	\(\apply{w}{0} = s_0, \apply{w}{1} = s_1, \dots, \apply{w}{n-1} = s_{n-1}\)
+	と定義されている場合，\(w\)を\(s_0, s_1, \dots, s_{n-1}\)を書き並べて%
+	\index[sidx]{\(s_0 s_1 \dots s_{n-1}\)：記号列の表記}%
+	\begin{equation}
+		s_0 s_1 \dots s_{n-1}
+	\end{equation}
+	と表すことが多い．
+	\(n = 0\)の場合，この表記法では何も書けないが，便宜上%
+	\index[sidx]{\(\emptystring\)：長さ0の記号列}%
+	\begin{equation}
+		\emptystring
+		\label{eq:emptystring}
+	\end{equation}
+	と表記することとする．
+
+	さらに，\(\Sigma\)上の記号列の全体\(\bigcup_{n \in \Natural} \Sigma^{\Set{0,1,\dots, n-1}}\)を
+	\(\Sigma\)の%
+	\index[widx]{Kleeneへいほう@Kleene閉包}%
+	\term{Kleene閉包}%
+	といい，%
+	\index[sidx]{\(\KleeneClosure{\Sigma}\)：Kleene閉包}%
+	\begin{equation}
+		\KleeneClosure{\Sigma}
+		\label{eq:KleeneClosure}
+	\end{equation}
+	と表す．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:formalstring}
+	\(\Sigma\)を以下の3つからなる集合とする：
+	\begin{enumerate}
+		\item 数字：\(\obj{0}, \obj{1}, \obj{2}, \dots\)
+		\item 加法を表す演算子記号：「\(\mathord{\obj{+}}\)」
+		\item 左カッコと右カッコ：「\(\lparen\)」「\(\rparen\)」
+	\end{enumerate}
+	このとき，以下はすべて\(\Sigma\)上の記号列である：
+	\begin{align*}
+		\obj{0},                                                                 \\
+		\obj{\lparen 1 + 2 \rparen},                                             \\
+		\obj{\lparen \lparen \lparen 4 \obj+ 1 \rparen + 5 \rparen + 6 \rparen}, \\
+		\obj{\rparen 4 + + \lparen \rparen 4 5 \lparen +}
+	\end{align*}
+\end{Ex}
+
+\Cref{Ex:formalstring}からもわかるように，
+単に「記号列」といっただけでは数学的に何らかの意味をもつと期待されるような記号列以外の記号列も含む．
+そのため，数学における「論理」を対象に議論する際には単に使う記号を列挙するだけでは不十分で，
+どのような記号列を「認める」のかを宣言する必要がある．
+要するに，用意した記号に対して「文法」を定義して議論の対象となる文字列を確定させる必要がある．
+このときによく使われる手法が帰納的定義である．例を挙げよう．
+
+\begin{Ex} \label[Ex]{Ex:recursivedefinition}
+	\(\Sigma\)を\cref{Ex:formalstring}で述べた記号の集合とする．
+	このとき，数式を以下のように定義する：
+	\begin{enumerate}
+		\item \(\Sigma\)の元のうち，数字はすべて数式である．
+		\item \(t_1, t_2\)が数式であるならば，記号列
+		      \begin{equation*}
+			      \obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}
+		      \end{equation*}
+		      は数式である．
+		\item 以上の規則を有限回適用して得られるもののみが数式である．
+	\end{enumerate}
+	このとき，\cref{Ex:formalstring}で述べた記号列のうち1つ目から3つ目までは数式であるが，4つ目は数式ではない．
+\end{Ex}
+
+\Cref{Ex:recursivedefinition}においては「数式とは〇〇であるものをいう」という形式での定義は困難である．
+そのため「\(\Sigma\)に属する数字からどのようにして数式全体が得られるか」という構成方法を述べることによって数式を定義している．
+整礎な半順序がすでに定義されている状況下での定義ではないため\cref{Thm:inductivedifinition}
+を即座に適用できるわけではないが，何が数式で何が数式でないかは明確に定まっており，
+この定義は定義として正当なものである．
+
+また，最後に「以上の規則を有限回適用して得られるもののみが」と宣言することで，
+上記の手続きで得られないものはすべてその定義からは外れていることを宣言し，
+対象の範囲を確定させている．この宣言がないと
+実際に定義したいものよりも広い範囲の対象が定義から外れることが明文化されない
+\footnote{%
+	例えば，偶数全体の集合\(A\)を「\(0 \in A\)であり，\(n \in A\)ならば\(n + 2 \in A\)かつ\(n - 2 \in A\)である」などとして
+	定義しようとしたとき，整数全体の集合\(\Zahlen\)もカギカッコ内の条件自体は満たしている．
+}%
+．
+とはいえ，この形式での定義においてこの宣言が必要なくなることはありえないので，自明であるとして省略されることも多い．
+
+\begin{Que} \label{Que:recursivedefinition}
+	\Cref{Ex:recursivedefinition}で述べた数式の定義を集合論のことばで正当化してみよう．
+	次のような集合\(L \subset \KleeneClosure{\Sigma}\)の存在を示せば十分である：
+	\begin{enumerate}
+		\item \(t \in \Sigma\)が数字ならば\(t \in L\)である．
+		\item 任意の\(t_1, t_2 \in L\)に対して\(\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen} \in L\)である．
+		\item \(L\)は上記の性質を満たす\(\KleeneClosure{\Sigma}\)の部分集合として包含関係に関して最小のものである．
+	\end{enumerate}
+	1, 2, 3をすべて満たす集合\(L\)の存在を示せ．
+\end{Que}
+
+\begin{Que} \label{Que:well-foundedexample}
+	\Cref{Ex:recursivedefinition}で述べた「数式」の定義からは自然に整礎な半順序が得られる．
+	これを示そう．
+	\Cref{Que:recursivedefinition}で述べた集合\(L\)について，
+	\(L\)上の二項関係\(\prec\)を以下のように定義する：
+	任意の\(t_1, t_2 \in L\)に対して
+	\(t_1 \prec \obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}\)かつ
+	\(t_2 \prec \obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}\)であり，
+	各\(x, y \in L\)に対して\(x \prec y\)となるのは上記のみである．
+	このとき，\(\prec\)の推移閉包\(\prec'\)は\(L\)上の二項関係として整礎な半順序であることを示せ
+	（ヒント：\(\prec'\)が\(L\)上の半順序であることはすぐにわかるので，\(L\)の部分集合\(L'\)が与えられたときの自然数\(n\)に対する主張
+	「\(L'\)が（記号列としての）長さ\(n\)以下の元をもつならば，\(L'\)は（\(L\)上の二項関係\(\prec'\)に関する）極小元をもつ」
+	がすべての自然数\(n\)に対して成り立つことを自然数に関する通常の数学的帰納法によって示すとよい）．
+\end{Que}
+
+なお，\cref{Que:well-foundedexample}における整礎な半順序\(\prec'\)は，\(L\)の構造から自然に与えられるものである．
+このように，帰納的に定義した集合に付随して与えられる整礎な半順序についての整礎帰納法を
+特に%
+\index[widx]{こうぞうきのうほう@構造帰納法}%
+\term{構造帰納法}と呼ぶ．
+
+\begin{Que} \label{Que:inductivedifinition}
+	\NewDocumentCommand{\Comp}{}{\mathop{\symup{Comp}}}
+	\NewDocumentCommand{\expr}{}{\text{\textit{expr}}}
+	\Cref{Thm:inductivedifinition}によって，\cref{Ex:recursivedefinition}で述べた
+	集合\(L\)の元\(\expr\)に対する以下の定義を正当化せよ．
+
+	数式\(\expr\)に対し，その複雑さ\(\apply{\Comp}{\expr}\)を以下のように定義する：
+	\(\expr\)が数字ならば，
+	\[
+		\apply{\Comp}{\expr} = 0
+	\]と定める．
+	\(\expr\)が数字以外のとき，\(\expr\)は2つの数式\(\expr_1, \expr_2\)を用いて\(\obj{\lparen} \expr_1 \obj{+} \expr_2 \obj{\rparen}\)
+	と表されるので，\(\expr\)の複雑さを\(\expr_1, \expr_2\)の複雑さを用いて
+	\[
+		\apply{\Comp}{\expr} = \max\Set{\apply{\Comp}{\expr_1}, \apply{\Comp}{\expr_2}} + 1
+	\]と定める．
+\end{Que}

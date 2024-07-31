@@ -49,6 +49,11 @@
 	\index[widx]{かいしゃく@解釈}%
 	\term{解釈}%
 	と呼ぶことが多い．
+
+	\(\symcal{M} = \pair{M, F}\)が\(\symcal{L}\)構造のとき，\(M\)を\(\symcal{M}\)の%
+	\index[widx]{たいしょうりょういき@対象領域}%
+	\term{対象領域}%
+	と呼ぶ．
 \end{Def}
 
 \Cref{Def:structure}は，形式的記号列として与えられる言語\(L\)の元が
@@ -57,7 +62,7 @@
 
 \begin{Def} \label{Def:namelanguage}
 	\(\symcal{L}\)を言語とし，\(\symcal{M} = \pair{M, F}\)を\(\symcal{L}\)構造とする．
-	このとき，集合\(M\)の元\(a\)ごとに定数記号\(c_a\)を用意し，
+	このとき，集合\(M\)の元\(a\)ごとに新たな定数記号\(c_a\)を用意し，
 	これを\(\symcal{L}\)に付け加えた言語\(\symcal{L} \cup \Set{c_a | a \in M}\)を考えることができる．
 	この言語を%
 	\index[sidx]{\(\languagewithname{\symcal{L}}{\symcal{M}}\)：構造による言語の拡張}%
@@ -67,7 +72,7 @@
 	\end{equation}
 	と表すことにする．各\(a \in M\)に対する\(c_a\)を\(a\)の%
 	\index[sidx]{\(c_a\)：\(a\)の名前}%
-	\index[widx]{名前}%
+	\index[widx]{なまえ@名前}%
 	\term{名前}という．
 \end{Def}
 
@@ -170,13 +175,95 @@
 		      とする．ただし，\(c_a\)は\(a \in M\)の名前である．
 	\end{enumerate}
 
+	\(\symcal{L}\)構造\(\symcal{M}\)と\(\symcal{L}\)論理式\(\varphi\)について，
 	\(\symcal{M} \satisfy \varphi\)であるとき，
 	\(\symcal{M}\)は\(\varphi\)を%
-	\index[widx]{じゅうそくする@充足する}%
-	\term{充足する}という．
+	\index[widx]{じゅうそく@充足}%
+	\term{充足}するという．
+	論理式\(\varphi\)が与えられたとき，\(\symcal{M} \satisfy \varphi\)となる\(\symcal{L}\)構造\(\symcal{M}\)が存在するならば，
+	\(\varphi\)は%
+	\index[widx]{じゅうそく@充足!じゅうそくかのう@---可能}%
+	\term{充足可能}であるという．
+
 \end{Def}
 
 \begin{Note}
 	\(a \in M\)の名前\(c_a\)は\(\apply{\Var}{c_a} = \emptyset\)を満たすので，
 	任意の論理式中の任意の変数記号に代入可能である．
 \end{Note}
+
+\begin{Ex} \label[Ex]{Ex:satisfy}
+	\(\symcal{L}\)を\cref{Ex:grouptheory}で述べた群論の言語とする．
+	整数全体の集合\(\Zahlen\)に対し，\(\Zahlen\)を対象領域とする\(\symcal{L}\)構造\(\symcal{M}\)を以下によって定義する：
+	\begin{enumerate}
+		\item \(\interpretation{\symcal{M}}{\obj{e}} = 0,\)
+		\item \(\interpretation{\symcal{M}}{\obj{\ast}} = \mathord{+},\)
+		\item \(\interpretation{\symcal{M}}{\obj{{}^{-1}}} = \mathord{-}.\)
+	\end{enumerate}
+	ここで，3つ目の式における右辺の「\(\mathord{-}\)」は\(x \mapsto -x\)で定義される写像である．
+
+	この\(\symcal{L}\)構造\(\symcal{M}\)は\cref{Ex:grouptheory}で挙げた3つの\(\symcal{L}\)文をすべて充足する．
+	一方で，\(\symcal{M}\)による解釈のうち\(\symcal{M}\)による\(\obj{e}\)の解釈を\(\interpretation{\symcal{M}}{\obj{e}} = 1\)
+	と置き換えて得られる\(\symcal{L}\)構造\(\symcal{M}'\)は，
+	\cref{Ex:grouptheory}で挙げた3つの\(\symcal{L}\)文のうち1つ目のみを充足する．
+\end{Ex}
+
+\begin{Que} \label{Que:satisfy}
+	\Cref{Ex:satisfy}で述べた事実が正しいことを確かめよ．
+\end{Que}
+
+\begin{Def} \label{Def:model}
+	\(\symcal{L}\)を言語，\(T\)を\(\symcal{L}\)理論とする．
+	このとき，\(\symcal{L}\)構造\(\symcal{M}\)が\(T\)の%
+	\index[widx]{もでる@モデル}%
+	\term{モデル}であるとは，任意の\(\varphi \in T\)に対して
+	\(\symcal{M} \satisfy \varphi\)
+	が成り立つことをいう．\(\symcal{M}\)が\(T\)のモデルであることを%
+	\index[sidx]{\(\symcal{M} \satisfy T\)：モデル}%
+	\begin{equation}
+		\symcal{M} \satisfy T
+		\label{eq:model}
+	\end{equation}
+	と表す．
+	また，\(T\)がモデルをもつとき，\(T\)は%
+	\index[widx]{じゅうそく@充足!じゅうそくかのう@---可能}%
+	\term{充足可能}であるという．
+
+	また，\(\varphi\)を\(\symcal{L}\)閉論理式とするとき，\(\symcal{L}\)理論\(T\)のすべてのモデルが
+	\(\varphi\)を充足するならば，\(\varphi\)は\(T\)の%
+	\index[widx]{ろんりてききけつ@論理的帰結}%
+	\term{論理的帰結}である，または\(\varphi\)は\(T\)における%
+	\index[widx]{ていり@定理}%
+	\term{定理}であるといい，
+	\begin{equation}
+		T \satisfy \varphi
+		\label{eq:logicalconsequence}
+	\end{equation}
+	と表す．特に，\(T = \emptyset\)のときには
+	\begin{equation}
+		\satisfy \varphi
+		\label{eq:nulllogicalconsequence}
+	\end{equation}
+	と表記する．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:model}
+	\Cref{Ex:grouptheory}で述べた3つの\(\symcal{L}\)文からなる\(\symcal{L}\)理論を\(T\)とする．
+	このとき，\cref{Ex:satisfy}で述べた\(\symcal{L}\)構造\(\symcal{M}\)は\(T\)のモデルである．
+	一方で，\cref{Ex:satisfy}で述べた\(\symcal{L}\)構造\(\symcal{M}'\)は\(T\)のモデルではない．
+\end{Ex}
+
+\begin{Note}
+	通常の通学では，\cref{Ex:model}における「\(\symcal{M}\)が\(T\)のモデルである」
+	ことを「\(\symcal{M}\)が群である」と表現している．
+	通常の数学では理論そのものと構造がその理論のモデルであるという主張を区別する必要性は薄いのだが，
+	数理論理学の文脈では当然厳格に区別する必要がある．
+\end{Note}
+
+\begin{Que} \label{Que:model}
+	\Cref{Ex:grouptheory}で挙げた群の理論\(T\)について，次の論理式を\(\varphi\)とする：
+	\[
+		\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\ast} \obj{y} = \obj{y} \obj{\ast} \obj{x}}.
+	\]
+	このとき，\(\varphi\)を充足する\(T\)のモデルと\(\varphi\)を充足しない\(T\)のモデルを1つずつ挙げよ．
+\end{Que}

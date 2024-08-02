@@ -207,27 +207,27 @@
 となるための必要十分条件を考える．
 まず\(\varphi_1\)については
 \begin{align*}
-	\symcal{M} & \satisfy \varphi_1                                                                                                                                         \\
-	           & \metaequivalent \text{すべての\(a \in \Zahlen\)に対して\(\symcal{M} \satisfy \forall \obj{y} \forall \obj{z} \subst{\varphi_1}{c_a / \obj{x}}\)}                   \\
-	           & \metaequivalent\text{すべての\(a, b \in \Zahlen\)に対して\(\symcal{M} \satisfy \forall \obj{z} \subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}\)}          \\
-	           & \metaequivalent\text{すべての\(a, b, c\in \Zahlen\)に対して\(\symcal{M} \satisfy \subst{\subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}}{c_c / \obj{z}}\)} \\
-	           & \metaequivalent\text{すべての\(a, b, c\in \Zahlen\)に対して
+	                & \symcal{M} \satisfy \varphi_1                                                                                                               \\
+	\metaequivalent & \text{すべての\(a \in \Zahlen\)に対して\(\symcal{M} \satisfy \forall \obj{y} \forall \obj{z} \subst{\varphi_1}{c_a / \obj{x}}\)}                    \\
+	\metaequivalent & \text{すべての\(a, b \in \Zahlen\)に対して\(\symcal{M} \satisfy \forall \obj{z} \subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}\)}          \\
+	\metaequivalent & \text{すべての\(a, b, c\in \Zahlen\)に対して\(\symcal{M} \satisfy \subst{\subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}}{c_c / \obj{z}}\)} \\
+	\metaequivalent & \text{すべての\(a, b, c\in \Zahlen\)に対して
 		\(\interpretation{\symcal{M}}{\paren{\paren{c_a \obj{\ast} c_b} \obj{\ast} c_c}}
-	= \interpretation{\symcal{M}}{\paren{c_a \obj{\ast} \paren{c_b \obj{\ast} c_c}}}\)}                                                                                     \\
-	           & \metaequivalent \text{すべての\(a, b, c \in \Zahlen\)に対して
+	= \interpretation{\symcal{M}}{\paren{c_a \obj{\ast} \paren{c_b \obj{\ast} c_c}}}\)}                                                                           \\
+	\metaequivalent & \text{すべての\(a, b, c \in \Zahlen\)に対して
 		\(\interpretation{\symcal{M}}{\paren{c_a \obj{\ast} c_b}} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{c_c}
-	= \interpretation{\symcal{M}}{c_a} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{\paren{c_b \obj{\ast} c_c}} \)}                                  \\
-	           & \metaequivalent \text{すべての\(a, b, c \in \Zahlen\)に対して\(
+	= \interpretation{\symcal{M}}{c_a} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{\paren{c_b \obj{\ast} c_c}} \)}                        \\
+	\metaequivalent & \text{すべての\(a, b, c \in \Zahlen\)に対して\(
 		\paren{\interpretation{\symcal{M}}{c_a} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{c_b}} + c
 		= a + \paren{\interpretation{\symcal{M}}{c_b} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{c_c}}
-	\)}                                                                                                                                                                     \\
-	           & \metaequivalent \text{すべての\(a, b, c \in \Zahlen\)に対して\(
+	\)}                                                                                                                                                           \\
+	\metaequivalent & \text{すべての\(a, b, c \in \Zahlen\)に対して\(
 		\paren{a + b} + c = a + \paren{b + c}
 		\)}
 \end{align*}
 となる．\(\varphi_2, \varphi_3\)についても同様にして
 \begin{align*}
-	\symcal{M} \satisfy \varphi_2 & \metaequivalent \text{すべての\(a \in \Zahlen\)に対して\(0 + a = a\)}          \\
+	\symcal{M} \satisfy \varphi_2 & \metaequivalent \text{すべての\(a \in \Zahlen\)に対して\(0 + a = a\)},         \\
 	\symcal{M} \satisfy \varphi_3 & \metaequivalent \text{すべての\(a \in \Zahlen\)に対して\(\paren{-a} + a = 0\)}
 \end{align*}
 となることがわかるので，\(\symcal{M}\)が\(\varphi_1, \varphi_2, \varphi_3\)のすべてを充足することがわかる．
@@ -243,9 +243,10 @@
 	\interpretation{\symcal{M}'}{\obj{\ast}}    & = \circ,      \\
 	\interpretation{\symcal{M}'}{\obj{{}^{-1}}} & = {}^{-1}
 \end{align*}
-ここで，\(\symup{id}\)は恒等写像，\(\circ \colon S_n \to S_n\)は写像の合成をとる写像，
+ここで，\(\symup{id} \colon S_n \to S_n\)は\(S_n\)上の恒等写像（つまり\(x \mapsto x\)という写像），
+\(\circ \colon S_n \to S_n\)は写像の合成をとる写像，
 \({}^{-1} \colon S_n \to S_n\)は逆写像をとる写像である．
-このようにして定義される\(\symcal{L}\)構造\(\symcal{M}'\)は\(\varphi\)を充足しない\(T\)のモデルである．
+このようにして定義される\(\symcal{L}\)構造\(\symcal{M}'\)は，\(n \geq 3\)ならば\(\varphi\)を充足しない\(T\)のモデルである．
 
 \Cref{Que:model}は，通常の数学における「可換な群とそうでない群を1つずつ挙げよ」という問題に相当することに注意せよ．
 

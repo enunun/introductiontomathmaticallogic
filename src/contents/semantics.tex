@@ -12,7 +12,7 @@
 
 \newpage
 
-\section{モデル} \label[section]{sec:model}
+\section{理論とそのモデル} \label[section]{sec:model}
 
 我々は，項や論理式を純粋な形式的記号列として導入し，
 数学理論の形式化を試みた．
@@ -158,9 +158,18 @@
 		      とする．
 		\item \(\varphi, \psi\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉論理式とするとき，
 		      \[
-			      \symcal{M} \satisfy \varphi \to \psi   \metaequivalent \text{\(\symcal{M} \satisfy \varphi\)ならば\(\symcal{M} \satisfy \psi\)}
+			      \symcal{M} \satisfy \varphi \to \psi \metaequivalent \text{\(\symcal{M} \satisfy \lnot \varphi\)または\(\symcal{M} \satisfy \psi\)}
 		      \]
-		      とする．
+		      とする%
+		      \footnote{%
+			      ここでは\(\symcal{M} \satisfy \varphi\)ならば\(\symcal{M} \satisfy \psi\)と書きたくなるところだが，あえてそうしていない．
+			      これは\(\symcal{M} \satisfy \varphi\)でないばあいに\(\symcal{M} \satisfy \varphi \to \psi\)といえるかどうかに
+			      若干のあいまいさが残ってしまうことを避けるためである．
+			      通常の数学では，ある主張\(A\)が成り立たない場合は「\(A\)ならば\(B\)」は成り立つものとして考えるためそれでも問題ないと思われるが，
+			      ここではあいまいさを極力排することを意図してこのような記述とした．
+			      言い換えれば『\(A\)が成り立たない場合は「\(A\)ならば\(B\)」は成り立つと決めた』ということとなる．
+		      }%
+		      ．
 		\item \(\varphi\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)論理式，\(x\)を変数記号とするとき，
 		      \(\exists x \varphi\)が\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉論理式（つまり\(\varphi\)に自由出現する変数記号が\(x\)以外にない）であれば
 		      \[
@@ -227,7 +236,9 @@
 	と表す．
 	また，\(T\)がモデルをもつとき，\(T\)は%
 	\index[widx]{じゅうそく@充足!じゅうそくかのう@---可能}%
-	\term{充足可能}であるという．
+	\term{充足可能}である，もしくは\(T\)は%
+	\index[widx]{むむじゅん@無矛盾}%
+	\term{無矛盾}であるという．
 
 	また，\(\varphi\)を\(\symcal{L}\)閉論理式とするとき，\(\symcal{L}\)理論\(T\)のすべてのモデルが
 	\(\varphi\)を充足するならば，\(\varphi\)は\(T\)の%
@@ -267,3 +278,66 @@
 	\]
 	このとき，\(\varphi\)を充足する\(T\)のモデルと\(\varphi\)を充足しない\(T\)のモデルを1つずつ挙げよ．
 \end{Que}
+
+
+\section{構造の同型} \label{sec:isomorphic}
+
+\Cref{sec:model}では，構造やモデルについて基本的な定義を行った．
+\Cref{sec:model}は理論と構造との間の関係に着目した議論であったが，ここでは構造同士の関係について考えよう．
+
+\begin{Def} \label{Def:isomorphic}
+	\(\symcal{L}\)を言語とし，\(\symcal{M}, \symcal{N}\)を対象領域が
+	それぞれ\(M, N\)であるような\(\symcal{L}\)構造とする．
+	このとき，写像\(\sigma \colon M \to N\)が\(\symcal{M}\)から\(\symcal{N}\)への%
+	\index[widx]{どうけい@同型!じゅうどうけい@準---写像}%
+	\term{準同型写像}であるとは，
+	\(\sigma\)が以下の条件を満たすことをいう：
+	\begin{enumerate}
+		\item すべての定数記号\(c \in L\)に対して
+		      \begin{equation}
+			      \apply{\sigma}{\interpretation{\symcal{M}}{c}} = \interpretation{\symcal{N}}{c}
+			      \label{eq:constanthomorphism}
+		      \end{equation}
+		      となる．
+		\item アリティ\(n\)の任意の関数記号\(f\)と任意の\(a_1, a_2, \dots, a_n \in M\)に対して
+		      \begin{equation}
+			      \apply{\interpretation{\symcal{M}}{f}}{a_1, a_2, \dots, a_n}
+			      = \apply{\interpretation{\symcal{N}}{f}}{
+				      \apply{\sigma}{a_1}, \apply{\sigma}{a_2}, \dots, \apply{\sigma}{a_n}
+			      }
+			      \label{eq:functionhomorphism}
+		      \end{equation}
+		      が成り立つ．
+		\item アリティ\(n\)の任意の関係記号\(r\)と任意の\(a_1, a_2, \dots, a_n\)に対して
+		      \begin{equation}
+			      \pair{a_1, a_2, \dots, a_n} \in \interpretation{\symcal{M}}{r}
+			      \metaimplies \pair{\apply{\sigma}{a_1}, \apply{\sigma}{a_2}, \dots, \apply{\sigma}{a_n}} \in \interpretation{\symcal{N}}{r}
+			      \label{eq:relationhomorphism}
+		      \end{equation}
+		      が成り立つ．
+	\end{enumerate}
+
+	また，準同型写像\(\sigma \colon M \to N\)が\(\symcal{M}\)から\(\symcal{N}\)への%
+	\index[widx]{うめこみ@埋め込み}%
+	\term{埋め込み}であるとは，\(\sigma\)が写像として単射であって，さらに
+	\begin{equation}
+		\pair{a_1, a_2, \dots, a_n} \in \interpretation{\symcal{M}}{r}
+		\metaequivalent \pair{\apply{\sigma}{a_1}, \apply{\sigma}{a_2}, \dots, \apply{\sigma}{a_n}} \in \interpretation{\symcal{N}}{r}
+		\label{eq:relationembedding}
+	\end{equation}
+	が成り立つことをいう．
+
+	埋め込み\(\sigma \colon M \to N\)が写像として全単射である場合，\(\sigma\)を\(\symcal{M}\)から\(\symcal{N}\)への
+	\index[widx]{どうけい@同型!どうけいしゃぞう@---写像}%
+	\term{同型写像}と呼ぶ．
+	2つの構造\(\symcal{M}, \symcal{N}\)について，\(\symcal{M}\)から\(\symcal{N}\)への同型写像が存在する場合，
+	\(\symcal{M}\)と\(\symcal{N}\)は%
+	\index[widx]{どうけい@同型}%
+	\term{同型}であるといい，%
+	\index[sidx]{\(\symcal{M} \isomorphic \symcal{N}\)：同型}%
+	\begin{equation}
+		\symcal{M} \isomorphic \symcal{N}
+		\label{eq:isomorphic}
+	\end{equation}
+	と表す．
+\end{Def}

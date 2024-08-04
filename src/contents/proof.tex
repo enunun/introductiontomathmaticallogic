@@ -21,25 +21,35 @@
 	\index[sidx]{\(\Gamma \sequent \varphi\)：シークエント}%
 	\begin{equation}
 		\Gamma \sequent \varphi
+		\label{eq:sequent}
 	\end{equation}
 	を%
 	\index[widx]{しーくえんと@シークエント}%
-	\term{シークエント}という．
+	\term{シークエント}という%
+	\footnote{%
+		通常の数学における「ならば」を表す記号「\(\implies\)」とは別物である．
+		\Cref{eq:sequent}に登場した「\(\sequent\)」は何ら意味を有さない形式的な記号である．
+		これは本書がそういう記号の使い方をしているというだけなので，くれぐれも
+		「\(\implies\)は長さで意味が変わるのだ」などと勘違いしないように注意されたい．
+	}%
+	．
 	このとき，\(\Gamma\)をこのシークエントの左辺，\(\varphi\)をこのシークエントの右辺という．
 \end{Def}
 
 \begin{Ex} \label[Ex]{Ex:sequent}
 	論理式\(\varphi\)に対して，
-	\begin{equation*}
+	\begin{equation}
 		\varphi \sequent \varphi
-	\end{equation*}
+		\label{eq:initialsequent}
+	\end{equation}
 	という記号列はシークエントである．この形のシークエントを%
 	\index[widx]{ししき@始式}%
 	\term{始式}と呼ぶ．
 	また，左辺に何もない
-	\begin{equation*}
-		\sequent \varphi, \\
-	\end{equation*}
+	\begin{equation}
+		\sequent \varphi,
+		\label{eq:emptysequent}
+	\end{equation}
 	といった記号列もシークエントである．
 \end{Ex}
 

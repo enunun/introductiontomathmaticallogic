@@ -127,7 +127,11 @@
 		\symcal{M} \satisfy \varphi
 		\label{eq:structuresatisfy}
 	\end{equation}
-	を，以下のように帰納的に定義する：
+	を%
+	\footnote{%
+		この記号「\(\satisfy\)」は「ダブルターンスタイル記号」だとか「ゲタ記号」だとか呼ばれているようである．
+	}%
+	，以下のように帰納的に定義する：
 	\begin{enumerate}
 		\item \(t_1, t_2\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉項とするとき，
 		      \[
@@ -299,8 +303,8 @@
 	の解釈をどのように定めても\cref{Ex:grouptheory}で挙げた
 	群の理論\(T\)のモデルとみなすことはできない\(\symcal{L}_1\)構造の例を挙げよ．
 
-	上記のような例が存在することは，\(T\)が\(\symcal{L}_1\)に記号を追加して
-	言語を拡張することによって\(T_1\)から自然に得られる理論だとはみなせないことを意味している．
+	上記のような例が存在することは，\(\symcal{L}_1\)に記号を追加して
+	言語を拡張しても，\(T_1\)から\(T\)を自然に得ることはできないことを意味している．
 \end{Que}
 
 
@@ -369,7 +373,7 @@
 
 簡単な議論によって，以下の補題が成り立つことがわかる．
 
-\begin{Lemma} \label{Lemma:equivrelationforisomorphic}
+\begin{Lemma} \label[Lemma]{Lemma:equivrelationforisomorphic}
 	\(\symcal{L}\)を言語とし，\(\symcal{M_1}, \symcal{M_2}, \symcal{M_3}\)を\(\symcal{L}\)構造とする．
 	このとき
 	\begin{align}
@@ -424,7 +428,7 @@
 
 \Cref{Lemma:equivrelationforisomorphic}から，以下の補題が即座に得られる．
 
-\begin{Lemma} \label{Lemma:equivrelationforelementarilyequivalent}
+\begin{Lemma} \label[Lemma]{Lemma:equivrelationforelementarilyequivalent}
 	\(\symcal{L}\)を言語とし，\(\symcal{M_1}, \symcal{M_2}, \symcal{M_3}\)を\(\symcal{L}\)構造とする．
 	このとき
 	\begin{align}
@@ -514,7 +518,7 @@
 	以上より，任意の\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉項\(t\)に対してもとの主張が成り立つことがわかった．
 \end{proof}
 
-\begin{Thm} \label{eq:isomorphicforlogicalexpression}
+\begin{Thm} \label[Thm]{Thm:isomorphicforlogicalexpression}
 	\(\symcal{L}\)を言語，\(\symcal{M}, \symcal{N}\)を\(\symcal{L}\)構造とする．
 	このとき，\(\symcal{M}\)と\(\symcal{N}\)が同型であるならば，
 	\(\symcal{M}\)と\(\symcal{N}\)は初等同値である．
@@ -570,7 +574,7 @@
 	残りの場合も上と同様にして導ける（\cref{Def:semanticimplies}の全パターンを網羅すればよい）．
 \end{proof}
 
-\begin{Ex} \label{Ex:isomorphic}
+\begin{Ex} \label[Ex]{Ex:isomorphic}
 	\Cref{Ex:grouptheory}で挙げた群の理論\(T\)の2つのモデル\(\symcal{M}, \symcal{N}\)が同型であることは，
 	よく知られた群の同型に関する標準的な定義
 	（\(M, N\)をそれぞれ\(\symcal{M}, \symcal{N}\)の対象領域とするとき，

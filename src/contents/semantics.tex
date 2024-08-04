@@ -85,6 +85,8 @@
 		\label{eq:languagewithnameinterpretation}
 	\end{equation}
 	と定めることにより，自然に\(\languagewithname{\symcal{L}}{\symcal{M}}\)構造とみなせる．
+	以後，\(\symcal{L}\)構造\(\symcal{M}\)はこの解釈によって
+	\(\languagewithname{\symcal{L}}{\symcal{M}}\)構造でもあるとみなす．
 \end{Note}
 
 まずは項に対する解釈を定義しよう．
@@ -94,8 +96,10 @@
 	\(t\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉項として，\(t\)の\(\symcal{M}\)による解釈\(\interpretation{\symcal{M}}{t}\)
 	を以下のように帰納的に定義する：
 	\begin{enumerate}
-		\item \(t\)が定数記号\(c\)であるならば\(\interpretation{\symcal{M}}{t} = \interpretation{\symcal{M}}{c}\)と定める．
-		\item \(t\)がアリティ\(n\)の関数記号\(f\)と\(\symcal{L}\)閉項\(t_1, t_2, \dots, t_n\)を用いて\(\apply{f}{t_1, t_2, \dots, t_n}\)と表されるならば
+		\item \(t\)が言語\(\languagewithname{\symcal{L}}{\symcal{M}}\)における定数記号\(c\)であるならば
+		      \(\interpretation{\symcal{M}}{t} = \interpretation{\symcal{M}}{c}\)と定める．
+		\item \(t\)がアリティ\(n\)の関数記号\(f\)と\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉項
+		      \(t_1, t_2, \dots, t_n\)を用いて\(\apply{f}{t_1, t_2, \dots, t_n}\)と表されるならば
 		      \begin{equation}
 			      \interpretation{\symcal{M}}{t}
 			      = \apply{\interpretation{\symcal{M}}{f}}{
@@ -279,6 +283,27 @@
 	このとき，\(\varphi\)を充足する\(T\)のモデルと\(\varphi\)を充足しない\(T\)のモデルを1つずつ挙げよ．
 \end{Que}
 
+\begin{Que} \label{Que:grouptheoryaxiomize}
+	\Cref{Que:invalidtheory}に関連して，アリティ2の関数記号1つだけからなる
+	言語\(\symcal{L}_1 = \Set{\obj{\ast}}\)に関する以下の
+	3つの論理式からなる\(\symcal{L}_1\)理論を\(T_1\)とする：
+	\begin{align*}
+		\varphi_1 \colon & \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\paren{\obj{x} \obj{\ast} \obj{y}} \obj{\ast} \obj{z} \objeq \obj{x} \obj{\ast} \paren{\obj{y} \obj{\ast} \obj{z}}}, \\
+		\varphi_2 \colon & \exists \obj{e'} \forall \obj{x} \paren{\obj{e'} \obj{\ast} \obj{x} \objeq \obj{x}},                     \\
+		\varphi_3 \colon & \exists \obj{e'}\forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} \objeq \obj{e}}.
+	\end{align*}
+	このとき，\cref{Ex:grouptheory}で挙げた群の言語\(\symcal{L}\)に対して\(\symcal{L}_1 \subset \symcal{L}\)が成り立つので，
+	\(T_1\)は自然に\(\symcal{L}\)理論ともみなせる．
+	さて，\(\symcal{L}_1\)理論\(T_1\)のモデルだが，\(\symcal{L}_1\)が有していない記号\(\obj{e}, {}^{\obj{-1}}\)
+	の解釈をどのように定めても\cref{Ex:grouptheory}で挙げた
+	群の理論\(T\)のモデルとみなすことはできない\(\symcal{L}_1\)構造の例を挙げよ．
+
+	上記のような例が存在することは，\(T\)が\(\symcal{L}_1\)に記号を追加して
+	言語を拡張することによって\(T_1\)から自然に得られる理論だとはみなせないことを意味している．
+\end{Que}
+
+
 
 \section{構造の同型} \label{sec:isomorphic}
 
@@ -301,7 +326,7 @@
 		      となる．
 		\item アリティ\(n\)の任意の関数記号\(f\)と任意の\(a_1, a_2, \dots, a_n \in M\)に対して
 		      \begin{equation}
-			      \apply{\interpretation{\symcal{M}}{f}}{a_1, a_2, \dots, a_n}
+			      \apply{\sigma}{\apply{\interpretation{\symcal{M}}{f}}{a_1, a_2, \dots, a_n}}
 			      = \apply{\interpretation{\symcal{N}}{f}}{
 				      \apply{\sigma}{a_1}, \apply{\sigma}{a_2}, \dots, \apply{\sigma}{a_n}
 			      }
@@ -341,3 +366,218 @@
 	\end{equation}
 	と表す．
 \end{Def}
+
+簡単な議論によって，以下の補題が成り立つことがわかる．
+
+\begin{Lemma} \label{Lemma:equivrelationforisomorphic}
+	\(\symcal{L}\)を言語とし，\(\symcal{M_1}, \symcal{M_2}, \symcal{M_3}\)を\(\symcal{L}\)構造とする．
+	このとき
+	\begin{align}
+		\symcal{M_1}                          & \isomorphic \symcal{M_1},
+		\label{eq:reflexivityforisomorphic}                                                         \\
+		\symcal{M_1} \isomorphic \symcal{M_2} & \metaimplies \symcal{M_2} \isomorphic \symcal{M_1},
+		\label{eq:symmetryforisomorphic}                                                            \\
+		\text{\(\symcal{M_1} \isomorphic \symcal{M_2}\)かつ\(\symcal{M_2} \isomorphic \symcal{M_3}\)}
+		                                      & \metaimplies \symcal{M_1} \isomorphic \symcal{M_3}
+		\label{eq:transitivityforisomorphic}
+	\end{align}
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\Cref{eq:reflexivityforisomorphic}は恒等写像が同型写像であることから，
+	\cref{eq:symmetryforisomorphic}は同型写像の逆写像もまた同型写像であることから，
+	\cref{eq:transitivityforisomorphic}は同型写像の合成もまた同型写像であることからそれぞれ従う．
+\end{proof}
+
+2つの\(\symcal{L}\)構造\(\symcal{M}, \symcal{N}\)が同型であることは，
+定数記号，関数記号，関係記号のすべてが同型写像\(\sigma\)を通して「翻訳」できることを主張している．
+通常の数学では，2つの構造が同型であることは「その理論の内部ではその2つの構造は同一視できる」
+ことと解釈される．この認識が適切であることを以下で検証しよう．
+
+まずは「その理論の内部ではその2つの構造は同一視できる」ことの定式化から行う．
+この主張は「その2つの構造はまったく同じ性質を満たす」ここと解釈できる．
+今までの議論の中で類似した概念として充足関係が登場している．
+そこで，以下のように定義しよう．
+
+\begin{Def} \label{Def:elementarilyequivalent}
+	\(\symcal{L}\)を言語とし，\(\symcal{M}, \symcal{N}\)を\(\symcal{L}\)構造とする．
+	このとき，
+	任意の\(\symcal{L}\)閉論理式\(\varphi\)に対して
+	\begin{equation}
+		\symcal{M} \satisfy \varphi \metaequivalent \symcal{N} \satisfy \varphi
+		\label{eq:elementarilyequivalentcondition}
+	\end{equation}
+	が成り立つとき，\(\symcal{M}\)と\(\symcal{N}\)は
+	\index[widx]{しょとうどうち@初等同値}%
+	\term{初等同値}であるといい，
+	\begin{equation}
+		\symcal{M} \elementarilyequivalent \symcal{N}
+		\label{eq:elementarilyequivalent}
+	\end{equation}
+	と表す%
+	\footnote{%
+		オブジェクト側の等号と記号が被っているが，文脈上混乱することはまずないと考えられる．
+	}%
+	．
+\end{Def}
+
+\Cref{Lemma:equivrelationforisomorphic}から，以下の補題が即座に得られる．
+
+\begin{Lemma} \label{Lemma:equivrelationforelementarilyequivalent}
+	\(\symcal{L}\)を言語とし，\(\symcal{M_1}, \symcal{M_2}, \symcal{M_3}\)を\(\symcal{L}\)構造とする．
+	このとき
+	\begin{align}
+		\symcal{M_1}                                      & \elementarilyequivalent \symcal{M_1},
+		\label{eq:reflexivityforelementarilyequivalent}                                                                    \\
+		\symcal{M_1} \elementarilyequivalent \symcal{M_2} & \metaimplies \symcal{M_2} \isomorphic \symcal{M_1},
+		\label{eq:symmetryforelementarilyequivalent}                                                                       \\
+		\text{\(\symcal{M_1} \elementarilyequivalent \symcal{M_2}\)かつ\(\symcal{M_2} \elementarilyequivalent \symcal{M_3}\)}
+		                                                  & \metaimplies \symcal{M_1} \elementarilyequivalent \symcal{M_3}
+		\label{eq:transitivityforelementarilyequivalent}
+	\end{align}
+	が成り立つ．
+\end{Lemma}
+
+容易に予想できるように，同型である2つの構造は初等同値である．このことを検証しよう．
+
+\begin{Lemma} \label[Lemma]{Lemma:isomorphicforterm}
+	\(\symcal{L}\)を言語とし，\(\symcal{M}, \symcal{N}\)は対象領域がそれぞれ\(M, N\)であるような
+	同型である\(\symcal{L}\)構造とし，\(\sigma \colon M \to N\)を同型写像とする．
+	このとき，任意の\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉項\(t\)に対して
+	\begin{align}
+		\apply{\sigma}{
+			\interpretation{\symcal{M}}{t}
+		}
+		= \interpretation{\symcal{N}}{
+			\subst{t}{\sigma}
+		}
+		\label{eq:isomorphicforterm}
+	\end{align}
+	が成り立つ．ここで，\(\subst{t}{\sigma}\)は\(t\)に出現する各\(a \in M\)の名前をすべて\(\apply{\sigma}{a} \in N\)
+	の名前で置き換えて得られる\(\languagewithname{\symcal{L}}{\symcal{N}}\)閉項とする．
+\end{Lemma}
+
+\begin{proof}
+	\(t\)の構成に関する帰納法によって示す．
+	\(t\)が\(\symcal{L}\)における定数記号であるとき，\cref{eq:constanthomorphism}から\cref{eq:isomorphicforterm}が従う．
+	\(t\)が\(M\)の元\(a\)の名前\(c_a\)であるとき，\cref{eq:isomorphicforterm}は
+	\[
+		\apply{\sigma}{\interpretation{\symcal{M}}{c_a}} = \interpretation{\symcal{N}}{c_{\apply{\sigma}{a}}}
+	\]
+	と書き換えられ，どちらも\(\apply{\sigma}{a}\)に等しいことから\cref{eq:isomorphicforterm}の成立がわかる．
+	次に，\(t\)がアリティ\(n\)の関数記号\(f\)と，
+	示すべき主張が成り立つ\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉項\(t_1, t_2, \dots, t_n\)を用いて
+	\[
+		t = \apply{f}{t_1, t_2, \dots, t_n}
+	\]
+	と書ける場合を考える．このとき，
+	\begin{align*}
+		\apply{\sigma}{
+			\interpretation{\symcal{M}}{t}
+		}
+		 & =
+		\apply{\sigma}{
+			\apply{\interpretation{\symcal{M}}{f}}{
+				\interpretation{\symcal{M}}{t_1},
+				\interpretation{\symcal{M}}{t_2},
+				\dots,
+				\interpretation{\symcal{M}}{t_n}
+			}
+		}    \\
+		 & =
+		\apply{\interpretation{\symcal{N}}{f}}{
+			\apply{\sigma}{\interpretation{\symcal{M}}{t_1}},
+			\apply{\sigma}{\interpretation{\symcal{M}}{t_2}},
+			\dots,
+			\apply{\sigma}{\interpretation{\symcal{M}}{t_n}}
+		}    \\
+		 & =
+		\apply{\interpretation{\symcal{N}}{f}}{
+			\interpretation{\symcal{N}}{\subst{t_1}{\sigma}},
+			\interpretation{\symcal{N}}{\subst{t_2}{\sigma}},
+			\dots,
+			\interpretation{\symcal{N}}{\subst{t_n}{\sigma}}
+		}    \\
+		 & =
+		\interpretation{\symcal{N}}{\paren{\apply{f}{
+					\subst{t_1}{\sigma},
+					\subst{t_2}{\sigma},
+					\dots,
+					\subst{t_n}{\sigma},
+		}}}  \\
+		 & =
+		\interpretation{\symcal{N}}{\subst{t}{\sigma}}
+	\end{align*}
+	となるので\cref{eq:isomorphicforterm}が成り立つ．
+
+	以上より，任意の\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉項\(t\)に対してもとの主張が成り立つことがわかった．
+\end{proof}
+
+\begin{Thm} \label{eq:isomorphicforlogicalexpression}
+	\(\symcal{L}\)を言語，\(\symcal{M}, \symcal{N}\)を\(\symcal{L}\)構造とする．
+	このとき，\(\symcal{M}\)と\(\symcal{N}\)が同型であるならば，
+	\(\symcal{M}\)と\(\symcal{N}\)は初等同値である．
+\end{Thm}
+
+\begin{proof}
+	\(\symcal{M}, \symcal{N}\)の対象領域をそれぞれ\(M, N\)とし，
+	\(\sigma \colon M \to N\)を同型写像とする．
+	\Cref{Lemma:equivrelationforelementarilyequivalent}により，
+	\(\symcal{M} \satisfy \varphi\)のとき\(\symcal{N} \satisfy \varphi\)となることを示せば十分．
+
+	\(\varphi\)が\(\symcal{L}\)閉項\(t_1, t_2\)に対する\(t_1 \objeq t_2\)の形のとき，
+	\(\symcal{M} \satisfy \varphi\)とすると\(\interpretation{\symcal{M}}{t_1} = \interpretation{\symcal{M}}{t_2}\)である．
+	よって\cref{Lemma:isomorphicforterm}から任意の\(\symcal{L}\)閉項\(t\)に対して
+	\[
+		\apply{\sigma}{\interpretation{\symcal{M}}{t}}
+		=
+		\interpretation{\symcal{N}}{\subst{t}{\sigma}}
+		=
+		\interpretation{\symcal{N}}{t}
+	\]
+	なので，\(\apply{\sigma}{t_1} = \apply{\sigma}{t_2}\)から
+	\(\interpretation{\symcal{N}}{t_1} = \interpretation{\symcal{N}}{t_2}\)が得られるため
+	\(\symcal{N} \satisfy t_1 \objeq t_2\)となる．
+
+	\(\varphi\)がアリティ\(n\)の関係記号\(n\)と\(\symcal{L}\)閉項\(t_1, t_2, \dots, t_n\)に対する
+	\(\apply{r}{t_1, t_2, \dots, t_n}\)の形のとき，
+	\(\symcal{M} \satisfy \varphi\)とすると
+	\(\pair{
+		\interpretation{\symcal{M}}{t_1},
+		\interpretation{\symcal{M}}{t_2},
+		\dots,
+		\interpretation{\symcal{M}}{t_n}
+	} \in \interpretation{\symcal{M}}{r}\)となる．
+	よって，\cref{eq:functionhomorphism}と\cref{Lemma:isomorphicforterm}から
+	\(\symcal{N} \satisfy \varphi\)が従う．
+
+	次に，\(\varphi\)が定理の主張を満たす\(\symcal{L}\)閉論理式\(\psi\)に対する
+	\(\lnot \psi\)の形の場合を考える．
+	\(\symcal{M} \satisfy \varphi\)とすると\(\symcal{M} \satisfy \psi\)ではない．
+	ここで，\(\symcal{N} \satisfy \psi\)と仮定すると，帰納法の仮定によって
+	\(\symcal{M} \satisfy \psi\)となって矛盾する．
+	よって\(\symcal{N} \satisfy \psi\)ではないので\(\symcal{N} \satisfy \varphi\)である．
+
+	\(\varphi\)が定理の主張を満たす\(\symcal{L}\)閉論理式\(\varphi_1, \varphi_2\)に対する
+	\(\varphi_1 \lor \varphi_2\)の形の場合を考える．
+	\(\symcal{M} \satisfy \varphi\)だとすると\(\symcal{M} \satisfy \varphi_1\)または
+	\(\symcal{M} \satisfy \varphi_2\)である．
+	どちらの場合も帰納法の仮定によって
+	「\(\symcal{N} \satisfy \varphi_1\)または\(\symcal{N} \satisfy \varphi_2\)」
+	が成り立つので\(\symcal{N} \satisfy \varphi\)である．
+
+	残りの場合も上と同様にして導ける（\cref{Def:semanticimplies}の全パターンを網羅すればよい）．
+\end{proof}
+
+\begin{Ex} \label{Ex:isomorphic}
+	\Cref{Ex:grouptheory}で挙げた群の理論\(T\)の2つのモデル\(\symcal{M}, \symcal{N}\)が同型であることは，
+	よく知られた群の同型に関する標準的な定義
+	（\(M, N\)をそれぞれ\(\symcal{M}, \symcal{N}\)の対象領域とするとき，
+	全単射\(f \colon M \to N\)で任意の\(x, y \in M\)に対して
+	\(\apply{f}{x \interpretation{\symcal{M}}{\ast} y}
+	= \apply{f}{x} \interpretation{\symcal{N}}{\ast} \apply{f}{y}\)が成り立つものが存在すること）と一致する．
+	よって「群として同型」であるような2つの群は，\(\symcal{L}\)閉論理式で表現できる性質に差異はない．
+	例えば「可換群である」という主張は\(\symcal{L}\)閉論理式として表現できる（\cref{Que:model}を参照）ので，
+	同型な2つの群はどちらも可換であるか，どちらも可換でないかのいずれかである．
+\end{Ex}

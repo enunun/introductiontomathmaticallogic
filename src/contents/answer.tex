@@ -250,6 +250,34 @@
 
 \Cref{Que:model}は，通常の数学における「可換な群とそうでない群を1つずつ挙げよ」という問題に相当することに注意せよ．
 
+\subsection*{\Cref{Que:grouptheoryaxiomize}}
+
+2つの元からなる集合\(M = \Set{a, b}\)に対し，\(M\)を対象領域とする\(\symcal{L}_1\)構造\(\symcal{M}\)を以下によって定義する：
+写像\(\mathord{\ast} \colon M \times M \to M\)を以下の表によって定義し，
+\(\interpretation{\symcal{M}}{\obj{\ast}} = \mathord{\ast}\)とする．
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{c|cc}
+		\(\ast\) & \(a\) & \(b\) \\ \hline
+		\(a\)    & \(a\) & \(b\) \\
+		\(b\)    & \(b\) & \(b\) \\
+	\end{tabular}
+\end{table}
+
+このとき，\(\symcal{M}\)は上記\(\varphi_1, \varphi_2, \varphi_3\)のすべてを充足するので\(T_1\)のモデルである．
+これは，\(\symcal{M} \satisfy \varphi_1\)，\(\symcal{M} \satisfy \varphi_2\)，\(\symcal{M} \satisfy \varphi_3\)がそれぞれ
+\begin{enumerate}
+	\item すべての\(x, y, z\)に対して\(\paren{x \ast y} \ast z = x \ast \paren{y \ast z}\)となる
+	\item \(e' \in M\)が存在して，すべての\(x \in M\)に対して\(e' \ast x = x\)となる
+	\item \(e' \in M\)が存在して，すべての\(x \in M\)に対して\(y \ast x = e'\)となる\(y \in M\)がとれる
+\end{enumerate}
+と同値になっていることからわかる（\(\symcal{M} \satisfy \varphi_2\)が成立する根拠となる\(e'\)として\(a\)が，
+\(\symcal{M} \satisfy \varphi_3\)が成立する根拠となる\(e'\)として\(b\)がそれぞれとれる）．
+しかし，2については\(b \ast a = a\)は成り立たず，3については\(y \ast b = a\)となる\(y \in M\)
+が存在しないので，上記2つの\(e'\)を一致させることはできない．
+このため，\(\symcal{M}\)による\(\obj{e}, {}^{\obj{-1}}\)の解釈をどのように定めても，
+\(\symcal{M}\)が\(T\)のモデルになることはない．
+
 \section*{\Cref{chap:proof}}
 
 \subsection*{\Cref{Que:sequent}}

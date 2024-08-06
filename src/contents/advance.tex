@@ -1,2 +1,439 @@
-\chapter{いくつかの進んだ話題}
+\chapter{数理論理学入門}
 \label[chapter]{chap:advanced}
+
+これまでの章では，
+1階述語論理を例として，数学における「論理」がどのようにして形式化され，その上に意味論や証明論がどのようにして構築されるのかを見た．
+いくつかの結果は得られたものの，定義の例や成立がほぼ自明なものに終始しており，
+数理論理学の成果として掲げるには物足りないものばかりであった．
+
+この章では，これまでの議論をもとにしてそれほど証明が難しくない数理論理学におけるいくつかの結果を示す．
+本書の最終章ではあるが，数理論理学という学問分野としては本章の内容がスタート地点といえる．
+
+\newpage
+
+\section{健全性} \label{sec:soundness}
+
+\Cref{chap:semantics}では論理的帰結という概念を，
+\cref{chap:proof}では証明可能性という概念をそれぞれ導入した．
+どちらの定義も独立に導入されたものであったが，これら2つの概念の通常の数学における対応物は
+等価であるものとみなされるのが普通である．
+すなわち，証明されたものは論理的に正しく，論理的に正しいものは必ず証明できるはずだとみなされている．
+本書で導入した形式的体系においてはどうか考えよう．
+
+\begin{Thm}[健全性定理] \label[Thm]{Thm:soundness}
+	\(\symcal{L}\)を言語とし，\(\Gamma\)を\(\symcal{L}\)理論とする．
+	このとき，任意の\(\symcal{L}\)閉論理式\(\varphi\)に対して
+	\begin{equation}
+		\Gamma \provable \varphi \metaimplies \Gamma \satisfy \varphi
+		\label{eq:soundness}
+	\end{equation}
+	が成り立つ．
+\end{Thm}
+
+\begin{proof}
+	\(\Gamma \provable \varphi\)なので，\(\Gamma\)の元からなる有限列\(\varphi_1, \varphi_2, \dots, \varphi_n\)で
+	シークエント
+	\begin{equation}
+		\varphi_1, \varphi_2, \dots, \varphi_n \sequent \varphi
+		\label{eq:targetsequent}
+	\end{equation}
+	が導出可能であるものが存在する．
+	このシークエントの導出可能性に関する帰納法（\cref{Def:provable}に付随する整礎関係に基づく帰納法）によって示す．
+
+	\Cref{eq:targetsequent}が最後に(ID)を適用することによって得られたとき，
+	\(\Gamma = \Set{\varphi}\)なので\(\Gamma\)のすべてのモデルが\(\varphi\)を充足することは明らかである．
+	次に，\cref{eq:targetsequent}が最後に(REFL)を適用することで得られたとする．
+	このとき，\(\varphi\)は項\(t\)に対する\(t \objeq t\)であり，
+	\(\Gamma = \emptyset\)である．
+	任意の\(\symcal{L}\)構造\(\symcal{M}\)に対して
+	\(\interpretation{\symcal{M}}{t} = \interpretation{\symcal{M}}{t}\)が成り立つので，
+	\(\symcal{M} \satisfy t \obj t\)が得られるので\(\Gamma \satisfy \varphi\)となる．
+
+	\Cref{eq:targetsequent}が最後に構造規則を適用することによって得られたとし，上段のシークエントについては
+	定理の主張が成り立つものとする．このとき，下段のシークエントについても主張が成り立つことは，
+	上段のシークエントの左辺と下段のシークエントの左辺をともに集合とみなしたときには同じ集合であることから明らか．
+
+	\Cref{eq:targetsequent}が最後に(\(\to\)I)を適用することによって得られたとし，上段のシークエントについては
+	定理の主張が成り立つものとする．このとき，上段のシークエント\(\psi, \Delta \sequent \chi\)について
+	論理式の集合としては\(\Delta \cup \Set{\psi} \satisfy \chi\)となっている．
+	\(\Delta \satisfy \psi\)であるとする．\(\Delta\)の任意のモデル\(\symcal{M}\)に対して
+	\(\symcal{M} \satisfy \psi\)であるため\(\symcal{M}\)は\(\Delta \cup \Set{\psi}\)のモデルでもあるから
+	\(\symcal{M} \satisfy \chi\)となる．よって，\(\Delta \satisfy \chi\)
+	\(\Delta \satisfy \chi\)であるから\(\Delta \satisfy \psi \to \chi\)となっている．
+	\(\symcal{M} \satisfy \psi\)でない場合は\(\Delta \satisfy \lnot \psi\)なので，やはり\(\Delta \satisfy \psi \to \chi\)となる．
+	いずれの場合も\(\Delta \satisfy \psi \to \chi\)となる．
+	\(\Delta\)が\(\Gamma\)の元からなる有限列で，\(\varphi\)が\(\psi \to \chi\)であることに注意しよう．
+
+	\Cref{eq:targetsequent}が最後に(\(\forall\)E)を適用することによって得られたとし，
+	上段のシークエントについては定理の主張が成り立つものとする．
+	上段のシークエント\(\Gamma \sequent \forall x \psi\)について，
+	論理式の集合としては\(\Gamma \satisfy \forall x \psi\)となっている．
+	よって，\(\Gamma\)の任意のモデル\(\symcal{M}\)に対して
+	\(\symcal{M} \satisfy \forall x \psi\)である．
+	任意の\(\symcal{L}\)閉項\(t\)に対して，\(\interpretation{\symcal{M}}{t} \in M\)
+	の名前を\(c\)とすると，\(\symcal{M} \satisfy \forall x \psi\)から
+	\(\symcal{M} \satisfy \subst{\varphi}{c/x}\)が従う．
+	\(c\)と\(t\)の\(\symcal{M}\)による解釈は一致するので
+	\(\symcal{M} \satisfy \subst{\varphi}{t/x}\)となる．
+	このことから\(\Gamma \satisfy \subst{\varphi}{t/x}\)が得られる．
+
+	残りの場合も同様にして導ける（すべての推論規則を網羅して検証すればよい）．
+\end{proof}
+
+健全性定理からの帰結として，無矛盾性が挙げられる．まずは無矛盾性を定義しよう．
+
+\begin{Def} \label{Def:consistency}
+	\(\symcal{L}\)を言語，\(\Gamma\)を\(\symcal{L}\)論理式からなる集合とする．
+	\(\Gamma \provable \bot\)であるならば，\(\Gamma\)は%
+	\index[widx]{むじゅん@矛盾}%
+	\term{矛盾}しているという．
+	\(\Gamma\)が矛盾していないとき，\(\Gamma\)は
+	\index[widx]{むじゅん@矛盾!むむじゅん@無---}%
+	\term{無矛盾}%
+	であるという．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{Lemma:inconsistency}
+	\(\symcal{L}\)を言語，\(\Gamma\)を\(\symcal{L}\)論理式からなる集合とする．
+	このとき，以下の3条件はすべて同値である．
+	\begin{enumerate}
+		\item \(\Gamma\)は矛盾している．
+		\item すべての\(\symcal{L}\)論理式\(\varphi\)に対して\(\Gamma \provable \varphi\)となる．
+		\item \(\Gamma \provable \varphi\)かつ\(\Gamma \provable \lnot \varphi\)となる\(\symcal{L}\)論理式\(\varphi\)が存在する．
+	\end{enumerate}
+\end{Lemma}
+
+\begin{proof}
+	\(1 \metaimplies 2\)は(w)規則と(\(\lnot\)I)規則，および(DNF)規則から従う．
+	\(2 \metaimplies 3\)は明らか．\(3 \metaimplies 1\)は(\(\lnot\)E)規則から従う．
+\end{proof}
+
+\begin{Corollary} \label[Corollary]{coro:consistencyfrommodel}
+	\(\symcal{L}\)を言語とし，\(\Gamma\)を\(\symcal{L}\)理論とする．
+	\(\Gamma\)がモデルをもつならば，\(\Gamma\)は無矛盾である．
+\end{Corollary}
+
+\begin{proof}
+	\(\Gamma\)がモデルをもつが矛盾していると仮定し，\(\symcal{M}\)を\(\Gamma\)のモデルとする．
+	\(\Gamma\)が矛盾しているので，\cref{Lemma:inconsistency}より
+	\(\Gamma \provable \varphi\)かつ\(\Gamma \provable \lnot \varphi\)となる\(\symcal{L}\)論理式\(\varphi\)が存在する．
+	このとき，\cref{Thm:soundness}によって
+	\(\Gamma \satisfy \varphi\)かつ\(\Gamma \satisfy \lnot \varphi\)
+	となり，\(\symcal{M} \satisfy \varphi\)かつ\(\symcal{M} \satisfy \lnot \varphi\)となるが，
+	\(\symcal{M} \satisfy \lnot \varphi\)の定義からこれはありえない．
+\end{proof}
+
+\Cref{coro:consistencyfrommodel}において\(\Gamma = \emptyset\)とすることで，
+以下の主張が得られる（\(\Gamma\)のモデルとしては適当な\(\symcal{L}\)構造を1つとればよい）．
+
+\begin{Corollary}[自然演繹式シークエント計算の無矛盾性] \label[Corollary]{coro:consistency}
+	\begin{equation}
+		\provable \bot
+		\label{eq:contradictionforsystem}
+	\end{equation}
+	となることはない．
+\end{Corollary}
+
+\section{完全性} \label{sec:completeness}
+
+\Cref{Thm:soundness}は，いわば「証明できるものは論理的に正しい」という主張であると解釈することができる．
+この逆となる「論理的に正しいものは証明できる」に相当する主張も成立するであろうことが予想される．
+実際これは成立するが，\cref{Thm:soundness}よりは長い議論となる．いくつかの準備の下で示すとしよう．
+
+また，簡単のため，本節においては言語\(\symcal{L}\)は高々可算集合であるとする．
+\(\symcal{L}\)が非可算である場合は以下で（通常の自然数に関する）
+帰納法や帰納的定義を行っている部分を整列集合に関する超限帰納法や超限再帰に置き換えることによってほとんど同様に議論できる．
+このとき，言語\(\symcal{L}\)上に整列順序が入ることは選択公理（と同値な整列可能定理）による．
+
+\begin{Lemma} \label[Lemma]{Lemma:consistencyor}
+	\(\symcal{L}\)を言語とし，\(\varphi\)を\(\symcal{L}\)論理式，\(\Gamma\)を\(\symcal{L}\)論理式からなる集合とする．
+	このとき，\(\Gamma \cup \Set{\varphi}\)
+	と\(\Gamma \cup \Set{\lnot \varphi}\)がともに矛盾するならば，\(\Gamma\)も矛盾する．
+\end{Lemma}
+
+\begin{proof}
+	\(\Gamma \cup \Set{\varphi}\)と\(\Gamma \cup \Set{\lnot \varphi}\)がともに矛盾していると仮定すると，
+	(\(\lnot\)I)規則と(DNF)規則によって\(\Gamma \provable \varphi\)かつ\(\Gamma \provable \lnot \varphi\)
+	であることがわかる．よって\cref{Lemma:inconsistency}によって\(\Gamma\)が矛盾することがわかる．
+\end{proof}
+
+\begin{Lemma} \label[Lemma]{Lemma:existsextend}
+	\(\symcal{L}\)を言語，\(\Gamma\)を論理式からなる集合，\(\varphi\)を\(\symcal{L}\)論理式，
+	\(x\)を変数記号とする．
+	このとき，\(\Gamma\)の元となっている論理式と\(\varphi\)のいずれにも出現しない定数記号\(c\)に対し，
+	\(\Gamma\)が無矛盾ならば\(\Gamma \cup \Set{\exists x \varphi \to \subst{\varphi}{c/x}}\)も無矛盾となる．
+\end{Lemma}
+
+\begin{proof}
+	\(\Gamma \cup \Set{\exists x \varphi \to \subst{\varphi}{c/x}}\)が矛盾すると仮定する．
+	\(\Gamma \provable \lnot \paren{\exists x \varphi \to \subst{\varphi}{c/x}}\)
+	なので\cref{Thm:equivlogicalexpression}の\cref{eq:lnotto}
+	（と(\(\to\)I)規則や(\(\to\)E)規則）により\(\Gamma \provable \exists x \varphi \land \lnot \subst{\varphi}{c/x}\)
+	となる．このとき，(\(\land\)I)の形から\(\Gamma \provable \exists x \varphi\)かつ\(\Gamma \provable \lnot \subst{\varphi}{c/x}\)
+	となる．すると，\(\Gamma \provable \lnot \subst{\varphi}{c/x}\)から
+	(\(\forall\)I)規則によって\(\Gamma \provable \forall x \lnot \varphi\)
+	が得られるが，\cref{Thm:equivlogicalexpression}の\cref{eq:existsdemorgan}から
+	\(\Gamma \provable \lnot \exists x \varphi\)が得られるので\(\Gamma\)の無矛盾性に反する．
+\end{proof}
+
+\begin{Def} \label{Def:maximumconsistency}
+	\(\symcal{L}\)を言語とし，\(\Gamma\)を\(\symcal{L}\)理論とする．
+	このとき，\(\Gamma\)が%
+	\index[widx]{きょくだいむむじゅんしゅうごう@極大無矛盾集合}%
+	\term{極大無矛盾集合}%
+	であるとは，
+	任意の\(\symcal{L}\)論理式\(\varphi\)に対して
+	\(\varphi \in \Gamma\)か\(\lnot \varphi \in \Gamma\)の
+	いずれか一方のみが必ず成り立つことをいう．
+
+	\Cref{Lemma:inconsistency}から，極大無矛盾集合は無矛盾である．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{Lemma:Henkintheory}
+	\(\symcal{L}\)を言語，\(\Gamma\)を\(\symcal{L}\)理論とする．
+	このとき，言語\(\symcal{L}_{\infty} \supset \symcal{L}\)と
+	無矛盾な\(\symcal{L}_\infty\)理論\(\Gamma_\infty \supset \Gamma\)で，
+	\(\exists x \varphi\)という形の任意の\(\symcal{L}_\infty\)閉論理式に対して
+	以下の条件を満たすものが存在する：
+	\begin{equation}
+		\Gamma_\infty \provable \exists x \varphi
+		\metaimplies \text{\(\Gamma_\infty \provable \subst{\varphi}{c/x}\)となる\(c \in \symcal{L}_\infty\)が存在する}
+		\label{eq:Henkinextend}
+	\end{equation}
+
+
+
+\end{Lemma}
+
+\begin{proof}
+	まず，\(\exists x \varphi\)という形の\(\symcal{L}\)閉論理式1つにつき
+	新しい定数記号\(c_{\exists x \varphi}\)を1つ用意し，
+	言語を\(\symcal{L} \cup \Set{c_{\exists x \varphi}}\)に拡張する．
+	次に，以下の\(\symcal{L} \cup \Set{c_{\exists x \varphi}}\)閉論理式を新しい公理として\(\Gamma\)に加える：
+	\begin{equation}
+		H_{\exists x \varphi} \colon \exists x \varphi \to \subst{\varphi}{c/x}
+		\label{eq:Henkinaxiom}
+	\end{equation}
+	このときの\(c_{\exists x \varphi}\)を%
+	\index[widx]{Henkinていすう@Henkin定数}%
+	\term{Henkin定数}，
+	論理式\(H_{\exists x \varphi}\)を%
+	\index[widx]{Henkinこうり@Henkin公理}%
+	\term{Henkin公理}と呼ぶ．
+	\Cref{Lemma:existsextend}により，\(\Gamma\)にHenkin公理を加えて得られる
+	\(\symcal{L} \cup \Set{c_{\exists x \varphi}}\)理論は無矛盾である．
+
+	さて，自然数\(n\)に対する言語\(\symcal{L}_n\)と\(\symcal{L}_n\)閉論理式の集合\(\H_n\)
+	を，および\(\symcal{L}_n\)理論\(\Gamma_n\)を以下のように帰納的に定義する：
+	まず，\(\symcal{L}_0 = \symcal{L}\)とし，
+	\(\exists x \varphi\)という形の\(\symcal{L}\)論理式に対するHenkin定数の全体を\(C_0\)，
+	Henkin公理の全体を\(H_0\)とする．
+	そして，\(\exists x \varphi\)という形の\(\symcal{L}_n\)論理式に対するHenkin定数の全体を\(C_n\)，
+	Henkin公理の全体を\(H_n\)として，\(\symcal{L}_{n+1} = \symcal{L}_n \cup C_n\)，\(\Gamma_n = \Gamma \cup H_n\)とする．
+	\cref{Lemma:existsextend}と帰納法によってすべての自然数\(n\)に対して\(\Gamma_n\)が無矛盾であることを示すことができる．
+	\(\symcal{L}_\infty = \bigcup_{n \in \Natural} \symcal{L}_n\)，\(\H_\infty = \bigcup_{n \in \Natural} H_n\)
+	とし，\(\Gamma_\infty = \bigcup_{n \in \Natural} \Gamma_n = \Gamma \cup H_\infty\)とする．
+	\(\symcal{L}_0 \subset \symcal{L}_1 \subset \symcal{L}_2 \subset \dotsb\)や
+	\(\Gamma_0 \subset\Gamma_1 \subset \Gamma_2 \subset \dotsb\)が成り立っている．
+
+	\(\Gamma_\infty\)が無矛盾であることを示そう．\(\Gamma_\infty\)が矛盾していると仮定すると，
+	有限集合\(\Delta \subset \Gamma_\infty\)で\(\Delta \provable \bot\)となるものが存在する．
+	このとき，\(\Delta\)が有限集合なので\(\Delta \subset \Gamma_n\)となる自然数\(n\)が存在する．
+	\(\Gamma_n\)が無矛盾なので\(\Delta\)も無矛盾である必要があるが，これは\(\Delta \provable \bot\)に矛盾する．
+
+	次に，\(\exists x \varphi\)という形の任意の\(\symcal{L}_\infty\)閉論理式に対して以下が成り立つことを示そう．
+	\begin{equation}
+		\Gamma_\infty \provable \exists x \varphi
+		\metaimplies \text{\(\Gamma_\infty \provable \subst{\varphi}{c_{\exists x \varphi}/x}\)}.
+		\label{eq:henkincondition}
+	\end{equation}
+	\(\varphi\)は\(\symcal{L}_\infty = \bigcup_{n \in \Natural} \symcal{L}_n\)論理式であって
+	その記号列としての長さは有限である．また，\(\symcal{L}_0 \subset \symcal{L}_1 \dotsb\)なので，
+	\(\varphi\)が\(\symcal{L}_n\)論理式になるような自然数\(n\)が存在する．
+	\(\Gamma_\infty \provable \exists x \varphi\)だから\(\symcal{L}_\infty\)論理式の
+	有限集合\(\Delta \subset \Gamma_\infty\)で\(\Delta \provable \exists x \varphi\)となるものが存在する．
+	\(\Delta\)は有限集合なので，\(\Delta \subset \Gamma_m\)となる自然数\(m\)がとれる．
+	\(l = \max \Set{n, m} + 1\)とおくと，\(\varphi\)は\(\symcal{L}_l\)論理式であり，
+	かつ\(\Delta \subset \Gamma_n \subset \Gamma_l\)なので
+	\(\Gamma_l \provable \exists x \varphi\)となる．
+	\(H_{\exists x \varphi} \in H_l\)より\(\Gamma_l \provable H_{\exists x \varphi}\)なので，
+	(\(\to\)E)によって\(\Gamma_l \provable \subst{\varphi}{c_{\exists x \varphi}/x}\)を得る．
+	よって\(\Gamma_\infty \provable \subst{\varphi}{c_{\exists x \varphi}/x}\)となる．
+	また，\(c_{\exists x \varphi} \in C_l \subset \symcal{L}_\infty\)
+	だから，この\(c_{\exists x \varphi}\)は\(\symcal{L}_\infty\)における定数記号である．
+\end{proof}
+
+\begin{Lemma}[Henkin拡大] \label[Lemma]{Lemma:Henkinextension}
+	\(\symcal{L}\)を言語，\(\Gamma\)を\(\symcal{L}\)理論とする．
+	このとき，言語\(\symcal{L}_{\infty} \supset \symcal{L}\)と
+	極大無矛盾集合であるような\(\symcal{L}_\infty\)理論\(\Gamma_\infty \supset \Gamma\)で，
+	\(\exists x \varphi\)という形の任意の\(\symcal{L}_\infty\)閉論理式に対して
+	\cref{eq:Henkinextend}を満たすものが存在する．
+
+	ここで存在が保証された\(\symcal{L}_\infty\)理論\(\Gamma_\infty\)を
+	\(\Gamma\)の%
+	\index[widx]{Henkinかくだい@Henkin拡大}%
+	\term{Henkin拡大}という．
+\end{Lemma}
+
+\begin{proof}
+	\Cref{Lemma:Henkintheory}における\(\Gamma_\infty\)を極大無矛盾集合に拡張する．
+	\(\symcal{L}\)が高々可算集合であることを仮定したので，\(\symcal{L}\)論理式全体の集合は可算集合である．
+	よって\(\symcal{L}_\infty\)閉論理式全体の集合も可算集合となるので，それらすべてを
+	\(\varphi_0, \varphi_1, \dots\)のように列として表すこととする．
+	自然数\(n\)に対する\(\symcal{L}_\infty\)理論\(T_n\)を以下のように帰納的に定義する：
+	まず，\(T_0 = \Gamma_\infty\)とする．
+	各自然数\(n\)に対し，\(T_n \cup \Set{\varphi_n} \provable \bot\)であれば\(T_{n + 1} = T_n \cup \Set{ \lnot \varphi_n}\)
+	とし，そうでなければ\(T_{n + 1} = T_n \cup \Set{\varphi_n}\)とする．
+	このように定義された自然数\(n\)に対する\(T_n\)を用いて\(T_\infty = \bigcup_{n \in \Natural} T_n\)と定義する．
+
+	\(\Gamma_\infty\)の無矛盾性と帰納法により，各\(n\)に対して\(T_n\)が無矛盾であることが従う．
+	また，\(\Gamma_\infty\)の無矛盾性と同様にして\(T_\infty\)の無矛盾性が従う．
+	さらに，任意の自然数\(n\)に対して\(\varphi_n \in T_n\)か\(\lnot \varphi_n \in T_n\)
+	のうちいずれか一方のみが成り立つので，\(T_\infty\)が極大無矛盾集合であることもわかる．
+	\(T_\infty\)が\(\exists x \varphi\)という形の任意の\(\symcal{L}_\infty\)閉論理式に対して
+	\cref{eq:Henkinextend}を満たすことは\(\Gamma_\infty \subset T_\infty\)であることから明らか．
+\end{proof}
+
+\begin{Lemma} \label[Lemma]{Lemma:Henkinextensionhasmodel}
+	\(\symcal{L}\)を言語，\(\Gamma\)を\(\symcal{L}\)理論とする．
+	このとき，\(\Gamma\)のHenkin拡大はモデルをもつ．
+\end{Lemma}
+
+\begin{proof}
+	\(\Gamma\)のHenkin拡大を\(\Gamma_\infty\)とし，
+	\(\Gamma_\infty\)は\cref{Lemma:Henkinextension}における
+	言語\(\symcal{L}_\infty\)閉論理式からなる集合とする．
+	\(\symcal{L}_\infty\)閉項全体の集合を\(X\)とし，\(X\)上の同値関係\(\sim\)を以下のように定める：
+	\begin{equation*}
+		x \sim y \metaequivalent x \objeq y \in \Gamma_\infty.
+	\end{equation*}
+	\(\sim\)が同値関係になることは(REFL)規則と\cref{Thm:equalsignrelation}からわかる．
+
+	この\(X\)の\(\sim\)による商集合を\(M = X / {\sim}\)とする．
+	\(t\)を代表元とする同値類を\(\equivclass{t}\)と表すことにする．
+	以下，\(M\)を対象領域とする\(\symcal{L}_\infty\)構造を定義する．
+
+	定数記号\(c\)の\(\symcal{M}\)による解釈は\(\interpretation{\symcal{M}}{c} = \equivclass{c}\)とする．
+	\(f\)がアリティ\(n\)の関数記号であるとき，\(f\)の\(\symcal{M}\)による解釈は
+	\(t_1, t_2, \dots, t_n\)を\(\symcal{L}_\infty\)閉項として
+	\[
+		\apply{\interpretation{\symcal{M}}{f}}{\equivclass{t_1}, \equivclass{t_2}, \dots, \equivclass{t_n}}
+		=
+		\equivclass{\apply{f}{t_1, t_2, \dots, t_n}}
+	\]
+	によって定める．
+	\(r\)がアリティ\(n\)の関係記号のとき，\(r\)の\(\symcal{M}\)による解釈は
+	\(t_1, t_2, \dots, t_n\)を\(\symcal{L}_\infty\)閉項として
+	\[
+		\pair{\equivclass{t_1}, \equivclass{t_2}, \dots, \equivclass{t_n}} \in \interpretation{\symcal{M}}{r}
+		\metaequivalent
+		\apply{r}{t_1, t_2, \dots, t_n} \in \Gamma_\infty
+	\]
+	で定める．
+	これらの定義の正当性（代表元のとり方に依存しないこと）は，(SUBST)規則や\cref{Thm:equalsign}などによる．
+
+	以上のように定義した\(\symcal{M}\)が任意の\(\symcal{L}_\infty\)閉論理式\(\varphi\)に対して
+	\begin{equation}
+		\symcal{M} \satisfy \varphi \metaequivalent \varphi \in \Gamma_\infty
+		\label{eq:henkintarget}
+	\end{equation}
+	を満たすことを\(\varphi\)の構造による帰納法によって示す．
+	これが示されれば\(\symcal{M}\)が\(\Gamma_\infty\)のモデルになっていることがわかる．
+
+	\(\varphi\)が\(\bot\)のとき，
+	\(\symcal{M} \satisfy \varphi\)も\(\varphi \in \Gamma_\infty\)も成り立たないので
+	\cref{eq:henkintarget}は成り立つ．
+	\(\varphi\)が\(s \objeq t\)の形のとき，
+	\begin{align*}
+		 & \symcal{M} \satisfy \varphi            \\
+		 & \metaequivalent s \sim t               \\
+		 & \metaequivalent s \objeq t \in \Gamma.
+	\end{align*}
+	\(\varphi\)がアリティ\(n\)の関係記号\(r\)と\(\symcal{L}_\infty\)閉項\(t_1, t_2, \dots, t_n\)によって
+	\(\apply{r}{t_1, t_2, \dots, t_n}\)と表されている場合
+	\begin{align*}
+		 & \symcal{M} \satisfy \varphi                                        \\
+		 & \metaequivalent \pair{
+			\interpretation{\symcal{M}}{t_1},
+			\interpretation{\symcal{M}}{t_2},
+			\dots,
+			\interpretation{\symcal{M}}{t_n}
+		}
+		\in \interpretation{\symcal{M}}{r}                                    \\
+		 & \metaequivalent \apply{r}{t_1, t_2, \dots, t_n} \in \Gamma_\infty.
+	\end{align*}
+
+	\(\varphi\)が\(\exists \psi\)の形をしている場合を考える．
+	まず，\(\varphi \in \Gamma_\infty\)と仮定すると，
+	\(\exists x \psi \to \subst{\psi}{c_{\exists x \psi}/x} \in \Gamma_\infty\)である．
+	よって\(\varphi \in \Gamma_\infty\)から(\(\to\)E)規則によって
+	\(\subst{\psi}{c_{\exists x \psi}/x} \in \Gamma_\infty\)を得る．
+	帰納法の仮定によって\(\symcal{M} \satisfy \subst{\psi}{c_{\exists x \psi}/x}\)なので
+	\(\symcal{M} \satisfy \varphi\)となる．
+	次に，\(\symcal{M} \satisfy \varphi\)と仮定すると，\(\symcal{M} \satisfy \subst{\psi}{c_a/x}\)
+	となる\(a \in M\)が存在する．ここで，\(c_a\)は\(a\)の名前である．
+	\(a\)は\(\symcal{L}_\infty\)閉項\(t\)を用いて\(a = \equivclass{t}\)と表されるので，
+	\(\interpretation{\symcal{M}}{t} = a\)だから\(\symcal{M} \satisfy \subst{\psi}{t/x}\)となる．
+	帰納法の仮定により\(\subst{\psi}{t/x} \in \Gamma_\infty\)だから(\(\exists\)I)規則に
+	よって\(\varphi \in \Gamma_\infty\)が従う．
+
+	残りの場合も同様にして証明できる．
+\end{proof}
+
+\index[widx]{Henkinのていり@Henkinの定理}
+\begin{Thm}[Henkinの定理] \label[Thm]{Thm:HenkinTheorem}
+	\(\symcal{L}\)を言語，\(\Gamma\)を\(\symcal{L}\)理論とする．
+	\(\Gamma\)が無矛盾であるならば，\(\Gamma\)はモデルをもつ．
+\end{Thm}
+
+\begin{proof}
+	\Cref{Lemma:Henkinextensionhasmodel}により，
+	\(\Gamma\)のHenkin拡大\(\Gamma_\infty\)のモデル\(\symcal{M}\)が存在する．
+	このとき，任意の\(\symcal{L}_\infty\)閉論理式\(\varphi\)に対して
+	\[
+		\symcal{M} \satisfy \varphi \metaequivalent \varphi \in \Gamma_\infty
+	\]
+	となる．
+	\(\Gamma \subset \Gamma_\infty\)なので，\(\varphi \in \Gamma\)となる
+	任意の\(\symcal{L}\)閉論理式\(\varphi\)に対して
+	\(\symcal{M} \satisfy \varphi\)が成り立つので，\(\symcal{M}\)は\(\Gamma\)のモデルであることがわかる．
+\end{proof}
+
+\Cref{coro:consistencyfrommodel}と\cref{Lemma:Henkinextensionhasmodel}により，以下の帰結が得られる．
+
+\begin{Corollary} \label{coro:completeness}
+	\(\Gamma\)を理論とする．このとき，\(Gamma\)が無矛盾であることと\(\Gamma\)がモデルをもつことは同値である．
+\end{Corollary}
+
+\index[widx]{かんぜんせいていり@完全性定理}
+\begin{Thm}[完全性定理] \label[Thm]{Thm:completeness}
+	\(\symcal{L}\)を言語とし，\(\Gamma\)を\(\symcal{L}\)理論とする．
+	このとき，任意の\(\symcal{L}\)閉論理式\(\varphi\)に対して
+	\begin{equation}
+		\Gamma \satisfy \varphi \metaimplies \Gamma \provable \varphi
+		\label{eq:completeness}
+	\end{equation}
+	が成り立つ．
+\end{Thm}
+
+\begin{Que} \label{Que:completeness}
+	\Cref{Thm:HenkinTheorem}を用いて\cref{Thm:completeness}を示せ．
+\end{Que}
+
+完全性定理の応用として，次のコンパクト性定理が得られる．
+
+\begin{Thm}[コンパクト性定理] \label[Thm]{Thm:compact}
+	\(\Gamma\)を理論とする．
+	このとき，\(\Gamma\)のすべての有限部分集合がモデルをもつことと
+	\(\Gamma\)がモデルをもつことは同値である．
+\end{Thm}
+
+\begin{proof}
+	\begin{align*}
+		                & \text{\(\Gamma\)がモデルをもたない}                 \\
+		\metaequivalent & \text{\(\Gamma\)は矛盾する}                     \\
+		\metaequivalent & \text{\(\Gamma\)のある有限部分集合で矛盾するものが存在する}     \\
+		\metaequivalent & \text{\(\Gamma\)のある有限部分集合でモデルをもたないものが存在する}
+	\end{align*}
+\end{proof}

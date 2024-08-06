@@ -244,9 +244,7 @@
 	と表す．
 	また，\(T\)がモデルをもつとき，\(T\)は%
 	\index[widx]{じゅうそく@充足!じゅうそくかのう@---可能}%
-	\term{充足可能}である，もしくは\(T\)は%
-	\index[widx]{むむじゅん@無矛盾}%
-	\term{無矛盾}であるという．
+	\term{充足可能}であるという．
 
 	また，\(\varphi\)を\(\symcal{L}\)閉論理式とするとき，\(\symcal{L}\)理論\(T\)のすべてのモデルが
 	\(\varphi\)を充足するならば，\(\varphi\)は\(T\)の%
@@ -295,7 +293,7 @@
 		\varphi_1 \colon & \forall \obj{x} \forall \obj{y} \forall \obj{z}
 		\paren{\paren{\obj{x} \obj{\ast} \obj{y}} \obj{\ast} \obj{z} \objeq \obj{x} \obj{\ast} \paren{\obj{y} \obj{\ast} \obj{z}}}, \\
 		\varphi_2 \colon & \exists \obj{e'} \forall \obj{x} \paren{\obj{e'} \obj{\ast} \obj{x} \objeq \obj{x}},                     \\
-		\varphi_3 \colon & \exists \obj{e'}\forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} \objeq \obj{e}}.
+		\varphi_3 \colon & \exists \obj{e'}\forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} \objeq \obj{e'}}.
 	\end{align*}
 	このとき，\cref{Ex:grouptheory}で挙げた群の言語\(\symcal{L}\)に対して\(\symcal{L}_1 \subset \symcal{L}\)が成り立つので，
 	\(T_1\)は自然に\(\symcal{L}\)理論ともみなせる．
@@ -376,22 +374,19 @@
 \begin{Lemma} \label[Lemma]{Lemma:equivrelationforisomorphic}
 	\(\symcal{L}\)を言語とし，\(\symcal{M_1}, \symcal{M_2}, \symcal{M_3}\)を\(\symcal{L}\)構造とする．
 	このとき
-	\begin{align}
-		\symcal{M_1}                          & \isomorphic \symcal{M_1},
-		\label{eq:reflexivityforisomorphic}                                                         \\
-		\symcal{M_1} \isomorphic \symcal{M_2} & \metaimplies \symcal{M_2} \isomorphic \symcal{M_1},
-		\label{eq:symmetryforisomorphic}                                                            \\
-		\text{\(\symcal{M_1} \isomorphic \symcal{M_2}\)かつ\(\symcal{M_2} \isomorphic \symcal{M_3}\)}
-		                                      & \metaimplies \symcal{M_1} \isomorphic \symcal{M_3}
-		\label{eq:transitivityforisomorphic}
-	\end{align}
+	\begin{enumerate}
+		\item \(\symcal{M_1} \isomorphic \symcal{M_1}\)
+		\item \(\symcal{M_1} \isomorphic \symcal{M_2} \metaimplies \symcal{M_2} \isomorphic \symcal{M_1}\)
+		\item \(\text{\(\symcal{M_1} \isomorphic \symcal{M_2}\)かつ\(\symcal{M_2} \isomorphic \symcal{M_3}\)}
+		      \metaimplies \symcal{M_1} \isomorphic \symcal{M_3}\)
+	\end{enumerate}
 	が成り立つ．
 \end{Lemma}
 
 \begin{proof}
-	\Cref{eq:reflexivityforisomorphic}は恒等写像が同型写像であることから，
-	\cref{eq:symmetryforisomorphic}は同型写像の逆写像もまた同型写像であることから，
-	\cref{eq:transitivityforisomorphic}は同型写像の合成もまた同型写像であることからそれぞれ従う．
+	1は恒等写像が同型写像であることから，
+	2は同型写像の逆写像もまた同型写像であることから，
+	3は同型写像の合成もまた同型写像であることからそれぞれ従う．
 \end{proof}
 
 2つの\(\symcal{L}\)構造\(\symcal{M}, \symcal{N}\)が同型であることは，
@@ -414,7 +409,8 @@
 	\end{equation}
 	が成り立つとき，\(\symcal{M}\)と\(\symcal{N}\)は
 	\index[widx]{しょとうどうち@初等同値}%
-	\term{初等同値}であるといい，
+	\term{初等同値}であるといい，%
+	\index[sidx]{\(\symcal{M} \elementarilyequivalent \symcal{N}\)：初等同値}
 	\begin{equation}
 		\symcal{M} \elementarilyequivalent \symcal{N}
 		\label{eq:elementarilyequivalent}
@@ -426,20 +422,18 @@
 	．
 \end{Def}
 
-\Cref{Lemma:equivrelationforisomorphic}から，以下の補題が即座に得られる．
+以下の補題は\cref{Def:elementarilyequivalent}から容易に得られる．
 
 \begin{Lemma} \label[Lemma]{Lemma:equivrelationforelementarilyequivalent}
 	\(\symcal{L}\)を言語とし，\(\symcal{M_1}, \symcal{M_2}, \symcal{M_3}\)を\(\symcal{L}\)構造とする．
 	このとき
-	\begin{align}
-		\symcal{M_1}                                      & \elementarilyequivalent \symcal{M_1},
-		\label{eq:reflexivityforelementarilyequivalent}                                                                    \\
-		\symcal{M_1} \elementarilyequivalent \symcal{M_2} & \metaimplies \symcal{M_2} \isomorphic \symcal{M_1},
-		\label{eq:symmetryforelementarilyequivalent}                                                                       \\
-		\text{\(\symcal{M_1} \elementarilyequivalent \symcal{M_2}\)かつ\(\symcal{M_2} \elementarilyequivalent \symcal{M_3}\)}
-		                                                  & \metaimplies \symcal{M_1} \elementarilyequivalent \symcal{M_3}
-		\label{eq:transitivityforelementarilyequivalent}
-	\end{align}
+	\begin{enumerate}
+		\item \(\symcal{M_1} \elementarilyequivalent \symcal{M_1}\)
+		\item \(\symcal{M_1} \elementarilyequivalent \symcal{M_2} \metaimplies \symcal{M_2} \elementarilyequivalent \symcal{M_1}\)
+		\item \(\text{\(\symcal{M_1} \elementarilyequivalent \symcal{M_2}\)かつ\(\symcal{M_2} \elementarilyequivalent \symcal{M_3}\)}
+		      \metaimplies \symcal{M_1} \elementarilyequivalent \symcal{M_3}\)
+	\end{enumerate}
+
 	が成り立つ．
 \end{Lemma}
 

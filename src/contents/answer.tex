@@ -896,3 +896,15 @@
 	\item \(\paren{s \objeq t} \land \paren{t \objeq u} \sequent \subst{\varphi}{t/x}\)\quad （1から(\(\land\)E)による）
 	\item \(\paren{s \objeq t} \land \paren{t \objeq u} \sequent \subst{\varphi}{s/x}\)\quad （4, 5から(SUBST)による）
 \end{enumerate}
+
+\section*{\Cref{chap:advanced}}
+
+\subsection*{\Cref{Que:completeness}}
+
+対偶，すなわち\(\Gamma \provable \varphi\)でないと仮定して\(\Gamma \satisfy \varphi\)でないことを示す．
+\(\Gamma \provable \varphi\)でないので，\(\Gamma \cup \Set{\lnot \varphi}\)が無矛盾となる．
+実際，\(\Gamma \cup \Set{\lnot \varphi}\)が矛盾すると仮定すると(\(\lnot\)I)規則と
+(DNF)規則により\(\Gamma \provable \varphi\)となる．
+\Cref{Thm:HenkinTheorem}により，\(\Gamma \cup \Set{\lnot \varphi}\)のモデル\(\symcal{M}\)が存在する．
+この\(\symcal{M}\)は\(\symcal{M} \satisfy \lnot \varphi\)を満たすので\(\symcal{M} \satisfy \varphi\)
+は成り立たず，従って\(\Gamma \satisfy \varphi\)ではない．

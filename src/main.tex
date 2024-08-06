@@ -131,6 +131,14 @@
 	}%
 }
 
+\NewDocumentCommand{\equivclass}{sm}{%
+	\IfBooleanTF{#1}{%
+		\mathopen{} [#2] \mathclose{}%
+	}%
+	{%
+		\mathopen{} \left[ #2 \right] \mathclose{}%
+	}%
+}
 \NewDocumentCommand{\emptystring}{}{\varepsilon}
 
 \NewDocumentCommand{\restriction}{}{\upharpoonright}
@@ -168,6 +176,7 @@
 \newtheorem{Ex}[Def]{例}
 \newtheorem{Que}{演習}[chapter]
 \newtheorem{Lemma}[Def]{補題}
+\newtheorem{Corollary}[Def]{系}
 \newtheorem{Note}[Def]{注意}
 %
 %
@@ -222,6 +231,8 @@
 \crefname{Que}{演習}{演習}
 \Crefname{Lemma}{補題}{補題}
 \crefname{Lemma}{補題}{補題}
+\Crefname{Corollary}{系}{系}
+\crefname{Corollary}{系}{系}
 \crefname{section}{\presectionname}{\presectionname}
 \Crefname{section}{\presectionname}{\presectionname}
 \crefname{subsection}{\presubsectionname}{\presubsectionname}
@@ -292,12 +303,12 @@
 
 \begin{document}
 
-\begin{titlepage}
-	\title{0から始める数理論理学入門}
-	\author{野口匠}
-	\date{2024年7月17日}
-	\maketitle
-\end{titlepage}
+%\begin{titlepage}
+%	\title{0から始める数理論理学入門}
+%	\author{野口匠}
+%	\date{2024年8月7日}
+%	\maketitle
+%\end{titlepage}
 
 \frontmatter
 
@@ -311,7 +322,7 @@
 \include{contents/syntax}
 \include{contents/semantics}
 \include{contents/proof}
-%\include{contents/advance}
+\include{contents/advance}
 
 \backmatter
 

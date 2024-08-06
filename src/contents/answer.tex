@@ -112,7 +112,7 @@
 
 \section*{\Cref{chap:syntax}}
 
-\subsection*{\Cref{Que:termexample}} \label{answer:termexample}
+\subsection*{\Cref{Que:termexample}}
 
 \(\obj{e}\)は変数記号，\(\obj{x}\)は変数記号なので，どちらも\(\symcal{L}_1\)項である．
 これと\(\obj{\ast}\)がアリティ2の関数記号であることにより，\(\apply{\obj{\ast}}{\obj{e}, \obj{x}}\)が
@@ -184,6 +184,101 @@
 とするのが正しい．
 なぜそうしなければならないのか，
 そしてなぜそうすれば「よい」のかについては，この段階ではわからない．
+
+\section*{\Cref{chap:semantics}}
+
+\subsection*{\Cref{Que:satisfy}}
+
+\(\symcal{M}\)が\cref{Ex:grouptheory}で述べた3つの\(\symcal{L}\)文すべてを充足することを確かめよう．
+
+\begin{align*}
+	\varphi_1 \colon & \forall \obj{x} \forall \obj{y} \forall \obj{z}
+	\paren{\paren{\obj{x} \obj{\ast} \obj{y}} \obj{\ast} \obj{z} \objeq \obj{x} \obj{\ast} \paren{\obj{y} \obj{\ast} \obj{z}}}, \\
+	\varphi_2 \colon & \forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} \objeq \obj{x}},                                       \\
+	\varphi_3 \colon & \forall \obj{x} \paren{\obj{x}^{\obj{-1}} \obj{\ast} \obj{x} \objeq \obj{e}}
+\end{align*}
+とする．
+このとき，
+\begin{align*}
+	\symcal{M} & \satisfy \varphi_1, \\
+	\symcal{M} & \satisfy \varphi_2, \\
+	\symcal{M} & \satisfy \varphi_3  \\
+\end{align*}
+となるための必要十分条件を考える．
+まず\(\varphi_1\)については
+\begin{align*}
+	                & \symcal{M} \satisfy \varphi_1                                                                                                               \\
+	\metaequivalent & \text{すべての\(a \in \Zahlen\)に対して\(\symcal{M} \satisfy \forall \obj{y} \forall \obj{z} \subst{\varphi_1}{c_a / \obj{x}}\)}                    \\
+	\metaequivalent & \text{すべての\(a, b \in \Zahlen\)に対して\(\symcal{M} \satisfy \forall \obj{z} \subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}\)}          \\
+	\metaequivalent & \text{すべての\(a, b, c\in \Zahlen\)に対して\(\symcal{M} \satisfy \subst{\subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}}{c_c / \obj{z}}\)} \\
+	\metaequivalent & \text{すべての\(a, b, c\in \Zahlen\)に対して
+		\(\interpretation{\symcal{M}}{\paren{\paren{c_a \obj{\ast} c_b} \obj{\ast} c_c}}
+	= \interpretation{\symcal{M}}{\paren{c_a \obj{\ast} \paren{c_b \obj{\ast} c_c}}}\)}                                                                           \\
+	\metaequivalent & \text{すべての\(a, b, c \in \Zahlen\)に対して
+		\(\interpretation{\symcal{M}}{\paren{c_a \obj{\ast} c_b}} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{c_c}
+	= \interpretation{\symcal{M}}{c_a} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{\paren{c_b \obj{\ast} c_c}} \)}                        \\
+	\metaequivalent & \text{すべての\(a, b, c \in \Zahlen\)に対して\(
+		\paren{\interpretation{\symcal{M}}{c_a} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{c_b}} + c
+		= a + \paren{\interpretation{\symcal{M}}{c_b} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{c_c}}
+	\)}                                                                                                                                                           \\
+	\metaequivalent & \text{すべての\(a, b, c \in \Zahlen\)に対して\(
+		\paren{a + b} + c = a + \paren{b + c}
+		\)}
+\end{align*}
+となる．\(\varphi_2, \varphi_3\)についても同様にして
+\begin{align*}
+	\symcal{M} \satisfy \varphi_2 & \metaequivalent \text{すべての\(a \in \Zahlen\)に対して\(0 + a = a\)},         \\
+	\symcal{M} \satisfy \varphi_3 & \metaequivalent \text{すべての\(a \in \Zahlen\)に対して\(\paren{-a} + a = 0\)}
+\end{align*}
+となることがわかるので，\(\symcal{M}\)が\(\varphi_1, \varphi_2, \varphi_3\)のすべてを充足することがわかる．
+\Cref{Ex:satisfy}で述べた\(\symcal{L}\)構造\(\symcal{M}'\)が\(\varphi_1\)のみを充足することも同様にして確かめられる．
+
+\subsection*{\Cref{Que:model}}
+
+\Cref{Ex:satisfy}で挙げた\(\symcal{L}\)構造\(\symcal{M}\)は\(\varphi\)を充足する\(T\)のモデルである．
+また，有限集合\(I_n = \Set{1, 2, \dots, n}\)上の置換（全単射）\(\sigma \colon I_n \to I_n\)全体の集合\(S_n\)を対象領域とする
+\(\symcal{L}\)構造\(\symcal{M}'\)を次のように定義する：
+\begin{align*}
+	\interpretation{\symcal{M}'}{\obj{e}}       & = \symup{id}, \\
+	\interpretation{\symcal{M}'}{\obj{\ast}}    & = \circ,      \\
+	\interpretation{\symcal{M}'}{\obj{{}^{-1}}} & = {}^{-1}
+\end{align*}
+ここで，\(\symup{id} \colon S_n \to S_n\)は\(S_n\)上の恒等写像（つまり\(x \mapsto x\)という写像），
+\(\circ \colon S_n \to S_n\)は写像の合成をとる写像，
+\({}^{-1} \colon S_n \to S_n\)は逆写像をとる写像である．
+このようにして定義される\(\symcal{L}\)構造\(\symcal{M}'\)は，\(n \geq 3\)ならば\(\varphi\)を充足しない\(T\)のモデルである．
+
+\Cref{Que:model}は，通常の数学における「可換な群とそうでない群を1つずつ挙げよ」という問題に相当することに注意せよ．
+
+\subsection*{\Cref{Que:grouptheoryaxiomize}}
+
+2つの元からなる集合\(M = \Set{a, b}\)に対し，\(M\)を対象領域とする\(\symcal{L}_1\)構造\(\symcal{M}\)を以下によって定義する：
+写像\(\mathord{\ast} \colon M \times M \to M\)を以下の表によって定義し，
+\(\interpretation{\symcal{M}}{\obj{\ast}} = \mathord{\ast}\)とする．
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{c|cc}
+		\(\ast\) & \(a\) & \(b\) \\ \hline
+		\(a\)    & \(a\) & \(b\) \\
+		\(b\)    & \(b\) & \(b\) \\
+	\end{tabular}
+\end{table}
+
+このとき，\(\symcal{M}\)は上記\(\varphi_1, \varphi_2, \varphi_3\)のすべてを充足するので\(T_1\)のモデルである．
+これは，\(\symcal{M} \satisfy \varphi_1\)，\(\symcal{M} \satisfy \varphi_2\)，\(\symcal{M} \satisfy \varphi_3\)がそれぞれ
+\begin{enumerate}
+	\item すべての\(x, y, z\)に対して\(\paren{x \ast y} \ast z = x \ast \paren{y \ast z}\)となる
+	\item \(e' \in M\)が存在して，すべての\(x \in M\)に対して\(e' \ast x = x\)となる
+	\item \(e' \in M\)が存在して，すべての\(x \in M\)に対して\(y \ast x = e'\)となる\(y \in M\)がとれる
+\end{enumerate}
+と同値になっていることからわかる（\(\symcal{M} \satisfy \varphi_2\)が成立する根拠となる\(e'\)として\(a\)が，
+\(\symcal{M} \satisfy \varphi_3\)が成立する根拠となる\(e'\)として\(b\)がそれぞれとれる）．
+しかし，2については\(b \ast a = a\)は成り立たず，3については\(y \ast b = a\)となる\(y \in M\)
+が存在しないので，上記2つの\(e'\)を一致させることはできない．
+このため，\(\symcal{M}\)による\(\obj{e}, {}^{\obj{-1}}\)の解釈をどのように定めても，
+\(\symcal{M}\)が\(T\)のモデルになることはない．
+
+\section*{\Cref{chap:proof}}
 
 \subsection*{\Cref{Que:sequent}}
 
@@ -801,3 +896,15 @@
 	\item \(\paren{s \objeq t} \land \paren{t \objeq u} \sequent \subst{\varphi}{t/x}\)\quad （1から(\(\land\)E)による）
 	\item \(\paren{s \objeq t} \land \paren{t \objeq u} \sequent \subst{\varphi}{s/x}\)\quad （4, 5から(SUBST)による）
 \end{enumerate}
+
+\section*{\Cref{chap:advanced}}
+
+\subsection*{\Cref{Que:completeness}}
+
+対偶，すなわち\(\Gamma \provable \varphi\)でないと仮定して\(\Gamma \satisfy \varphi\)でないことを示す．
+\(\Gamma \provable \varphi\)でないので，\(\Gamma \cup \Set{\lnot \varphi}\)が無矛盾となる．
+実際，\(\Gamma \cup \Set{\lnot \varphi}\)が矛盾すると仮定すると(\(\lnot\)I)規則と
+(DNF)規則により\(\Gamma \provable \varphi\)となる．
+\Cref{Thm:HenkinTheorem}により，\(\Gamma \cup \Set{\lnot \varphi}\)のモデル\(\symcal{M}\)が存在する．
+この\(\symcal{M}\)は\(\symcal{M} \satisfy \lnot \varphi\)を満たすので\(\symcal{M} \satisfy \varphi\)
+は成り立たず，従って\(\Gamma \satisfy \varphi\)ではない．

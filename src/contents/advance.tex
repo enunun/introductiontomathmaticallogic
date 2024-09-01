@@ -223,15 +223,16 @@
 	\Cref{Lemma:existsextend}により，\(\Gamma\)にHenkin公理を加えて得られる
 	\(\symcal{L} \cup \Set{c_{\exists x \varphi}}\)理論は無矛盾である．
 
-	さて，自然数\(n\)に対する言語\(\symcal{L}_n\)と\(\symcal{L}_n\)閉論理式の集合\(\H_n\)
-	を，および\(\symcal{L}_n\)理論\(\Gamma_n\)を以下のように帰納的に定義する：
+	さて，自然数\(n\)に対する言語\(\symcal{L}_n\)と\(\symcal{L}_n\)閉論理式からなる
+	Henkin公理の集合\(H_n\)，
+	および\(\symcal{L}_n\)理論\(\Gamma_n\)を以下のように帰納的に定義する：
 	まず，\(\symcal{L}_0 = \symcal{L}\)とし，
 	\(\exists x \varphi\)という形の\(\symcal{L}\)論理式に対するHenkin定数の全体を\(C_0\)，
 	Henkin公理の全体を\(H_0\)とする．
 	そして，\(\exists x \varphi\)という形の\(\symcal{L}_n\)論理式に対するHenkin定数の全体を\(C_n\)，
 	Henkin公理の全体を\(H_n\)として，\(\symcal{L}_{n+1} = \symcal{L}_n \cup C_n\)，\(\Gamma_n = \Gamma \cup H_n\)とする．
 	\cref{Lemma:existsextend}と帰納法によってすべての自然数\(n\)に対して\(\Gamma_n\)が無矛盾であることを示すことができる．
-	\(\symcal{L}_\infty = \bigcup_{n \in \Natural} \symcal{L}_n\)，\(\H_\infty = \bigcup_{n \in \Natural} H_n\)
+	\(\symcal{L}_\infty = \bigcup_{n \in \Natural} \symcal{L}_n\)，\(H_\infty = \bigcup_{n \in \Natural} H_n\)
 	とし，\(\Gamma_\infty = \bigcup_{n \in \Natural} \Gamma_n = \Gamma \cup H_\infty\)とする．
 	\(\symcal{L}_0 \subset \symcal{L}_1 \subset \symcal{L}_2 \subset \dotsb\)や
 	\(\Gamma_0 \subset\Gamma_1 \subset \Gamma_2 \subset \dotsb\)が成り立っている．
@@ -247,7 +248,7 @@
 		\metaimplies \text{\(\Gamma_\infty \provable \subst{\varphi}{c_{\exists x \varphi}/x}\)}.
 		\label{eq:henkincondition}
 	\end{equation}
-	\(\varphi\)は\(\symcal{L}_\infty = \bigcup_{n \in \Natural} \symcal{L}_n\)論理式であって
+	\(\varphi\)は\(\symcal{L}_\infty\)論理式であって
 	その記号列としての長さは有限である．また，\(\symcal{L}_0 \subset \symcal{L}_1 \dotsb\)なので，
 	\(\varphi\)が\(\symcal{L}_n\)論理式になるような自然数\(n\)が存在する．
 	\(\Gamma_\infty \provable \exists x \varphi\)だから\(\symcal{L}_\infty\)論理式の
@@ -364,7 +365,7 @@
 		 & \metaequivalent \apply{r}{t_1, t_2, \dots, t_n} \in \Gamma_\infty.
 	\end{align*}
 
-	\(\varphi\)が\(\exists \psi\)の形をしている場合を考える．
+	\(\varphi\)が\(\exists x \psi\)の形をしている場合を考える．
 	まず，\(\varphi \in \Gamma_\infty\)と仮定すると，
 	\(\exists x \psi \to \subst{\psi}{c_{\exists x \psi}/x} \in \Gamma_\infty\)である．
 	よって\(\varphi \in \Gamma_\infty\)から(\(\to\)E)規則によって
@@ -403,7 +404,7 @@
 \Cref{coro:consistencyfrommodel}と\cref{Lemma:Henkinextensionhasmodel}により，以下の帰結が得られる．
 
 \begin{Corollary} \label{coro:completeness}
-	\(\Gamma\)を理論とする．このとき，\(Gamma\)が無矛盾であることと\(\Gamma\)がモデルをもつことは同値である．
+	\(\Gamma\)を理論とする．このとき，\(\Gamma\)が無矛盾であることと\(\Gamma\)がモデルをもつことは同値である．
 \end{Corollary}
 
 \index[widx]{かんぜんせいていり@完全性定理}

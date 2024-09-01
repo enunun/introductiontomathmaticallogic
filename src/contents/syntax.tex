@@ -136,7 +136,7 @@
 \end{Que}
 
 
-
+\index[widx]{ろんりしき@論理式}
 \begin{Def} \label[Def]{Def:logicalexpression}
 	言語\(\symcal{L}\)に対し，\(\symcal{L}\)論理式を以下のように帰納的に定義する：
 	\begin{enumerate}
@@ -169,6 +169,32 @@
 		      はいずれも\(\symcal{L}\)論理式である．
 		\item 以上の規則を有限回適用して得られるもののみが論理式である．
 	\end{enumerate}
+\end{Def}
+
+\begin{Def} \label[Def]{Def:atomiclogicalexpression}
+	\Cref{Def:logicalexpression}において，最後に規則1, 2, 3を適用して得られる\(\symcal{L}\)論理式，すなわち
+	\begin{align*}
+		\bot,                   \\
+		\paren{t_1 \objeq t_2}, \\
+		\apply{r}{t_1, t_2, \dotsc, t_n}
+	\end{align*}
+	の形の\(\symcal{L}\)論理式を%
+	\index[widx]{ろんりしき@論理式!げんしろんりしき@原子---}%
+	\(\symcal{L}\)\term{原子論理式}といい，
+	\(\symcal{L}\)原子論理式でない\(\symcal{L}\)論理式，
+	すなわち最後に規則4を適用して得られる\(\symcal{L}\)論理式を%
+	\index[widx]{ろんりしき@論理式!ふくごうろんりしき@複合---}%
+	\(\symcal{L}\)\term{複合論理式}という．
+	さらに，
+	\begin{align*}
+		\forall x \varphi, \\
+		\exists x \varphi
+	\end{align*}
+	の形の\(\symcal{L}\)論理式をそれぞれ%
+	\index[widx]{ろんりしき@論理式!ぜんしょうろんりしき@全称---}%
+	\(\symcal{L}\)\term{全称論理式}，
+	\index[widx]{ろんりしき@論理式!そんざいろんりしき@存在---}%
+	\(\symcal{L}\)\term{存在論理式}という．
 \end{Def}
 
 \begin{Ex} \label[Ex]{Ex:logicalexpression}

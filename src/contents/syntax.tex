@@ -381,7 +381,7 @@
 \end{Ex}
 
 
-\section{理論} \label[section]{sec:Theory}
+\section{理論とその例} \label[section]{sec:Theory}
 
 前節までは項や論理式に関する一般論を述べた．
 ここでは，実際の数学理論がどう形式化されるかについて少しだけ触れる．
@@ -396,9 +396,11 @@
 	言語\(\symcal{L}\)を明示しない文脈では，\(\symcal{L}\)理論や\(\symcal{L}\)公理系は単に理論や公理系と呼ばれる．
 \end{Def}
 
+今後，例として登場する言語や理論を先んじていくつか挙げておく．
+
 \begin{Ex} \label[Ex]{Ex:grouptheory}
-	群論の言語\(\symcal{L} = \set{\obj{\ast}, \obj{e}, {}^{\obj{-1}}}\)において，
-	群の理論は次の3つの文からなると考えることができる：
+	群の言語を\(\symcal{L}_{\GP} = \set{\obj{\ast}, \obj{e}, {}^{\obj{-1}}}\)とする．
+	群の理論\(\GP\)は，次の3つの文からなると考えることができる：
 	\begin{enumerate}
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
 		      \paren{\paren{\obj{x} \obj{\ast} \obj{y}} \obj{\ast} \obj{z} \objeq \obj{x} \obj{\ast} \paren{\obj{y} \obj{\ast} \obj{z}}}\),
@@ -418,3 +420,14 @@
 	\end{enumerate}
 	しかし，この書き下し方は構文的に不適切である．その理由を述べよ．
 \end{Que}
+
+\begin{Ex} \label[Ex]{Ex:Ring}
+	環の言語を\(\symcal{L}_{\Ring} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}}\)とする．
+	環の理論\(\Ring\)は，以下の文からなる公理系と考えることができる：
+	%後で書く
+\end{Ex}
+
+\begin{Ex} \label{Ex:OrderedRing}
+	順序環の言語を\(\symcal{L}_{\OrderedRing} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}}\)とする．
+	% 後で書く
+\end{Ex}

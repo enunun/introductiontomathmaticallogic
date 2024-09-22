@@ -250,6 +250,38 @@
 	「\(\symcal{L}\)項」や「\(\symcal{L}\)論理式」は単に「項」や「論理式」と呼称する．
 \end{Note}
 
+さらに記述を簡素化するために，追加で略記表現をを導入する．
+
+\index[sidx]{\(\formulaequiv\)：（論理式の）同値}
+\index[sidx]{\(\uexists\)：一意存在}
+\begin{Def} \label{Def:AbbreviatioForFormula}
+	論理式\(\varphi, \psi\)に対し，論理式
+	\begin{align*}
+		\paren{\varphi \to \psi} \land \paren{\psi \to \varphi}
+	\end{align*}
+	を
+	\begin{equation}
+		\varphi \formulaequiv \psi
+		\label{eq:formulaequiv}
+	\end{equation}
+	と略記する．
+	また，変数記号\(x, x_1, x_2\)を\(x_1, x_2\)が自由出現しない論理式\(\varphi\)に対し，論理式
+	\begin{align*}
+		\exists x \varphi \land \forall x \forall y \paren{\subst{\varphi}{x_1/x} \land \subst{\varphi}{x_2} \to x_1 \objeq x_2}
+	\end{align*}
+	を
+	\begin{equation}
+		\uexists x \varphi
+		\label{eq:uexists}
+	\end{equation}
+	と略記する．
+
+	\Cref{eq:formulaequiv}は「\(\varphi\)と\(\psi\)は同値である」
+	ことを表現することが期待される論理式で，
+	\cref{eq:uexists}は「\(\varphi\)となる\(x\)がただ1つ存在する」
+	ことを表現することが期待される論理式である．
+\end{Def}
+
 \section{変数の出現と代入可能性} \label{sec:substitution}
 
 数学においては，一般論に具体例を当てはめることによって議論を進めることが多い．
@@ -360,6 +392,7 @@
 	\(\varphi\)に出現しない変数記号すべてに対してあらゆる項が代入可能である．
 \end{Ex}
 
+\index[sidx]{\(\subst{\varphi}{t/x}\)：論理式への代入}
 \begin{Def} \label[Def]{Def:substitution}
 	論理式\(\varphi\)中の変数記号\(x\)に項\(t\)が代入可能であるとき，
 	\(\varphi\)に自由出現している\(x\)すべてを\(t\)に置き換えて得られる論理式を
@@ -398,9 +431,12 @@
 
 今後，例として登場する言語や理論を先んじていくつか挙げておく．
 
+\index[sidx]{\(\GP\)：群の理論}
+\index[sidx]{\(\symcal{L}_{\GP}\)：群の言語}
 \begin{Ex} \label[Ex]{Ex:grouptheory}
 	群の言語を\(\symcal{L}_{\GP} = \set{\obj{\ast}, \obj{e}, {}^{\obj{-1}}}\)とする．
-	群の理論\(\GP\)は，次の3つの文からなると考えることができる：
+	ここで，\(\obj{\ast}\)はアリティ2の関数記号，\(\obj{e}\)は定数記号，\({}^{\obj{-1}}\)はアリティ1の関係記号である．
+	群の理論\(\GP\)は，次の3つの文からなる\(\symcal{L}_{\GP}\)理論であると考えることができる：
 	\begin{enumerate}
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
 		      \paren{\paren{\obj{x} \obj{\ast} \obj{y}} \obj{\ast} \obj{z} \objeq \obj{x} \obj{\ast} \paren{\obj{y} \obj{\ast} \obj{z}}}\),
@@ -411,7 +447,7 @@
 \end{Ex}
 
 \begin{Que} \label[Que]{Que:invalidtheory}
-	群の言語を\(\symcal{L} = \set{\obj{\ast}}\)だと考えて，群の理論を次のように書き下そうとする場合がある．
+	群の言語を\(\symcal{L} = \set{\obj{\ast}}\)だと考えて，群の理論を次のような\(\symcal{L}\)理論として書き下そうとする場合がある．
 	\begin{enumerate}
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
 		      \paren{\paren{\obj{x} \obj{\ast} \obj{y}} \obj{\ast} \obj{z} \objeq \obj{x} \obj{\ast} \paren{\obj{y} \obj{\ast} \obj{z}}},\)
@@ -421,13 +457,114 @@
 	しかし，この書き下し方は構文的に不適切である．その理由を述べよ．
 \end{Que}
 
+\index[sidx]{\(\Ring\)：環の理論}
+\index[sidx]{\(\symcal{L}_{\Ring}\)：環の言語}
 \begin{Ex} \label[Ex]{Ex:Ring}
 	環の言語を\(\symcal{L}_{\Ring} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}}\)とする．
-	環の理論\(\Ring\)は，以下の文からなる公理系と考えることができる：
-	%後で書く
+	環の理論\(\Ring\)は，以下の文からなる\(\symcal{L}_{\Ring}\)理論であると考えることができる：
+	\begin{enumerate}
+		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z} \paren{\paren{\obj{x} \obj{+} \obj{y}} \obj{z} \objeq \obj{x} \obj{+} \paren{\obj{y} \obj{+} \obj{z}}},\)
+		\item \(\forall \obj{x} \paren{\obj{0} \obj{+} \obj{x} \objeq \obj{x}},\)
+		\item \(\forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{+} \obj{x} \objeq \obj{0}},\)
+		\item \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{y} \objeq \obj{y} \obj{+} \obj{x}},\)
+		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
+		      \paren{\paren{\obj{x} \obj{\cdot} \obj{y}} \obj{\cdot} \obj{z} \objeq \obj{x} \obj{\cdot} \paren{\obj{y} \obj{\cdot} \obj{z}}},\)
+		\item \(\forall \obj{x} \paren{\paren{\obj{1} \obj{\cdot} \obj{x} \objeq \obj{x}} \land \paren{\obj{x} \obj{\cdot} \obj{1} \objeq \obj{x}}},\)
+		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
+		      \paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{+} \obj{z}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{+} \paren{\obj{x} \obj{\cdot} \obj{z}}},\)
+		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
+		      \paren{ \paren{\obj{x} \obj{+} \obj{y}} \obj{\cdot} \obj{z} \objeq \paren{\obj{x} \obj{\cdot} \obj{z}} \obj{+} \paren{\obj{y} \obj{\cdot} \obj{z}}}.\)
+	\end{enumerate}
+	最初の文3つは，\(\symcal{L}_{\GP}\)における\(\obj{\ast}\)を\(\obj{+}\)に置き換えたものであることに注意せよ．
 \end{Ex}
 
-\begin{Ex} \label{Ex:OrderedRing}
+\index[sidx]{\(\OrderedRing\)：順序環の理論}
+\index[sidx]{\(\symcal{L}_{\OrderedRing}\)：順序環の言語}
+\begin{Ex} \label[Ex]{Ex:OrderedRing}
 	順序環の言語を\(\symcal{L}_{\OrderedRing} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}}\)とする．
-	% 後で書く
+	順序環の理論\(\OrderedRing\)は，以下の文からなる\(\symcal{L}_{\OrderedRing}\)理論と考えることができる：
+	\begin{enumerate}
+		\item \Cref{Ex:Ring}で挙げた8つの論理式すべて，
+		\item \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \obj{y} \objeq \obj{y} \obj{\cdot} \obj{x}},\)
+		\item \(\forall \obj{x} \lnot \paren{x \obj{<} \obj{x}},\)
+		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
+		      \paren{\obj{x} \obj{<} \obj{y} \land \obj{y} \obj{<} \obj{z} \to \obj{x} \obj{<} \obj{z}},\)
+		\item \(\forall \obj{x} \forall \obj{y}
+		      \paren{\paren{\obj{x} \obj{<} \obj{y} \lor \obj{y} \obj{<} \obj{x}} \lor \obj{x} \objeq \obj{y}},\)
+		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
+		      \paren{\obj{x} \obj{<} \obj{y} \to \obj{x} \obj{+} \obj{z} \obj{<} \obj{y} \obj{+} \obj{z}},\)
+		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
+		      \paren{\obj{x} \obj{<} \obj{y} \land \obj{0} \obj{<} \obj{z} \to \obj{x} \obj{\cdot} \obj{z} \obj{<} \obj{y} \obj{\cdot} \obj{z}}.\)
+	\end{enumerate}
 \end{Ex}
+
+\index[sidx]{\(\ProjectiveGeometryPart\)：射影幾何の部分体系}
+\index[sidx]{\(\symcal{L}_{\ProjectiveGeometryPart}\)：射影幾何の言語}
+\begin{Ex} \label[Ex]{Ex:ProjectiveGeometry}
+	\NewDocumentCommand{\LiesOn}{}{\obj{\varepsilon}}
+	射影幾何の言語を\(\symcal{L}_{\ProjectiveGeometryPart}\)を\(\symcal{L}_{\ProjectiveGeometryPart} = \Set{\obj{P}, \obj{L}, \LiesOn}\)
+	とする．ここで，\(\obj{P}, \obj{L}\)はアリティ1の関係記号，\(\obj{\varepsilon}\)はアリティ2の関係記号である．
+	このとき，射影幾何の理論の部分体系\(\ProjectiveGeometryPart\)として，以下の文からなる\(\symcal{L}_{\ProjectiveGeometryPart}\)理論を考えることができる：
+	\begin{enumerate}
+		\item \(\forall \obj{x} \paren{\apply{\obj{P}}{\obj{x}} \formulaequiv \lnot \apply{\obj{L}}{\obj{x}}},\)
+		\item \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \LiesOn \obj{y} \to \apply{\obj{P}}{\obj{x}} \land \apply{\obj{L}}{\obj{y}}},\)
+		\item \(\forall \obj{x} \forall \obj{y} \paren{\apply{\obj{P}}{\obj{x}} \land \apply{\obj{P}}{\obj{y}} \land \lnot \paren{\obj{x} \objeq \obj{y}}
+			      \to \uexists z \paren{\obj{x} \LiesOn \obj{x} \land \obj{y} \LiesOn \obj{z}}},\)
+		\item \(\forall \obj{x} \forall \obj{y} \paren{\paren{\apply{\obj{L}}{\obj{x}} \land \apply{\obj{L}}{y}} \land \lnot \paren{\obj{x} \objeq \obj{y}}
+			      \to \uexists z \paren{\obj{z} \LiesOn \obj{x} \land \obj{z} \LiesOn \obj{y}}},\)
+		\item \(\apply{c}{x, y, z}\)を
+		      \[\exists \obj{w} \paren{x \LiesOn \obj{w} \land y \LiesOn \obj{w} \land z \LiesOn \obj{w}}
+		      \]
+		      の略記，
+		      \(\apply{n}{a, b, c, d}\)を\[
+			      \lnot \paren{a \objeq b} \land \lnot \paren{a \objeq c} \land \lnot \paren{a \objeq d} \land \lnot \paren{b \objeq c}
+			      \land \lnot \paren{c \objeq d}\]
+		      の略記として
+		      \begin{align*}
+			      \exists \obj{a} \exists \obj{b} \exists \obj{c} \exists \obj{d} \paren{\apply{n}{\obj{a}, \obj{b}, \obj{c}, \obj{d}}
+				      \land \lnot \apply{c}{\obj{a}, \obj{b}, \obj{c}}
+				      \land \lnot \apply{c}{\obj{a}, \obj{b}, \obj{d}}
+				      \land \lnot \apply{c}{\obj{a}, \obj{c}, \obj{d}}
+				      \land \lnot \apply{c}{\obj{b}, \obj{c}, \obj{d}}
+			      }.
+		      \end{align*}
+	\end{enumerate}
+	ただし，\(\obj{P}, \obj{Q}\)は\(\apply{\obj{P}}{x}, \apply{\obj{L}}{x}\)でそれぞれ「\(x\)は点である」ことと「\(x\)は直線である」
+	ことを表現する意図で導入した記号であり，
+	\(\LiesOn\)は\(x \LiesOn y\)で「\(x\)は\(y\)上にある」ことを表現する意図で導入した記号である．
+	すると，上記の各文は順に
+	\begin{enumerate}
+		\item 点と直線は異なる対象である．
+		\item \(x\)が\(y\)上にあるならば，\(x\)は点であり，\(y\)は直線である．
+		\item 任意の相異なる2点を通る直線がただ1つ存在する．
+		\item 相異なる2直線はつねに1点で交わる．
+		\item どの3つも共線でないような4点が存在する．
+	\end{enumerate}
+	を表現することを意図した論理式であると解釈できる．
+\end{Ex}
+
+\begin{Note}
+	\cref{Ex:ProjectiveGeometry}では\(c\)や\(n\)のようなもとの言語になかった記号が理論を記述するために使用されている．
+	しかし，ここでの\(\apply{c}{x, y, y}\)や\(\apply{n}{a, b, c, d}\)は単に既知の論理式の略記表現であり，
+	アリティ3, 4の新しい関係記号が導入されたわけではないことに注意しよう．
+	\(c, n\)を使った論理式は，単に\(\apply{c}{x, y, z}, \apply{n}{a, b, c, d}\)をその定義に置き換えることによって
+	いつでも\(c, n\)があらわれない形に書き直すことができる．
+\end{Note}
+
+\begin{Que} \label[Que]{Que:ProjectiveGeometrydual}
+	\NewDocumentCommand{\LiesOn}{}{\obj{\varepsilon}}
+	\Cref{Ex:ProjectiveGeometry}における言語\(\symcal{L}_{\ProjectiveGeometryPart}\)を考える．
+	\(\sigma\)を\(\symcal{L}_{\ProjectiveGeometryPart}\)論理式とするとき，\(\sigma\)に対して以下の操作を施して得られる
+	\(\symcal{L}_{\ProjectiveGeometryPart}\)を\(\tilde{\sigma}\)とする%
+	\footnote{%
+		論理式における代入と同じように，この操作は帰納的定義によって精密化できる．%
+	}%
+	：
+	\begin{enumerate}
+		\item \(\sigma\)にあらわれる\(\obj{P}, \obj{L}\)をすべて入れ替える．
+		\item \(\sigma\)にあらわれる\(x \LiesOn y\)を\(y \LiesOn x\)に変更する．
+	\end{enumerate}
+	この\(\tilde{\sigma}\)を\(\sigma\)の双対と呼ぶ．
+
+	このとき，\cref{Ex:ProjectiveGeometry}で述べた体系\(\ProjectiveGeometryPart\)の各公理の双対を求めよ．
+\end{Que}

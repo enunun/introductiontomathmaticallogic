@@ -498,34 +498,37 @@
 	\end{enumerate}
 \end{Ex}
 
-\index[sidx]{\(\ProjectiveGeometryPart\)：射影幾何の部分体系}
-\index[sidx]{\(\symcal{L}_{\ProjectiveGeometryPart}\)：射影幾何の言語}
+\index[sidx]{\(\ProjectiveGeometryPart\)：射影平面幾何の部分体系}
+\index[sidx]{\(\symcal{L}_{\ProjectiveGeometryPart}\)：射影平面幾何の言語}
 \begin{Ex} \label[Ex]{Ex:ProjectiveGeometry}
 	\NewDocumentCommand{\LiesOn}{}{\obj{\varepsilon}}
-	射影幾何の言語を\(\symcal{L}_{\ProjectiveGeometryPart}\)を\(\symcal{L}_{\ProjectiveGeometryPart} = \Set{\obj{P}, \obj{L}, \LiesOn}\)
+	射影平面幾何の言語を\(\symcal{L}_{\ProjectiveGeometryPart}\)を\(\symcal{L}_{\ProjectiveGeometryPart} = \Set{\obj{P}, \obj{L}, \LiesOn}\)
 	とする．ここで，\(\obj{P}, \obj{L}\)はアリティ1の関係記号，\(\obj{\varepsilon}\)はアリティ2の関係記号である．
-	このとき，射影幾何の理論の部分体系\(\ProjectiveGeometryPart\)として，以下の文からなる\(\symcal{L}_{\ProjectiveGeometryPart}\)理論を考えることができる：
+	このとき，射影平面幾何の理論の部分体系\(\ProjectiveGeometryPart\)として，以下の文からなる\(\symcal{L}_{\ProjectiveGeometryPart}\)理論を考えることができる：
 	\begin{enumerate}
 		\item \(\forall \obj{x} \paren{\apply{\obj{P}}{\obj{x}} \formulaequiv \lnot \apply{\obj{L}}{\obj{x}}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \LiesOn \obj{y} \to \apply{\obj{P}}{\obj{x}} \land \apply{\obj{L}}{\obj{y}}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \paren{\apply{\obj{P}}{\obj{x}} \land \apply{\obj{P}}{\obj{y}} \land \lnot \paren{\obj{x} \objeq \obj{y}}
-			      \to \uexists z \paren{\obj{x} \LiesOn \obj{x} \land \obj{y} \LiesOn \obj{z}}},\)
+			      \to \uexists z \paren{\obj{x} \LiesOn \obj{z} \land \obj{y} \LiesOn \obj{z}}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \paren{\paren{\apply{\obj{L}}{\obj{x}} \land \apply{\obj{L}}{y}} \land \lnot \paren{\obj{x} \objeq \obj{y}}
 			      \to \uexists z \paren{\obj{z} \LiesOn \obj{x} \land \obj{z} \LiesOn \obj{y}}},\)
-		\item \(\apply{c}{x, y, z}\)を
-		      \[\exists \obj{w} \paren{x \LiesOn \obj{w} \land y \LiesOn \obj{w} \land z \LiesOn \obj{w}}
+		\item \(\apply{C}{x, y, z}\)を
+		      \[
+			      \lnot \exists \obj{w} \paren{\paren{x \LiesOn \obj{w} \land y \LiesOn \obj{w}} \land z \LiesOn \obj{w}}
 		      \]
 		      の略記，
 		      \(\apply{n}{a, b, c, d}\)を\[
-			      \lnot \paren{a \objeq b} \land \lnot \paren{a \objeq c} \land \lnot \paren{a \objeq d} \land \lnot \paren{b \objeq c}
+			      \paren{\paren{\paren{\lnot \paren{a \objeq b} \land \lnot \paren{a \objeq c}} \land \lnot \paren{a \objeq d}} \land \lnot \paren{b \objeq c}}
 			      \land \lnot \paren{c \objeq d}\]
-		      の略記として
+		      の略記としたときの
 		      \begin{align*}
-			      \exists \obj{a} \exists \obj{b} \exists \obj{c} \exists \obj{d} \paren{\apply{n}{\obj{a}, \obj{b}, \obj{c}, \obj{d}}
-				      \land \lnot \apply{c}{\obj{a}, \obj{b}, \obj{c}}
-				      \land \lnot \apply{c}{\obj{a}, \obj{b}, \obj{d}}
-				      \land \lnot \apply{c}{\obj{a}, \obj{c}, \obj{d}}
-				      \land \lnot \apply{c}{\obj{b}, \obj{c}, \obj{d}}
+			       & \exists \obj{a} \exists \obj{b} \exists \obj{c} \exists \obj{d} \\
+			       & \paren{
+				      \paren{\paren{\paren{\apply{n}{\obj{a}, \obj{b}, \obj{c}, \obj{d}}
+							      \land \apply{C}{\obj{a}, \obj{b}, \obj{c}}}
+						      \land \apply{C}{\obj{a}, \obj{b}, \obj{d}}}
+					      \land \apply{C}{\obj{a}, \obj{c}, \obj{d}}}
+				      \land \apply{C}{\obj{b}, \obj{c}, \obj{d}}
 			      }.
 		      \end{align*}
 	\end{enumerate}
@@ -541,6 +544,7 @@
 		\item どの3つも共線でないような4点が存在する．
 	\end{enumerate}
 	を表現することを意図した論理式であると解釈できる．
+	上記\(\apply{C}{x, y, z}\)は「3点\(x, y, z\)は共点ではない」という主張に対応する論理式であると考えることができる．
 \end{Ex}
 
 \begin{Note}
@@ -550,6 +554,17 @@
 	\(c, n\)を使った論理式は，単に\(\apply{c}{x, y, z}, \apply{n}{a, b, c, d}\)をその定義に置き換えることによって
 	いつでも\(c, n\)があらわれない形に書き直すことができる．
 \end{Note}
+
+\begin{Note}
+	ここで導入した体系\(\ProjectiveGeometryPart\)は射影平面幾何の部分体系であり，射影平面幾何そのものではない．
+	例えばこの体系\(\ProjectiveGeometryPart\)では，射影平面幾何の定理として有名なPappusの定理は証明できないことが知られている．
+
+	また，平面幾何においては「点」と「直線」を区別して扱いたいので，対応する一階述語論理の理論においてそれを陽に提示する場合には
+	\(\obj{P}\)や\(\obj{L}\)のような関係記号が必要となる．
+	そのため，射影空間幾何の理論をこのやり方で作ろうとした場合は「平面」に対応する新しい記号が必要となる．
+	すなわち，次元を1つ増やすごとにアリティ1の関係記号が1つ増えることになる．
+\end{Note}
+
 
 \begin{Que} \label[Que]{Que:ProjectiveGeometrydual}
 	\NewDocumentCommand{\LiesOn}{}{\obj{\varepsilon}}
@@ -562,7 +577,7 @@
 	：
 	\begin{enumerate}
 		\item \(\sigma\)にあらわれる\(\obj{P}, \obj{L}\)をすべて入れ替える．
-		\item \(\sigma\)にあらわれる\(x \LiesOn y\)を\(y \LiesOn x\)に変更する．
+		\item \(\sigma\)にあらわれる\(x \LiesOn y\)という形の部分をすべて\(y \LiesOn x\)に変更する．
 	\end{enumerate}
 	この\(\tilde{\sigma}\)を\(\sigma\)の双対と呼ぶ．
 

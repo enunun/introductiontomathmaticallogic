@@ -185,6 +185,37 @@
 なぜそうしなければならないのか，
 そしてなぜそうすれば「よい」のかについては，この段階ではわからない．
 
+\subsection*{\Cref{Que:ProjectiveGeometrydual}}
+
+\begin{enumerate}
+	\NewDocumentCommand{\LiesOn}{}{\obj{\varepsilon}}
+	\item \(\forall \obj{x} \paren{\apply{\obj{L}}{\obj{x}} \formulaequiv \lnot \apply{\obj{P}}{\obj{x}}},\)
+	\item \(\forall \obj{x} \forall \obj{y} \paren{\obj{y} \LiesOn \obj{x} \to \apply{\obj{L}}{\obj{x}} \land \apply{\obj{P}}{\obj{y}}},\)
+	\item \(\forall \obj{x} \forall \obj{y} \paren{\apply{\obj{L}}{\obj{x}} \land \apply{\obj{L}}{\obj{y}} \land \lnot \paren{\obj{x} \objeq \obj{y}}
+		      \to \uexists z \paren{\obj{z} \LiesOn \obj{x} \land \obj{z} \LiesOn \obj{y}}},\)
+	\item \(\forall \obj{x} \forall \obj{y} \paren{\paren{\apply{\obj{P}}{\obj{x}} \land \apply{\obj{P}}{y}} \land \lnot \paren{\obj{x} \objeq \obj{y}}
+		      \to \uexists z \paren{\obj{x} \LiesOn \obj{z} \land \obj{y} \LiesOn \obj{z}}},\)
+	\item \(C'\)を
+	      \[
+		      \lnot \exists \obj{w} \paren{\paren{\obj{w} \LiesOn x \land \obj{w} \LiesOn y} \land \obj{w} \LiesOn z}
+	      \]
+	      の略記としたときの
+	      \begin{align*}
+		       & \exists \obj{a} \exists \obj{b} \exists \obj{c} \exists \obj{d} \\
+		       & \paren{
+			      \paren{\paren{\paren{\apply{n}{\obj{a}, \obj{b}, \obj{c}, \obj{d}}
+						      \land \apply{C'}{\obj{a}, \obj{b}, \obj{c}}}
+					      \land \apply{C'}{\obj{a}, \obj{b}, \obj{d}}}
+				      \land \apply{C'}{\obj{a}, \obj{c}, \obj{d}}}
+			      \land \apply{C'}{\obj{b}, \obj{c}, \obj{d}}
+		      }.
+	      \end{align*}
+\end{enumerate}
+
+双対をとる操作によって，1と2は意味が変わらず，3と4は互いに入れ替わり，5については
+「どの3直線も共線でないような相異なる4直線が存在する」という主張に対応する論理式になったことに注意しよう．
+上記\(\apply{C'}{x, y, z}\)は「3直線\(x, y, z\)は共線でない」という主張に対応すると考えることができる．
+
 \section*{\Cref{chap:semantics}}
 
 \subsection*{\Cref{Que:satisfy}}

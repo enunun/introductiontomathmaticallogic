@@ -463,7 +463,7 @@
 	環の言語を\(\symcal{L}_{\Ring} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}}\)とする．
 	環の理論\(\Ring\)は，以下の文からなる\(\symcal{L}_{\Ring}\)理論であると考えることができる：
 	\begin{enumerate}
-		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z} \paren{\paren{\obj{x} \obj{+} \obj{y}} \obj{z} \objeq \obj{x} \obj{+} \paren{\obj{y} \obj{+} \obj{z}}},\)
+		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z} \paren{\paren{\obj{x} \obj{+} \obj{y}} \obj{+} \obj{z} \objeq \obj{x} \obj{+} \paren{\obj{y} \obj{+} \obj{z}}},\)
 		\item \(\forall \obj{x} \paren{\obj{0} \obj{+} \obj{x} \objeq \obj{x}},\)
 		\item \(\forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{+} \obj{x} \objeq \obj{0}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{y} \objeq \obj{y} \obj{+} \obj{x}},\)
@@ -490,7 +490,7 @@
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
 		      \paren{\obj{x} \obj{<} \obj{y} \land \obj{y} \obj{<} \obj{z} \to \obj{x} \obj{<} \obj{z}},\)
 		\item \(\forall \obj{x} \forall \obj{y}
-		      \paren{\paren{\obj{x} \obj{<} \obj{y} \lor \obj{y} \obj{<} \obj{x}} \lor \obj{x} \objeq \obj{y}},\)
+		      \paren{\obj{x} \obj{<} \obj{y} \lor \obj{y} \obj{<} \obj{x} \lor \obj{x} \objeq \obj{y}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
 		      \paren{\obj{x} \obj{<} \obj{y} \to \obj{x} \obj{+} \obj{z} \obj{<} \obj{y} \obj{+} \obj{z}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
@@ -501,7 +501,7 @@
 \index[sidx]{\(\ProjectiveGeometryPart\)：射影平面幾何の部分体系}
 \index[sidx]{\(\symcal{L}_{\ProjectiveGeometryPart}\)：射影平面幾何の言語}
 \begin{Ex} \label[Ex]{Ex:ProjectiveGeometry}
-	\NewDocumentCommand{\LiesOn}{}{\obj{\varepsilon}}
+	\NewDocumentCommand{\LiesOn}{}{\mathrel{\obj{\varepsilon}}}
 	射影平面幾何の言語を\(\symcal{L}_{\ProjectiveGeometryPart}\)を\(\symcal{L}_{\ProjectiveGeometryPart} = \Set{\obj{P}, \obj{L}, \LiesOn}\)
 	とする．ここで，\(\obj{P}, \obj{L}\)はアリティ1の関係記号，\(\obj{\varepsilon}\)はアリティ2の関係記号である．
 	このとき，射影平面幾何の理論の部分体系\(\ProjectiveGeometryPart\)として，以下の文からなる\(\symcal{L}_{\ProjectiveGeometryPart}\)理論を考えることができる：
@@ -510,29 +510,29 @@
 		\item \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \LiesOn \obj{y} \to \apply{\obj{P}}{\obj{x}} \land \apply{\obj{L}}{\obj{y}}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \paren{\apply{\obj{P}}{\obj{x}} \land \apply{\obj{P}}{\obj{y}} \land \lnot \paren{\obj{x} \objeq \obj{y}}
 			      \to \uexists z \paren{\obj{x} \LiesOn \obj{z} \land \obj{y} \LiesOn \obj{z}}},\)
-		\item \(\forall \obj{x} \forall \obj{y} \paren{\paren{\apply{\obj{L}}{\obj{x}} \land \apply{\obj{L}}{y}} \land \lnot \paren{\obj{x} \objeq \obj{y}}
+		\item \(\forall \obj{x} \forall \obj{y} \paren{\apply{\obj{L}}{\obj{x}} \land \apply{\obj{L}}{y} \land \lnot \paren{\obj{x} \objeq \obj{y}}
 			      \to \uexists z \paren{\obj{z} \LiesOn \obj{x} \land \obj{z} \LiesOn \obj{y}}},\)
 		\item \(\apply{C}{x, y, z}\)を
 		      \[
-			      \lnot \exists \obj{w} \paren{\paren{x \LiesOn \obj{w} \land y \LiesOn \obj{w}} \land z \LiesOn \obj{w}}
+			      \lnot \exists \obj{w} \paren{x \LiesOn \obj{w} \land y \LiesOn \obj{w} \land z \LiesOn \obj{w}}
 		      \]
 		      の略記，
 		      \(\apply{n}{a, b, c, d}\)を\[
-			      \paren{\paren{\paren{\lnot \paren{a \objeq b} \land \lnot \paren{a \objeq c}} \land \lnot \paren{a \objeq d}} \land \lnot \paren{b \objeq c}}
+			      \lnot \paren{a \objeq b} \land \lnot \paren{a \objeq c} \land \lnot \paren{a \objeq d} \land \lnot \paren{b \objeq c}
 			      \land \lnot \paren{c \objeq d}\]
 		      の略記としたときの
-		      \begin{align*}
-			       & \exists \obj{a} \exists \obj{b} \exists \obj{c} \exists \obj{d} \\
-			       & \paren{
-				      \paren{\paren{\paren{\apply{n}{\obj{a}, \obj{b}, \obj{c}, \obj{d}}
-							      \land \apply{C}{\obj{a}, \obj{b}, \obj{c}}}
-						      \land \apply{C}{\obj{a}, \obj{b}, \obj{d}}}
-					      \land \apply{C}{\obj{a}, \obj{c}, \obj{d}}}
+		      \[
+			      \exists \obj{a} \exists \obj{b} \exists \obj{c} \exists \obj{d}
+			      \paren{
+				      \apply{n}{\obj{a}, \obj{b}, \obj{c}, \obj{d}}
+				      \land \apply{C}{\obj{a}, \obj{b}, \obj{c}}
+				      \land \apply{C}{\obj{a}, \obj{b}, \obj{d}}
+				      \land \apply{C}{\obj{a}, \obj{c}, \obj{d}}
 				      \land \apply{C}{\obj{b}, \obj{c}, \obj{d}}
 			      }.
-		      \end{align*}
+		      \]
 	\end{enumerate}
-	ただし，\(\obj{P}, \obj{Q}\)は\(\apply{\obj{P}}{x}, \apply{\obj{L}}{x}\)でそれぞれ「\(x\)は点である」ことと「\(x\)は直線である」
+	ただし，\(\obj{P}, \obj{L}\)は\(\apply{\obj{P}}{x}, \apply{\obj{L}}{x}\)でそれぞれ「\(x\)は点である」ことと「\(x\)は直線である」
 	ことを表現する意図で導入した記号であり，
 	\(\LiesOn\)は\(x \LiesOn y\)で「\(x\)は\(y\)上にある」ことを表現する意図で導入した記号である．
 	すると，上記の各文は順に
@@ -567,7 +567,7 @@
 
 
 \begin{Que} \label[Que]{Que:ProjectiveGeometrydual}
-	\NewDocumentCommand{\LiesOn}{}{\obj{\varepsilon}}
+	\NewDocumentCommand{\LiesOn}{}{\mathrel{\obj{\varepsilon}}}
 	\Cref{Ex:ProjectiveGeometry}における言語\(\symcal{L}_{\ProjectiveGeometryPart}\)を考える．
 	\(\sigma\)を\(\symcal{L}_{\ProjectiveGeometryPart}\)論理式とするとき，\(\sigma\)に対して以下の操作を施して得られる
 	\(\symcal{L}_{\ProjectiveGeometryPart}\)を\(\tilde{\sigma}\)とする%

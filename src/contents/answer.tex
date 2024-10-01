@@ -188,7 +188,7 @@
 \subsection*{\Cref{Que:ProjectiveGeometrydual}}
 
 \begin{enumerate}
-	\NewDocumentCommand{\LiesOn}{}{\obj{\varepsilon}}
+	\NewDocumentCommand{\LiesOn}{}{\mathrel{\obj{\varepsilon}}}
 	\item \(\forall \obj{x} \paren{\apply{\obj{L}}{\obj{x}} \formulaequiv \lnot \apply{\obj{P}}{\obj{x}}},\)
 	\item \(\forall \obj{x} \forall \obj{y} \paren{\obj{y} \LiesOn \obj{x} \to \apply{\obj{L}}{\obj{x}} \land \apply{\obj{P}}{\obj{y}}},\)
 	\item \(\forall \obj{x} \forall \obj{y} \paren{\apply{\obj{L}}{\obj{x}} \land \apply{\obj{L}}{\obj{y}} \land \lnot \paren{\obj{x} \objeq \obj{y}}
@@ -197,16 +197,16 @@
 		      \to \uexists z \paren{\obj{x} \LiesOn \obj{z} \land \obj{y} \LiesOn \obj{z}}},\)
 	\item \(C'\)を
 	      \[
-		      \lnot \exists \obj{w} \paren{\paren{\obj{w} \LiesOn x \land \obj{w} \LiesOn y} \land \obj{w} \LiesOn z}
+		      \lnot \exists \obj{w} \paren{\obj{w} \LiesOn x \land \obj{w} \LiesOn y \land \obj{w} \LiesOn z}
 	      \]
 	      の略記としたときの
 	      \begin{align*}
 		       & \exists \obj{a} \exists \obj{b} \exists \obj{c} \exists \obj{d} \\
 		       & \paren{
-			      \paren{\paren{\paren{\apply{n}{\obj{a}, \obj{b}, \obj{c}, \obj{d}}
-						      \land \apply{C'}{\obj{a}, \obj{b}, \obj{c}}}
-					      \land \apply{C'}{\obj{a}, \obj{b}, \obj{d}}}
-				      \land \apply{C'}{\obj{a}, \obj{c}, \obj{d}}}
+			      \apply{n}{\obj{a}, \obj{b}, \obj{c}, \obj{d}}
+			      \land \apply{C'}{\obj{a}, \obj{b}, \obj{c}}
+			      \land \apply{C'}{\obj{a}, \obj{b}, \obj{d}}
+			      \land \apply{C'}{\obj{a}, \obj{c}, \obj{d}}
 			      \land \apply{C'}{\obj{b}, \obj{c}, \obj{d}}
 		      }.
 	      \end{align*}

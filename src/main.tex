@@ -29,6 +29,7 @@
 \setsansfont[Ligatures=TeX]{Libertinus Sans}
 \setmathfont{Libertinus Math}[math-style=ISO, bold-style=ISO]
 \setmathfont{TeX Gyre Pagella Math}[range=bb]
+\setmathfont{Garamond Math}[range={\Coloneq}]
 \DeclareFontFamily{OML}{nxlmi}{\skewchar \font =127}
 \DeclareFontShape{OML}{nxlmi}{m}{it}{
 	<-6.3>  nxlmi035
@@ -93,6 +94,7 @@
 \DeclareMathOperator{\FV}{FV}
 \DeclareMathOperator{\BV}{BV}
 \DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\depth}{depth}
 
 \NewDocumentCommand{\subst}{smm}{%
 \IfBooleanTF{#1}{#2[{#3}]%
@@ -139,6 +141,16 @@
 		\mathopen{} \left[ #2 \right] \mathclose{}%
 	}%
 }
+
+\NewDocumentCommand{\anglebrackets}{sm}{%
+	\IfBooleanTF{#1}{%
+		\mathopen{} \langle #2\rangle \mathclose{}%
+	}%
+	{%
+		\mathopen{} \left\langle #2\right\rangle \mathclose{}%
+	}%
+}
+
 \NewDocumentCommand{\emptystring}{}{\varepsilon}
 
 \NewDocumentCommand{\restriction}{}{\upharpoonright}
@@ -256,6 +268,8 @@
 \crefname{Lemma}{補題}{補題}
 \Crefname{Corollary}{系}{系}
 \crefname{Corollary}{系}{系}
+\Crefname{Note}{注意}{注意}
+\crefname{Note}{注意}{注意}
 \crefname{section}{\presectionname}{\presectionname}
 \Crefname{section}{\presectionname}{\presectionname}
 \crefname{subsection}{\presubsectionname}{\presubsectionname}

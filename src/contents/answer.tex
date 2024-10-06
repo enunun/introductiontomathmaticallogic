@@ -45,11 +45,19 @@
 
 \subsection*{\Cref{Que:recursivedefinition}}
 
-\(\Sigma\)のKleene閉包\(\KleeneClosure{\Sigma}\)は，1, 2を満たす．
-よって，\(\KleeneClosure{\Sigma}\)の部分集合で1, 2を満たすものの全体を
-\(\symcal{S}\)とおくと，\(\symcal{S}\)は空でない．
-\(L = \bigcap \symcal{S}\)とおくと\(L\)は1, 2を満たす\(\KleeneClosure{\Sigma}\)
-の部分集合で包含関係に対して最小のものである．
+自然数\(n\)に対する集合\(L_n \subset \KleeneClosure{\Sigma}\)を，以下のように帰納的に定義する：
+まず，\(L_0\)を数字全体の集合とする．各\(n\)について，\(L_n\)から\(L_{n+1}\)を
+\begin{equation*}
+	L_{n+1} = L_n \cup \Set{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen} | t_1, t_2 \in L_n}
+\end{equation*}
+によって定める．
+
+このようにして定義される列\(L_0, L_1, \dots\)は，\Cref{Que:recursivedefinition}における規則1, 2, 3をすべて満たす．
+数式全体の集合\(L\)は，この列\(L_0, L_1, \dots\)を使って
+\begin{equation*}
+	L = \bigcup_{n \in \Natural} L_n
+\end{equation*}
+と定義できる．
 
 \subsection*{\Cref{Que:well-foundedexample}}
 
@@ -59,25 +67,41 @@
 が成り立つので，すべての\(t \in L\)に対して\(t \not\prec' t\)が成り立つ．よって\(\prec'\)は非反射的である．
 \(\prec'\)は\(\prec\)の推移閉包なので推移的であり，\(\prec'\)が半順序であることが従う．
 
-\(\prec'\)が整礎であることを示そう．まず，すべての自然数\(n\)に対して
-「\(L'\)が（記号列としての）長さ\(n\)以下の元をもつならば，\(L'\)は（\(L\)上の二項関係\(\prec'\)に関する）極小元をもつ」
-という主張が成り立つことを自然数に関する数学的帰納法によって示す：
-\(n=0\)のとき，\(L'\)は長さ0の文字列\(\emptystring\)を元にもつ．
-\(x \prec' y\)を満たす任意の\(x, y \in L\)に対して\(\length{x} < \length{y}\)が成り立つので，
-\(\emptystring\)は\(L'\)の極小元である．
-\(L'\)が長さ\(n\)以下の元をもつときに\(L'\)が極小元をもつと仮定して，
-\(L'\)が長さ\(n + 1\)以下の元\(t\)を持つ場合を考える．\(t\)が極小元ならば，
-\(L'\)は極小元\(t\)をもつ．\(t\)が極小元でないならば，
-\(t = \obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}\)なる\(t_1, t_2 \in L'\)が存在する．
-このとき，\(\length{t_1} < \length{t}\)かつ\(\length{t_2} < \length{t}\)なので
-\(t_1, t_2\)の長さは\(n\)以下であり，\(L'\)は長さ\(n\)以下の元\(t_1, t_2\)をもつことがわかる．
-よって帰納法の仮定により，\(L'\)は極小元をもつ．
-以上の議論により「\(L'\)が（記号列としての）長さ\(n\)以下の元をもつならば，\(L'\)は（\(L\)上の二項関係\(\prec'\)に関する）極小元をもつ」
-という主張がすべての自然数\(n\)に対して成り立つことがわかった．
+\(\prec'\)が整礎であることを示そう．
+\(L'\)を\(L\)の空でない部分集合とする．このとき，\(\Natural\)の部分集合
+\begin{equation*}
+	N = \Set{\apply{\depth}{t} | t \in L'}
+\end{equation*}
+は空でない．よって，\(\Natural\)上の通常の大小関係\(<\)の整礎性から\(N\)の極小元\(x\)をとることができる．
+\(x = \apply{\depth}{t}\)を満たす\(t\)が1つとれるが，
+\(x\)が\(N\)の極小元であることから\(y < x\)を満たす\(N\)の元\(y\)
+は存在せず，\cref{eq:recursivedefinitiondepthorder}から\(u \prec' t\)
+を満たす\(u \in L'\)も存在しない．
+従って\(t\)は\(L'\)の極小元であることから，\(\prec'\)は整礎な半順序であることがわかる．
 
-さて，\(L'\)を\(L\)の空でない部分集合とし，その元\(t\)をとる．
-すると，\(L'\)は長さ\(\length{t}\)以下の元をもつので
-\(L'\)は極小元をもつ．従って，\(\prec'\)は整礎な半順序である．
+なお，上記\(t\)は\(L'\)に対して一意であるとは限らない．
+例えば，\(L'\)が数字を元としてもつならば，その数字すべてが\(L'\)の極小元である．
+
+\subsection*{\Cref{Que:recursivedefinitiondepth}}
+
+\(t\)が数字ならば\(t \in L_0\)なので，\(\apply{\depth}{t} = 0 + 1 = 1\)であり，
+\cref{eq:Que:recursivedefinitiondepth_numeral}が成り立つ．
+\(t_1, t_2 \in L\)とする．
+このとき，\(t_1 \in L_n\)となる\(n\)のうち最小のもの\(m = \apply{\depth}{t_1} - 1\)と，
+\(t_2 \in L_n\)となる\(n\)のうち最小のもの\(l = \apply{\depth}{t_2} - 1\)がそれぞれとれる．
+\(m \leq l\)ならば，\(l\)は\(t_1 \in L_n\)と\(t_2 \in L_n\)をともに満たす\(n\)のうち最小のものである．
+よって\(l + 1\)は\(\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen} \in L_n\)を満たす\(n\)のうち最小のものであって，
+\begin{equation*}
+	\apply{\depth}{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}} = l + 1 + 1 = \apply{\depth}{t_2} + 1
+\end{equation*}
+となる．\(l < m\)の場合も同様に
+\begin{equation*}
+	\apply{\depth}{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}} = \apply{\depth}{t_1} + 1
+\end{equation*}
+となる．
+\(m \leq l\)のときは\(\apply{\depth}{t_1} \leq \apply{\depth}{t_2}\)であり
+\(l < m\)のときは\(\apply{\depth}{t_2} < \apply{\depth}{t_1}\)であるから，
+\cref{eq:Que:recursivedefinitiondepth_inductionstep}が成り立つことがわかる．
 
 \subsection*{\Cref{Que:inductivedifinition}}
 
@@ -96,19 +120,38 @@
 このとき，\(t_1 \prec t\)となる\(t_1 \in L\)もとれるので\(t_2 \prec t\)となる\(t_2 \in L\)
 もとれる．このような\(t_1, t_2\)の組は一意に定まるので，
 \[
-	\apply{G}{f} = \max \Set{\apply{f}{t_1}, \apply{f}{t_2}} + 1
+	\apply{G}{f} = \apply{f}{t_1} + \apply{f}{t_2} + 1
 \]
 とする．
-\begingroup
-\NewDocumentCommand{\Comp}{}{\mathop{\symup{Comp}}}
-このとき，\cref{Thm:inductivedifinition}により，写像\({\Comp} \colon L \to \Natural\)
+このとき，\cref{Thm:inductivedifinition}により，写像\({\size} \colon L \to \Natural\)
 で任意の\(t \in L\)に対して
 \[
-	\apply{\Comp}{t} = \apply{G}{ \Comp \restriction \Set{s \in L | s \prec' t}}
+	\apply{\size}{t} = \apply{G}{ \size \restriction \Set{s \in L | s \prec' t}}
 \]
 を満たすものがただ1つ定まる．
-この\(\Comp\)が\cref{Que:inductivedifinition}で定義しようとした数式の複雑さを表す写像にほかならない．
-\endgroup
+この\(\size\)が\cref{Que:inductivedifinition}で定義しようとした数式の大きさを表す写像にほかならない．
+
+
+\subsection*{\Cref{Que:structuralinductionexample}}
+
+\(t \in L\)を1つとり，\(u \prec' t\)を満たすすべての\(u\)に対して\cref{eq:sizedepthinequality}が成り立つと仮定する．
+このとき，この\(t\)についても\cref{eq:sizedepthinequality}が成り立つことを示す．
+
+\(t\)が数字ならば，\(\apply{\size}{t}\)と\(\apply{\depth}{t}\)はともに1なので\cref{eq:sizedepthinequality}は成り立つ．
+\(t\)が数字でないとき，\(t\)は\(t_1, t_2 \in L\)を用いて\(\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}\)と表される．
+このとき，\(t_1 \prec' t\)かつ\(t_2 \prec' t\)なので，\(t_1, t_2\)はともに\cref{eq:sizedepthinequality}を満たす．
+よって
+\begin{align*}
+	\apply{\size}{t} & = \apply{\size}{t_1} + \apply{\size}{t_2} + 1                      \\
+	                 & \leq 2^{\apply{\depth}{t_1}} - 1 + 2^{\apply{\depth}{t_2}} - 1 + 1 \\
+	                 & = 2^{\max\Set{\apply{\depth}{t_1}, \apply{\depth}{t_2}} + 1} - 1   \\
+	                 & = 2^{\apply{\depth}{t}} - 1
+\end{align*}
+だから，この\(t\)についても\cref{eq:sizedepthinequality}が成り立つ．
+
+以上より，整礎帰納法によって
+すべての\(t \in L\)に対して\cref{eq:sizedepthinequality}が成り立つ．
+
 
 \section*{\Cref{chap:syntax}}
 

@@ -579,7 +579,7 @@
 	\begin{enumerate}
 		\item \(L_0\)は数字全体の集合である．
 		\item 各\(n\)について，任意の\(t_1, t_2 \in L_n\)に対して\(\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen} \in L_{n+1}\)を満たす．
-		\item \(L_{n+1}\)は\(L_n \subset L_{n+1}\)と上記2を満たす包含関係に関して最小の集合である．
+		\item 各\(n\)について，\(L_{n+1}\)は\(L_n \subset L_{n+1}\)と上記2を満たす包含関係に関して最小の集合である．
 	\end{enumerate}
 	1, 2, 3をすべて満たす集合\(L_n\)の存在を示し，それを使って\cref{Ex:recursivedefinition}で述べた数式全体の集合\(L\)をつくれ．
 \end{Que}
@@ -614,9 +614,10 @@
 	\(t \in L_{n}\)となる自然数\(n\)がとれる．そのため，そのような\(n\)のなかで最小のものをとることができる．
 	この自然数\(n\)は\(t \in L\)に対して一意に定まるので，\(n + 1\)を\(t\)の複雑さと定義して
 	\(\apply{\depth}{t}\)と表すことにすると，
-	\[
+	\begin{equation}
 		t_1 \prec' t_2 \metaequivalent \apply{\depth}{t_1} < \apply{\depth}{t_2}
-	\]
+		\label{eq:recursivedefinitiondepthorder}
+	\end{equation}
 	が成り立っている．
 	よく知られているように，自然数全体の集合\(\Natural\)上の通常の大小関係\(\mathord{<}\)は整礎であるから，
 	それを使って\(\prec'\)の整礎を示すことができる．
@@ -630,15 +631,15 @@
 \end{Note}
 
 \begin{Que} \label[Que]{Que:recursivedefinitiondepth}
-	\Cref{Que:well-foundedexample}における数式の複雑さを表す写像\(\depth \colon L \to \Natural\)は，以下の条件を満たすことを証明せよ．
+	\Cref{Que:well-foundedexample}における数式の複雑さを表す写像\(\mathalpha{\depth} \colon L \to \Natural\)は，以下の条件を満たすことを証明せよ．
 	\begin{align}
-		\apply{\depth}{t}                                           & = 1 \quad \text{(\(t\)が数字のとき)}
-		\label{eq:Que:recursivedefinitiondepth_numeral}                                                                                                          \\
-		\apply{\depth}{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}} & = \max\Set{\apply{\depth}{t_1}, \apply{\depth}{t_2}} + 1 \quad \text{(\(t_1, t_2 \in L\))}
+		\apply{\depth}{t}                                           & = 1, \quad \text{(\(t\)が数字のとき)}
+		\label{eq:Que:recursivedefinitiondepth_numeral}                                                                                                           \\
+		\apply{\depth}{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}} & = \max\Set{\apply{\depth}{t_1}, \apply{\depth}{t_2}} + 1. \quad \text{(\(t_1, t_2 \in L\))}
 		\label{eq:Que:recursivedefinitiondepth_inductionstep}
 	\end{align}
 
-	なお，写像\(d\)は\cref{eq:Que:recursivedefinitiondepth_numeral}と
+	なお，この写像\(\depth\)は\cref{eq:Que:recursivedefinitiondepth_numeral}と
 	\cref{eq:Que:recursivedefinitiondepth_inductionstep}を満たす写像として，
 	\cref{Thm:inductivedifinition}を通して特徴づけることができる．
 	しかし，そのようにして写像\(\depth\)を定義したい場合には，
@@ -652,7 +653,6 @@
 \term{構造帰納法}と呼ぶ．
 
 \begin{Que} \label{Que:inductivedifinition}
-	\NewDocumentCommand{\size}{}{\mathop{\symup{size}}}
 	\Cref{Thm:inductivedifinition}によって，\cref{Ex:recursivedefinition}で述べた
 	集合\(L\)の元\(t\)に対する以下の定義を正当化せよ．
 
@@ -668,8 +668,7 @@
 	\]と定める．
 \end{Que}
 
-\begin{Que} \label{Que:structuralinduction}
-	\NewDocumentCommand{\size}{}{\mathop{\symup{size}}}
+\begin{Que} \label{Que:structuralinductionexample}
 	任意の数式\(t\)に対し，
 	\cref{Que:well-foundedexample}における数式の複雑さ\(\apply{\depth}{t}\)と
 	\cref{Que:inductivedifinition}における

@@ -444,8 +444,8 @@
 今後我々が議論の対象とするのは「意味」をもたない形式的な記号列である．
 まずはこの「形式的な記号列」の数学的定式化を述べておく．
 以後，「自然数」といえば0も含むので注意されたい．%
-\index[sidx]{\(\Natural\)：自然数全体の集合}%
-また，自然数全体の集合を\(\Natural\)と表記する．
+\index[sidx]{\(\NaturalNumbers\)：自然数全体の集合}%
+また，自然数全体の集合を\(\NaturalNumbers\)と表記する．
 
 \begin{Def} \label{Def:formallanguage}
 	記号の集合\(\Sigma\)が与えられたとする．\(w\)が\(\Sigma\)上の%
@@ -496,7 +496,7 @@
 	\end{equation}
 	と表記することとする．
 
-	さらに，\(\Sigma\)上の記号列の全体\(\bigcup_{n \in \Natural} \Sigma^{\Set{0,1,\dots, n-1}}\)を
+	さらに，\(\Sigma\)上の記号列の全体\(\bigcup_{n \in \NaturalNumbers} \Sigma^{\Set{0,1,\dots, n-1}}\)を
 	\(\Sigma\)の%
 	\index[widx]{Kleeneへいほう@Kleene閉包}%
 	\term{Kleene閉包}%
@@ -559,7 +559,7 @@
 実際に定義したいものよりも広い範囲の対象が定義から外れることが明文化されない
 \footnote{%
 	例えば，偶数全体の集合\(A\)を「\(0 \in A\)であり，\(n \in A\)ならば\(n + 2 \in A\)かつ\(n - 2 \in A\)である」などとして
-	定義しようとしたとき，整数全体の集合\(\Zahlen\)もカギカッコ内の条件自体は満たしている．
+	定義しようとしたとき，整数全体の集合\(\Integers\)もカギカッコ内の条件自体は満たしている．
 }%
 ．
 とはいえ，この形式での定義においてこの宣言が必要なくなることはありえないので，自明であるとして省略されることも多い．
@@ -619,7 +619,7 @@
 		\label{eq:recursivedefinitiondepthorder}
 	\end{equation}
 	が成り立っている．
-	よく知られているように，自然数全体の集合\(\Natural\)上の通常の大小関係\(\mathord{<}\)は整礎であるから，
+	よく知られているように，自然数全体の集合\(\NaturalNumbers\)上の通常の大小関係\(\mathord{<}\)は整礎であるから，
 	それを使って\(\prec'\)の整礎を示すことができる．
 \end{Que}
 
@@ -631,7 +631,7 @@
 \end{Note}
 
 \begin{Que} \label[Que]{Que:recursivedefinitiondepth}
-	\Cref{Que:well-foundedexample}における数式の複雑さを表す写像\(\mathalpha{\depth} \colon L \to \Natural\)は，以下の条件を満たすことを証明せよ．
+	\Cref{Que:well-foundedexample}における数式の複雑さを表す写像\(\mathalpha{\depth} \colon L \to \NaturalNumbers\)は，以下の条件を満たすことを証明せよ．
 	\begin{align}
 		\apply{\depth}{t}                                           & = 1, \quad \text{(\(t\)が数字のとき)}
 		\label{eq:Que:recursivedefinitiondepth_numeral}                                                                                                           \\

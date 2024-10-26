@@ -29,6 +29,7 @@
 \setsansfont[Ligatures=TeX]{Libertinus Sans}
 \setmathfont{Libertinus Math}[math-style=ISO, bold-style=ISO]
 \setmathfont{TeX Gyre Pagella Math}[range=bb]
+\setmathfont{Garamond Math}[range={\Coloneq}]
 \DeclareFontFamily{OML}{nxlmi}{\skewchar \font =127}
 \DeclareFontShape{OML}{nxlmi}{m}{it}{
 	<-6.3>  nxlmi035
@@ -53,6 +54,7 @@
 \usepackage{bussproofs}
 \usepackage{multicol}
 \usepackage{framed}
+\usepackage{numbersets}
 
 %\delimitershortfall=-.3pt
 
@@ -86,13 +88,11 @@
 
 \NewDocumentCommand{\obj}{m}{\symtt{#1}}
 
-\NewDocumentCommand{\Natural}{}{\omega}
-
-\NewDocumentCommand{\Zahlen}{}{\symbb{Z}}
-
 \DeclareMathOperator{\FV}{FV}
 \DeclareMathOperator{\BV}{BV}
 \DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\depth}{depth}
+\DeclareMathOperator{\size}{size}
 
 \NewDocumentCommand{\subst}{smm}{%
 \IfBooleanTF{#1}{#2[{#3}]%
@@ -139,11 +139,25 @@
 		\mathopen{} \left[ #2 \right] \mathclose{}%
 	}%
 }
+
+\NewDocumentCommand{\anglebrackets}{sm}{%
+	\IfBooleanTF{#1}{%
+		\mathopen{} \langle #2\rangle \mathclose{}%
+	}%
+	{%
+		\mathopen{} \left\langle #2\right\rangle \mathclose{}%
+	}%
+}
+
 \NewDocumentCommand{\emptystring}{}{\varepsilon}
 
 \NewDocumentCommand{\restriction}{}{\upharpoonright}
 
 \NewDocumentCommand{\objeq}{}{\equiv}
+
+\NewDocumentCommand{\formulaequiv}{}{\leftrightarrow}
+
+\NewDocumentCommand{\uexists}{}{{\exists !}}
 
 \NewDocumentCommand{\powerset}{m}{\apply{\symfrak{P}}{#1}}
 
@@ -160,6 +174,25 @@
 \NewDocumentCommand{\isomorphic}{}{\cong}
 
 \NewDocumentCommand{\elementarilyequivalent}{}{\equiv}
+
+\NewDocumentCommand{\GP}{}{\symup{GP}}
+
+\NewDocumentCommand{\Ring}{}{\symup{Ring}}
+
+\NewDocumentCommand{\OrderedRing}{}{\symup{OR}}
+
+\NewDocumentCommand{\ProjectiveGeometryPart}{}{\symup{B}}
+
+\NewDocumentCommand{\ZF}{}{\symup{ZF}}
+
+\NewDocumentCommand{\ZFC}{}{\symup{ZFC}}
+
+\NewDocumentCommand{\RArithmetic}{}{\symup{R}}
+
+\NewDocumentCommand{\Robinson}{}{\symup{Q}}
+
+\NewDocumentCommand{\PA}{}{\symup{PA}}
+
 %
 %%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
 %
@@ -233,6 +266,8 @@
 \crefname{Lemma}{補題}{補題}
 \Crefname{Corollary}{系}{系}
 \crefname{Corollary}{系}{系}
+\Crefname{Note}{注意}{注意}
+\crefname{Note}{注意}{注意}
 \crefname{section}{\presectionname}{\presectionname}
 \Crefname{section}{\presectionname}{\presectionname}
 \crefname{subsection}{\presubsectionname}{\presubsectionname}

@@ -197,6 +197,20 @@
 	\(\symcal{L}\)\term{存在論理式}という．
 \end{Def}
 
+\begin{Def} \label[Def]{Def:universalclosure}
+	\(\symcal{L}\)を言語とし，\(\varphi\)を\(\symcal{L}\)論理式，\(\varphi\)に自由出現する変数記号全体が
+	\[
+		\apply{\FV}{\varphi} = \Set{x_1, x_2, \dots, x_n}
+	\]
+	であるとする．このとき，\(\symcal{L}\)論理式
+	\[
+		\forall x_1 \forall x_2 \dotsb \forall x_n \varphi
+	\]
+	は\(\symcal{L}\)閉論理式となる．この論理式を\(\varphi\)の%
+	\index[widx]{ぜんしょうへいほう@全称閉包}%
+	\term{全称閉包}という．
+\end{Def}
+
 \begin{Ex} \label[Ex]{Ex:logicalexpression}
 	群論の言語\(\symcal{L}_1\)において，
 	\(\paren{\apply{\obj{\ast}}{\obj{x}, \obj{y}} \obj{\objeq} \apply{\obj{\ast}}{\obj{y}, \obj{x}}}\)は

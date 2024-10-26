@@ -1001,3 +1001,68 @@
 \Cref{Thm:HenkinTheorem}により，\(\Gamma \cup \Set{\lnot \varphi}\)のモデル\(\symcal{M}\)が存在する．
 この\(\symcal{M}\)は\(\symcal{M} \satisfy \lnot \varphi\)を満たすので\(\symcal{M} \satisfy \varphi\)
 は成り立たず，従って\(\Gamma \satisfy \varphi\)ではない．
+
+\subsection*{\Cref{Que:Herbrandstructurewelldefineded}}
+
+まずは\cref{eq:herbrandequivalencerelation}で定義される二項関係\(\sim\)が同値関係であることを示す．
+\(x \in X\)を1つとる．このとき，等号に関する公理(REFL)によって\(\Gamma \provable x \objeq x\)だから\(x \sim x\)である．
+次に\(x, y \in X\)を任意にとり，\(x \sim y\)とする．このとき\(\Gamma \provable x \objeq y\)であるから，
+\cref{Thm:equalsignrelation}の\cref{eq:equalsignsymmetry}が導出可能であることや
+(\(\to\)I), (\(\to\)E)規則などによって\(\Gamma \provable y \objeq x\)であることが従う．
+よって\(y \sim x\)である．
+最後に\(x, y, z \in X\)を任意にとり，\(x \sim y\)かつ\(y \sim z\)であるとする．
+このとき，\(\Gamma \provable x \objeq y\)かつ\(\Gamma \provable y \objeq z\)である．
+\cref{eq:equalsigntransitivity}が導出可能であることや
+(\(\land\)I), (\(\to\)I), (\(\to\)E)規則などによって\(\Gamma \provable x \objeq z\)となることがわかる．
+ゆえに\(x \sim z\)である．
+以上より，\(\sim\)は\(X\)上の同値関係である．
+
+\Cref{eq:herbrandinterpretationconstantsymbol}から\cref{eq:herbrandinterpretationrelationsymbol}で
+定義された\(\symcal{L}\)の各記号の\(\symcal{M}\)による解釈が，その代表元のとりかたによらないことを示す．
+\Cref{eq:herbrandinterpretationconstantsymbol}における定数記号の解釈は，もともと代表元を使っての定義ではない．
+よって，\cref{eq:herbrandinterpretationfunctionsymbol}と\cref{eq:herbrandinterpretationrelationsymbol}についてのみ確かめればよい．
+まずは\cref{eq:herbrandinterpretationfunctionsymbol}について確かめよう．
+閉項\(t_1, t_2, \dots, t_n, s_1, s_2, \dots, s_n\)について，\(i = 1, 2, \dots, n\)に対して\(t_i \sim s_i\)であるとする．
+このとき，\(\apply{f}{t_1, t_2, \dots, t_n} \sim \apply{f}{s_1, s_2, \dots, s_n}\)であることを示せばよい．
+\(t_1, t_2, \dots, t_n, s_1, s_2, \dots, t_n\)のいずれにも出現しない，つまり自由出現も束縛出現もしない変数記号
+\(x_1, x_2, \dots, x_n\)をとり，以下の論理式を\(\varphi\)とする：
+\[
+	\apply{f}{t_1, t_2, \dots, t_n} \objeq \apply{f}{x_1, x_2, \dots, x_n}
+\]
+このとき，\cref{Que:equalsignrelation}と同様にして，シークエント
+\[
+	\paren{t_1 \objeq s_1} \land \paren{t_2 \objeq s_2} \land \dotsb \land \paren{t_n \objeq s_n}
+	\sequent \apply{f}{t_1, t_2, \dots, t_n} \objeq \apply{f}{s_1, s_2, \dots, s_n}
+\]
+が導出可能であることがわかる（\cref{Que:equalsignrelation}の議論をもとにして\(f\)のアリティ\(n\)に関する数学的帰納法を適用すればよい）．
+(\(\land\)I), (\(\to\)I), (\(\to\)E)などの規則と\(f\)のアリティ\(n\)に関する数学的帰納法によって
+\[
+	\Gamma \provable \apply{f}{t_1, t_2, \dots, t_n} \objeq \apply{f}{s_1, s_2, \dots, s_n}
+\]
+が成り立つことがわかる．
+以上より\(\apply{f}{t_1, t_2, \dots, t_n} \sim \apply{f}{s_1, s_2, \dots, s_n}\)であって，
+\cref{eq:herbrandinterpretationfunctionsymbol}による定義が代表元のとりかたに依存しないことがわかる．
+次に\cref{eq:herbrandinterpretationrelationsymbol}について確かめよう．
+閉項\(t_1, t_2, \dots, t_n, s_1, s_2, \dots, s_n\)について，\(i = 1, 2, \dots, n\)に対して\(t_i \sim s_i\)であるとする．
+このとき，
+\[
+	\Gamma \provable \apply{r}{t_1, t_2, \dots, t_n} \metaequivalent \Gamma \provable \apply{r}{s_1, s_2, \dots, s_n}
+\]
+であることを示せばよい．\(\sim\)が同値関係であることを踏まえれば，
+\[
+	\Gamma \provable \apply{r}{t_1, t_2, \dots, t_n} \metaimplies \Gamma \provable \apply{r}{s_1, s_2, \dots, s_n}
+\]
+を示せば十分である．いま，
+\[
+	\Gamma \provable \apply{r}{t_1, t_2, \dots, t_n}
+\]
+と仮定する．
+\(t_1, t_2, \dots, t_n, s_1, s_2, \dots, t_n\)のいずれにも出現しない，つまり自由出現も束縛出現もしない変数記号
+\(x_1, x_2, \dots, x_n\)をとる．
+このとき，(SUBST)などの規則と\(r\)のアリティ\(n\)に関する数学的帰納法によって
+\[
+	\Gamma \provable \apply{r}{s_1, s_2, \dots, s_n}
+\]
+が成り立つことがわかる．
+従って，\cref{eq:herbrandinterpretationrelationsymbol}による
+\(r\)の\(\symcal{M}\)による解釈の定義はその代表元のとりかたに依存しない．

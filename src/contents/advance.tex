@@ -232,8 +232,8 @@
 	そして，\(\exists x \varphi\)という形の\(\symcal{L}_n\)論理式に対するHenkin定数の全体を\(C_n\)，
 	Henkin公理の全体を\(H_n\)として，\(\symcal{L}_{n+1} = \symcal{L}_n \cup C_n\)，\(\Gamma_n = \Gamma \cup H_n\)とする．
 	\cref{Lemma:existsextend}と帰納法によってすべての自然数\(n\)に対して\(\Gamma_n\)が無矛盾であることを示すことができる．
-	\(\symcal{L}_\infty = \bigcup_{n \in \Natural} \symcal{L}_n\)，\(H_\infty = \bigcup_{n \in \Natural} H_n\)
-	とし，\(\Gamma_\infty = \bigcup_{n \in \Natural} \Gamma_n = \Gamma \cup H_\infty\)とする．
+	\(\symcal{L}_\infty = \bigcup_{n \in \NaturalNumbers} \symcal{L}_n\)，\(H_\infty = \bigcup_{n \in \NaturalNumbers} H_n\)
+	とし，\(\Gamma_\infty = \bigcup_{n \in \NaturalNumbers} \Gamma_n = \Gamma \cup H_\infty\)とする．
 	\(\symcal{L}_0 \subset \symcal{L}_1 \subset \symcal{L}_2 \subset \dotsb\)や
 	\(\Gamma_0 \subset\Gamma_1 \subset \Gamma_2 \subset \dotsb\)が成り立っている．
 
@@ -286,7 +286,7 @@
 	まず，\(T_0 = \Gamma_\infty\)とする．
 	各自然数\(n\)に対し，\(T_n \cup \Set{\varphi_n} \provable \bot\)であれば\(T_{n + 1} = T_n \cup \Set{ \lnot \varphi_n}\)
 	とし，そうでなければ\(T_{n + 1} = T_n \cup \Set{\varphi_n}\)とする．
-	このように定義された自然数\(n\)に対する\(T_n\)を用いて\(T_\infty = \bigcup_{n \in \Natural} T_n\)と定義する．
+	このように定義された自然数\(n\)に対する\(T_n\)を用いて\(T_\infty = \bigcup_{n \in \NaturalNumbers} T_n\)と定義する．
 
 	\(\Gamma_\infty\)の無矛盾性と帰納法により，各\(n\)に対して\(T_n\)が無矛盾であることが従う．
 	また，\(\Gamma_\infty\)の無矛盾性と同様にして\(T_\infty\)の無矛盾性が従う．

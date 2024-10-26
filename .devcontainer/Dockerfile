@@ -1,1 +1,1 @@
-FROM texlive/texlive:TL2023-historic
+FROM texlive/texlive:latest

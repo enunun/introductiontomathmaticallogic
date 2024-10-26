@@ -300,28 +300,28 @@
 となるための必要十分条件を考える．
 まず\(\varphi_1\)については
 \begin{align*}
-	                & \symcal{M} \satisfy \varphi_1                                                                                                                \\
-	\metaequivalent & \text{すべての\(a \in Integers\)に対して\(\symcal{M} \satisfy \forall \obj{y} \forall \obj{z} \subst{\varphi_1}{c_a / \obj{x}}\)}                    \\
-	\metaequivalent & \text{すべての\(a, b \in Integers\)に対して\(\symcal{M} \satisfy \forall \obj{z} \subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}\)}          \\
-	\metaequivalent & \text{すべての\(a, b, c\in Integers\)に対して\(\symcal{M} \satisfy \subst{\subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}}{c_c / \obj{z}}\)} \\
-	\metaequivalent & \text{すべての\(a, b, c\in Integers\)に対して
+	                & \symcal{M} \satisfy \varphi_1                                                                                                                 \\
+	\metaequivalent & \text{すべての\(a \in \Integers\)に対して\(\symcal{M} \satisfy \forall \obj{y} \forall \obj{z} \subst{\varphi_1}{c_a / \obj{x}}\)}                    \\
+	\metaequivalent & \text{すべての\(a, b \in \Integers\)に対して\(\symcal{M} \satisfy \forall \obj{z} \subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}\)}          \\
+	\metaequivalent & \text{すべての\(a, b, c\in \Integers\)に対して\(\symcal{M} \satisfy \subst{\subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}}{c_c / \obj{z}}\)} \\
+	\metaequivalent & \text{すべての\(a, b, c\in \Integers\)に対して
 		\(\interpretation{\symcal{M}}{\paren{\paren{c_a \obj{\ast} c_b} \obj{\ast} c_c}}
-	= \interpretation{\symcal{M}}{\paren{c_a \obj{\ast} \paren{c_b \obj{\ast} c_c}}}\)}                                                                            \\
-	\metaequivalent & \text{すべての\(a, b, c \in Integers\)に対して
+	= \interpretation{\symcal{M}}{\paren{c_a \obj{\ast} \paren{c_b \obj{\ast} c_c}}}\)}                                                                             \\
+	\metaequivalent & \text{すべての\(a, b, c \in \Integers\)に対して
 		\(\interpretation{\symcal{M}}{\paren{c_a \obj{\ast} c_b}} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{c_c}
-	= \interpretation{\symcal{M}}{c_a} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{\paren{c_b \obj{\ast} c_c}} \)}                         \\
-	\metaequivalent & \text{すべての\(a, b, c \in Integers\)に対して\(
+	= \interpretation{\symcal{M}}{c_a} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{\paren{c_b \obj{\ast} c_c}} \)}                          \\
+	\metaequivalent & \text{すべての\(a, b, c \in \Integers\)に対して\(
 		\paren{\interpretation{\symcal{M}}{c_a} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{c_b}} + c
 		= a + \paren{\interpretation{\symcal{M}}{c_b} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{c_c}}
-	\)}                                                                                                                                                            \\
-	\metaequivalent & \text{すべての\(a, b, c \in Integers\)に対して\(
+	\)}                                                                                                                                                             \\
+	\metaequivalent & \text{すべての\(a, b, c \in \Integers\)に対して\(
 		\paren{a + b} + c = a + \paren{b + c}
 		\)}
 \end{align*}
 となる．\(\varphi_2, \varphi_3\)についても同様にして
 \begin{align*}
-	\symcal{M} \satisfy \varphi_2 & \metaequivalent \text{すべての\(a \in Integers\)に対して\(0 + a = a\)},         \\
-	\symcal{M} \satisfy \varphi_3 & \metaequivalent \text{すべての\(a \in Integers\)に対して\(\paren{-a} + a = 0\)}
+	\symcal{M} \satisfy \varphi_2 & \metaequivalent \text{すべての\(a \in \Integers\)に対して\(0 + a = a\)},         \\
+	\symcal{M} \satisfy \varphi_3 & \metaequivalent \text{すべての\(a \in \Integers\)に対して\(\paren{-a} + a = 0\)}
 \end{align*}
 となることがわかるので，\(\symcal{M}\)が\(\varphi_1, \varphi_2, \varphi_3\)のすべてを充足することがわかる．
 \Cref{Ex:satisfy}で述べた\(\symcal{L}\)構造\(\symcal{M}'\)が\(\varphi_1\)のみを充足することも同様にして確かめられる．

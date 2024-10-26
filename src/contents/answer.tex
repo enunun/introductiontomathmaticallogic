@@ -6,7 +6,20 @@
 
 \(X\)上の二項関係として直積集合\(X \times X\)を考えると，\(X \times X\)は\(\prec\)を含む推移的な\(X\)上の二項関係である．
 よって，\(\prec\)を含む推移的な\(X\)上の二項関係の全体を\(\symcal{R}\)とおくと，\(\symcal{R}\)は空でない．
-\(\mathord{\prec'} = \bigcap \symcal{R}\)は，\(\prec\)を含む推移的な\(X\)上の二項関係で包含関係に対して最小のものである．
+\(\mathord{\prec'} = \bigcap \symcal{R}\)は，\(\prec\)を含む推移的な\(X\)上の二項関係で包含関係に対して最小のものである．これを示そう．
+
+まず，\(\prec'\)が\(\prec\)を含む推移的な\(X\)上の二項関係であることを示す．
+\(x \prec y\)とする．このとき，すべての\(R \in \symcal{R}\)に対して
+\(x \mathrel{R} y\)となるので\(x \prec' y\)となる．
+\(\prec' \subset X \times X\)であることもあわせて\(\prec'\)は\(\prec\)を含む\(X\)上の二項関係であることがわかる．
+\(\prec'\)の推移性を示す．\(x \prec' y\)かつ\(y \prec' z\)とする．
+任意の\(R \in \symcal{R}\)に対し，\(x \mathrel{R} y\)かつ\(y \mathrel{R} z\)となる．
+\(R\)は推移的なので\(x \mathrel{R} z\)である．ゆえに\(x \prec' z\)となり，\(\prec'\)が推移的であることが従う．
+
+最後に\(\prec'\)が\(\prec\)を含む推移的な\(X\)上の二項関係で包含関係に関して最小のものであることを示そう．
+\(x \prec' y\)とする．\(\prec\)を含む推移的な\(X\)上の二項関係\(R\)を任意にとる．
+このとき，\(R \in \symcal{R}\)であるから\(x \mathrel{R} y\)でなければならない．
+従って，集合として\(\prec' \subset R\)が成り立つので，\(\prec'\)が\(\prec\)を含む推移的な\(X\)上の二項関係で包含関係に対して最小のものであることがわかる．
 
 \subsection*{\Cref{que:proofinductivedefinition}}
 
@@ -61,11 +74,17 @@
 
 \subsection*{\Cref{Que:well-foundedexample}}
 
-任意の\(t_1, t_2 \in L\)に対して\(\length{t_1} < \length{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}}\)
-かつ
-\(\length{t_2} < \length{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}}\)
-が成り立つので，すべての\(t \in L\)に対して\(t \not\prec' t\)が成り立つ．よって\(\prec'\)は非反射的である．
-\(\prec'\)は\(\prec\)の推移閉包なので推移的であり，\(\prec'\)が半順序であることが従う．
+まず，\(\prec'\)の非反射性を示そう．
+\(t \prec' t\)となる\(t \in L\)が存在すると仮定すると，\cref{eq:recursivedefinitiondepthorder}により
+この\(t\)は\(\apply{\depth}{t} < \apply{\depth}{t}\)
+を満たさなければならず\(<\)の非反射性に矛盾する．よって\(\prec'\)は非反射的である．
+
+次に，\(\prec'\)の推移性を示す．
+\(t_1 \prec' t_2\)かつ\(t_2 \prec' t_3\)となる\(t_1, t_2, t_3 \in L\)を任意にとる．
+このとき，\cref{eq:recursivedefinitiondepthorder}により
+\(\apply{\depth}{t_1} < \apply{\depth}{t_2}\)かつ\(\apply{\depth}{t_2} < \apply{\depth}{t_3}\)である．
+よって\(<\)の推移性から\(\apply{\depth}{t_1} < \apply{\depth}{t_3}\)となるので，\cref{eq:recursivedefinitiondepthorder}から
+\(t_1 \prec' t_3\)となることがわかる．従って，\(\prec'\)は推移的である．
 
 \(\prec'\)が整礎であることを示そう．
 \(L'\)を\(L\)の空でない部分集合とする．このとき，\(\NaturalNumbers\)の部分集合

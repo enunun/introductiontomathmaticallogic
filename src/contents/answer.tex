@@ -371,6 +371,19 @@
 このため，\(\symcal{M}\)による\(\obj{e}, {}^{\obj{-1}}\)の解釈をどのように定めても，
 \(\symcal{M}\)が\(T\)のモデルになることはない．
 
+\subsection*{\Cref{Que:semanticlawofexcludedmiddle}}
+
+整数全体の集合\(\Integers\)を対象領域とする\(\symcal{L}_{\OrderedRing}\)構造\(\symcal{M}\)を考える．
+ただし，\(\symcal{M}\)による\(\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}\)の解釈はそれぞれ\(\Integers\)
+における通常の加法，乗法，\(0\)，\(1\)とし，\(\obj{<}\)の\(\symcal{M}\)による解釈は
+\(\Integers\)における通常の等号付き大小関係\(\leq\)とする．
+このとき，閉論理式\(\varphi \colon \forall \obj{x} \paren{\obj{x} \obj{<} \obj{x}}\)について
+\[
+	\symcal{M} \satisfy \varphi \metaequivalent \text{すべての\(a \in \Integers\)に対して\(a \leq a\)でない}
+\]
+となるが，例えば\(a = 1\)のときにこれは成り立たない．
+よって，\(\Integers\)はこの\(\varphi\)を充足しない．
+
 \section*{\Cref{chap:proof}}
 
 \subsection*{\Cref{Que:sequent}}

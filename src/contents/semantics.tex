@@ -580,6 +580,69 @@
 	同型な2つの群はどちらも可換であるか，どちらも可換でないかのいずれかである．
 \end{Ex}
 
+
+\section{同値な論理式} \label{sec:equivalentformula}
+
+以降，言語\(\symcal{L}\)が重要視されない文脈では\(\symcal{L}\)構造のことを単に構造と表記することとする．
+
+\Cref{sec:model}では，与えられた構造が各論理式を充足するかどうかという関係を定義した．
+この充足関係に着目したとき，閉論理式は以下の3パターンに分類することができる：
+\begin{enumerate}
+	\item あらゆる構造が充足する閉論理式，
+	\item ある構造は充足するが，別の構造は充足しない閉論理式，
+	\item どんな構造も充足しない閉論理式．
+\end{enumerate}
+これらのパターンに着目して，以下のように定義しよう．
+
+\begin{Def} \label[Def]{Def:validformula}
+	閉論理式\(\varphi\)が%
+	\index[widx]{こうしんしき@恒真式}%
+	\term{恒真式}%
+	であるとは，すべての構造\(\symcal{M}\)が\(\varphi\)を充足することをいう．
+	また，\(\varphi\)が%
+	\index[widx]{こうぎしき@恒偽式}%
+	\index[widx]{むじゅんしき@矛盾式}%
+	\term{恒偽式}，あるいは\term{矛盾式}であるとは，
+	すべての構造\(\symcal{M}\)が\(\varphi\)を充足しないことをいう．
+	閉論理式\(\varphi\)が恒偽式であることは，\(\lnot \varphi\)が恒真式であることと同値である．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:semanticlawofexcludedmiddle}
+	\(\varphi\)を閉論理式とするとき，閉論理式\(\varphi \lor \lnot \varphi\)は恒真式である．
+	実際，任意の構造\(\symcal{M}\)に対して，\(\symcal{M} \satisfy \varphi\)である場合には
+	\(\symcal{M} \satisfy \varphi \lor \lnot \varphi\)が成り立ち，
+	\(\symcal{M} \satisfy \varphi\)でない場合には\(\symcal{M} \satisfy \lnot \varphi\)となるので
+	\(\symcal{M} \satisfy \varphi \lor \lnot \varphi\)となる．
+
+	一方で，\cref{Ex:OrderedRing}で挙げた言語\(\symcal{L}_{\OrderedRing}\)における
+	閉論理式\(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{x}}\)を\(\varphi\)とするとき，\(\varphi\)は恒真式ではない．
+	理論\(\OrderedRing\)のモデルはすべて\(\varphi\)を充足するが，\(\OrderedRing\)のモデルでない
+	\(\symcal{L}_{\OrderedRing}\)構造で\(\varphi\)を充足しないものが存在するからである．
+\end{Ex}
+
+\begin{Que} \label{Que:semanticlawofexcludedmiddle}
+	\Cref{Ex:semanticlawofexcludedmiddle}の後半で述べた事実を検証せよ．すなわち，
+	\(\symcal{L}_{\OrderedRing}\)構造\(\symcal{M}\)で閉論理式\(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{x}}\)を
+	充足しないものを挙げよ．
+\end{Que}
+
+
+
+\index[sidx]{\(\varphi \logicallyequivalent \psi\)：論理的に同値}
+\index[widx]{ろんりてきにどうち@論理的に同値}
+\begin{Def} \label{Def:equivalentformula}
+	\(\varphi, \psi\)を論理式とする．このとき，論理式
+	\[
+		\varphi \formulaequiv \psi
+	\]
+	の全称閉包が恒真式であるとき，\(\varphi\)と\(\psi\)は\term{論理的に同値}であるといい
+	\begin{equation}
+		\varphi \logicallyequivalent \psi
+		\label{eq:logicallyequivalent}
+	\end{equation}
+	と表す．
+\end{Def}
+
 \section{等式理論とHorn理論} \label{sec:equationaltheory}
 
 本節では，言語や公理に特別な制約を課した場合について考察する．

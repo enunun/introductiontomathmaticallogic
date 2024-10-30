@@ -371,18 +371,54 @@
 このため，\(\symcal{M}\)による\(\obj{e}, {}^{\obj{-1}}\)の解釈をどのように定めても，
 \(\symcal{M}\)が\(T\)のモデルになることはない．
 
-\subsection*{\Cref{Que:semanticlawofexcludedmiddle}}
+\subsection*{\Cref{Que:validformula}}
 
 整数全体の集合\(\Integers\)を対象領域とする\(\symcal{L}_{\OrderedRing}\)構造\(\symcal{M}\)を考える．
 ただし，\(\symcal{M}\)による\(\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}\)の解釈はそれぞれ\(\Integers\)
-における通常の加法，乗法，\(0\)，\(1\)とし，\(\obj{<}\)の\(\symcal{M}\)による解釈は
+における通常の\(\mathord{+}, \mathord{\cdot}, 0, 1\)とし，\(\obj{<}\)の\(\symcal{M}\)による解釈は
 \(\Integers\)における通常の等号付き大小関係\(\leq\)とする．
-このとき，閉論理式\(\varphi \colon \forall \obj{x} \paren{\obj{x} \obj{<} \obj{x}}\)について
+このとき，閉論理式\(\varphi \colon \forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{x}}\)について
 \[
 	\symcal{M} \satisfy \varphi \metaequivalent \text{すべての\(a \in \Integers\)に対して\(a \leq a\)でない}
 \]
 となるが，例えば\(a = 1\)のときにこれは成り立たない．
 よって，\(\Integers\)はこの\(\varphi\)を充足しない．
+
+\subsection*{\Cref{Que:truthtableforequivalent}}
+
+\(\varphi \formulaequiv \psi\)の真理値表を以下に示す
+（\(\varphi \formulaequiv \psi\)は\(\paren{\varphi \to \psi} \land \paren{\psi \to \varphi}\)の略記であったことを思い出そう）．
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{cc|ccc}
+		\hline
+		\(\varphi\) & \(\psi\) & \(\varphi \to \psi\) & \(\psi \to \varphi\) & \(\varphi \formulaequiv \psi\) \\ \hline
+		0           & 0        & 1                    & 1                    & 1                              \\
+		0           & 1        & 1                    & 0                    & 0                              \\
+		1           & 0        & 0                    & 1                    & 0                              \\
+		1           & 1        & 1                    & 1                    & 1                              \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection*{\Cref{Que:semanticlawofexcludedmiddle}}
+
+\(\varphi \lor \lnot \varphi\)の真理値表を以下に示す．
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{c|cc}
+		\hline
+		\(\varphi\) & \(\lnot \varphi\) & \(\varphi \lor \varphi\) \\ \hline
+		0           & 1                 & 1                        \\
+		1           & 0                 & 1                        \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\(\varphi \lor \lnot \varphi\)の真理値はつねに1になるため，\(\varphi \lor \lnot \varphi\)が恒真式であることがわかる．
+
 
 \section*{\Cref{chap:proof}}
 

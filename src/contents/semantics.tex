@@ -149,6 +149,7 @@
 		      } \in \interpretation{\symcal{M}}{r}
 		      \)
 		      とする．
+		\item \(\symcal{M} \satisfy \bot\)は成り立たないとする．
 		\item \(\varphi, \psi\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉論理式とするとき，
 		      \[
 			      \symcal{M} \satisfy \lnot \varphi      \metaequivalent \text{\(\symcal{M} \satisfy \varphi\)でない}
@@ -191,6 +192,13 @@
 		      \]
 		      とする．ただし，\(c_a\)は\(a \in M\)の名前である．
 	\end{enumerate}
+
+	閉論理式とは限らない論理式\(\varphi\)については，その全称閉包\(\hat{\varphi}\)を用いて
+	\begin{equation}
+		\symcal{M} \satisfy \varphi \metaequivalent \symcal{M} \satisfy \hat{\varphi}
+		\label{eq:structuresatisfyclosure}
+	\end{equation}
+	と定める．
 
 	\(\symcal{L}\)構造\(\symcal{M}\)と\(\symcal{L}\)論理式\(\varphi\)について，
 	\(\symcal{M} \satisfy \varphi\)であるとき，
@@ -430,8 +438,7 @@
 	\begin{enumerate}
 		\item \(\symcal{M_1} \elementarilyequivalent \symcal{M_1}\)
 		\item \(\symcal{M_1} \elementarilyequivalent \symcal{M_2} \metaimplies \symcal{M_2} \elementarilyequivalent \symcal{M_1}\)
-		\item \(\text{\(\symcal{M_1} \elementarilyequivalent \symcal{M_2}\)かつ\(\symcal{M_2} \elementarilyequivalent \symcal{M_3}\)}
-		      \metaimplies \symcal{M_1} \elementarilyequivalent \symcal{M_3}\)
+		\item \(\text{\(\symcal{M_1} \elementarilyequivalent \symcal{M_2}\)かつ\(\symcal{M_2} \elementarilyequivalent \symcal{M_3}\)} \metaimplies \symcal{M_1} \elementarilyequivalent \symcal{M_3}\)
 	\end{enumerate}
 
 	が成り立つ．
@@ -522,7 +529,8 @@
 	\(\symcal{M}, \symcal{N}\)の対象領域をそれぞれ\(M, N\)とし，
 	\(\sigma \colon M \to N\)を同型写像とする．
 	\Cref{Lemma:equivrelationforelementarilyequivalent}により，
-	\(\symcal{M} \satisfy \varphi\)のとき\(\symcal{N} \satisfy \varphi\)となることを示せば十分．
+	任意の\(\symcal{L}\)閉論理式\(\varphi\)に対して
+	\(\symcal{M} \satisfy \varphi\)ならば\(\symcal{N} \satisfy \varphi\)となることを示せば十分．
 
 	\(\varphi\)が\(\symcal{L}\)閉項\(t_1, t_2\)に対する\(t_1 \objeq t_2\)の形のとき，
 	\(\symcal{M} \satisfy \varphi\)とすると\(\interpretation{\symcal{M}}{t_1} = \interpretation{\symcal{M}}{t_2}\)である．
@@ -586,16 +594,16 @@
 以降，言語\(\symcal{L}\)が重要視されない文脈では\(\symcal{L}\)構造のことを単に構造と表記することとする．
 
 \Cref{sec:model}では，与えられた構造が各論理式を充足するかどうかという関係を定義した．
-この充足関係に着目したとき，閉論理式は以下の3パターンに分類することができる：
+この充足関係に着目したとき，論理式は以下の3パターンに分類することができる：
 \begin{enumerate}
-	\item あらゆる構造が充足する閉論理式，
-	\item ある構造は充足するが，別の構造は充足しない閉論理式，
-	\item どんな構造も充足しない閉論理式．
+	\item あらゆる構造が充足する論理式，
+	\item ある構造は充足するが，別の構造は充足しない論理式，
+	\item どんな構造も充足しない論理式．
 \end{enumerate}
 これらのパターンに着目して，以下のように定義しよう．
 
 \begin{Def} \label[Def]{Def:validformula}
-	閉論理式\(\varphi\)が%
+	論理式\(\varphi\)が%
 	\index[widx]{こうしんしき@恒真式}%
 	\term{恒真式}%
 	であるとは，すべての構造\(\symcal{M}\)が\(\varphi\)を充足することをいう．
@@ -604,25 +612,25 @@
 	\index[widx]{むじゅんしき@矛盾式}%
 	\term{恒偽式}，あるいは\term{矛盾式}であるとは，
 	すべての構造\(\symcal{M}\)が\(\varphi\)を充足しないことをいう．
-	閉論理式\(\varphi\)が恒偽式であることは，\(\lnot \varphi\)が恒真式であることと同値である．
+	論理式\(\varphi\)が恒偽式であることは，\(\lnot \varphi\)が恒真式であることと同値である．
 \end{Def}
 
-\begin{Ex} \label[Ex]{Ex:semanticlawofexcludedmiddle}
-	\(\varphi\)を閉論理式とするとき，閉論理式\(\varphi \lor \lnot \varphi\)は恒真式である．
+\begin{Ex} \label[Ex]{Ex:validformula}
+	\(\varphi\)を論理式とするとき，論理式\(\varphi \lor \lnot \varphi\)は恒真式である．
 	実際，任意の構造\(\symcal{M}\)に対して，\(\symcal{M} \satisfy \varphi\)である場合には
 	\(\symcal{M} \satisfy \varphi \lor \lnot \varphi\)が成り立ち，
 	\(\symcal{M} \satisfy \varphi\)でない場合には\(\symcal{M} \satisfy \lnot \varphi\)となるので
 	\(\symcal{M} \satisfy \varphi \lor \lnot \varphi\)となる．
 
 	一方で，\cref{Ex:OrderedRing}で挙げた言語\(\symcal{L}_{\OrderedRing}\)における
-	閉論理式\(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{x}}\)を\(\varphi\)とするとき，\(\varphi\)は恒真式ではない．
+	論理式\(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{x}}\)を\(\varphi\)とするとき，\(\varphi\)は恒真式ではない．
 	理論\(\OrderedRing\)のモデルはすべて\(\varphi\)を充足するが，\(\OrderedRing\)のモデルでない
 	\(\symcal{L}_{\OrderedRing}\)構造で\(\varphi\)を充足しないものが存在するからである．
 \end{Ex}
 
-\begin{Que} \label{Que:semanticlawofexcludedmiddle}
-	\Cref{Ex:semanticlawofexcludedmiddle}の後半で述べた事実を検証せよ．すなわち，
-	\(\symcal{L}_{\OrderedRing}\)構造\(\symcal{M}\)で閉論理式\(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{x}}\)を
+\begin{Que} \label{Que:validformula}
+	\Cref{Ex:validformula}の後半で述べた事実を検証せよ．すなわち，
+	\(\symcal{L}_{\OrderedRing}\)構造\(\symcal{M}\)で論理式\(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{x}}\)を
 	充足しないものを挙げよ．
 \end{Que}
 
@@ -635,13 +643,207 @@
 	\[
 		\varphi \formulaequiv \psi
 	\]
-	の全称閉包が恒真式であるとき，\(\varphi\)と\(\psi\)は\term{論理的に同値}であるといい
+	恒真式であるとき，\(\varphi\)と\(\psi\)は\term{論理的に同値}であるといい
 	\begin{equation}
 		\varphi \logicallyequivalent \psi
 		\label{eq:logicallyequivalent}
 	\end{equation}
 	と表す．
 \end{Def}
+
+\begin{Note}
+	論理式\(\varphi, \psi\)が論理的に同値である場合，通常は\(\varphi, \psi\)は「意味論的には同じ論理式である」とみなされる．
+	\(\varphi, \psi\)が論理的に同値である場合，\(\varphi, \psi\)を充足する構造は一致するため
+	「どのような構造によって充足されるか」という観点では\(\varphi, \psi\)に差を見出すことはできないからである．
+\end{Note}
+
+
+論理記号\(\forall, \exists\)や等号\(\objeq\)および関係記号が陽に現れない論理式の場合，
+与えられた2つの論理式が論理的に同値であるかどうかを判定するのは容易である．
+構造\(\symcal{M}\)を固定した場合，どのように複雑な論理式であっても結局は\(\symcal{M}\)によって充足されるかされないかの2通りでしかない．
+そのため，ベースとなる論理式を決め，その論理式が固定した構造によって充足されるかどうかに応じて
+同値であるかを判定したい論理式がその構造によって充足されるかどうかを調べればよい．
+論理記号\(\forall, \exists\)，等号\(\objeq\)，および関係記号が陽に現れない場合，\cref{Def:semanticimplies}に基づいて
+各論理式の充足性を検証する作業は有限回の機械的な操作で完了する．
+このとき，充足される場合に1を，そうでない場合に0を割り当て表にしておくとわかりやすい．
+この表を%
+\index[widx]{しんりち@真理値!---表}%
+\term{真理値表}といい，それぞれの論理式に割り当てられた0, 1の値をその論理式の%
+\index[widx]{しんりち@真理値}%
+\term{真理値}という．
+論理的に同値であるかを判定したい論理式の真理値がつねに一致している場合，それらの論理式は論理的に同値であるといえる．
+逆に，真理値が一致しない場合がある場合にはそれらの論理式は論理的に同値ではない．
+
+なお，上記の文脈で与えられた論理式が恒真式であるかどうかを判定したい場合，その論理式の真理値表を書き真理値がつねに1になるかどうかを検証すればよい．
+つねに1になるならばその論理式は恒真式であり，そうでないならばその論理式は恒真式ではない．
+
+まずは\cref{Def:semanticimplies}における\(\lnot, \lor, \land, \to\)について考えよう．
+
+\begin{Ex} \label[Ex]{Ex:truthtableforlnot}
+	\(\varphi\)を閉論理式とする．このとき，\(\varphi\)が1つの構造\(\symcal{M}\)によって充足されるかどうかに応じて
+	\(\lnot \varphi\)が充足されるかどうかを表にまとめたものを\cref{tab:lnottruthtable}に示す．
+
+	\begin{table}[htbp]
+		\centering
+		\caption{
+			\(\lnot \varphi\)の真理値表，1列目が\(\varphi\)が\(\symcal{M}\)に充足されるかどうか，2列目が\(\lnot \varphi\)が\(\symcal{M}\)に充足されるかどうかを示す．
+			1行目において1列目が0で2列目が1であることは，\(\varphi\)が\(\symcal{M}\)に充足されない場合，\(\lnot \varphi\)が\(\symcal{M}\)に充足されることを示す．
+			2行目も同様である．
+		}
+		\label{tab:lnottruthtable}
+		\begin{tabular}{c|c}
+			\hline
+			\(\varphi\) & \(\lnot \varphi\) \\ \hline
+			0           & 1                 \\
+			1           & 0                 \\
+			\hline
+		\end{tabular}
+	\end{table}
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:truthtableforbinsymbol}
+	\(\varphi, \psi\)を閉論理式とする．このとき，\(\varphi, \psi\)が1つの構造\(\symcal{M}\)によって充足されるかどうかに応じて
+	\(\varphi \lor \psi, \varphi \land \psi, \varphi \to \psi\)が充足されるかどうかを表にまとめたものを\cref{tab:binsymboltruthtable}に示す．
+
+	\begin{table}[htbp]
+		\centering
+		\caption{
+			\(\varphi \land \psi, \varphi \lor \psi, \varphi \to \psi\)の真理値表，
+			\(\varphi \to \psi\)の真理値は\(\lnot \varphi\)と\(\psi\)の真理値によって決まるため，\(\lnot \varphi\)の真理値を記載した列が書かれている．
+		}
+		\label{tab:binsymboltruthtable}
+		\begin{tabular}{cc|cccc}
+			\hline
+			\(\varphi\) & \(\psi\) & \(\varphi \lor \psi\) & \(\varphi \land \psi\) & \(\lnot \varphi\) & \(\varphi \to \psi\) \\ \hline
+			0           & 0        & 0                     & 0                      & 1                 & 1                    \\
+			0           & 1        & 1                     & 0                      & 1                 & 1                    \\
+			1           & 0        & 1                     & 0                      & 0                 & 0                    \\
+			1           & 1        & 1                     & 1                      & 0                 & 1                    \\
+			\hline
+		\end{tabular}
+	\end{table}
+\end{Ex}
+
+\begin{Note}
+	真理値表を書く際には，ベースと決めた論理式の内部構造は考えずにそれが与えられた構造によって充足されるかどうかを考えた．
+	「与えられた構造によって充足されること」を「その構造においては真である（正しい）」と読み替えることで，
+	真理値表を書く際は「ベースとなる論理式の内部構造は無視してその真偽のみに着目した」と考えることができる．
+	本書では議論しないが，
+	ベースとなる論理式の内部構造に踏み込まざるを得ない論理記号\(\forall, \exists\)や等号\(\objeq\)および言語を排した体系というのも考えられる．
+	このような体系として典型的なのは命題論理と呼ばれる体系である．
+	命題論理においては，この「ベースとなる論理式」は命題として提示される．
+	本書で学ぶ1階述語論理は，命題論理で登場する命題の内部構造を議論できるよう拡張したものと考えることができる．
+\end{Note}
+
+\begin{Note}
+	「命題」という術語については，よく「命題とは，真偽を判断する対象となる言明のことである」という
+	「定義」らしきものが提示されることがある．
+	むろんこのようなあいまいさの強い「定義」は定義とはいわない．
+	「命題」という用語は「何らかの数学的意味を有する主張」程度の意味合いでラフに使われる言葉であり，
+	何が命題で何が命題でないかを厳格に区別するような一般的な定義があるわけではない．
+
+	なお，命題論理においては「命題」の定義が提示されることはない．
+	述語論理において「関数記号」の定義が提示されないのと同じように，
+	命題論理において「命題」を定義しなくても困ることはない．
+\end{Note}
+
+\begin{Que} \label{Que:truthtableforequivalent}
+	\(\varphi, \psi\)を論理式とする．\(\varphi \formulaequiv \psi\)の真理値表を書き，
+	\(\varphi \formulaequiv \psi\)の真理値が1になるのは\(\varphi, \psi\)の真理値が一致する場合であることを確かめよ．
+\end{Que}
+
+\begin{Thm} \label{Thm:semanticdne}
+	\(\varphi\)を論理式とする．このとき，
+	\begin{equation}
+		\varphi \logicallyequivalent \lnot \lnot \varphi
+		\label{eq:semanticdne}
+	\end{equation}
+	が成り立つ．
+\end{Thm}
+
+\begin{proof}
+	\(\lnot \lnot \varphi\)の真理値表を書くことによって示す．
+	\begin{table}[htbp]
+		\centering
+		\begin{tabular}{c|cc}
+			\hline
+			\(\varphi\) & \(\lnot \varphi\) & \(\lnot \lnot \varphi\) \\ \hline
+			0           & 1                 & 0                       \\
+			1           & 0                 & 1                       \\
+			\hline
+		\end{tabular}
+	\end{table}
+
+	真理値表により，\(\varphi\)と\(\lnot \lnot \varphi\)の真理値はつねに一致することがわかる．
+	ゆえに\cref{eq:semanticdne}が成り立つ．
+\end{proof}
+
+\begin{Que} \label{Que:semanticlawofexcludedmiddle}
+	\(\varphi\)を論理式とするとき，\(\varphi \lor \lnot \varphi\)の真理値表を書き，これが恒真式であることを確かめよ．
+\end{Que}
+
+以下，よく知られた同値な論理式のうち，真理値表を書くだけで簡単に検証できるものを提示しておく．
+
+\begin{Thm} \label{Thm:semantictodisjunctivenormalform}
+	\(\varphi, \psi\)を論理式とする．このとき
+	\begin{equation}
+		\varphi \to \psi \logicallyequivalent \lnot \varphi \lor \psi
+		\label{eq:semantictodisjunctivenormalform}
+	\end{equation}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label{Thm:semanticDemorganslawproposition}
+	\(\varphi, \psi\)を論理式とする．このとき
+	\begin{align}
+		\lnot \paren{\varphi \lor \psi}  & \logicallyequivalent \lnot \varphi \land \lnot \psi,
+		\label{eq:semanticDemorganslawpropositionlor}                                           \\
+		\lnot \paren{\varphi \land \psi} & \logicallyequivalent \lnot \varphi \lor \lnot \psi
+		\label{eq:semanticDemorganslawpropositionland}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label{Thm:semanticcommunitativelaw}
+	\(\varphi, \psi\)を論理式とする．
+	このとき
+	\begin{align}
+		\varphi \land \psi & \logicallyequivalent \psi \land \psi,
+		\label{eq:semanticcommunitativelawland}                     \\
+		\varphi \lor \psi  & \logicallyequivalent \psi \lor \varphi
+		\label{eq:semanticcommunitativelawlor}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label{Thm:semanticassociativelaw}
+	\(\varphi, \psi\)を論理式とする．
+	このとき
+	\begin{align}
+		\varphi \land \paren{\psi \land \chi} & \logicallyequivalent \paren{\varphi \land \psi} \land \chi,
+		\label{eq:semanticassosiativelawland}                                                               \\
+		\varphi \lor \paren{\psi \lor \chi}   & \logicallyequivalent \paren{\varphi \lor \psi} \lor \chi
+		\label{eq:semanticassosiativelawlor}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\Cref{Thm:semanticassociativelaw}により，\(\varphi \land \psi \land \chi\)や\(\varphi \lor \psi \lor \chi\)のような
+略記表現について，意味論的には問題が生じないことがわかる．
+
+\begin{Thm} \label{Thm:semantictolnotland}
+	\(\varphi, \psi\)を論理式とする．
+	このとき
+	\begin{align}
+		\lnot \paren{\varphi \to \psi}    & \logicallyequivalent \varphi \land \lnot \psi,
+		\label{eq:semantictolnotland}                                                          \\
+		\varphi \to \psi                  & \logicallyequivalent \lnot \psi \to \lnot \varphi,
+		\label{eq:semanticcontraposition}                                                      \\
+		\varphi \to \paren{\psi \to \chi} & \logicallyequivalent \varphi \land \psi \to \chi
+		\label{eq:semantictonesting}
+	\end{align}
+	が成り立つ．
+\end{Thm}
 
 \section{等式理論とHorn理論} \label{sec:equationaltheory}
 

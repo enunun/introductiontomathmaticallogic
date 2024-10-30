@@ -285,6 +285,14 @@
 	数理論理学の文脈では当然厳格に区別する必要がある．
 \end{Note}
 
+\begin{Note}
+	理論\(T\)に対して，
+	\[
+		T \satisfy \bot
+	\]
+	は，\(T\)にモデルが存在しない場合，かつその場合にのみ成り立つ．
+\end{Note}
+
 \begin{Que} \label{Que:model}
 	\Cref{Ex:grouptheory}で挙げた群の理論\(T\)について，次の論理式を\(\varphi\)とする：
 	\[
@@ -844,6 +852,87 @@
 	\end{align}
 	が成り立つ．
 \end{Thm}
+
+\(\forall, \exists\)や等号\(\objeq\)が陽に現れない文脈では，以上のように真理値表を書くだけで論理式の論理的同値性を確かめることができる．
+一方で，\(\forall, \exists\)や等号\(\objeq\)が陽に現れる文脈ではこうはいかない．
+ここでは，\(\forall, \exists\)が現れる文脈においてはどうすればいいか考えよう%
+\footnote{%
+	等号\(\objeq\)が陽に現れる場合については本書では取り上げない．ただし，\cref{chap:proof}においては
+	等号\(\objeq\)が陽に現れる場合も含めて「同値な論理式」について本章とは違った考え方で議論する．
+}%
+．
+
+以降，論理式\(\varphi_1, \varphi_2, \dots, \varphi_n, \psi\)に対する
+\[
+	\Set{\varphi_1, \varphi_2, \dots, \varphi_n} \satisfy \psi
+\]
+を
+\[
+	\varphi_1, \varphi_2, \dots, \varphi_n \satisfy \psi
+\]
+と略記する（要するに，集合を表すカッコを省略する）．
+
+\(\forall, \exists\)が陽に現れる文脈では，真理値表のような「全パターンを機械的に網羅する」という手が使えない．
+そこで代わりに登場するのは，意味論的な「推論」という概念である．
+
+\begin{Lemma}[背理法] \label{lemma:semanticcontradiction}
+	\(\Gamma\)を論理式の集合，\(\varphi\)を論理式とする．
+	このとき
+	\[
+		\Gamma \satisfy \varphi \metaequivalent \Set{\lnot \varphi} \cup \Gamma \satisfy \bot
+	\]
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\[
+		\Gamma \satisfy \varphi
+	\]
+	とする．
+	このとき，任意の構造\(\symcal{M}\)に対し，\(\symcal{M} \satisfy \varphi\)が成り立つ．
+	よって，\(\symcal{M} \satisfy \lnot \varphi\)が成り立つことはないので，\(\symcal{M}\)が
+	\(\Set{\lnot \varphi} \cup \Gamma\)のモデルになることはない．
+	従って
+	\[
+		\Set{\lnot \varphi} \cup \Gamma \satisfy \bot
+	\]
+	となる．
+
+	\[
+		\Set{\lnot \varphi} \cup \Gamma \satisfy \bot
+	\]
+	と仮定する．このとき，\(\Set{\lnot \varphi} \cup \Gamma\)のモデルは存在しない．
+	任意の構造\(\symcal{M}\)に対し，\(\symcal{M} \satisfy \Gamma\)と仮定する．もし\(\symcal{M} \satisfy \lnot \varphi\)であれば
+	\(\symcal{M}\)が\(\Set{\lnot \varphi} \cup \Gamma\)のモデルになるので，\(\symcal{M} \satisfy \varphi\)でなければならない．
+	よって
+	\[
+		\Gamma \satisfy \varphi
+	\]
+	となる．
+\end{proof}
+
+\begin{Lemma}[全称除去律] \label{lemma:semanticforallelimination}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号，\(a\)を\(\varphi\)中の\(x\)に代入可能な項とする．
+	このとき，任意の構造\(\symcal{M}\)に対して
+	\[
+		\symcal{M} \satisfy \forall x \varphi \metaimplies \symcal{M} \satisfy \subst{\varphi}{a/x}
+	\]
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)の対象領域を\(M\)とする．
+	\(\symcal{M}\)による項\(a\)の解釈\(\interpretation{\symcal{M}}{a}\)は\(M\)の元である．
+	従って，その元の名前を\(c\)とすると，
+	\[
+		\symcal{M} \satisfy \subst{\varphi}{a/x} \metaequivalent \symcal{M} \satisfy \subst{\varphi}{c/x}
+	\]
+	となる（厳密には\(\varphi\)の構造に関する帰納法で示せる）．
+	\(\symcal{M} \satisfy \forall x \varphi\)だから
+	\(\symcal{M} \satisfy \subst{\varphi}{c/x}\)は成り立つので，
+	\(\symcal{M} \satisfy \subst{\varphi}{a/x}\)となる．
+\end{proof}
+
 
 \section{等式理論とHorn理論} \label{sec:equationaltheory}
 

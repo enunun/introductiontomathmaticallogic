@@ -167,12 +167,12 @@
 \begin{proof}
 	\(\Gamma \cup \Set{\exists x \varphi \to \subst{\varphi}{c/x}}\)が矛盾すると仮定する．
 	\(\Gamma \provable \lnot \paren{\exists x \varphi \to \subst{\varphi}{c/x}}\)
-	なので\cref{Thm:equivlogicalexpression}の\cref{eq:lnotto}
+	なので\cref{Thm:prooflnotforallexistscontradiction}の\cref{eq:lnotto}
 	（と(\(\to\)I)規則や(\(\to\)E)規則）により\(\Gamma \provable \exists x \varphi \land \lnot \subst{\varphi}{c/x}\)
 	となる．このとき，(\(\land\)I)の形から\(\Gamma \provable \exists x \varphi\)かつ\(\Gamma \provable \lnot \subst{\varphi}{c/x}\)
 	となる．すると，\(\Gamma \provable \lnot \subst{\varphi}{c/x}\)から
 	(\(\forall\)I)規則によって\(\Gamma \provable \forall x \lnot \varphi\)
-	が得られるが，\cref{Thm:equivlogicalexpression}の\cref{eq:existsdemorgan}から
+	が得られるが，\cref{Thm:proofdemorganlaw}の\cref{eq:existsdemorgan}から
 	\(\Gamma \provable \lnot \exists x \varphi\)が得られるので\(\Gamma\)の無矛盾性に反する．
 \end{proof}
 

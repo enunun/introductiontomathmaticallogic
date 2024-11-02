@@ -29,6 +29,8 @@
 \setsansfont[Ligatures=TeX]{Libertinus Sans}
 \setmathfont{Libertinus Math}[math-style=ISO, bold-style=ISO]
 \setmathfont{TeX Gyre Pagella Math}[range=bb]
+\setmathfont{TeX Gyre Pagella Math}[range={\DashVDash}]
+\setmathfont{TeX Gyre Pagella Math}[range={\dashVdash}]
 \setmathfont{Garamond Math}[range={\Coloneq}]
 \DeclareFontFamily{OML}{nxlmi}{\skewchar \font =127}
 \DeclareFontShape{OML}{nxlmi}{m}{it}{
@@ -109,7 +111,7 @@
 \NewDocumentCommand{\pair}{m}{\langle #1 \rangle}
 
 \NewDocumentCommand{\provable}{}{\vdash}
-\NewDocumentCommand{\interderivable}{}{\dashv\vdash}
+\NewDocumentCommand{\interderivable}{}{\dashVdash}
 
 \NewDocumentCommand{\KleeneClosure}{m}{{#1}^{\ast}}
 
@@ -170,6 +172,8 @@
 \NewDocumentCommand{\metaequivalent}{}{\iff}
 
 \NewDocumentCommand{\satisfy}{}{\vDash}
+
+\NewDocumentCommand{\logicallyequivalent}{}{\DashVDash}
 
 \NewDocumentCommand{\isomorphic}{}{\cong}
 

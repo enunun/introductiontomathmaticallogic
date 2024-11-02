@@ -382,7 +382,7 @@
 	\symcal{M} \satisfy \varphi \metaequivalent \text{すべての\(a \in \Integers\)に対して\(a \leq a\)でない}
 \]
 となるが，例えば\(a = 1\)のときにこれは成り立たない．
-よって，\(\Integers\)はこの\(\varphi\)を充足しない．
+よって\(\symcal{M}\)はこの\(\varphi\)を充足しない．
 
 \subsection*{\Cref{Que:truthtableforequivalent}}
 
@@ -418,6 +418,25 @@
 \end{table}
 
 \(\varphi \lor \lnot \varphi\)の真理値はつねに1になるため，\(\varphi \lor \lnot \varphi\)が恒真式であることがわかる．
+
+\subsection*{\Cref{Que:semanticpeircelaw}}
+
+\(\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi\)の真理値表を以下に示す．
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{cc|ccc}
+		\hline
+		\(\varphi\) & \(\psi\) & \(\varphi \to \psi\) & \(\paren{\varphi \to \psi} \to \varphi\) & \(\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi\) \\ \hline
+		0           & 0        & 1                    & 0                                        & 1                                                            \\
+		0           & 1        & 1                    & 0                                        & 1                                                            \\
+		1           & 0        & 0                    & 1                                        & 1                                                            \\
+		1           & 1        & 1                    & 1                                        & 1                                                            \\
+		\hline
+	\end{tabular}
+\end{table}
+
+よって\(\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi\)は恒真式である．
 
 
 \section*{\Cref{chap:proof}}

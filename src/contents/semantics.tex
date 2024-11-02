@@ -254,7 +254,7 @@
 	\index[widx]{じゅうそく@充足!じゅうそくかのう@---可能}%
 	\term{充足可能}であるという．
 
-	また，\(\varphi\)を\(\symcal{L}\)閉論理式とするとき，\(\symcal{L}\)理論\(T\)のすべてのモデルが
+	また，\(\varphi\)を\(\symcal{L}\)論理式とするとき，\(\symcal{L}\)理論\(T\)のすべてのモデルが
 	\(\varphi\)を充足するならば，\(\varphi\)は\(T\)の%
 	\index[widx]{ろんりてききけつ@論理的帰結}%
 	\term{論理的帰結}である，または\(\varphi\)は\(T\)における%
@@ -790,7 +790,151 @@
 	\(\varphi\)を論理式とするとき，\(\varphi \lor \lnot \varphi\)の真理値表を書き，これが恒真式であることを確かめよ．
 \end{Que}
 
-以下，よく知られた同値な論理式のうち，真理値表を書くだけで簡単に検証できるものを提示しておく．
+\(\forall, \exists\)や等号\(\objeq\)が陽に現れない文脈では，以上のように真理値表を書くだけで論理式の論理的同値性を確かめることができる．
+一方で，\(\forall, \exists\)や等号\(\objeq\)が陽に現れる文脈ではこうはいかない．
+ここでは，\(\forall, \exists\)が現れる文脈においてはどうすればいいか考えよう%
+\footnote{%
+	等号\(\objeq\)が陽に現れる場合については本書では取り上げない．ただし，\cref{chap:proof}においては
+	等号\(\objeq\)が陽に現れる場合も含めて「同値な論理式」について本章とは違った考え方で議論する．
+}%
+．
+
+\(\forall, \exists\)が陽に現れる文脈では，真理値表のような「全パターンを機械的に網羅する」という手が使えない．
+そこで代わりに登場するのは，意味論的な「推論」という概念である．
+
+\index[widx]{はいりほう@背理法}
+\begin{Lemma}[背理法] \label{lemma:semanticcontradiction}
+	\(\Gamma\)を閉論理式の集合，\(\varphi\)を論理式とする．
+	このとき
+	\[
+		\Gamma \satisfy \varphi \metaequivalent \Gamma \satisfy \lnot \varphi \to \bot
+	\]
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\(\Gamma \satisfy \varphi\)
+	とする．
+	このとき，\(\Gamma\)の任意のモデル\(\symcal{M}\)に対し，\(\symcal{M} \satisfy \varphi\)が成り立つ．
+	よって，\(\symcal{M} \satisfy \lnot \varphi\)が成り立つことはないので，\(\symcal{M} \satisfy \lnot \varphi \to \bot\)となる．
+	従って
+	\(\Gamma \satisfy \lnot \varphi \to \bot\)
+	となる．
+
+	次に
+	\(\Gamma \satisfy \lnot \varphi \to \bot\)
+	と仮定する．\(\symcal{M}\)を\(\Gamma\)の任意のモデルとすると，
+	\(\symcal{M} \satisfy \lnot \varphi\)が成り立たないか\(\symcal{M} \satisfy \bot\)が成り立つかのいずれかである．
+	\(\symcal{M} \satisfy \bot\)が成り立つことはないので\(\symcal{M} \satisfy \lnot \varphi\)は成り立たない．
+	よって\(\symcal{M} \satisfy \varphi\)が成り立つので
+	\(\Gamma \satisfy \varphi\)
+	となる．
+\end{proof}
+
+\index[widx]{ぜんしょうじょきょりつ@全称除去律}
+\begin{Lemma}[全称除去律] \label{lemma:semanticforallelimination}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号，\(a\)を\(\varphi\)中の\(x\)に代入可能な項とする．
+	このとき，任意の閉論理式の集合\(\Gamma\)に対して
+	\[
+		\Gamma \satisfy \forall x \varphi \metaimplies \Gamma \satisfy \subst{\varphi}{a/x}
+	\]
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\Gamma\)の任意のモデルとし，\(\symcal{M}\)の対象領域を\(M\)とする．
+	\(a\)が閉項の場合にのみ考えれば十分（\(a\)が閉項でない場合，\(a\)に現れる変数記号を\(M\)の任意の元の名前で置き換えて考えればよい）である．
+	\(\symcal{M}\)による項\(a\)の解釈\(\interpretation{\symcal{M}}{a}\)は\(M\)の元である．
+	従って，その元の名前を\(c\)とすると，
+	\[
+		\symcal{M} \satisfy \subst{\varphi}{a/x} \metaequivalent \symcal{M} \satisfy \subst{\varphi}{c/x}
+	\]
+	となる（厳密には\(\varphi\)の構造に関する帰納法で示せる）．
+	\(\symcal{M} \satisfy \forall x \varphi\)だから
+	\(\symcal{M} \satisfy \subst{\varphi}{c/x}\)は成り立つので，
+	\(\symcal{M} \satisfy \subst{\varphi}{a/x}\)となる．
+\end{proof}
+
+\index[widx]{そんざいじょきょりつ@存在除去律}
+\begin{Lemma}[存在除去律] \label{lemma:semanticexistselimination}
+	\(\Gamma, \Delta\)を閉論理式の集合とし，
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
+	このとき，
+	\(\Gamma \satisfy \exists x \varphi\)
+	かつ\(\varphi\)中の\(x\)に代入可能であって
+	\(\apply{\Var}{a}\)の元が
+	\(\exists x \varphi\)と\(\psi\)のいずれにも自由出現しないような任意の項\(a\)に対して
+	\(\Delta \satisfy \subst{\varphi}{a/x} \to \psi\)
+	が成り立つならば，
+	\(\Gamma \cup \Delta \satisfy \psi\)
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\Gamma \cup \Delta\)の任意のモデルとする．
+	このとき，\(\symcal{M}\)は\(\Gamma\)のモデルである．
+	よって\(\symcal{M} \satisfy \exists x \varphi\)
+	が成り立つ．
+	\(\symcal{M} \satisfy \exists x \varphi\)なので\(\symcal{M} \satisfy \subst{\varphi}{c_b/x}\)を満たす
+	\(b \in M\)が存在する（ただし\(c_b\)は\(b\)の名前である）．
+	\(\symcal{M}\)は\(\Delta\)のモデルでもあるから，この\(c_b\)について
+	\(\symcal{M} \satisfy \subst{\varphi}{c_b/x} \to \psi\)
+	が成り立つ．
+	\(\symcal{M} \satisfy \lnot \subst{\varphi}{c_b/x}\)であることはないので
+	\(\symcal{M} \satisfy \psi\)
+	でなければならない．
+	よって\(\Gamma \satisfy \psi\)
+	となる．
+\end{proof}
+
+\index[widx]{ぜんしょうどうにゅうりつ@全称導入律}
+\begin{Lemma}[全称導入律] \label{lemma:semanticforallinsertion}
+	\(\Gamma\)を閉論理式の集合とし，\(x\)を変数記号，\(\varphi\)を論理式とする．
+	\(\varphi\)中の\(x\)に代入可能であって\(\apply{\Var}{a}\)の元が
+	\(\varphi\)に自由出現しないような任意の項\(a\)に対して
+	\(	\Gamma \satisfy \subst{\varphi}{a/x}\)
+	が成り立つとする．このとき\(\Gamma \satisfy \forall x \varphi\)
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\Gamma\)の任意のモデルとする．
+	任意の\(b \in M\)に対し，\(b\)の名前を\(c\)とすると\(\symcal{M} \satisfy \subst{\varphi}{c/x}\)
+	が成り立つ．よって\(\symcal{M} \satisfy \forall x \varphi\)であるから
+	\(\Gamma \satisfy \forall x \varphi\)
+	となる．
+\end{proof}
+
+\index[widx]{そんざいどうにゅうりつ@存在導入律}
+\begin{Lemma}[存在導入律] \label{lemma:semanticexistsinsertion}
+	\(\Gamma\)を閉論理式の集合とし，\(x\)を変数記号，\(\varphi\)を論理式とする．
+	このとき，\(\varphi\)中の\(x\)に代入可能な任意の項\(a\)に対して
+	\[
+		\Gamma \satisfy \subst{\varphi}{a/x} \metaimplies \Gamma \satisfy \exists x \varphi
+	\]
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\Gamma\)の任意のモデルとし，\(\symcal{M}\)の対象領域を\(M\)とする．
+	\(a\)が閉項の場合にのみ考えれば十分（\(a\)が閉項でない場合，\(a\)に現れる変数記号を\(M\)の任意の元の名前で置き換えて考えればよい）である．
+	\(\symcal{M} \satisfy \subst{\varphi}{a/x}\)である．
+	\(a\)の\(\symcal{M}\)による解釈は\(M\)の元であるから，その名前を\(c\)とすると
+	\[
+		\symcal{M} \satisfy \subst{\varphi}{a/x} \metaequivalent \symcal{M} \satisfy \subst{\varphi}{c/x}
+	\]
+	が成り立っている（厳密には\(\varphi\)の構造に関する帰納法で示せる）．
+	よって\(\symcal{M} \satisfy \subst{\varphi}{c/x}\)から\(\symcal{M} \satisfy \exists x \varphi\)が従うので
+	\(\Gamma \satisfy \exists x \varphi\)
+\end{proof}
+
+ここで，全称除去律と存在除去律は「\(\forall, \exists\)を含む論理式が論理的帰結として得られた場合にいえること」を表現したもので，
+全称導入律と存在導入律は「\(\forall, \exists\)を含む論理式を論理的帰結として得たい場合に必要なこと」を表現したものである．
+
+以上の準備のもと，よく知られた同値な論理式を以下に挙げておく．
+\(\forall, \exists\)を陽に含まないものについては真理値表を書くことにより，
+\(\forall, \exists\)を陽に含むものについては上記補題をうまく使うことでその同値性を確かめることができる．
+
 
 \begin{Thm} \label{Thm:semantictodisjunctivenormalform}
 	\(\varphi, \psi\)を論理式とする．このとき
@@ -801,13 +945,18 @@
 	が成り立つ．
 \end{Thm}
 
-\begin{Thm} \label{Thm:semanticDemorganslawproposition}
-	\(\varphi, \psi\)を論理式とする．このとき
+\index[widx]{De Morganのほうそく@De Morganの法則}
+\begin{Thm}[De Morganの法則] \label{Thm:semanticDemorganslawproposition}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．このとき
 	\begin{align}
 		\lnot \paren{\varphi \lor \psi}  & \logicallyequivalent \lnot \varphi \land \lnot \psi,
 		\label{eq:semanticDemorganslawpropositionlor}                                           \\
-		\lnot \paren{\varphi \land \psi} & \logicallyequivalent \lnot \varphi \lor \lnot \psi
-		\label{eq:semanticDemorganslawpropositionland}
+		\lnot \paren{\varphi \land \psi} & \logicallyequivalent \lnot \varphi \lor \lnot \psi,
+		\label{eq:semanticDemorganslawpropositionland}                                          \\
+		\lnot \forall x \varphi          & \logicallyequivalent \exists x \lnot \varphi,
+		\label{eq:semanticdemorganforall}                                                       \\
+		\lnot \exists x \varphi          & \logicallyequivalent \forall x \lnot \varphi
+		\label{eq:semanticdemorganexists}
 	\end{align}
 	が成り立つ．
 \end{Thm}
@@ -843,96 +992,61 @@
 	\(\varphi, \psi\)を論理式とする．
 	このとき
 	\begin{align}
-		\lnot \paren{\varphi \to \psi}    & \logicallyequivalent \varphi \land \lnot \psi,
-		\label{eq:semantictolnotland}                                                          \\
-		\varphi \to \psi                  & \logicallyequivalent \lnot \psi \to \lnot \varphi,
-		\label{eq:semanticcontraposition}                                                      \\
-		\varphi \to \paren{\psi \to \chi} & \logicallyequivalent \varphi \land \psi \to \chi
+		\lnot \paren{\varphi \to \psi}           & \logicallyequivalent \varphi \land \lnot \psi,
+		\label{eq:semantictolnotland}                                                                                   \\
+		\lnot \forall x \paren{\varphi \to \psi} & \logicallyequivalent \exists \lnot \paren{\varphi \land \lnot \psi},
+		\label{eq:semanticforallcontradiction}                                                                          \\
+		\varphi \to \psi                         & \logicallyequivalent \lnot \psi \to \lnot \varphi,
+		\label{eq:semanticcontraposition}                                                                               \\
+		\varphi \to \paren{\psi \to \chi}        & \logicallyequivalent \varphi \land \psi \to \chi
 		\label{eq:semantictonesting}
 	\end{align}
 	が成り立つ．
 \end{Thm}
 
-\(\forall, \exists\)や等号\(\objeq\)が陽に現れない文脈では，以上のように真理値表を書くだけで論理式の論理的同値性を確かめることができる．
-一方で，\(\forall, \exists\)や等号\(\objeq\)が陽に現れる文脈ではこうはいかない．
-ここでは，\(\forall, \exists\)が現れる文脈においてはどうすればいいか考えよう%
-\footnote{%
-	等号\(\objeq\)が陽に現れる場合については本書では取り上げない．ただし，\cref{chap:proof}においては
-	等号\(\objeq\)が陽に現れる場合も含めて「同値な論理式」について本章とは違った考え方で議論する．
-}%
-．
-
-以降，論理式\(\varphi_1, \varphi_2, \dots, \varphi_n, \psi\)に対する
-\[
-	\Set{\varphi_1, \varphi_2, \dots, \varphi_n} \satisfy \psi
-\]
-を
-\[
-	\varphi_1, \varphi_2, \dots, \varphi_n \satisfy \psi
-\]
-と略記する（要するに，集合を表すカッコを省略する）．
-
-\(\forall, \exists\)が陽に現れる文脈では，真理値表のような「全パターンを機械的に網羅する」という手が使えない．
-そこで代わりに登場するのは，意味論的な「推論」という概念である．
-
-\begin{Lemma}[背理法] \label{lemma:semanticcontradiction}
-	\(\Gamma\)を論理式の集合，\(\varphi\)を論理式とする．
+\begin{Thm} \label{Thm:semanticforallexiststo}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
 	このとき
-	\[
-		\Gamma \satisfy \varphi \metaequivalent \Set{\lnot \varphi} \cup \Gamma \satisfy \bot
-	\]
+	\begin{align}
+		\forall x \paren{\varphi \to \psi} \logicallyequivalent \exists x \varphi \to \psi \quad \text{ただし\(x \notin \apply{\FV}{\psi}\)},
+		\label{eq:semanticforalltoexists} \\
+		\exists x \paren{\varphi \to \psi} \logicallyequivalent \forall x \varphi \to \psi \quad \text{ただし\(x \notin \apply{\FV}{\psi}\)}
+		\label{eq:semanticexiststoforall}
+	\end{align}
 	が成り立つ．
-\end{Lemma}
+\end{Thm}
 
-\begin{proof}
-	\[
-		\Gamma \satisfy \varphi
-	\]
-	とする．
-	このとき，任意の構造\(\symcal{M}\)に対し，\(\symcal{M} \satisfy \varphi\)が成り立つ．
-	よって，\(\symcal{M} \satisfy \lnot \varphi\)が成り立つことはないので，\(\symcal{M}\)が
-	\(\Set{\lnot \varphi} \cup \Gamma\)のモデルになることはない．
-	従って
-	\[
-		\Set{\lnot \varphi} \cup \Gamma \satisfy \bot
-	\]
-	となる．
-
-	\[
-		\Set{\lnot \varphi} \cup \Gamma \satisfy \bot
-	\]
-	と仮定する．このとき，\(\Set{\lnot \varphi} \cup \Gamma\)のモデルは存在しない．
-	任意の構造\(\symcal{M}\)に対し，\(\symcal{M} \satisfy \Gamma\)と仮定する．もし\(\symcal{M} \satisfy \lnot \varphi\)であれば
-	\(\symcal{M}\)が\(\Set{\lnot \varphi} \cup \Gamma\)のモデルになるので，\(\symcal{M} \satisfy \varphi\)でなければならない．
-	よって
-	\[
-		\Gamma \satisfy \varphi
-	\]
-	となる．
-\end{proof}
-
-\begin{Lemma}[全称除去律] \label{lemma:semanticforallelimination}
-	\(\varphi, \psi\)を論理式，\(x\)を変数記号，\(a\)を\(\varphi\)中の\(x\)に代入可能な項とする．
-	このとき，任意の構造\(\symcal{M}\)に対して
-	\[
-		\symcal{M} \satisfy \forall x \varphi \metaimplies \symcal{M} \satisfy \subst{\varphi}{a/x}
-	\]
+\begin{Thm} \label{Thm:semanticforallexistslandlor}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
+	このとき
+	\begin{align}
+		\forall x \paren{\varphi \land \psi} & \logicallyequivalent \forall x \varphi \land \forall x \psi,
+		\label{eq:semanticforallland}                                                                       \\
+		\exists x \paren{\varphi \lor \psi}  & \logicallyequivalent \exists x \varphi \lor \exists x \psi
+		\label{eq:semanticexistslor}
+	\end{align}
 	が成り立つ．
-\end{Lemma}
+\end{Thm}
 
-\begin{proof}
-	\(\symcal{M}\)の対象領域を\(M\)とする．
-	\(\symcal{M}\)による項\(a\)の解釈\(\interpretation{\symcal{M}}{a}\)は\(M\)の元である．
-	従って，その元の名前を\(c\)とすると，
-	\[
-		\symcal{M} \satisfy \subst{\varphi}{a/x} \metaequivalent \symcal{M} \satisfy \subst{\varphi}{c/x}
-	\]
-	となる（厳密には\(\varphi\)の構造に関する帰納法で示せる）．
-	\(\symcal{M} \satisfy \forall x \varphi\)だから
-	\(\symcal{M} \satisfy \subst{\varphi}{c/x}\)は成り立つので，
-	\(\symcal{M} \satisfy \subst{\varphi}{a/x}\)となる．
-\end{proof}
+\begin{Thm} \label{Thm:semanticforallexistslandloroneside}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
+	このとき
+	\begin{align}
+		\forall x \paren{\varphi \lor \psi}  & \logicallyequivalent \forall x \varphi \lor \psi \quad \text{ただし\(x \notin \apply{\FV}{\psi}\)},
+		\label{eq:semanticforallloroneside}                                                                                                     \\
+		\exists x \paren{\varphi \land \psi} & \logicallyequivalent \exists x \varphi \land \psi \quad \text{ただし\(x \notin \apply{\FV}{\psi}\)}
+		\label{eq:semanticexistslandoneside}
+	\end{align}
+	が成り立つ．
+\end{Thm}
 
+\begin{Que} \label{Que:semanticpeircelaw}
+	\(\varphi, \psi\)を論理式とする．真理値表により，下記論理式が恒真式であることを確かめよ．
+	\begin{equation}
+		\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi
+		\label{eq:semanticpeircelaw}
+	\end{equation}
+\end{Que}
 
 \section{等式理論とHorn理論} \label{sec:equationaltheory}
 

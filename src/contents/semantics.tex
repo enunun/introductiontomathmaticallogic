@@ -218,8 +218,8 @@
 \end{Note}
 
 \begin{Ex} \label[Ex]{Ex:satisfy}
-	\(\symcal{L}\)を\cref{Ex:grouptheory}で述べた群論の言語とする．
-	整数全体の集合\(\Integers\)に対し，\(\Integers\)を対象領域とする\(\symcal{L}\)構造\(\symcal{M}\)を以下によって定義する：
+	\(\symcal{L}_{\GP}\)を\cref{Ex:grouptheory}で述べた群論の言語とする．
+	整数全体の集合\(\Integers\)に対し，\(\Integers\)を対象領域とする\(\symcal{L}_{\GP}\)構造\(\symcal{M}\)を以下によって定義する：
 	\begin{enumerate}
 		\item \(\interpretation{\symcal{M}}{\obj{e}} = 0,\)
 		\item \(\interpretation{\symcal{M}}{\obj{\ast}} = \mathord{+},\)
@@ -227,10 +227,10 @@
 	\end{enumerate}
 	ここで，3つ目の式における右辺の「\(\mathord{-}\)」は\(x \mapsto -x\)で定義される写像である．
 
-	この\(\symcal{L}\)構造\(\symcal{M}\)は\cref{Ex:grouptheory}で挙げた3つの\(\symcal{L}\)文をすべて充足する．
+	この\(\symcal{L}_{\GP}\)構造\(\symcal{M}\)は\cref{Ex:grouptheory}で挙げた3つの\(\symcal{L}_{\GP}\)文をすべて充足する．
 	一方で，\(\symcal{M}\)による解釈のうち\(\symcal{M}\)による\(\obj{e}\)の解釈を\(\interpretation{\symcal{M}}{\obj{e}} = 1\)
-	と置き換えて得られる\(\symcal{L}\)構造\(\symcal{M}'\)は，
-	\cref{Ex:grouptheory}で挙げた3つの\(\symcal{L}\)文のうち1つ目のみを充足する．
+	と置き換えて得られる\(\symcal{L}_{\GP}\)構造\(\symcal{M}'\)は，
+	\cref{Ex:grouptheory}で挙げた3つの\(\symcal{L}_{|GP}\)文のうち1つ目のみを充足する．
 \end{Ex}
 
 \begin{Que} \label{Que:satisfy}
@@ -273,15 +273,15 @@
 \end{Def}
 
 \begin{Ex} \label[Ex]{Ex:model}
-	\Cref{Ex:grouptheory}で述べた3つの\(\symcal{L}\)文からなる\(\symcal{L}\)理論を\(T\)とする．
-	このとき，\cref{Ex:satisfy}で述べた\(\symcal{L}\)構造\(\symcal{M}\)は\(T\)のモデルである．
-	一方で，\cref{Ex:satisfy}で述べた\(\symcal{L}\)構造\(\symcal{M}'\)は\(T\)のモデルではない．
+	\Cref{Ex:grouptheory}で述べた3つの\(\symcal{L}_{\GP}\)文からなる\(\symcal{L}_{\GP}\)理論\(\GP\)について考える．
+	このとき，\cref{Ex:satisfy}で述べた\(\symcal{L}_{\GP}\)構造\(\symcal{M}\)は\(\GP\)のモデルである．
+	一方で，\cref{Ex:satisfy}で述べた\(\symcal{L}_{\GP}\)構造\(\symcal{M}'\)は\(\GP\)のモデルではない．
 \end{Ex}
 
 \begin{Note}
-	通常の通学では，\cref{Ex:model}における「\(\symcal{M}\)が\(T\)のモデルである」
+	通常の通学では，\cref{Ex:model}における「\(\symcal{M}\)が\(\GP\)のモデルである」
 	ことを「\(\symcal{M}\)が群である」と表現している．
-	通常の数学では理論そのものと構造がその理論のモデルであるという主張を区別する必要性は薄いのだが，
+	通常の数学では理論そのものと理論のモデルとを区別する必要性は薄いのだが，
 	数理論理学の文脈では当然厳格に区別する必要がある．
 \end{Note}
 
@@ -294,31 +294,31 @@
 \end{Note}
 
 \begin{Que} \label{Que:model}
-	\Cref{Ex:grouptheory}で挙げた群の理論\(T\)について，次の論理式を\(\varphi\)とする：
+	\Cref{Ex:grouptheory}で挙げた群の理論\(\GP\)について，次の論理式を\(\varphi\)とする：
 	\[
 		\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\ast} \obj{y} = \obj{y} \obj{\ast} \obj{x}}.
 	\]
-	このとき，\(\varphi\)を充足する\(T\)のモデルと\(\varphi\)を充足しない\(T\)のモデルを1つずつ挙げよ．
+	このとき，\(\varphi\)を充足する\(\GP\)のモデルと\(\varphi\)を充足しない\(\GP\)のモデルを1つずつ挙げよ．
 \end{Que}
 
 \begin{Que} \label{Que:grouptheoryaxiomize}
 	\Cref{Que:invalidtheory}に関連して，アリティ2の関数記号1つだけからなる
-	言語\(\symcal{L}_1 = \Set{\obj{\ast}}\)に関する以下の
-	3つの論理式からなる\(\symcal{L}_1\)理論を\(T_1\)とする：
+	言語\(\symcal{L} = \Set{\obj{\ast}}\)に関する以下の
+	3つの論理式からなる\(\symcal{L}\)理論を\(T\)とする：
 	\begin{align*}
 		\varphi_1 \colon & \forall \obj{x} \forall \obj{y} \forall \obj{z}
 		\paren{\paren{\obj{x} \obj{\ast} \obj{y}} \obj{\ast} \obj{z} \objeq \obj{x} \obj{\ast} \paren{\obj{y} \obj{\ast} \obj{z}}}, \\
 		\varphi_2 \colon & \exists \obj{e'} \forall \obj{x} \paren{\obj{e'} \obj{\ast} \obj{x} \objeq \obj{x}},                     \\
 		\varphi_3 \colon & \exists \obj{e'}\forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} \objeq \obj{e'}}.
 	\end{align*}
-	このとき，\cref{Ex:grouptheory}で挙げた群の言語\(\symcal{L}\)に対して\(\symcal{L}_1 \subset \symcal{L}\)が成り立つので，
-	\(T_1\)は自然に\(\symcal{L}\)理論ともみなせる．
-	さて，\(\symcal{L}_1\)理論\(T_1\)のモデルだが，\(\symcal{L}_1\)が有していない記号\(\obj{e}, {}^{\obj{-1}}\)
+	このとき，\cref{Ex:grouptheory}で挙げた群の言語\(\symcal{L}_{\GP}\)に対して\(\symcal{L} \subset \symcal{L}_{\GP}\)が成り立つので，
+	\(T\)は自然に\(\symcal{L}_{\GP}\)理論ともみなせる．
+	さて，\(\symcal{L}\)理論\(T\)のモデルだが，\(\symcal{L}\)が有していない記号\(\obj{e}, {}^{\obj{-1}}\)
 	の解釈をどのように定めても\cref{Ex:grouptheory}で挙げた
-	群の理論\(T\)のモデルとみなすことはできない\(\symcal{L}_1\)構造の例を挙げよ．
+	群の理論\(\GP\)のモデルとみなすことはできない\(\symcal{L}\)構造の例を挙げよ．
 
-	上記のような例が存在することは，\(\symcal{L}_1\)に記号を追加して
-	言語を拡張しても，\(T_1\)から\(T\)を自然に得ることはできないことを意味している．
+	上記のような例が存在することは，\(\symcal{L}\)に記号を追加して
+	言語を拡張しても，\(T\)から\(\GP\)を自然に得ることはできないことを意味している．
 \end{Que}
 
 
@@ -585,14 +585,14 @@
 \end{proof}
 
 \begin{Ex} \label[Ex]{Ex:isomorphic}
-	\Cref{Ex:grouptheory}で挙げた群の理論\(T\)の2つのモデル\(\symcal{M}, \symcal{N}\)が同型であることは，
+	\Cref{Ex:grouptheory}で挙げた群の理論\(\GP\)の2つのモデル\(\symcal{M}, \symcal{N}\)が同型であることは，
 	よく知られた群の同型に関する標準的な定義
 	（\(M, N\)をそれぞれ\(\symcal{M}, \symcal{N}\)の対象領域とするとき，
 	全単射\(f \colon M \to N\)で任意の\(x, y \in M\)に対して
 	\(\apply{f}{x \interpretation{\symcal{M}}{\ast} y}
 	= \apply{f}{x} \interpretation{\symcal{N}}{\ast} \apply{f}{y}\)が成り立つものが存在すること）と一致する．
-	よって「群として同型」であるような2つの群は，\(\symcal{L}\)閉論理式で表現できる性質に差異はない．
-	例えば「可換群である」という主張は\(\symcal{L}\)閉論理式として表現できる（\cref{Que:model}を参照）ので，
+	よって「群として同型」であるような2つの群は，\(\symcal{L}_{\GP}\)閉論理式で表現できる性質に差異はない．
+	例えば「可換群である」という主張は\(\symcal{L}_{\GP}\)閉論理式として表現できる（\cref{Que:model}を参照）ので，
 	同型な2つの群はどちらも可換であるか，どちらも可換でないかのいずれかである．
 \end{Ex}
 
@@ -760,7 +760,7 @@
 	\(\varphi \formulaequiv \psi\)の真理値が1になるのは\(\varphi, \psi\)の真理値が一致する場合であることを確かめよ．
 \end{Que}
 
-\begin{Thm} \label{Thm:semanticdne}
+\begin{Thm} \label[Thm]{Thm:semanticdne}
 	\(\varphi\)を論理式とする．このとき，
 	\begin{equation}
 		\varphi \logicallyequivalent \lnot \lnot \varphi
@@ -803,7 +803,7 @@
 そこで代わりに登場するのは，意味論的な「推論」という概念である．
 
 \index[widx]{はいりほう@背理法}
-\begin{Lemma}[背理法] \label{lemma:semanticcontradiction}
+\begin{Lemma}[背理法] \label[Lemma]{lemma:semanticcontradiction}
 	\(\Gamma\)を閉論理式の集合，\(\varphi\)を論理式とする．
 	このとき
 	\[
@@ -832,7 +832,7 @@
 \end{proof}
 
 \index[widx]{ぜんしょうじょきょりつ@全称除去律}
-\begin{Lemma}[全称除去律] \label{lemma:semanticforallelimination}
+\begin{Lemma}[全称除去律] \label[Lemma]{lemma:semanticforallelimination}
 	\(\varphi, \psi\)を論理式，\(x\)を変数記号，\(a\)を\(\varphi\)中の\(x\)に代入可能な項とする．
 	このとき，任意の閉論理式の集合\(\Gamma\)に対して
 	\[
@@ -856,7 +856,7 @@
 \end{proof}
 
 \index[widx]{そんざいじょきょりつ@存在除去律}
-\begin{Lemma}[存在除去律] \label{lemma:semanticexistselimination}
+\begin{Lemma}[存在除去律] \label[Lemma]{lemma:semanticexistselimination}
 	\(\Gamma, \Delta\)を閉論理式の集合とし，
 	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
 	このとき，
@@ -888,7 +888,7 @@
 \end{proof}
 
 \index[widx]{ぜんしょうどうにゅうりつ@全称導入律}
-\begin{Lemma}[全称導入律] \label{lemma:semanticforallinsertion}
+\begin{Lemma}[全称導入律] \label[Lemma]{lemma:semanticforallinsertion}
 	\(\Gamma\)を閉論理式の集合とし，\(x\)を変数記号，\(\varphi\)を論理式とする．
 	\(\varphi\)中の\(x\)に代入可能であって\(\apply{\Var}{a}\)の元が
 	\(\varphi\)に自由出現しないような任意の項\(a\)に対して
@@ -906,7 +906,7 @@
 \end{proof}
 
 \index[widx]{そんざいどうにゅうりつ@存在導入律}
-\begin{Lemma}[存在導入律] \label{lemma:semanticexistsinsertion}
+\begin{Lemma}[存在導入律] \label[Lemma]{lemma:semanticexistsinsertion}
 	\(\Gamma\)を閉論理式の集合とし，\(x\)を変数記号，\(\varphi\)を論理式とする．
 	このとき，\(\varphi\)中の\(x\)に代入可能な任意の項\(a\)に対して
 	\[
@@ -936,7 +936,7 @@
 \(\forall, \exists\)を陽に含むものについては上記補題をうまく使うことでその同値性を確かめることができる．
 
 
-\begin{Thm} \label{Thm:semantictodisjunctivenormalform}
+\begin{Thm} \label[Thm]{Thm:semantictodisjunctivenormalform}
 	\(\varphi, \psi\)を論理式とする．このとき
 	\begin{equation}
 		\varphi \to \psi \logicallyequivalent \lnot \varphi \lor \psi
@@ -946,7 +946,7 @@
 \end{Thm}
 
 \index[widx]{De Morganのほうそく@De Morganの法則}
-\begin{Thm}[De Morganの法則] \label{Thm:semanticDemorganslawproposition}
+\begin{Thm}[De Morganの法則] \label[Thm]{Thm:semanticDemorganslawproposition}
 	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．このとき
 	\begin{align}
 		\lnot \paren{\varphi \lor \psi}  & \logicallyequivalent \lnot \varphi \land \lnot \psi,
@@ -961,7 +961,7 @@
 	が成り立つ．
 \end{Thm}
 
-\begin{Thm} \label{Thm:semanticcommunitativelaw}
+\begin{Thm} \label[Thm]{Thm:semanticcommunitativelaw}
 	\(\varphi, \psi\)を論理式とする．
 	このとき
 	\begin{align}
@@ -973,7 +973,7 @@
 	が成り立つ．
 \end{Thm}
 
-\begin{Thm} \label{Thm:semanticassociativelaw}
+\begin{Thm} \label[Thm]{Thm:semanticassociativelaw}
 	\(\varphi, \psi\)を論理式とする．
 	このとき
 	\begin{align}
@@ -988,7 +988,7 @@
 \Cref{Thm:semanticassociativelaw}により，\(\varphi \land \psi \land \chi\)や\(\varphi \lor \psi \lor \chi\)のような
 略記表現について，意味論的には問題が生じないことがわかる．
 
-\begin{Thm} \label{Thm:semantictolnotland}
+\begin{Thm} \label[Thm]{Thm:semantictolnotland}
 	\(\varphi, \psi\)を論理式とする．
 	このとき
 	\begin{align}
@@ -1004,7 +1004,7 @@
 	が成り立つ．
 \end{Thm}
 
-\begin{Thm} \label{Thm:semanticforallexiststo}
+\begin{Thm} \label[Thm]{Thm:semanticforallexiststo}
 	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
 	このとき
 	\begin{align}
@@ -1016,7 +1016,7 @@
 	が成り立つ．
 \end{Thm}
 
-\begin{Thm} \label{Thm:semanticforallexistslandlor}
+\begin{Thm} \label[Thm]{Thm:semanticforallexistslandlor}
 	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
 	このとき
 	\begin{align}
@@ -1028,7 +1028,7 @@
 	が成り立つ．
 \end{Thm}
 
-\begin{Thm} \label{Thm:semanticforallexistslandloroneside}
+\begin{Thm} \label[Thm]{Thm:semanticforallexistslandloroneside}
 	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
 	このとき
 	\begin{align}

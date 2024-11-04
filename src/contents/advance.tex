@@ -441,3 +441,50 @@
 	\end{align*}
 	よってもとの主張も成り立つ．
 \end{proof}
+
+
+\section{等式理論とHorn理論} \label{sec:equationaltheory}
+
+本節では，言語や公理に特別な制約を課した場合について考察する．
+
+\begin{Def} \label[Def]{Def:horntheory}
+	原子論理式のことを%
+	\index[widx]{りてらる@リテラル!せいのりてらる@正の---}%
+	\term{正のリテラル}といい，
+	原子論理式\(p\)の否定\(\lnot p\)のことを%
+	\index[widx]{りてらる@リテラル!ふのりてらる@負の---}%
+	\term{負のリテラル}という．
+	正のリテラルと負のリテラルを総称して%
+	\index[widx]{りてらる@リテラル}%
+	\term{リテラル}という．
+	また，リテラル\(p_1, p_2, \dots, p_n\)に対し，論理式
+	\begin{equation*}
+		p_1 \lor p_2 \lor \dotsb \lor p_n
+	\end{equation*}
+	を%
+	\index[widx]{せつ@節}%
+	\term{節}%
+	といい，節に含まれる正のリテラルが高々1つである場合にはその節のことを%
+	\index[widx]{せつ@節!Hornせつ@Horn節}%
+	\term{Horn節}という．
+
+	理論\(T\)の各文がすべてHorn節の全称閉包である場合，\(T\)は%
+	\index[widx]{りろん@理論!Hornりろん@全称Horn---}%
+	\term{全称Horn理論}であるという．
+\end{Def}
+
+全称Horn理論の特別な場合として，以下に示す等式理論も重要である．
+
+\begin{Def} \label[Def]{Def:equationaltheory}
+	\(\symcal{L}\)を言語とし，\(T\)を\(\symcal{L}\)理論とする．
+	このとき，\(T\)が%
+	\index[widx]{りろん@理論!とうしきりろん@等式---}%
+	\term{等式理論}であるとは，\(\symcal{L}\)が関係記号をもたず，
+	さらに\(T\)の各文がすべて等式（\(s \objeq t\)の形の論理式）の全称閉包になっていることをいう．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:equationaltheory}
+	\Cref{Ex:grouptheory}における群の理論\(\GP\)と\cref{Ex:Ring}における環の理論\(\Ring\)はいずれも等式理論であり，
+	従って全称Horn理論でもある．
+\end{Ex}
+

@@ -357,12 +357,18 @@
 \end{Def}
 
 \begin{Note}
-	\Cref{Def:sequent}でシークエント「\(\Gamma \sequent \varphi\)」を定義した際には\(\Gamma\)は論理式の有限列であったが
-	\cref{Def:provable}で「\(\Gamma \provable \varphi\)」という記法を定義した際には\(\Gamma\)は論理式からなる集合であり，
+	\Cref{Def:sequent}でシークエント「\(\Gamma \sequent \varphi\)」を定義した際には\(\Gamma\)は論理式の有限列であったが，
+	\cref{Def:provable}で「\(\Gamma \provable \varphi\)」という記法を定義した際には\(\Gamma\)は論理式からなる集合であり
 	有限集合でも無限集合でもよいという違いがあった．
 	このうち「有限集合でも無限集合でもよい」という部分は重要で，無限個の公理をもつ理論に対しても証明可能性が定義できるようになっている．
 \end{Note}
 
+\begin{Note}
+	\(\varphi \interderivable \psi\)のとき，\(\varphi, \psi\)は証明論的には「同じ」とみなされる．
+	\(\varphi \interderivable \psi\)ならば，任意の論理式の集合\(\Gamma\)に対して
+	\(\Gamma \provable \varphi\)と\(\Gamma \provable \psi\)が同値になるので
+	「どのような仮定から導くことができるか」という観点では両者を区別できないからである．
+\end{Note}
 
 ここで定義した体系が我々の素朴的直観における「証明」を模倣できているかどうかは，
 ここから導かれるさまざまな結果を見るよりほかはない．
@@ -533,6 +539,9 @@
 	\end{align}
 	が成り立つ．
 \end{Thm}
+
+\Cref{Thm:proofassociativelaw}により，\(\varphi \land \psi \land \chi\)や\(\varphi \lor \psi \lor \chi\)のような
+略記表現について，意味論と同様に証明論的にも問題が生じないことがわかる．
 
 \begin{Thm} \label[Thm]{Thm:proofdistributivelaw}
 	\(\varphi, \psi, \chi\)を論理式とする．このとき

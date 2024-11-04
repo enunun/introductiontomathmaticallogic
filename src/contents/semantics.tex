@@ -149,6 +149,7 @@
 		      } \in \interpretation{\symcal{M}}{r}
 		      \)
 		      とする．
+		\item \(\symcal{M} \satisfy \bot\)は成り立たないとする．
 		\item \(\varphi, \psi\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)閉論理式とするとき，
 		      \[
 			      \symcal{M} \satisfy \lnot \varphi      \metaequivalent \text{\(\symcal{M} \satisfy \varphi\)でない}
@@ -192,6 +193,13 @@
 		      とする．ただし，\(c_a\)は\(a \in M\)の名前である．
 	\end{enumerate}
 
+	閉論理式とは限らない論理式\(\varphi\)については，その全称閉包\(\hat{\varphi}\)を用いて
+	\begin{equation}
+		\symcal{M} \satisfy \varphi \metaequivalent \symcal{M} \satisfy \hat{\varphi}
+		\label{eq:structuresatisfyclosure}
+	\end{equation}
+	と定める．
+
 	\(\symcal{L}\)構造\(\symcal{M}\)と\(\symcal{L}\)論理式\(\varphi\)について，
 	\(\symcal{M} \satisfy \varphi\)であるとき，
 	\(\symcal{M}\)は\(\varphi\)を%
@@ -210,8 +218,8 @@
 \end{Note}
 
 \begin{Ex} \label[Ex]{Ex:satisfy}
-	\(\symcal{L}\)を\cref{Ex:grouptheory}で述べた群論の言語とする．
-	整数全体の集合\(\Integers\)に対し，\(\Integers\)を対象領域とする\(\symcal{L}\)構造\(\symcal{M}\)を以下によって定義する：
+	\(\symcal{L}_{\GP}\)を\cref{Ex:grouptheory}で述べた群論の言語とする．
+	整数全体の集合\(\Integers\)に対し，\(\Integers\)を対象領域とする\(\symcal{L}_{\GP}\)構造\(\symcal{M}\)を以下によって定義する：
 	\begin{enumerate}
 		\item \(\interpretation{\symcal{M}}{\obj{e}} = 0,\)
 		\item \(\interpretation{\symcal{M}}{\obj{\ast}} = \mathord{+},\)
@@ -219,10 +227,10 @@
 	\end{enumerate}
 	ここで，3つ目の式における右辺の「\(\mathord{-}\)」は\(x \mapsto -x\)で定義される写像である．
 
-	この\(\symcal{L}\)構造\(\symcal{M}\)は\cref{Ex:grouptheory}で挙げた3つの\(\symcal{L}\)文をすべて充足する．
+	この\(\symcal{L}_{\GP}\)構造\(\symcal{M}\)は\cref{Ex:grouptheory}で挙げた3つの\(\symcal{L}_{\GP}\)文をすべて充足する．
 	一方で，\(\symcal{M}\)による解釈のうち\(\symcal{M}\)による\(\obj{e}\)の解釈を\(\interpretation{\symcal{M}}{\obj{e}} = 1\)
-	と置き換えて得られる\(\symcal{L}\)構造\(\symcal{M}'\)は，
-	\cref{Ex:grouptheory}で挙げた3つの\(\symcal{L}\)文のうち1つ目のみを充足する．
+	と置き換えて得られる\(\symcal{L}_{\GP}\)構造\(\symcal{M}'\)は，
+	\cref{Ex:grouptheory}で挙げた3つの\(\symcal{L}_{|GP}\)文のうち1つ目のみを充足する．
 \end{Ex}
 
 \begin{Que} \label{Que:satisfy}
@@ -246,7 +254,7 @@
 	\index[widx]{じゅうそく@充足!じゅうそくかのう@---可能}%
 	\term{充足可能}であるという．
 
-	また，\(\varphi\)を\(\symcal{L}\)閉論理式とするとき，\(\symcal{L}\)理論\(T\)のすべてのモデルが
+	また，\(\varphi\)を\(\symcal{L}\)論理式とするとき，\(\symcal{L}\)理論\(T\)のすべてのモデルが
 	\(\varphi\)を充足するならば，\(\varphi\)は\(T\)の%
 	\index[widx]{ろんりてききけつ@論理的帰結}%
 	\term{論理的帰結}である，または\(\varphi\)は\(T\)における%
@@ -265,44 +273,52 @@
 \end{Def}
 
 \begin{Ex} \label[Ex]{Ex:model}
-	\Cref{Ex:grouptheory}で述べた3つの\(\symcal{L}\)文からなる\(\symcal{L}\)理論を\(T\)とする．
-	このとき，\cref{Ex:satisfy}で述べた\(\symcal{L}\)構造\(\symcal{M}\)は\(T\)のモデルである．
-	一方で，\cref{Ex:satisfy}で述べた\(\symcal{L}\)構造\(\symcal{M}'\)は\(T\)のモデルではない．
+	\Cref{Ex:grouptheory}で述べた3つの\(\symcal{L}_{\GP}\)文からなる\(\symcal{L}_{\GP}\)理論\(\GP\)について考える．
+	このとき，\cref{Ex:satisfy}で述べた\(\symcal{L}_{\GP}\)構造\(\symcal{M}\)は\(\GP\)のモデルである．
+	一方で，\cref{Ex:satisfy}で述べた\(\symcal{L}_{\GP}\)構造\(\symcal{M}'\)は\(\GP\)のモデルではない．
 \end{Ex}
 
 \begin{Note}
-	通常の通学では，\cref{Ex:model}における「\(\symcal{M}\)が\(T\)のモデルである」
+	通常の通学では，\cref{Ex:model}における「\(\symcal{M}\)が\(\GP\)のモデルである」
 	ことを「\(\symcal{M}\)が群である」と表現している．
-	通常の数学では理論そのものと構造がその理論のモデルであるという主張を区別する必要性は薄いのだが，
+	通常の数学では理論そのものと理論のモデルとを区別する必要性は薄いのだが，
 	数理論理学の文脈では当然厳格に区別する必要がある．
 \end{Note}
 
+\begin{Note}
+	理論\(T\)に対して，
+	\[
+		T \satisfy \bot
+	\]
+	は，\(T\)にモデルが存在しない場合，かつその場合にのみ成り立つ．
+\end{Note}
+
 \begin{Que} \label{Que:model}
-	\Cref{Ex:grouptheory}で挙げた群の理論\(T\)について，次の論理式を\(\varphi\)とする：
+	\Cref{Ex:grouptheory}で挙げた群の理論\(\GP\)について，次の論理式を\(\varphi\)とする：
 	\[
 		\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\ast} \obj{y} = \obj{y} \obj{\ast} \obj{x}}.
 	\]
-	このとき，\(\varphi\)を充足する\(T\)のモデルと\(\varphi\)を充足しない\(T\)のモデルを1つずつ挙げよ．
+	このとき，\(\varphi\)を充足する\(\GP\)のモデルと\(\varphi\)を充足しない\(\GP\)のモデルを1つずつ挙げよ．
 \end{Que}
 
 \begin{Que} \label{Que:grouptheoryaxiomize}
 	\Cref{Que:invalidtheory}に関連して，アリティ2の関数記号1つだけからなる
-	言語\(\symcal{L}_1 = \Set{\obj{\ast}}\)に関する以下の
-	3つの論理式からなる\(\symcal{L}_1\)理論を\(T_1\)とする：
+	言語\(\symcal{L} = \Set{\obj{\ast}}\)に関する以下の
+	3つの論理式からなる\(\symcal{L}\)理論を\(T\)とする：
 	\begin{align*}
 		\varphi_1 \colon & \forall \obj{x} \forall \obj{y} \forall \obj{z}
 		\paren{\paren{\obj{x} \obj{\ast} \obj{y}} \obj{\ast} \obj{z} \objeq \obj{x} \obj{\ast} \paren{\obj{y} \obj{\ast} \obj{z}}}, \\
 		\varphi_2 \colon & \exists \obj{e'} \forall \obj{x} \paren{\obj{e'} \obj{\ast} \obj{x} \objeq \obj{x}},                     \\
 		\varphi_3 \colon & \exists \obj{e'}\forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} \objeq \obj{e'}}.
 	\end{align*}
-	このとき，\cref{Ex:grouptheory}で挙げた群の言語\(\symcal{L}\)に対して\(\symcal{L}_1 \subset \symcal{L}\)が成り立つので，
-	\(T_1\)は自然に\(\symcal{L}\)理論ともみなせる．
-	さて，\(\symcal{L}_1\)理論\(T_1\)のモデルだが，\(\symcal{L}_1\)が有していない記号\(\obj{e}, {}^{\obj{-1}}\)
+	このとき，\cref{Ex:grouptheory}で挙げた群の言語\(\symcal{L}_{\GP}\)に対して\(\symcal{L} \subset \symcal{L}_{\GP}\)が成り立つので，
+	\(T\)は自然に\(\symcal{L}_{\GP}\)理論ともみなせる．
+	さて，\(\symcal{L}\)理論\(T\)のモデルだが，\(\symcal{L}\)が有していない記号\(\obj{e}, {}^{\obj{-1}}\)
 	の解釈をどのように定めても\cref{Ex:grouptheory}で挙げた
-	群の理論\(T\)のモデルとみなすことはできない\(\symcal{L}_1\)構造の例を挙げよ．
+	群の理論\(\GP\)のモデルとみなすことはできない\(\symcal{L}\)構造の例を挙げよ．
 
-	上記のような例が存在することは，\(\symcal{L}_1\)に記号を追加して
-	言語を拡張しても，\(T_1\)から\(T\)を自然に得ることはできないことを意味している．
+	上記のような例が存在することは，\(\symcal{L}\)に記号を追加して
+	言語を拡張しても，\(T\)から\(\GP\)を自然に得ることはできないことを意味している．
 \end{Que}
 
 
@@ -375,8 +391,8 @@
 	\(\symcal{L}\)を言語とし，\(\symcal{M_1}, \symcal{M_2}, \symcal{M_3}\)を\(\symcal{L}\)構造とする．
 	このとき
 	\begin{enumerate}
-		\item \(\symcal{M_1} \isomorphic \symcal{M_1}\)
-		\item \(\symcal{M_1} \isomorphic \symcal{M_2} \metaimplies \symcal{M_2} \isomorphic \symcal{M_1}\)
+		\item \(\symcal{M_1} \isomorphic \symcal{M_1}\),
+		\item \(\symcal{M_1} \isomorphic \symcal{M_2} \metaimplies \symcal{M_2} \isomorphic \symcal{M_1}\),
 		\item \(\text{\(\symcal{M_1} \isomorphic \symcal{M_2}\)かつ\(\symcal{M_2} \isomorphic \symcal{M_3}\)}
 		      \metaimplies \symcal{M_1} \isomorphic \symcal{M_3}\)
 	\end{enumerate}
@@ -391,8 +407,8 @@
 
 2つの\(\symcal{L}\)構造\(\symcal{M}, \symcal{N}\)が同型であることは，
 定数記号，関数記号，関係記号のすべてが同型写像\(\sigma\)を通して「翻訳」できることを主張している．
-通常の数学では，2つの構造が同型であることは「その理論の内部ではその2つの構造は同一視できる」
-ことと解釈される．この認識が適切であることを以下で検証しよう．
+通常の数学では，2つの構造が同型である場合には「その理論の内部ではその2つの構造は同一視できる」
+ことが期待される．この認識が適切であることを以下で検証しよう．
 
 まずは「その理論の内部ではその2つの構造は同一視できる」ことの定式化から行う．
 この主張は「その2つの構造はまったく同じ性質を満たす」ここと解釈できる．
@@ -428,12 +444,10 @@
 	\(\symcal{L}\)を言語とし，\(\symcal{M_1}, \symcal{M_2}, \symcal{M_3}\)を\(\symcal{L}\)構造とする．
 	このとき
 	\begin{enumerate}
-		\item \(\symcal{M_1} \elementarilyequivalent \symcal{M_1}\)
-		\item \(\symcal{M_1} \elementarilyequivalent \symcal{M_2} \metaimplies \symcal{M_2} \elementarilyequivalent \symcal{M_1}\)
-		\item \(\text{\(\symcal{M_1} \elementarilyequivalent \symcal{M_2}\)かつ\(\symcal{M_2} \elementarilyequivalent \symcal{M_3}\)}
-		      \metaimplies \symcal{M_1} \elementarilyequivalent \symcal{M_3}\)
+		\item \(\symcal{M_1} \elementarilyequivalent \symcal{M_1}\),
+		\item \(\symcal{M_1} \elementarilyequivalent \symcal{M_2} \metaimplies \symcal{M_2} \elementarilyequivalent \symcal{M_1}\),
+		\item \(\text{\(\symcal{M_1} \elementarilyequivalent \symcal{M_2}\)かつ\(\symcal{M_2} \elementarilyequivalent \symcal{M_3}\)} \metaimplies \symcal{M_1} \elementarilyequivalent \symcal{M_3}\)
 	\end{enumerate}
-
 	が成り立つ．
 \end{Lemma}
 
@@ -522,7 +536,8 @@
 	\(\symcal{M}, \symcal{N}\)の対象領域をそれぞれ\(M, N\)とし，
 	\(\sigma \colon M \to N\)を同型写像とする．
 	\Cref{Lemma:equivrelationforelementarilyequivalent}により，
-	\(\symcal{M} \satisfy \varphi\)のとき\(\symcal{N} \satisfy \varphi\)となることを示せば十分．
+	任意の\(\symcal{L}\)閉論理式\(\varphi\)に対して
+	\(\symcal{M} \satisfy \varphi\)ならば\(\symcal{N} \satisfy \varphi\)となることを示せば十分．
 
 	\(\varphi\)が\(\symcal{L}\)閉項\(t_1, t_2\)に対する\(t_1 \objeq t_2\)の形のとき，
 	\(\symcal{M} \satisfy \varphi\)とすると\(\interpretation{\symcal{M}}{t_1} = \interpretation{\symcal{M}}{t_2}\)である．
@@ -569,13 +584,504 @@
 \end{proof}
 
 \begin{Ex} \label[Ex]{Ex:isomorphic}
-	\Cref{Ex:grouptheory}で挙げた群の理論\(T\)の2つのモデル\(\symcal{M}, \symcal{N}\)が同型であることは，
+	\Cref{Ex:grouptheory}で挙げた群の理論\(\GP\)の2つのモデル\(\symcal{M}, \symcal{N}\)が同型であることは，
 	よく知られた群の同型に関する標準的な定義
 	（\(M, N\)をそれぞれ\(\symcal{M}, \symcal{N}\)の対象領域とするとき，
 	全単射\(f \colon M \to N\)で任意の\(x, y \in M\)に対して
 	\(\apply{f}{x \interpretation{\symcal{M}}{\ast} y}
 	= \apply{f}{x} \interpretation{\symcal{N}}{\ast} \apply{f}{y}\)が成り立つものが存在すること）と一致する．
-	よって「群として同型」であるような2つの群は，\(\symcal{L}\)閉論理式で表現できる性質に差異はない．
-	例えば「可換群である」という主張は\(\symcal{L}\)閉論理式として表現できる（\cref{Que:model}を参照）ので，
+	よって「群として同型」であるような2つの群は，\(\symcal{L}_{\GP}\)閉論理式で表現できる性質に差異はない．
+	例えば「可換群である」という主張は\(\symcal{L}_{\GP}\)閉論理式として表現できる（\cref{Que:model}を参照）ので，
 	同型な2つの群はどちらも可換であるか，どちらも可換でないかのいずれかである．
 \end{Ex}
+
+\begin{Note}
+	\Cref{Thm:isomorphicforlogicalexpression}は「同型ならば初等同値」であることを示すが，
+	逆の「初等同値ならば同型」は成り立たないことが知られている．
+\end{Note}
+
+\section{同値な論理式} \label{sec:equivalentformula}
+
+以降，言語\(\symcal{L}\)が重要視されない文脈では\(\symcal{L}\)構造のことを単に構造と表記することとする．
+
+\Cref{sec:model}では，与えられた構造が各論理式を充足するかどうかという関係を定義した．
+この充足関係に着目したとき，論理式は以下の3パターンに分類することができる：
+\begin{enumerate}
+	\item あらゆる構造が充足する論理式，
+	\item ある構造は充足するが，別の構造は充足しない論理式，
+	\item どんな構造も充足しない論理式．
+\end{enumerate}
+これらのパターンに着目して，以下のように定義しよう．
+
+\begin{Def} \label[Def]{Def:validformula}
+	論理式\(\varphi\)が%
+	\index[widx]{こうしんしき@恒真式}%
+	\term{恒真式}%
+	であるとは，すべての構造\(\symcal{M}\)が\(\varphi\)を充足することをいう．
+	また，\(\varphi\)が%
+	\index[widx]{こうぎしき@恒偽式}%
+	\index[widx]{むじゅんしき@矛盾式}%
+	\term{恒偽式}，あるいは\term{矛盾式}であるとは，
+	すべての構造\(\symcal{M}\)が\(\varphi\)を充足しないことをいう．
+	論理式\(\varphi\)が恒偽式であることは，\(\lnot \varphi\)が恒真式であることと同値である．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:validformula}
+	\(\varphi\)を論理式とするとき，論理式\(\varphi \lor \lnot \varphi\)は恒真式である．
+	実際，任意の構造\(\symcal{M}\)に対して，\(\symcal{M} \satisfy \varphi\)である場合には
+	\(\symcal{M} \satisfy \varphi \lor \lnot \varphi\)が成り立ち，
+	\(\symcal{M} \satisfy \varphi\)でない場合には\(\symcal{M} \satisfy \lnot \varphi\)となるので
+	\(\symcal{M} \satisfy \varphi \lor \lnot \varphi\)となる．
+
+	一方で，\cref{Ex:OrderedRing}で挙げた言語\(\symcal{L}_{\OrderedRing}\)における
+	論理式\(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{x}}\)を\(\varphi\)とするとき，\(\varphi\)は恒真式ではない．
+	理論\(\OrderedRing\)のモデルはすべて\(\varphi\)を充足するが，\(\OrderedRing\)のモデルでない
+	\(\symcal{L}_{\OrderedRing}\)構造で\(\varphi\)を充足しないものが存在するからである．
+\end{Ex}
+
+\begin{Que} \label{Que:validformula}
+	\Cref{Ex:validformula}の後半で述べた事実を検証せよ．すなわち，
+	\(\symcal{L}_{\OrderedRing}\)構造\(\symcal{M}\)で論理式\(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{x}}\)を
+	充足しないものを挙げよ．
+\end{Que}
+
+
+
+\index[sidx]{\(\varphi \logicallyequivalent \psi\)：論理的に同値}
+\index[widx]{ろんりてきにどうち@論理的に同値}
+\begin{Def} \label{Def:equivalentformula}
+	\(\varphi, \psi\)を論理式とする．このとき，論理式
+	\[
+		\varphi \formulaequiv \psi
+	\]
+	恒真式であるとき，\(\varphi\)と\(\psi\)は\term{論理的に同値}であるといい
+	\begin{equation}
+		\varphi \logicallyequivalent \psi
+		\label{eq:logicallyequivalent}
+	\end{equation}
+	と表す．
+\end{Def}
+
+\begin{Note}
+	論理式\(\varphi, \psi\)が論理的に同値である場合，通常は\(\varphi, \psi\)は「意味論的には同じ論理式である」とみなされる．
+	\(\varphi, \psi\)が論理的に同値である場合，\(\varphi, \psi\)を充足する構造は一致するため
+	「どのような構造によって充足されるか」という観点では\(\varphi, \psi\)に差を見出すことはできないからである．
+\end{Note}
+
+
+論理記号\(\forall, \exists\)や等号\(\objeq\)および関係記号が陽に現れない論理式の場合，
+与えられた2つの論理式が論理的に同値であるかどうかを判定するのは容易である．
+構造\(\symcal{M}\)を固定した場合，どのように複雑な論理式であっても結局は\(\symcal{M}\)によって充足されるかされないかの2通りでしかない．
+そのため，ベースとなる論理式を決め，その論理式が固定した構造によって充足されるかどうかに応じて
+同値であるかを判定したい論理式がその構造によって充足されるかどうかを調べればよい．
+論理記号\(\forall, \exists\)，等号\(\objeq\)，および関係記号が陽に現れない場合，\cref{Def:semanticimplies}に基づいて
+各論理式の充足性を検証する作業は有限回の機械的な操作で完了する．
+このとき，充足される場合に1を，そうでない場合に0を割り当て表にしておくとわかりやすい．
+この表を%
+\index[widx]{しんりち@真理値!---表}%
+\term{真理値表}といい，それぞれの論理式に割り当てられた0, 1の値をその論理式の%
+\index[widx]{しんりち@真理値}%
+\term{真理値}という．
+論理的に同値であるかを判定したい論理式の真理値がつねに一致している場合，それらの論理式は論理的に同値であるといえる．
+逆に，真理値が一致しない場合がある場合にはそれらの論理式は論理的に同値ではない．
+
+なお，上記の文脈で与えられた論理式が恒真式であるかどうかを判定したい場合，その論理式の真理値表を書き真理値がつねに1になるかどうかを検証すればよい．
+つねに1になるならばその論理式は恒真式であり，そうでないならばその論理式は恒真式ではない．
+
+まずは\cref{Def:semanticimplies}における\(\lnot, \lor, \land, \to\)について考えよう．
+
+\begin{Ex} \label[Ex]{Ex:truthtableforlnot}
+	\(\varphi\)を閉論理式とする．このとき，\(\varphi\)が1つの構造\(\symcal{M}\)によって充足されるかどうかに応じて
+	\(\lnot \varphi\)が充足されるかどうかを表にまとめたものを\cref{tab:lnottruthtable}に示す．
+
+	\begin{table}[htbp]
+		\centering
+		\caption{
+			\(\lnot \varphi\)の真理値表，1列目が\(\varphi\)が\(\symcal{M}\)に充足されるかどうか，2列目が\(\lnot \varphi\)が\(\symcal{M}\)に充足されるかどうかを示す．
+			1行目において1列目が0で2列目が1であることは，\(\varphi\)が\(\symcal{M}\)に充足されない場合，\(\lnot \varphi\)が\(\symcal{M}\)に充足されることを示す．
+			2行目も同様である．
+		}
+		\label{tab:lnottruthtable}
+		\begin{tabular}{c|c}
+			\hline
+			\(\varphi\) & \(\lnot \varphi\) \\ \hline
+			0           & 1                 \\
+			1           & 0                 \\
+			\hline
+		\end{tabular}
+	\end{table}
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:truthtableforbinsymbol}
+	\(\varphi, \psi\)を閉論理式とする．このとき，\(\varphi, \psi\)が1つの構造\(\symcal{M}\)によって充足されるかどうかに応じて
+	\(\varphi \lor \psi, \varphi \land \psi, \varphi \to \psi\)が充足されるかどうかを表にまとめたものを\cref{tab:binsymboltruthtable}に示す．
+
+	\begin{table}[htbp]
+		\centering
+		\caption{
+			\(\varphi \land \psi, \varphi \lor \psi, \varphi \to \psi\)の真理値表，
+			\(\varphi \to \psi\)の真理値は\(\lnot \varphi\)と\(\psi\)の真理値によって決まるため，\(\lnot \varphi\)の真理値を記載した列が書かれている．
+		}
+		\label{tab:binsymboltruthtable}
+		\begin{tabular}{cc|cccc}
+			\hline
+			\(\varphi\) & \(\psi\) & \(\varphi \lor \psi\) & \(\varphi \land \psi\) & \(\lnot \varphi\) & \(\varphi \to \psi\) \\ \hline
+			0           & 0        & 0                     & 0                      & 1                 & 1                    \\
+			0           & 1        & 1                     & 0                      & 1                 & 1                    \\
+			1           & 0        & 1                     & 0                      & 0                 & 0                    \\
+			1           & 1        & 1                     & 1                      & 0                 & 1                    \\
+			\hline
+		\end{tabular}
+	\end{table}
+\end{Ex}
+
+\begin{Note}
+	真理値表を書く際には，ベースと決めた論理式の内部構造は考えずにそれが与えられた構造によって充足されるかどうかを考えた．
+	「与えられた構造によって充足されること」を「その構造においては真である（正しい）」と読み替えることで，
+	真理値表を書く際は「ベースとなる論理式の内部構造は無視してその真偽のみに着目した」と考えることができる．
+	本書では議論しないが，
+	ベースとなる論理式の内部構造に踏み込まざるを得ない論理記号\(\forall, \exists\)や等号\(\objeq\)および言語を排した体系というのも考えられる．
+	このような体系として典型的なのは命題論理と呼ばれる体系である．
+	命題論理においては，この「ベースとなる論理式」は命題として提示される．
+	本書で学ぶ1階述語論理は，命題論理で登場する命題の内部構造を議論できるよう拡張したものと考えることができる．
+\end{Note}
+
+\begin{Note}
+	「命題」という術語については，よく「命題とは，真偽を判断する対象となる言明のことである」という
+	「定義」らしきものが提示されることがある．
+	むろんこのようなあいまいさの強い「定義」は定義とはいわない．
+	「命題」という用語は「何らかの数学的意味を有する主張」程度の意味合いでラフに使われる言葉であり，
+	何が命題で何が命題でないかを厳格に区別するような一般的な定義があるわけではない．
+
+	なお，命題論理においては「命題」の定義が提示されることはない．
+	述語論理において「関数記号」の定義が提示されないのと同じように，
+	命題論理において「命題」を定義しなくても困ることはない．
+\end{Note}
+
+\begin{Que} \label{Que:truthtableforequivalent}
+	\(\varphi, \psi\)を論理式とする．\(\varphi \formulaequiv \psi\)の真理値表を書き，
+	\(\varphi \formulaequiv \psi\)の真理値が1になるのは\(\varphi, \psi\)の真理値が一致する場合であることを確かめよ．
+\end{Que}
+
+\begin{Thm} \label[Thm]{Thm:semanticdne}
+	\(\varphi\)を論理式とする．このとき，
+	\begin{equation}
+		\varphi \logicallyequivalent \lnot \lnot \varphi
+		\label{eq:semanticdne}
+	\end{equation}
+	が成り立つ．
+\end{Thm}
+
+\begin{proof}
+	\(\lnot \lnot \varphi\)の真理値表を書くことによって示す．
+	\begin{table}[htbp]
+		\centering
+		\begin{tabular}{c|cc}
+			\hline
+			\(\varphi\) & \(\lnot \varphi\) & \(\lnot \lnot \varphi\) \\ \hline
+			0           & 1                 & 0                       \\
+			1           & 0                 & 1                       \\
+			\hline
+		\end{tabular}
+	\end{table}
+
+	真理値表により，\(\varphi\)と\(\lnot \lnot \varphi\)の真理値はつねに一致することがわかる．
+	ゆえに\cref{eq:semanticdne}が成り立つ．
+\end{proof}
+
+\begin{Que} \label{Que:semanticlawofexcludedmiddle}
+	\(\varphi\)を論理式とするとき，\(\varphi \lor \lnot \varphi\)の真理値表を書き，これが恒真式であることを確かめよ．
+\end{Que}
+
+\(\forall, \exists\)や等号\(\objeq\)が陽に現れない文脈では，以上のように真理値表を書くだけで論理式の論理的同値性を確かめることができる．
+一方で，\(\forall, \exists\)や等号\(\objeq\)が陽に現れる文脈ではこうはいかない．
+ここでは，\(\forall, \exists\)が現れる文脈においてはどうすればいいか考えよう%
+\footnote{%
+	等号\(\objeq\)が陽に現れる場合については本書では取り上げない．ただし，\cref{chap:proof}においては
+	等号\(\objeq\)が陽に現れる場合も含めて「同値な論理式」について本章とは違った考え方で議論する．
+}%
+．
+
+\(\forall, \exists\)が陽に現れる文脈では，真理値表のような「全パターンを機械的に網羅する」という手が使えない．
+そこで代わりに登場するのは，意味論的な「推論」という概念である．
+
+\index[widx]{はいりほう@背理法}
+\begin{Lemma}[背理法] \label[Lemma]{lemma:semanticcontradiction}
+	\(\Gamma\)を閉論理式の集合，\(\varphi\)を論理式とする．
+	このとき
+	\[
+		\Gamma \satisfy \varphi \metaequivalent \Gamma \satisfy \lnot \varphi \to \bot
+	\]
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\(\Gamma \satisfy \varphi\)
+	とする．
+	このとき，\(\Gamma\)の任意のモデル\(\symcal{M}\)に対し，\(\symcal{M} \satisfy \varphi\)が成り立つ．
+	よって，\(\symcal{M} \satisfy \lnot \varphi\)が成り立つことはないので，\(\symcal{M} \satisfy \lnot \varphi \to \bot\)となる．
+	従って
+	\(\Gamma \satisfy \lnot \varphi \to \bot\)
+	となる．
+
+	次に
+	\(\Gamma \satisfy \lnot \varphi \to \bot\)
+	と仮定する．\(\symcal{M}\)を\(\Gamma\)の任意のモデルとすると，
+	\(\symcal{M} \satisfy \lnot \varphi\)が成り立たないか\(\symcal{M} \satisfy \bot\)が成り立つかのいずれかである．
+	\(\symcal{M} \satisfy \bot\)が成り立つことはないので\(\symcal{M} \satisfy \lnot \varphi\)は成り立たない．
+	よって\(\symcal{M} \satisfy \varphi\)が成り立つので
+	\(\Gamma \satisfy \varphi\)
+	となる．
+\end{proof}
+
+\index[widx]{ぜんしょうじょきょりつ@全称除去律}
+\begin{Lemma}[全称除去律] \label[Lemma]{lemma:semanticforallelimination}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号，\(a\)を\(\varphi\)中の\(x\)に代入可能な項とする．
+	このとき，任意の閉論理式の集合\(\Gamma\)に対して
+	\[
+		\Gamma \satisfy \forall x \varphi \metaimplies \Gamma \satisfy \subst{\varphi}{a/x}
+	\]
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\Gamma\)の任意のモデルとし，\(\symcal{M}\)の対象領域を\(M\)とする．
+	\(a\)が閉項の場合にのみ考えれば十分（\(a\)が閉項でない場合，\(a\)に現れる変数記号を\(M\)の任意の元の名前で置き換えて考えればよい）である．
+	\(\symcal{M}\)による項\(a\)の解釈\(\interpretation{\symcal{M}}{a}\)は\(M\)の元である．
+	従って，その元の名前を\(c\)とすると，
+	\[
+		\symcal{M} \satisfy \subst{\varphi}{a/x} \metaequivalent \symcal{M} \satisfy \subst{\varphi}{c/x}
+	\]
+	となる（厳密には\(\varphi\)の構造に関する帰納法で示せる）．
+	\(\symcal{M} \satisfy \forall x \varphi\)だから
+	\(\symcal{M} \satisfy \subst{\varphi}{c/x}\)は成り立つので，
+	\(\symcal{M} \satisfy \subst{\varphi}{a/x}\)となる．
+\end{proof}
+
+\index[widx]{そんざいじょきょりつ@存在除去律}
+\begin{Lemma}[存在除去律] \label[Lemma]{lemma:semanticexistselimination}
+	\(\Gamma, \Delta\)を閉論理式の集合とし，
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
+	このとき，
+	\(\Gamma \satisfy \exists x \varphi\)
+	かつ\(\varphi\)中の\(x\)に代入可能であって
+	\(\apply{\Var}{a}\)の元が
+	\(\exists x \varphi\)と\(\psi\)のいずれにも自由出現しないような任意の項\(a\)に対して
+	\(\Delta \satisfy \subst{\varphi}{a/x} \to \psi\)
+	が成り立つならば，
+	\(\Gamma \cup \Delta \satisfy \psi\)
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\Gamma \cup \Delta\)の任意のモデルとする．
+	このとき，\(\symcal{M}\)は\(\Gamma\)のモデルである．
+	よって\(\symcal{M} \satisfy \exists x \varphi\)
+	が成り立つ．
+	\(\symcal{M} \satisfy \exists x \varphi\)なので\(\symcal{M} \satisfy \subst{\varphi}{c_b/x}\)を満たす
+	\(b \in M\)が存在する（ただし\(c_b\)は\(b\)の名前である）．
+	\(\symcal{M}\)は\(\Delta\)のモデルでもあるから，この\(c_b\)について
+	\(\symcal{M} \satisfy \subst{\varphi}{c_b/x} \to \psi\)
+	が成り立つ．
+	\(\symcal{M} \satisfy \lnot \subst{\varphi}{c_b/x}\)であることはないので
+	\(\symcal{M} \satisfy \psi\)
+	でなければならない．
+	よって\(\Gamma \satisfy \psi\)
+	となる．
+\end{proof}
+
+\index[widx]{ぜんしょうどうにゅうりつ@全称導入律}
+\begin{Lemma}[全称導入律] \label[Lemma]{lemma:semanticforallinsertion}
+	\(\Gamma\)を閉論理式の集合とし，\(x\)を変数記号，\(\varphi\)を論理式とする．
+	\(\varphi\)中の\(x\)に代入可能であって\(\apply{\Var}{a}\)の元が
+	\(\varphi\)に自由出現しないような任意の項\(a\)に対して
+	\(	\Gamma \satisfy \subst{\varphi}{a/x}\)
+	が成り立つとする．このとき\(\Gamma \satisfy \forall x \varphi\)
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\Gamma\)の任意のモデルとする．
+	任意の\(b \in M\)に対し，\(b\)の名前を\(c\)とすると\(\symcal{M} \satisfy \subst{\varphi}{c/x}\)
+	が成り立つ．よって\(\symcal{M} \satisfy \forall x \varphi\)であるから
+	\(\Gamma \satisfy \forall x \varphi\)
+	となる．
+\end{proof}
+
+\index[widx]{そんざいどうにゅうりつ@存在導入律}
+\begin{Lemma}[存在導入律] \label[Lemma]{lemma:semanticexistsinsertion}
+	\(\Gamma\)を閉論理式の集合とし，\(x\)を変数記号，\(\varphi\)を論理式とする．
+	このとき，\(\varphi\)中の\(x\)に代入可能な任意の項\(a\)に対して
+	\[
+		\Gamma \satisfy \subst{\varphi}{a/x} \metaimplies \Gamma \satisfy \exists x \varphi
+	\]
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\Gamma\)の任意のモデルとし，\(\symcal{M}\)の対象領域を\(M\)とする．
+	\(a\)が閉項の場合にのみ考えれば十分（\(a\)が閉項でない場合，\(a\)に現れる変数記号を\(M\)の任意の元の名前で置き換えて考えればよい）である．
+	\(\symcal{M} \satisfy \subst{\varphi}{a/x}\)である．
+	\(a\)の\(\symcal{M}\)による解釈は\(M\)の元であるから，その名前を\(c\)とすると
+	\[
+		\symcal{M} \satisfy \subst{\varphi}{a/x} \metaequivalent \symcal{M} \satisfy \subst{\varphi}{c/x}
+	\]
+	が成り立っている（厳密には\(\varphi\)の構造に関する帰納法で示せる）．
+	よって\(\symcal{M} \satisfy \subst{\varphi}{c/x}\)から\(\symcal{M} \satisfy \exists x \varphi\)が従うので
+	\(\Gamma \satisfy \exists x \varphi\)
+\end{proof}
+
+全称除去律と存在除去律は「\(\forall, \exists\)を含む論理式が論理的帰結として得られた場合にいえること」を表現したもので，
+全称導入律と存在導入律は「\(\forall, \exists\)を含む論理式を論理的帰結として得たい場合に必要なこと」を表現したものである．
+
+以上の準備のもと，よく知られた同値な論理式を以下に挙げておく．
+\(\forall, \exists\)を陽に含まないものについては真理値表を書くことにより，
+\(\forall, \exists\)を陽に含むものについては上記補題を使うことで確かめることができる．
+
+
+\begin{Thm} \label[Thm]{Thm:semantictodisjunctivenormalform}
+	\(\varphi, \psi\)を論理式とする．このとき
+	\begin{equation}
+		\varphi \to \psi \logicallyequivalent \lnot \varphi \lor \psi
+		\label{eq:semantictodisjunctivenormalform}
+	\end{equation}
+	が成り立つ．
+\end{Thm}
+
+\index[widx]{De Morganのほうそく@De Morganの法則}
+\begin{Thm}[De Morganの法則] \label[Thm]{Thm:semanticDemorganslawproposition}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．このとき
+	\begin{align}
+		\lnot \paren{\varphi \lor \psi}  & \logicallyequivalent \lnot \varphi \land \lnot \psi,
+		\label{eq:semanticDemorganslawpropositionlor}                                           \\
+		\lnot \paren{\varphi \land \psi} & \logicallyequivalent \lnot \varphi \lor \lnot \psi,
+		\label{eq:semanticDemorganslawpropositionland}                                          \\
+		\lnot \forall x \varphi          & \logicallyequivalent \exists x \lnot \varphi,
+		\label{eq:semanticdemorganforall}                                                       \\
+		\lnot \exists x \varphi          & \logicallyequivalent \forall x \lnot \varphi
+		\label{eq:semanticdemorganexists}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label[Thm]{Thm:semanticcommunitativelaw}
+	\(\varphi, \psi\)を論理式とする．
+	このとき
+	\begin{align}
+		\varphi \land \psi & \logicallyequivalent \psi \land \psi,
+		\label{eq:semanticcommunitativelawland}                     \\
+		\varphi \lor \psi  & \logicallyequivalent \psi \lor \varphi
+		\label{eq:semanticcommunitativelawlor}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label[Thm]{Thm:semanticassociativelaw}
+	\(\varphi, \psi\)を論理式とする．
+	このとき
+	\begin{align}
+		\varphi \land \paren{\psi \land \chi} & \logicallyequivalent \paren{\varphi \land \psi} \land \chi,
+		\label{eq:semanticassosiativelawland}                                                               \\
+		\varphi \lor \paren{\psi \lor \chi}   & \logicallyequivalent \paren{\varphi \lor \psi} \lor \chi
+		\label{eq:semanticassosiativelawlor}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\Cref{Thm:semanticassociativelaw}により，\(\varphi \land \psi \land \chi\)や\(\varphi \lor \psi \lor \chi\)のような
+略記表現について，意味論的には問題が生じないことがわかる．
+
+\begin{Thm} \label[Thm]{Thm:semantictolnotland}
+	\(\varphi, \psi\)を論理式とする．
+	このとき
+	\begin{align}
+		\lnot \paren{\varphi \to \psi}           & \logicallyequivalent \varphi \land \lnot \psi,
+		\label{eq:semantictolnotland}                                                                                     \\
+		\lnot \forall x \paren{\varphi \to \psi} & \logicallyequivalent \exists x \lnot \paren{\varphi \land \lnot \psi},
+		\label{eq:semanticforallcontradiction}                                                                            \\
+		\varphi \to \psi                         & \logicallyequivalent \lnot \psi \to \lnot \varphi,
+		\label{eq:semanticcontraposition}                                                                                 \\
+		\varphi \to \paren{\psi \to \chi}        & \logicallyequivalent \varphi \land \psi \to \chi
+		\label{eq:semantictonesting}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label[Thm]{Thm:semanticforallexiststo}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
+	このとき
+	\begin{align}
+		\forall x \paren{\varphi \to \psi} & \logicallyequivalent \exists x \varphi \to \psi \quad \text{ただし\(x \notin \apply{\FV}{\psi}\)},
+		\label{eq:semanticforalltoexists}                                                                                                    \\
+		\exists x \paren{\varphi \to \psi} & \logicallyequivalent \forall x \varphi \to \psi \quad \text{ただし\(x \notin \apply{\FV}{\psi}\)}
+		\label{eq:semanticexiststoforall}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label[Thm]{Thm:semanticforallexistslandlor}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
+	このとき
+	\begin{align}
+		\forall x \paren{\varphi \land \psi} & \logicallyequivalent \forall x \varphi \land \forall x \psi,
+		\label{eq:semanticforallland}                                                                       \\
+		\exists x \paren{\varphi \lor \psi}  & \logicallyequivalent \exists x \varphi \lor \exists x \psi
+		\label{eq:semanticexistslor}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label[Thm]{Thm:semanticforallexistslandloroneside}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
+	このとき
+	\begin{align}
+		\forall x \paren{\varphi \lor \psi}  & \logicallyequivalent \forall x \varphi \lor \psi \quad \text{ただし\(x \notin \apply{\FV}{\psi}\)},
+		\label{eq:semanticforallloroneside}                                                                                                     \\
+		\exists x \paren{\varphi \land \psi} & \logicallyequivalent \exists x \varphi \land \psi \quad \text{ただし\(x \notin \apply{\FV}{\psi}\)}
+		\label{eq:semanticexistslandoneside}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Que} \label{Que:semanticpeircelaw}
+	\(\varphi, \psi\)を論理式とする．真理値表により，下記論理式が恒真式であることを確かめよ．
+	\begin{equation}
+		\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi.
+		\label{eq:semanticpeircelaw}
+	\end{equation}
+\end{Que}
+
+
+論理的に同値であるとわかっている論理式を適切に「置き換える」ことにより，さらに別の論理式の論理的同値性を導くことができる．
+このことを検証するためには，まず論理式の「置き換え」を正確に定義しなくてはならない．
+本書では正確な定義の代わりに例を挙げることで理解を深めることとする．
+正確な定義と「置き換え」操作の正当性は，帰納的定義とその構造に関する帰納法によって行える．
+
+\begin{Ex} \label[Ex]{Ex:expressionsubstitution}
+	\(\varphi, \psi\)を論理式とする．\cref{Thm:semantictolnotland}の\cref{eq:semantictolnotland}は真理値表を書くことによっても確かめられるが，
+	\cref{Thm:semanticdne}の\cref{eq:semanticdne}や
+	\cref{Thm:semantictodisjunctivenormalform}の\cref{eq:semantictodisjunctivenormalform}，
+	および\cref{Thm:semanticDemorganslawproposition}の\cref{eq:semanticDemorganslawpropositionlor}を用いて以下のように導くこともできる：
+	\begin{align*}
+		\lnot \paren{\varphi \to \psi} & \logicallyequivalent  \lnot \paren{\lnot \varphi \lor \psi} \\
+		                               & \logicallyequivalent  \lnot \lnot \varphi \land \lnot \psi  \\
+		                               & \logicallyequivalent  \varphi \land \lnot \psi.
+	\end{align*}
+\end{Ex}
+
+ただし，\cref{Ex:expressionsubstitution}では以下の性質を暗黙的に利用した．
+
+\begin{Thm} \label[Thm]{Thm:logicallyequivalentequivalentrelation}
+	\(\varphi_1, \varphi_2, \varphi_3\)を論理式とする．このとき，以下が成り立つ：
+	\begin{enumerate}
+		\item \(\varphi_1 \logicallyequivalent \varphi_1\),
+		\item \(\varphi_1 \logicallyequivalent \varphi_2 \metaimplies \varphi_2 \logicallyequivalent \varphi_1\),
+		\item \(\text{\(\varphi_1 \logicallyequivalent \varphi_2\)かつ\(\varphi_2 \logicallyequivalent \varphi_3 \metaimplies \varphi_1 \logicallyequivalent \varphi_3\)}\).
+	\end{enumerate}
+\end{Thm}
+
+\begin{Que} \label{Que:expressionsubstitution}
+	\Cref{Ex:expressionsubstitution}と同様にして，
+	\cref{eq:semanticdemorganforall}や\cref{eq:semantictolnotland}を用いて
+	\cref{eq:semanticforallcontradiction}を導け．
+\end{Que}

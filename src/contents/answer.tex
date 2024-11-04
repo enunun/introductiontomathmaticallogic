@@ -282,7 +282,7 @@
 
 \subsection*{\Cref{Que:satisfy}}
 
-\(\symcal{M}\)が\cref{Ex:grouptheory}で述べた3つの\(\symcal{L}\)文すべてを充足することを確かめよう．
+\(\symcal{M}\)が\cref{Ex:grouptheory}で述べた3つの\(\symcal{L}_{\GP}\)文すべてを充足することを確かめよう．
 
 \begin{align*}
 	\varphi_1 \colon & \forall \obj{x} \forall \obj{y} \forall \obj{z}
@@ -324,13 +324,13 @@
 	\symcal{M} \satisfy \varphi_3 & \metaequivalent \text{すべての\(a \in \Integers\)に対して\(\paren{-a} + a = 0\)}
 \end{align*}
 となることがわかるので，\(\symcal{M}\)が\(\varphi_1, \varphi_2, \varphi_3\)のすべてを充足することがわかる．
-\Cref{Ex:satisfy}で述べた\(\symcal{L}\)構造\(\symcal{M}'\)が\(\varphi_1\)のみを充足することも同様にして確かめられる．
+\Cref{Ex:satisfy}で述べた\(\symcal{L}_{\GP}\)構造\(\symcal{M}'\)が\(\varphi_1\)のみを充足することも同様にして確かめられる．
 
 \subsection*{\Cref{Que:model}}
 
-\Cref{Ex:satisfy}で挙げた\(\symcal{L}\)構造\(\symcal{M}\)は\(\varphi\)を充足する\(T\)のモデルである．
+\Cref{Ex:satisfy}で挙げた\(\symcal{L}_{\GP}\)構造\(\symcal{M}\)は\(\varphi\)を充足する\(\GP\)のモデルである．
 また，有限集合\(I_n = \Set{1, 2, \dots, n}\)上の置換（全単射）\(\sigma \colon I_n \to I_n\)全体の集合\(S_n\)を対象領域とする
-\(\symcal{L}\)構造\(\symcal{M}'\)を次のように定義する：
+\(\symcal{L}_{\GP}\)構造\(\symcal{M}'\)を次のように定義する：
 \begin{align*}
 	\interpretation{\symcal{M}'}{\obj{e}}       & = \symup{id}, \\
 	\interpretation{\symcal{M}'}{\obj{\ast}}    & = \circ,      \\
@@ -339,7 +339,7 @@
 ここで，\(\symup{id} \colon S_n \to S_n\)は\(S_n\)上の恒等写像（つまり\(x \mapsto x\)という写像），
 \(\circ \colon S_n \to S_n\)は写像の合成をとる写像，
 \({}^{-1} \colon S_n \to S_n\)は逆写像をとる写像である．
-このようにして定義される\(\symcal{L}\)構造\(\symcal{M}'\)は，\(n \geq 3\)ならば\(\varphi\)を充足しない\(T\)のモデルである．
+このようにして定義される\(\symcal{L}_{\GP}\)構造\(\symcal{M}'\)は，\(n \geq 3\)ならば\(\varphi\)を充足しない\(\GP\)のモデルである．
 
 \Cref{Que:model}は，通常の数学における「可換な群とそうでない群を1つずつ挙げよ」という問題に相当することに注意せよ．
 
@@ -370,6 +370,80 @@
 が存在しないので，上記2つの\(e'\)を一致させることはできない．
 このため，\(\symcal{M}\)による\(\obj{e}, {}^{\obj{-1}}\)の解釈をどのように定めても，
 \(\symcal{M}\)が\(T\)のモデルになることはない．
+
+\subsection*{\Cref{Que:validformula}}
+
+整数全体の集合\(\Integers\)を対象領域とする\(\symcal{L}_{\OrderedRing}\)構造\(\symcal{M}\)を考える．
+ただし，\(\symcal{M}\)による\(\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}\)の解釈はそれぞれ\(\Integers\)
+における通常の\(\mathord{+}, \mathord{\cdot}, 0, 1\)とし，\(\obj{<}\)の\(\symcal{M}\)による解釈は
+\(\Integers\)における通常の等号付き大小関係\(\leq\)とする．
+このとき，閉論理式\(\varphi \colon \forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{x}}\)について
+\[
+	\symcal{M} \satisfy \varphi \metaequivalent \text{すべての\(a \in \Integers\)に対して\(a \leq a\)でない}
+\]
+となるが，例えば\(a = 1\)のときにこれは成り立たない．
+よって\(\symcal{M}\)はこの\(\varphi\)を充足しない．
+
+\subsection*{\Cref{Que:truthtableforequivalent}}
+
+\(\varphi \formulaequiv \psi\)の真理値表を以下に示す
+（\(\varphi \formulaequiv \psi\)は\(\paren{\varphi \to \psi} \land \paren{\psi \to \varphi}\)の略記であったことを思い出そう）．
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{cc|ccc}
+		\hline
+		\(\varphi\) & \(\psi\) & \(\varphi \to \psi\) & \(\psi \to \varphi\) & \(\varphi \formulaequiv \psi\) \\ \hline
+		0           & 0        & 1                    & 1                    & 1                              \\
+		0           & 1        & 1                    & 0                    & 0                              \\
+		1           & 0        & 0                    & 1                    & 0                              \\
+		1           & 1        & 1                    & 1                    & 1                              \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection*{\Cref{Que:semanticlawofexcludedmiddle}}
+
+\(\varphi \lor \lnot \varphi\)の真理値表を以下に示す．
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{c|cc}
+		\hline
+		\(\varphi\) & \(\lnot \varphi\) & \(\varphi \lor \varphi\) \\ \hline
+		0           & 1                 & 1                        \\
+		1           & 0                 & 1                        \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\(\varphi \lor \lnot \varphi\)の真理値はつねに1になるため，\(\varphi \lor \lnot \varphi\)が恒真式であることがわかる．
+
+\subsection*{\Cref{Que:semanticpeircelaw}}
+
+\(\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi\)の真理値表を以下に示す．
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{cc|ccc}
+		\hline
+		\(\varphi\) & \(\psi\) & \(\varphi \to \psi\) & \(\paren{\varphi \to \psi} \to \varphi\) & \(\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi\) \\ \hline
+		0           & 0        & 1                    & 0                                        & 1                                                            \\
+		0           & 1        & 1                    & 0                                        & 1                                                            \\
+		1           & 0        & 0                    & 1                                        & 1                                                            \\
+		1           & 1        & 1                    & 1                                        & 1                                                            \\
+		\hline
+	\end{tabular}
+\end{table}
+
+よって\(\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi\)は恒真式である．
+
+\subsection*{\Cref{Que:expressionsubstitution}}
+
+\begin{align*}
+	\lnot \forall x \paren{\varphi \to \psi} & \logicallyequivalent \exists x \lnot \paren{\varphi \to \psi}    \\
+	                                         & \logicallyequivalent \exists x \paren{\varphi \land \lnot \psi}.
+\end{align*}
 
 \section*{\Cref{chap:proof}}
 

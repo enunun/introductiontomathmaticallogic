@@ -357,12 +357,18 @@
 \end{Def}
 
 \begin{Note}
-	\Cref{Def:sequent}でシークエント「\(\Gamma \sequent \varphi\)」を定義した際には\(\Gamma\)は論理式の有限列であったが
-	\cref{Def:provable}で「\(\Gamma \provable \varphi\)」という記法を定義した際には\(\Gamma\)は論理式からなる集合であり，
+	\Cref{Def:sequent}でシークエント「\(\Gamma \sequent \varphi\)」を定義した際には\(\Gamma\)は論理式の有限列であったが，
+	\cref{Def:provable}で「\(\Gamma \provable \varphi\)」という記法を定義した際には\(\Gamma\)は論理式からなる集合であり
 	有限集合でも無限集合でもよいという違いがあった．
 	このうち「有限集合でも無限集合でもよい」という部分は重要で，無限個の公理をもつ理論に対しても証明可能性が定義できるようになっている．
 \end{Note}
 
+\begin{Note}
+	\(\varphi \interderivable \psi\)のとき，\(\varphi, \psi\)は証明論的には「同じ」とみなされる．
+	\(\varphi \interderivable \psi\)ならば，任意の論理式の集合\(\Gamma\)に対して
+	\(\Gamma \provable \varphi\)と\(\Gamma \provable \psi\)が同値になるので
+	「どのような仮定から導くことができるか」という観点では両者を区別できないからである．
+\end{Note}
 
 ここで定義した体系が我々の素朴的直観における「証明」を模倣できているかどうかは，
 ここから導かれるさまざまな結果を見るよりほかはない．
@@ -486,61 +492,134 @@
 \Cref{Thm:lawofexcludedmiddle}と同じように考えれば，
 数学における論理でよく知られてきた結果がこの自然演繹式シークエント計算においても導くことができる．
 
-\begin{Thm} \label[Thm]{Thm:equivlogicalexpression}
-	\(\varphi, \psi, \chi\)を論理式，\(x\)を変数記号とする．
-	このとき，以下が成り立つ：
-	\begin{align}
-		\varphi \to \psi                         & \interderivable \lnot \varphi \lor \psi,
-		\label{eq:todisjunctivenormalform}                                                                                                         \\
-		\lnot \paren{\varphi \lor \psi}          & \interderivable \lnot \varphi \land \lnot \psi,
-		\label{eq:lordemorgan}                                                                                                                     \\
-		\lnot \paren{\varphi \land \psi}         & \interderivable \lnot \varphi \lor \lnot \psi,
-		\label{eq:landdemorgan}                                                                                                                    \\
-		\lnot \forall x \varphi                  & \interderivable \exists x \lnot \varphi,
-		\label{eq:foralldemorgan}                                                                                                                  \\
-		\lnot \exists x \varphi                  & \interderivable \forall x \lnot \varphi,
-		\label{eq:existsdemorgan}                                                                                                                  \\
-		\varphi \land \psi                       & \interderivable \psi \land \varphi,
-		\label{eq:landcommunitativelaw}                                                                                                            \\
-		\varphi \lor \psi                        & \interderivable \psi \lor \varphi,
-		\label{eq:lorcommunitativelaw}                                                                                                             \\
-		\varphi \land \paren{\psi \land \chi}    & \interderivable \paren{\varphi \land \psi} \land \chi,
-		\label{eq:landassociativelaw}                                                                                                              \\
-		\varphi \lor \paren{\psi \lor \chi}      & \interderivable \paren{\varphi \lor \psi} \lor \chi,
-		\label{eq:lorassociativelaw}                                                                                                               \\
-		\varphi \land \paren{\psi \lor \chi }    & \interderivable \paren{\varphi \land \psi} \lor \paren{\varphi \land \chi},
-		\label{eq:landdistributivelaw}                                                                                                             \\
-		\varphi \lor \paren{\psi \land \chi }    & \interderivable \paren{\varphi \lor \psi} \land \paren{\varphi \lor \chi},
-		\label{eq:lordistributivelaw}                                                                                                              \\
-		\lnot \paren{\varphi \to \psi}           & \interderivable \varphi \land \lnot \psi,
-		\label{eq:lnotto}                                                                                                                          \\
-		\lnot \forall x \paren{\varphi \to \psi} & \interderivable \exists x \paren{\varphi \land \lnot \psi},
-		\label{eq:lnotforallto}                                                                                                                    \\
-		\varphi \to \psi                         & \interderivable \lnot \psi \to \lnot \varphi,
-		\label{eq:contraposition}                                                                                                                  \\
-		\varphi \to \paren{\psi \to \chi}        & \interderivable \varphi \land \psi \to \chi,
-		\label{eq:nestedto}                                                                                                                        \\
-		\forall x \paren{\varphi \to \psi}       & \interderivable \exists x \varphi \to \psi, \quad \text{（ただし\(x \notin \apply{\FV}{\psi}\)）}
-		\label{eq:forallinfrontx}                                                                                                                  \\
-		\exists x \paren{\varphi \to \psi}       & \interderivable \forall x \varphi \to \psi, \quad \text{（ただし\(x \notin \apply{\FV}{\psi}\)）}
-		\label{eq:existsinfrontx}                                                                                                                  \\
-		\forall x \paren{\varphi \to \psi}       & \interderivable \varphi \to \forall x \psi, \quad \text{（ただし\(x \notin \apply{\FV}{\varphi}\)）}
-		\label{eq:forallbehindx}                                                                                                                   \\
-		\exists x \paren{\varphi \to \psi}       & \interderivable \varphi \to \exists x \psi, \quad \text{（ただし\(x \notin \apply{\FV}{\varphi}\)）}
-		\label{eq:existsbehindx}                                                                                                                   \\
-		\forall x \paren{\varphi \land \psi}     & \interderivable \forall x \varphi \land \forall x \psi,
-		\label{eq:foralldistributivelaw}                                                                                                           \\
-		\exists x \paren{\varphi \lor \psi}      & \interderivable \exists x \varphi \lor \exists x \psi,
-		\label{eq:existsdistributivelaw}                                                                                                           \\
-		\forall x \paren{\varphi \lor \psi}      & \interderivable \forall x \varphi \lor \psi, \quad \text{（ただし\(x \notin \apply{\FV}{\psi}\)）}
-		\label{eq:foralldistributivelawoinfrontx}                                                                                                  \\
-		\exists x \paren{\varphi \land \psi}     & \interderivable \exists x \varphi \land \psi. \quad \text{（ただし\(x \notin \apply{\FV}{\psi}\)）}
-		\label{eq:existsdistributivelawinfrontx}
-	\end{align}
+\begin{Thm} \label[Thm]{Thm:todisjunctivenormalform}
+	\(\varphi, \psi\)を論理式とする．このとき
+	\begin{equation}
+		\varphi \to \psi \interderivable \lnot \varphi \lor \psi
+		\label{eq:todisjunctivenormalform}
+	\end{equation}
+	が成り立つ．
 \end{Thm}
 
+\index[widx]{De Morganのほうそく@De Morganの法則}
+\begin{Thm}[De Morganの法則] \label[Thm]{Thm:proofdemorganlaw}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
+	このとき
+	\begin{align}
+		\lnot \paren{\varphi \lor \psi}  & \interderivable \lnot \varphi \land \lnot \psi,
+		\label{eq:lordemorgan}                                                             \\
+		\lnot \paren{\varphi \land \psi} & \interderivable \lnot \varphi \lor \lnot \psi,
+		\label{eq:landdemorgan}                                                            \\
+		\lnot \forall x \varphi          & \interderivable \exists x \lnot \varphi,
+		\label{eq:foralldemorgan}                                                          \\
+		\lnot \exists x \varphi          & \interderivable \forall x \lnot \varphi
+		\label{eq:existsdemorgan}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label[Thm]{Thm:proofcommutitativelaw}
+	\(\varphi, \psi, \chi\)を論理式とする．このとき
+	\begin{align}
+		\varphi \land \psi & \interderivable \psi \land \varphi,
+		\label{eq:landcommunitativelaw}                          \\
+		\varphi \lor \psi  & \interderivable \psi \lor \varphi
+		\label{eq:lorcommunitativelaw}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label[Thm]{Thm:proofassociativelaw}
+	\(\varphi, \psi, \chi\)を論理式とする．このとき
+	\begin{align}
+		\varphi \land \paren{\psi \land \chi} & \interderivable \paren{\varphi \land \psi} \land \chi,
+		\label{eq:landassociativelaw}                                                                  \\
+		\varphi \lor \paren{\psi \lor \chi}   & \interderivable \paren{\varphi \lor \psi} \lor \chi
+		\label{eq:lorassociativelaw}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\Cref{Thm:proofassociativelaw}により，\(\varphi \land \psi \land \chi\)や\(\varphi \lor \psi \lor \chi\)のような
+略記表現について，意味論と同様に証明論的にも問題が生じないことがわかる．
+
+\begin{Thm} \label[Thm]{Thm:proofdistributivelaw}
+	\(\varphi, \psi, \chi\)を論理式とする．このとき
+	\begin{align}
+		\varphi \land \paren{\psi \lor \chi } & \interderivable \paren{\varphi \land \psi} \lor \paren{\varphi \land \chi},
+		\label{eq:landdistributivelaw}                                                                                      \\
+		\varphi \lor \paren{\psi \land \chi } & \interderivable \paren{\varphi \lor \psi} \land \paren{\varphi \lor \chi}
+		\label{eq:lordistributivelaw}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label[Thm]{Thm:prooflnotforallexistscontradiction}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
+	このとき
+	\begin{align}
+		\lnot \paren{\varphi \to \psi}           & \interderivable \varphi \land \lnot \psi,
+		\label{eq:lnotto}                                                                                      \\
+		\lnot \forall x \paren{\varphi \to \psi} & \interderivable \exists x \paren{\varphi \land \lnot \psi},
+		\label{eq:lnotforallto}                                                                                \\
+		\varphi \to \psi                         & \interderivable \lnot \psi \to \lnot \varphi,
+		\label{eq:contraposition}                                                                              \\
+		\varphi \to \paren{\psi \to \chi}        & \interderivable \varphi \land \psi \to \chi
+		\label{eq:nestedto}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label[Thm]{Thm:proofforallexiststo}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
+	このとき
+	\begin{align}
+		\forall x \paren{\varphi \to \psi} & \interderivable \exists x \varphi \to \psi \quad \text{（ただし\(x \notin \apply{\FV}{\psi}\)）},
+		\label{eq:forallinfrontx}                                                                                                         \\
+		\exists x \paren{\varphi \to \psi} & \interderivable \forall x \varphi \to \psi \quad \text{（ただし\(x \notin \apply{\FV}{\psi}\)）}
+		\label{eq:existsinfrontx}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label[Thm]{Thm:proofforallexiststooneside}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．このとき
+	\begin{align}
+		\forall x \paren{\varphi \to \psi} & \interderivable \varphi \to \forall x \psi \quad \text{（ただし\(x \notin \apply{\FV}{\varphi}\)）},
+		\label{eq:forallbehindx}                                                                                                             \\
+		\exists x \paren{\varphi \to \psi} & \interderivable \varphi \to \exists x \psi \quad \text{（ただし\(x \notin \apply{\FV}{\varphi}\)）}
+		\label{eq:existsbehindx}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label[Thm]{Thm:proofforallexistslandlor}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
+	このとき
+	\begin{align}
+		\forall x \paren{\varphi \land \psi} & \interderivable \forall x \varphi \land \forall x \psi,
+		\label{eq:foralldistributivelaw}                                                               \\
+		\exists x \paren{\varphi \lor \psi}  & \interderivable \exists x \varphi \lor \exists x \psi
+		\label{eq:existsdistributivelaw}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Thm} \label[Thm]{Thm:proofforallexistslandloroneside}
+	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
+	このとき
+	\begin{align}
+		\forall x \paren{\varphi \lor \psi}  & \interderivable \forall x \varphi \lor \psi \quad \text{（ただし\(x \notin \apply{\FV}{\psi}\)）},
+		\label{eq:foralldistributivelawoinfrontx}                                                                                            \\
+		\exists x \paren{\varphi \land \psi} & \interderivable \exists x \varphi \land \psi \quad \text{（ただし\(x \notin \apply{\FV}{\psi}\)）}
+		\label{eq:existsdistributivelawinfrontx}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+
 \begin{Que} \label[Que]{Que:sequent}
-	\Cref{Thm:equivlogicalexpression}を証明せよ．
+	\Cref{Thm:todisjunctivenormalform}から\cref{Thm:proofforallexistslandloroneside}までを証明せよ．
 \end{Que}
 
 \begin{Que} \label[Que]{Que:peirce}

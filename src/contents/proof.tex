@@ -207,7 +207,7 @@
 \end{Def}
 
 \begin{Def}[論理規則その2] \label[Def]{Def:quantiferrule}
-	論理式の有限列\(\Gamma, \Delta\)と論理式\(\varphi, \psi\)および変数記号\(x\)と項\(a\)に対して，
+	論理式の有限列\(\Gamma, \Delta\)と論理式\(\varphi, \psi\)および変数記号\(x,a\)に対して，
 	下記の4つは自然演繹式シークエント計算における推論規則である．
 	ここで，\(a\)は\(\varphi\)中の\(x\)に代入可能であるものとする．
 	\begin{multicols}{2}
@@ -216,7 +216,7 @@
 			\LeftLabel{(\(\forall\)I)}
 			\UnaryInfC{\(\Gamma \sequent \forall x \varphi\)}
 		\end{prooftree}
-		ただし，\(\apply{\Var}{a}\)の元は\(\Gamma\)中の各論理式や\(\varphi\)に自由出現しない．
+		ただし，\(a\)は\(\Gamma\)中の各論理式や\(\varphi\)に自由出現しない．
 		\columnbreak
 		\begin{prooftree}
 			\AxiomC{\(\Gamma \sequent \forall x \varphi\)}
@@ -237,7 +237,7 @@
 			\LeftLabel{(\(\exists\)E)}
 			\BinaryInfC{\(\Gamma, \Delta \sequent \psi\)}
 		\end{prooftree}
-		ただし，\(\apply{\Var}{a}\)の元は\(\Gamma, \Delta\)中の各論理式と\(\exists x \varphi, \psi\)のいずれにも自由出現しない．
+		ただし，\(a\)は\(\Gamma, \Delta\)中の各論理式と\(\exists x \varphi, \psi\)のいずれにも自由出現しない．
 	\end{multicols}
 \end{Def}
 

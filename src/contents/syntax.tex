@@ -508,6 +508,26 @@
 	最初の文3つは，\(\symcal{L}_{\GP}\)における\(\obj{\ast}\)を\(\obj{+}\)に置き換えたものであることに注意せよ．
 \end{Ex}
 
+\index[sidx]{\(\POSET\)：狭義の半順序の理論}
+\index[sidx]{\(\TOSET\)：狭義の全順序の理論}
+\index[sidx]{\(\symcal{L}_{\POSET}\)：狭義の半順序の言語}
+\begin{Ex} \label{Ex:orderedset}
+	狭義の半順序の言語を\(\symcal{L}_{\POSET} = \Set{\obj{<}}\)とする．
+	狭義の半順序の理論\(\POSET\)は，以下の2つの文からなる\(\symcal{L}_{\POSET}\)理論と考えることができる．
+	\begin{enumerate}
+		\item \(\forall \obj{x} \lnot \paren{x \obj{<} \obj{x}},\)
+		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
+		      \paren{\obj{x} \obj{<} \obj{y} \land \obj{y} \obj{<} \obj{z} \to \obj{x} \obj{<} \obj{z}}\)
+	\end{enumerate}
+	なお，理論\(\POSET\)に
+	\[
+		\forall \obj{x} \forall \obj{y}
+		\paren{\obj{x} \obj{<} \obj{y} \lor \obj{y} \obj{<} \obj{x} \lor \obj{x} \objeq \obj{y}}
+	\]
+	を加えた理論は，狭義の全順序の理論を表していると考えることができる．
+	この理論を\(\TOSET\)と表すこととする．
+\end{Ex}
+
 \index[sidx]{\(\OrderedRing\)：順序環の理論}
 \index[sidx]{\(\symcal{L}_{\OrderedRing}\)：順序環の言語}
 \begin{Ex} \label[Ex]{Ex:OrderedRing}
@@ -515,12 +535,8 @@
 	順序環の理論\(\OrderedRing\)は，以下の文からなる\(\symcal{L}_{\OrderedRing}\)理論と考えることができる：
 	\begin{enumerate}
 		\item \Cref{Ex:Ring}で挙げた8つの論理式すべて，
+		\item \Cref{Ex:orderedset}で挙げた3つの論理式すべて，
 		\item \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \obj{y} \objeq \obj{y} \obj{\cdot} \obj{x}},\)
-		\item \(\forall \obj{x} \lnot \paren{x \obj{<} \obj{x}},\)
-		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
-		      \paren{\obj{x} \obj{<} \obj{y} \land \obj{y} \obj{<} \obj{z} \to \obj{x} \obj{<} \obj{z}},\)
-		\item \(\forall \obj{x} \forall \obj{y}
-		      \paren{\obj{x} \obj{<} \obj{y} \lor \obj{y} \obj{<} \obj{x} \lor \obj{x} \objeq \obj{y}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
 		      \paren{\obj{x} \obj{<} \obj{y} \to \obj{x} \obj{+} \obj{z} \obj{<} \obj{y} \obj{+} \obj{z}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}

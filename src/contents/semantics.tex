@@ -391,8 +391,8 @@
 	\(\symcal{L}\)を言語とし，\(\symcal{M_1}, \symcal{M_2}, \symcal{M_3}\)を\(\symcal{L}\)構造とする．
 	このとき
 	\begin{enumerate}
-		\item \(\symcal{M_1} \isomorphic \symcal{M_1}\)
-		\item \(\symcal{M_1} \isomorphic \symcal{M_2} \metaimplies \symcal{M_2} \isomorphic \symcal{M_1}\)
+		\item \(\symcal{M_1} \isomorphic \symcal{M_1}\),
+		\item \(\symcal{M_1} \isomorphic \symcal{M_2} \metaimplies \symcal{M_2} \isomorphic \symcal{M_1}\),
 		\item \(\text{\(\symcal{M_1} \isomorphic \symcal{M_2}\)かつ\(\symcal{M_2} \isomorphic \symcal{M_3}\)}
 		      \metaimplies \symcal{M_1} \isomorphic \symcal{M_3}\)
 	\end{enumerate}
@@ -407,8 +407,8 @@
 
 2つの\(\symcal{L}\)構造\(\symcal{M}, \symcal{N}\)が同型であることは，
 定数記号，関数記号，関係記号のすべてが同型写像\(\sigma\)を通して「翻訳」できることを主張している．
-通常の数学では，2つの構造が同型であることは「その理論の内部ではその2つの構造は同一視できる」
-ことと解釈される．この認識が適切であることを以下で検証しよう．
+通常の数学では，2つの構造が同型である場合には「その理論の内部ではその2つの構造は同一視できる」
+ことが期待される．この認識が適切であることを以下で検証しよう．
 
 まずは「その理論の内部ではその2つの構造は同一視できる」ことの定式化から行う．
 この主張は「その2つの構造はまったく同じ性質を満たす」ここと解釈できる．
@@ -444,11 +444,10 @@
 	\(\symcal{L}\)を言語とし，\(\symcal{M_1}, \symcal{M_2}, \symcal{M_3}\)を\(\symcal{L}\)構造とする．
 	このとき
 	\begin{enumerate}
-		\item \(\symcal{M_1} \elementarilyequivalent \symcal{M_1}\)
-		\item \(\symcal{M_1} \elementarilyequivalent \symcal{M_2} \metaimplies \symcal{M_2} \elementarilyequivalent \symcal{M_1}\)
+		\item \(\symcal{M_1} \elementarilyequivalent \symcal{M_1}\),
+		\item \(\symcal{M_1} \elementarilyequivalent \symcal{M_2} \metaimplies \symcal{M_2} \elementarilyequivalent \symcal{M_1}\),
 		\item \(\text{\(\symcal{M_1} \elementarilyequivalent \symcal{M_2}\)かつ\(\symcal{M_2} \elementarilyequivalent \symcal{M_3}\)} \metaimplies \symcal{M_1} \elementarilyequivalent \symcal{M_3}\)
 	\end{enumerate}
-
 	が成り立つ．
 \end{Lemma}
 
@@ -596,6 +595,10 @@
 	同型な2つの群はどちらも可換であるか，どちらも可換でないかのいずれかである．
 \end{Ex}
 
+\begin{Note}
+	\Cref{Thm:isomorphicforlogicalexpression}は「同型ならば初等同値」であることを示すが，
+	逆の「初等同値ならば同型」は成り立たないことが知られている．
+\end{Note}
 
 \section{同値な論理式} \label{sec:equivalentformula}
 
@@ -928,12 +931,12 @@
 	\(\Gamma \satisfy \exists x \varphi\)
 \end{proof}
 
-ここで，全称除去律と存在除去律は「\(\forall, \exists\)を含む論理式が論理的帰結として得られた場合にいえること」を表現したもので，
+全称除去律と存在除去律は「\(\forall, \exists\)を含む論理式が論理的帰結として得られた場合にいえること」を表現したもので，
 全称導入律と存在導入律は「\(\forall, \exists\)を含む論理式を論理的帰結として得たい場合に必要なこと」を表現したものである．
 
 以上の準備のもと，よく知られた同値な論理式を以下に挙げておく．
 \(\forall, \exists\)を陽に含まないものについては真理値表を書くことにより，
-\(\forall, \exists\)を陽に含むものについては上記補題をうまく使うことでその同値性を確かめることができる．
+\(\forall, \exists\)を陽に含むものについては上記補題を使うことで確かめることができる．
 
 
 \begin{Thm} \label[Thm]{Thm:semantictodisjunctivenormalform}
@@ -993,11 +996,11 @@
 	このとき
 	\begin{align}
 		\lnot \paren{\varphi \to \psi}           & \logicallyequivalent \varphi \land \lnot \psi,
-		\label{eq:semantictolnotland}                                                                                   \\
-		\lnot \forall x \paren{\varphi \to \psi} & \logicallyequivalent \exists \lnot \paren{\varphi \land \lnot \psi},
-		\label{eq:semanticforallcontradiction}                                                                          \\
+		\label{eq:semantictolnotland}                                                                                     \\
+		\lnot \forall x \paren{\varphi \to \psi} & \logicallyequivalent \exists x \lnot \paren{\varphi \land \lnot \psi},
+		\label{eq:semanticforallcontradiction}                                                                            \\
 		\varphi \to \psi                         & \logicallyequivalent \lnot \psi \to \lnot \varphi,
-		\label{eq:semanticcontraposition}                                                                               \\
+		\label{eq:semanticcontraposition}                                                                                 \\
 		\varphi \to \paren{\psi \to \chi}        & \logicallyequivalent \varphi \land \psi \to \chi
 		\label{eq:semantictonesting}
 	\end{align}
@@ -1008,9 +1011,9 @@
 	\(\varphi, \psi\)を論理式，\(x\)を変数記号とする．
 	このとき
 	\begin{align}
-		\forall x \paren{\varphi \to \psi} \logicallyequivalent \exists x \varphi \to \psi \quad \text{ただし\(x \notin \apply{\FV}{\psi}\)},
-		\label{eq:semanticforalltoexists} \\
-		\exists x \paren{\varphi \to \psi} \logicallyequivalent \forall x \varphi \to \psi \quad \text{ただし\(x \notin \apply{\FV}{\psi}\)}
+		\forall x \paren{\varphi \to \psi} & \logicallyequivalent \exists x \varphi \to \psi \quad \text{ただし\(x \notin \apply{\FV}{\psi}\)},
+		\label{eq:semanticforalltoexists}                                                                                                    \\
+		\exists x \paren{\varphi \to \psi} & \logicallyequivalent \forall x \varphi \to \psi \quad \text{ただし\(x \notin \apply{\FV}{\psi}\)}
 		\label{eq:semanticexiststoforall}
 	\end{align}
 	が成り立つ．
@@ -1043,52 +1046,42 @@
 \begin{Que} \label{Que:semanticpeircelaw}
 	\(\varphi, \psi\)を論理式とする．真理値表により，下記論理式が恒真式であることを確かめよ．
 	\begin{equation}
-		\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi
+		\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi.
 		\label{eq:semanticpeircelaw}
 	\end{equation}
 \end{Que}
 
-\section{等式理論とHorn理論} \label{sec:equationaltheory}
 
-本節では，言語や公理に特別な制約を課した場合について考察する．
+論理的に同値であるとわかっている論理式を適切に「置き換える」ことにより，さらに別の論理式の論理的同値性を導くことができる．
+このことを検証するためには，まず論理式の「置き換え」を正確に定義しなくてはならない．
+本書では正確な定義の代わりに例を挙げることで理解を深めることとする．
+正確な定義と「置き換え」操作の正当性は，帰納的定義とその構造に関する帰納法によって行える．
 
-\begin{Def} \label[Def]{Def:horntheory}
-	原子論理式のことを%
-	\index[widx]{りてらる@リテラル!せいのりてらる@正の---}%
-	\term{正のリテラル}といい，
-	原子論理式\(p\)の否定\(\lnot p\)のことを%
-	\index[widx]{りてらる@リテラル!ふのりてらる@負の---}%
-	\term{負のリテラル}という．
-	正のリテラルと負のリテラルを総称して%
-	\index[widx]{りてらる@リテラル}%
-	\term{リテラル}という．
-	また，リテラル\(p_1, p_2, \dots, p_n\)に対し，論理式
-	\begin{equation*}
-		p_1 \lor p_2 \lor \dotsb \lor p_n
-	\end{equation*}
-	を%
-	\index[widx]{せつ@節}%
-	\term{節}%
-	といい，節に含まれる正のリテラルが高々1つである場合にはその節のことを%
-	\index[widx]{せつ@節!Hornせつ@Horn節}%
-	\term{Horn節}という．
-
-	理論\(T\)の各文がすべてHorn節の全称閉包である場合，\(T\)は%
-	\index[widx]{りろん@理論!Hornりろん@全称Horn---}%
-	\term{全称Horn理論}であるという．
-\end{Def}
-
-全称Horn理論の特別な場合として，以下に示す等式理論も重要である．
-
-\begin{Def} \label[Def]{Def:equationaltheory}
-	\(\symcal{L}\)を言語とし，\(T\)を\(\symcal{L}\)理論とする．
-	このとき，\(T\)が%
-	\index[widx]{りろん@理論!とうしきりろん@等式---}%
-	\term{等式理論}であるとは，\(\symcal{L}\)が関係記号をもたず，
-	さらに\(T\)の各文がすべて等式（\(s \objeq t\)の形の論理式）の全称閉包になっていることをいう．
-\end{Def}
-
-\begin{Ex} \label[Ex]{Ex:equationaltheory}
-	\Cref{Ex:grouptheory}における群の理論\(\GP\)と\cref{Ex:Ring}における環の理論\(\Ring\)はいずれも等式理論であり，
-	従って全称Horn理論でもある．
+\begin{Ex} \label[Ex]{Ex:expressionsubstitution}
+	\(\varphi, \psi\)を論理式とする．\cref{Thm:semantictolnotland}の\cref{eq:semantictolnotland}は真理値表を書くことによっても確かめられるが，
+	\cref{Thm:semanticdne}の\cref{eq:semanticdne}や
+	\cref{Thm:semantictodisjunctivenormalform}の\cref{eq:semantictodisjunctivenormalform}，
+	および\cref{Thm:semanticDemorganslawproposition}の\cref{eq:semanticDemorganslawpropositionlor}を用いて以下のように導くこともできる：
+	\begin{align*}
+		\lnot \paren{\varphi \to \psi} & \logicallyequivalent  \lnot \paren{\lnot \varphi \lor \psi} \\
+		                               & \logicallyequivalent  \lnot \lnot \varphi \land \lnot \psi  \\
+		                               & \logicallyequivalent  \varphi \land \lnot \psi.
+	\end{align*}
 \end{Ex}
+
+ただし，\cref{Ex:expressionsubstitution}では以下の性質を暗黙的に利用した．
+
+\begin{Thm} \label[Thm]{Thm:logicallyequivalentequivalentrelation}
+	\(\varphi_1, \varphi_2, \varphi_3\)を論理式とする．このとき，以下が成り立つ：
+	\begin{enumerate}
+		\item \(\varphi_1 \logicallyequivalent \varphi_1\),
+		\item \(\varphi_1 \logicallyequivalent \varphi_2 \metaimplies \varphi_2 \logicallyequivalent \varphi_1\),
+		\item \(\text{\(\varphi_1 \logicallyequivalent \varphi_2\)かつ\(\varphi_2 \logicallyequivalent \varphi_3 \metaimplies \varphi_1 \logicallyequivalent \varphi_3\)}\).
+	\end{enumerate}
+\end{Thm}
+
+\begin{Que} \label{Que:expressionsubstitution}
+	\Cref{Ex:expressionsubstitution}と同様にして，
+	\cref{eq:semanticdemorganforall}や\cref{eq:semantictolnotland}を用いて
+	\cref{eq:semanticforallcontradiction}を導け．
+\end{Que}

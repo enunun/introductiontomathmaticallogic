@@ -419,6 +419,39 @@
 
 \(\varphi \lor \lnot \varphi\)の真理値はつねに1になるため，\(\varphi \lor \lnot \varphi\)が恒真式であることがわかる．
 
+\subsection*{\Cref{Que:logicallyequivalentcharactarize}}
+
+\(\apply{\FV}{\varphi} \cup \apply{\FV}{\psi} = \Set{x_1, x_2, \dots, x_n}\)とする．
+\(\symcal{M}\)を任意の構造とし，\(M\)をその対象領域とする．
+このとき，
+\[
+	\symcal{M} \satisfy \varphi \formulaequiv \psi
+\]
+であるためには，任意の\(a_1,a_2, \dots, a_n\)に対して
+\[
+	\symcal{M} \satisfy \subst{\subst{\subst{\paren{\varphi \formulaequiv \psi}}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}
+\]
+となることが必要十分である．ここで，\(i = 1,2,\dots,n\)に対して\(c_i\)は\(a_i\)の名前である．
+
+\begin{align*}
+	                & \symcal{M} \satisfy \subst{\subst{\subst{\paren{\varphi \formulaequiv \psi}}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}                                                    \\
+	\metaequivalent & \symcal{M} \satisfy \subst{\subst{\subst{\varphi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n} \formulaequiv \subst{\subst{\subst{\psi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}.
+\end{align*}
+
+ここで，\(\subst{\subst{\subst{\varphi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}\)と
+\(\subst{\subst{\subst{\psi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}\)はともに閉論理式である．
+閉論理式については\cref{lemma:logicallyequivalentcharactarize}の主張が成り立つことはわかっているので，
+\(\varphi, \psi\)が閉論理式とは限らない場合については，\(\varphi, \psi\)が論理的に同値であるための必要十分条件が
+\begin{align*}
+	\symcal{M} \satisfy \subst{\subst{\subst{\varphi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n} \metaequivalent \symcal{M} \satisfy \subst{\subst{\subst{\psi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}
+\end{align*}
+となることがわかる．
+これは
+\begin{align*}
+	\symcal{M} \satisfy \varphi \metaequivalent \symcal{M} \satisfy \psi
+\end{align*}
+と等価であるから，\(\varphi, \psi\)が閉論理式とは限らない場合にも\cref{lemma:logicallyequivalentcharactarize}の主張が成り立つことがわかる．
+
 \subsection*{\Cref{Que:semanticpeircelaw}}
 
 \(\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi\)の真理値表を以下に示す．

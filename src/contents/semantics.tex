@@ -321,6 +321,43 @@
 	言語を拡張しても，\(T\)から\(\GP\)を自然に得ることはできないことを意味している．
 \end{Que}
 
+\index[sidx]{\(\apply{\Th}{\symcal{M}}\)：構造から得られる理論}
+\begin{Def} \label{Def:modeltheory}
+	\(\symcal{L}\)を言語とし，\(\symcal{M}\)を\(\symcal{L}\)構造とする．
+	このとき，\(\symcal{M} \satisfy \varphi\)
+	を満たす\(\symcal{L}\)文\(\varphi\)全体の集合を
+	\begin{equation}
+		\apply{\Th}{\symcal{M}}
+		\label{eq:modeltheory}
+	\end{equation}
+	と表す．
+	\(\apply{\Th}{\symcal{M}}\)は\(\symcal{L}\)理論であり，
+	\(\symcal{M}\)は\(\apply{\Th}{\symcal{M}}\)のモデルである．
+\end{Def}
+
+\index[widx]{だいあぐらむ@ダイアグラム!しょとうだいあぐらむ@初等---}
+\index[widx]{だいあぐらむ@ダイアグラム}
+\index[sidx]{\(\apply{\eDiag}{\symcal{M}}\)：初等ダイアグラム}
+\index[sidx]{\(\apply{\Diag}{\symcal{M}}\)：ダイアグラム}
+\begin{Def} \label{Def:modeldiagram}
+	\(\symcal{L}\)を言語とし，\(\symcal{M}\)を\(\symcal{L}\)構造とする．
+	\(\symcal{M}\)を\(\languagewithname{\symcal{L}}{\symcal{M}}\)構造とみなしたときの
+	\(\apply{\Th}{\symcal{M}}\)のことを
+	\(\symcal{M}\)の\term{初等ダイアグラム}といい，
+	\begin{equation}
+		\apply{\eDiag}{\symcal{M}}
+		\label{eq:modelelementalydiagram}
+	\end{equation}
+	と表す．
+	また，\(\apply{\eDiag}{\symcal{M}}\)の元のうち開論理であるもの，すなわち\(\forall, \exists\)を含まないものの全体を
+	\(\symcal{M}\)の\term{ダイアグラム}といい，
+	\begin{equation}
+		\apply{\Diag}{\symcal{M}}
+		\label{eq:modeldiagram}
+	\end{equation}
+	と表す．
+\end{Def}
+
 
 
 \section{構造の同型} \label{sec:isomorphic}

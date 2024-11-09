@@ -368,6 +368,7 @@
 	\(\varphi \interderivable \psi\)ならば，任意の論理式の集合\(\Gamma\)に対して
 	\(\Gamma \provable \varphi\)と\(\Gamma \provable \psi\)が同値になるので
 	「どのような仮定から導くことができるか」という観点では両者を区別できないからである．
+	このことは，意味論における\(\logicallyequivalent\)の注意とほぼ同じであることに注意せよ．
 \end{Note}
 
 ここで定義した体系が我々の素朴的直観における「証明」を模倣できているかどうかは，
@@ -667,3 +668,15 @@
 \begin{Que} \label[Que]{Que:equalsignrelation}
 	\Cref{Thm:equalsign}と\cref{Thm:equalsignrelation}を証明せよ．
 \end{Que}
+
+意味論のときと同じように，\(\interderivable\)についても「置き換え」操作を行うことができる．
+ベースとなる主張もほぼ同じである．
+
+\begin{Thm} \label[Thm]{Thm:interderivablequivalentrelation}
+	\(\varphi_1, \varphi_2, \varphi_3\)を論理式とする．このとき，以下が成り立つ：
+	\begin{enumerate}
+		\item \(\varphi_1 \interderivable \varphi_1\),
+		\item \(\varphi_1 \interderivable \varphi_2 \metaimplies \varphi_2 \interderivable \varphi_1\),
+		\item \(\text{\(\varphi_1 \interderivable \varphi_2\)かつ\(\varphi_2 \interderivable \varphi_3 \metaimplies \varphi_1 \interderivable \varphi_3\)}\).
+	\end{enumerate}
+\end{Thm}

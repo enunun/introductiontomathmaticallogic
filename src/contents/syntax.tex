@@ -324,6 +324,9 @@
 	\term{閉論理式}，あるいは%
 	\index[widx]{ぶん@文|see{閉論理式}}%
 	\term{文}と呼ぶ．
+	一方，\(\forall, \exists\)を含まない論理式を%
+	\index[widx]{ろんりしき@論理式!かいろんりしき@開---}%
+	\term{開論理式}という．
 	\(\apply{\Var}{t} = \emptyset\)となる項\(t\)は%
 	\index[widx]{こう@項!へいこう@閉---}%
 	\term{閉項}であるという．
@@ -516,6 +519,7 @@
 \end{Que}
 
 \index[sidx]{\(\Ring\)：環の理論}
+\index[sidx]{\(\CRing\)：可換環の理論}
 \index[sidx]{\(\symcal{L}_{\Ring}\)：環の言語}
 \begin{Ex} \label[Ex]{Ex:Ring}
 	環の言語を\(\symcal{L}_{\Ring} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}}\)とする．
@@ -534,6 +538,13 @@
 		      \paren{ \paren{\obj{x} \obj{+} \obj{y}} \obj{\cdot} \obj{z} \objeq \paren{\obj{x} \obj{\cdot} \obj{z}} \obj{+} \paren{\obj{y} \obj{\cdot} \obj{z}}}.\)
 	\end{enumerate}
 	最初の文3つは，\(\symcal{L}_{\GP}\)における\(\obj{\ast}\)を\(\obj{+}\)に置き換えたものであることに注意せよ．
+
+	なお，\(\Ring\)に閉論理式
+	\[
+		\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \obj{y} \objeq \obj{y} \obj{\cdot} \obj{x}}
+	\]
+	を加えたものは可換環の理論だと考えることができる．
+	この理論は\(\CRing\)と表すことにする．
 \end{Ex}
 
 \index[sidx]{\(\POSET\)：狭義の半順序の理論}
@@ -562,8 +573,8 @@
 	順序環の言語を\(\symcal{L}_{\OrderedRing} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}}\)とする．
 	順序環の理論\(\OrderedRing\)は，以下の文からなる\(\symcal{L}_{\OrderedRing}\)理論と考えることができる：
 	\begin{enumerate}
-		\item \Cref{Ex:Ring}で挙げた8つの論理式すべて，
-		\item \Cref{Ex:orderedset}で挙げた3つの論理式すべて，
+		\item \Cref{Ex:Ring}で挙げた理論\(\Ring\)の8つの論理式すべて，
+		\item \Cref{Ex:orderedset}で挙げた理論\(\TOSET\)の3つの論理式すべて，
 		\item \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \obj{y} \objeq \obj{y} \obj{\cdot} \obj{x}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
 		      \paren{\obj{x} \obj{<} \obj{y} \to \obj{x} \obj{+} \obj{z} \obj{<} \obj{y} \obj{+} \obj{z}},\)

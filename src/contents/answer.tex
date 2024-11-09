@@ -1106,12 +1106,12 @@
 \(\Gamma \provable \varphi\)でないので，\(\Gamma \cup \Set{\lnot \varphi}\)が無矛盾となる．
 実際，\(\Gamma \cup \Set{\lnot \varphi}\)が矛盾すると仮定すると(\(\lnot\)I)規則と
 (DNF)規則により\(\Gamma \provable \varphi\)となる．
-\Cref{Thm:MenkinTheorem}により，\(\Gamma \cup \Set{\lnot \varphi}\)のモデル\(\symcal{M}\)が存在する．
+\Cref{Thm:HenkinTheorem}により，\(\Gamma \cup \Set{\lnot \varphi}\)のモデル\(\symcal{M}\)が存在する．
 この\(\symcal{M}\)は\(\symcal{M} \satisfy \lnot \varphi\)を満たすので\(\symcal{M} \satisfy \varphi\)
 は成り立たず，従って\(\Gamma \satisfy \varphi\)ではない．
 
 
-\subsection*{\Cref{Que:Merbrandstructurewelldefineded}}
+\subsection*{\Cref{Que:Herbrandstructurewelldefineded}}
 
 まずは\cref{eq:herbrandequivalencerelation}で定義される二項関係\(\sim\)が同値関係であることを示す．
 \(x \in X\)を1つとる．このとき，等号に関する公理(REFL)によって\(\Gamma \provable x \objeq x\)だから\(x \sim x\)である．
@@ -1127,7 +1127,7 @@
 以上より，\(\sim\)は\(X\)上の同値関係である．
 
 \Cref{eq:herbrandinterpretationconstantsymbol}から\cref{eq:herbrandinterpretationrelationsymbol}で
-定義された\(\symcal{L}\)の各記号の\(\symcal{M}\)による解釈が，その代表元のとりかたによらないことを示す．
+定義された\(\symcal{L}\)の各記号の\(\symcal{M}\)による解釈がその代表元のとりかたによらないことを示す．
 \Cref{eq:herbrandinterpretationconstantsymbol}における定数記号の解釈は，もともと代表元を使っての定義ではない．
 よって，\cref{eq:herbrandinterpretationfunctionsymbol}と\cref{eq:herbrandinterpretationrelationsymbol}についてのみ確かめればよい．
 まずは\cref{eq:herbrandinterpretationfunctionsymbol}について確かめよう．
@@ -1280,3 +1280,51 @@
 だから，(\(\forall\)E)規則を繰り返し用いて
 \(\Gamma \provable \apply{\psi}{t_1, t_2, \dots, t_n}\)を得る．
 \(\apply{\psi}{t_1, t_2, \dots, t_n}\)は原子論理式かつ閉論理式だから，3.により\(\symcal{M} \satisfy \apply{\psi}{t_1, t_2, \dots, t_n}\)となる．
+
+
+\subsection*{\Cref{Que:polynomialringherbrandmodel}}
+
+以降の議論では不定元は1つで十分である．それを\(x\)とおく．
+
+まずは\(\RealNumbers\)上の多項式環について考えよう．
+通常の数学では，以下のような多項式の計算は妥当なものとして扱われる：
+\[
+	\paren{2x + \sqrt{2}} \paren{x + \sqrt{2}} = \paren{2x^2 + 3 \sqrt{2} + 2}.
+\]
+この計算が妥当であることは，我々が\cref{Ex:polynomialringherbrandmodel}で定義した多項式環においては
+\[
+	\equivclass{\paren{2x \obj{+} \sqrt{2}} \obj{\cdot} \paren{x \obj{+} \sqrt{2}}}
+	= \equivclass{2 \obj{\cdot} x \obj{\cdot} x \obj{+} 3 \obj{\cdot} \sqrt{2} \obj{\cdot} x + 2}
+\]
+という主張に相当する．
+これが成り立つためには
+\[
+	\Gamma \provable
+	\paren{2x \obj{+} \sqrt{2}} \obj{\cdot} \paren{x \obj{+} \sqrt{2}}
+	\objeq
+	2 \obj{\cdot} x \obj{\cdot} x \obj{+} 3 \obj{\cdot} \sqrt{2} \obj{\cdot} x + 2
+\]
+が成り立つことが必要十分である．
+これを示すためには，理論\(\Ring\)で得られる一般論のほかに\(\RealNumbers\)で成り立っている
+\[
+	\sqrt{2} \cdot \sqrt{2} = 2
+\]
+といった事実を用いる必要がある．このような事実に相当する論理式は
+\(\apply{\Diag}{\RealNumbers}\)の元である．
+
+次に，\cref{Ex:polynomialringherbrandmodel}における\(\Gamma\)として，
+\(\Ring\)に\(\apply{\Diag}{\symcal{R}}\)ではなく\(\apply{\eDiag}{\symcal{R}}\)を加えた場合を考えよう．
+\(\symcal{R}\)としては剰余環\(\Integers/2\Integers\)を考える．
+よく知られているように，\(\Integers/2\Integers\)は
+\[
+	\Integers/2\Integers \satisfy \forall x \paren{x \obj{\cdot} x \obj{\cdot} x = x}
+\]
+を満たす．この論理式を\(\varphi\)としよう．
+\(\varphi\)は\(\apply{\eDiag}{\Integers/2\Integers}\)の元である．
+一方，\(\varphi\)は\(\forall\)を含むため\(\apply{\Diag}{\Integers/2\Integers}\)の元ではない．
+さて，通常の数学における\(\Integers/2\Integers\)上の多項式の計算では，
+多項式\(x\)と多項式\(x^3\)は異なる多項式とみなされる．
+よって，Herbrand構造を定義する際にベースとした理論\(\Gamma\)には\(\varphi\)が含まれていてはいけない．
+
+以上のような事情により，\cref{Ex:polynomialringherbrandmodel}では
+\(\Gamma\)として\(\Ring\)に\(\apply{\Diag}{\symcal{R}}\)を加えたのであった．

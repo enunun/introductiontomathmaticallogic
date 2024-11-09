@@ -95,6 +95,9 @@
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\depth}{depth}
 \DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\Th}{Th}
+\DeclareMathOperator{\eDiag}{eDiag}
+\DeclareMathOperator{\Diag}{Diag}
 
 \NewDocumentCommand{\subst}{smm}{%
 \IfBooleanTF{#1}{#2[{#3}]%
@@ -133,12 +136,30 @@
 	}%
 }
 
-\NewDocumentCommand{\equivclass}{sm}{%
+\NewDocumentCommand{\squarebrackets}{sm}{%
 	\IfBooleanTF{#1}{%
 		\mathopen{} [#2] \mathclose{}%
 	}%
 	{%
 		\mathopen{} \left[ #2 \right] \mathclose{}%
+	}%
+}
+
+\NewDocumentCommand{\equivclass}{sm}{%
+	\IfBooleanTF{#1}{%
+		\squarebrackets*{#2}
+	}%
+	{%
+		\squarebrackets{#2}
+	}%
+}
+
+\NewDocumentCommand{\polynomial}{smm}{%
+	\IfBooleanTF{#1}{%
+		#2 \squarebrackets*{#3}
+	}%
+	{%
+		#2 \squarebrackets{#3}
 	}%
 }
 
@@ -182,6 +203,8 @@
 \NewDocumentCommand{\GP}{}{\symup{GP}}
 
 \NewDocumentCommand{\Ring}{}{\symup{Ring}}
+
+\NewDocumentCommand{\CRing}{}{\symup{CRing}}
 
 \NewDocumentCommand{\OrderedRing}{}{\symup{OR}}
 

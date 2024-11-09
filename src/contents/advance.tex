@@ -523,6 +523,24 @@
 	\end{enumerate}
 \end{Que}
 
+\begin{Lemma} \label[Lemma]{lemma:herbrandsemantics}
+	\(\symcal{L}\)を定数記号をもつ言語とし，\(\Gamma\)を\(\symcal{L}\)理論とする．
+	\(\symcal{M}\)を\(\symcal{L}\)における\(\Gamma\)のHerbrand構造とする．
+	このとき，以下が成り立つ．
+	\begin{enumerate}
+		\item \(t\)を\(\symcal{L}\)閉項とするとき，\(\interpretation{\symcal{M}}{t} = \equivclass{t}\)である．
+		\item \(\symcal{L}\)文\(\varphi\)が\(\forall x_1 \forall x_2 \dotsb \forall x_n \apply{\psi}{x_1, x_2, \dots, x_n}\)
+		      の形の論理式であるならば，\(\symcal{M} \satisfy \varphi\)とすべての\(\symcal{L}\)閉項\(t_1, t_2, \dots, t_n\)に対して
+		      \(\symcal{M} \satisfy \apply{\psi}{t_1, t_2, \dots, t_n}\)であることは同値．
+		\item \(\symcal{L}\)文\(\varphi\)が原子論理式であるならば，\(\Gamma \provable \varphi\)と\(\symcal{M} \satisfy \varphi\)は同値．
+		\item \(\varphi\)が\(\symcal{L}\)原子論理式の全称閉包で\(\Gamma \provable \varphi\)ならば\(\symcal{M} \satisfy \varphi\)となる．
+	\end{enumerate}
+\end{Lemma}
+
+\begin{Que} \label{Que:herbrandsemantics}
+	\Cref{lemma:herbrandsemantics}を示せ．
+\end{Que}
+
 \section{等式理論とHorn理論} \label{sec:equationaltheory}
 
 本節では，言語や公理に特別な制約を課した場合について考察する．

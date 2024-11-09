@@ -984,6 +984,26 @@
 	が成り立つ．
 \end{Thm}
 
+\index[widx]{\(\alpha\)どうちせい@\(\alpha\)同値性}
+\begin{Thm}[\(\alpha\)同値性] \label[Thm]{Thm:alphaequivalent}
+	\(\varphi\)を論理式，\(x, y\)を変数記号とする．\(\varphi\)中の\(x\)に\(y\)が代入可能であるならば
+	\begin{align}
+		\forall x \varphi & \logicallyequivalent \forall y \subst{\varphi}{y/x},
+		\label{eq:alphaequivalentforall}                                         \\
+		\exists x \varphi & \logicallyequivalent \exists y \subst{\varphi}{y/x}
+		\label{eq:alphaequivalentexists}
+	\end{align}
+	が成り立つ．
+\end{Thm}
+
+\begin{Note}
+	\Cref{Thm:alphaequivalent}は，
+	全称論理式や存在論理式を表現するために用意する変数記号を別のものにとりかえてもその意味が変わらないことを示している．
+	この性質により，束縛出現に関して何らかの制約がある場合は束縛出現する変数記号を別の変数記号にとりかえることによって回避可能である．
+
+	なお，定理名にもある\(\alpha\)同値性は，ラムダ計算という理論における用語である．
+\end{Note}
+
 \begin{Que} \label{Que:semanticpeircelaw}
 	\(\varphi, \psi\)を論理式とする．真理値表により，下記論理式が恒真式であることを確かめよ．
 	\begin{equation}

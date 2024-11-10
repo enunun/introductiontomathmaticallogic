@@ -610,13 +610,12 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 
 \begin{Thm} \label[Thm]{Thm:HornHerbrandmodel}
 	\(\symcal{L}\)を定数記号をもつ言語とする．
-	理論\(\Gamma, \Gamma'\)が\(\Gamma \subset \Gamma'\)を満たすとする．
-	\(\Gamma\)が無矛盾な全称Horn理論であるならば，
-	\(\symcal{L}\)における\(\Gamma'\)のHerbrand構造は\(\Gamma\)のモデルとなる．
+	\(\symcal{L}\)理論\(\Gamma\)が無矛盾な全称Horn理論であるならば，
+	\(\symcal{L}\)における\(\Gamma\)のHerbrand構造は\(\Gamma\)のモデルとなる．
 \end{Thm}
 
 \begin{proof}
-	\(\symcal{L}\)における\(\Gamma'\)のHerbrand構造を\(\symcal{M}\)とする．
+	\(\symcal{L}\)における\(\Gamma\)のHerbrand構造を\(\symcal{M}\)とする．
 	\(\varphi \in \Gamma\)を任意にとる．
 	\(\varphi\)が正のリテラルを1つもつ場合を考える．
 	このとき，\(\varphi\)は原子論理式\(p_1, p_2, \dots, p_{n-1}, p_n\)を用いた以下の論理式\(\apply{\psi}{x_1, \dots, x_m}\)の全称閉包とみなせる：
@@ -670,10 +669,11 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 		b \obj{*} b                   & \objeq \obj{e},                      \\
 		b \obj{*} a                   & \objeq \paren{a \obj{*} a} \obj{*} b
 	\end{align*}
-	よく知られているように\(\GP\)はモデルをもつから無矛盾であり，
-	等式理論であるから全称Horn理論でもある．
-	よって，\cref{Thm:HornHerbrandmodel}から
-	\(\symcal{L}\)における\(\Gamma\)のHerbrand構造\(\symcal{M}\)が\(\GP\)のモデルであることがわかる．
+	\(\symcal{L}\)における\(\Gamma\)のHerbrand構造\(\symcal{M}\)を考える．
+	\(\GP\)の公理はすべて等式の全称閉包になっていることと\(\GP \subset \Gamma\)であることにより，
+	任意の\(\varphi \in \GP\)に対して\(\Gamma \provable \varphi\)となる．
+	従って\cref{lemma:herbrandsemantics}によって\(\symcal{M}\)は\(\GP\)の3つの公理すべてを充足する．
+	よって\(\symcal{M}\)は\(\GP\)のモデルである．
 	なお，\(\symcal{M}\)は上で与えた3つの基本関係式に従う2つの生成元\(a, b\)によって
 	生成される位数6の二面体群となる．
 \end{Ex}
@@ -687,9 +687,12 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 	\(\languagewithname{\symcal{L}}{\symcal{R}}\)における\(\Gamma\)のHerbrand構造は通常
 	\(x_1, x_2, \dots, x_n\)を不定元とする\(\symcal{R}\)上の多項式環と呼ばれ，
 	\(\polynomial{\symcal{R}}{x_1, x_2, \dots, x_n}\)と表記される．
-	\(\GP\)と同様に\(\Ring\)も無矛盾な全称Horn理論であるから，
-	\cref{Thm:HornHerbrandmodel}によって
-	\(\polynomial{\symcal{R}}{x_1, x_2, \dots, x_n}\)が\(\Ring\)のモデルであることがわかる．
+	\(\Ring\)も無矛盾な全称Horn理論であり，\(\symcal{R} \satisfy \Ring \cup \apply{\Diag}{\symcal{R}}\)
+	だから\(\Gamma\)は無矛盾である．さらに，\(\apply{\Diag}{\symcal{R}}\)の元はすべて等式だから
+	\(\Gamma\)は無矛盾な全称Horn理論である．
+	ゆえに\cref{Thm:HornHerbrandmodel}によって
+	\(\polynomial{\symcal{R}}{x_1, x_2, \dots, x_n}\)が\(\Gamma\)のモデルであることがわかる．
+	\(\Ring \subset \Gamma\)だから，\(\polynomial{\symcal{R}}{x_1, x_2, \dots, x_n}\)は\(\Ring\)のモデルでもある．
 \end{Ex}
 
 \begin{Que} \label{Que:polynomialringherbrandmodel}
@@ -813,7 +816,7 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 \end{Thm}
 
 \begin{proof}
-	まず1.を示す．
+	まず1.を示す．\(\Gamma\)が無矛盾の場合にのみ示せば十分である．
 	\(\Gamma \subset \Gamma'\)なので，\(\Gamma'\)は\(\Gamma\)の拡大である．
 	\(\Gamma' \provable \varphi\)を満たすが\(\Gamma \provable \varphi\)が成り立たない
 	\(\symcal{L}\)論理式\(\varphi\)が存在したと仮定する．
@@ -846,7 +849,10 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 	\(f \in \symcal{L}' \setminus \symcal{L}\)がアリティ\(n\)の関数記号の場合を考える．
 	このとき，\(\symcal{L}, \Gamma\)における\(f\)の定義となる\cref{eq:extensionbydefinitionfunctionsymbol}における
 	論理式\(\apply{\theta}{x_1, x_2, \dots, x_n, y}\)について，\cref{eq:definitionfunctionsymbol}から
-	\(\symcal{M} \satisfy \forall x_1 \forall x_2 \dotsb \forall x_n \uexists y \apply{\theta}{x_1, x_2, \dots, x_n, y}\)である．
+	\[
+		\symcal{M} \satisfy \forall x_1 \forall x_2 \dotsb \forall x_n \uexists y \apply{\theta}{x_1, x_2, \dots, x_n, y}
+	\]
+	である．
 	ゆえに，任意の\(a_1, a_2, \dots, a_n\)に対して
 	\[
 		\symcal{M} \satisfy \apply{\theta}{c_1, c_2, \dots, c_n, c_b}

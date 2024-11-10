@@ -410,14 +410,47 @@
 	\centering
 	\begin{tabular}{c|cc}
 		\hline
-		\(\varphi\) & \(\lnot \varphi\) & \(\varphi \lor \varphi\) \\ \hline
-		0           & 1                 & 1                        \\
-		1           & 0                 & 1                        \\
+		\(\varphi\) & \(\lnot \varphi\) & \(\varphi \lor \lnot \varphi\) \\ \hline
+		0           & 1                 & 1                              \\
+		1           & 0                 & 1                              \\
 		\hline
 	\end{tabular}
 \end{table}
 
 \(\varphi \lor \lnot \varphi\)の真理値はつねに1になるため，\(\varphi \lor \lnot \varphi\)が恒真式であることがわかる．
+
+\subsection*{\Cref{Que:logicallyequivalentcharactarize}}
+
+\(\apply{\FV}{\varphi} \cup \apply{\FV}{\psi} = \Set{x_1, x_2, \dots, x_n}\)とする．
+\(\symcal{M}\)を任意の構造とし，\(M\)をその対象領域とする．
+このとき，
+\[
+	\symcal{M} \satisfy \varphi \formulaequiv \psi
+\]
+であるためには，任意の\(a_1,a_2, \dots, a_n\)に対して
+\[
+	\symcal{M} \satisfy \subst{\subst{\subst{\paren{\varphi \formulaequiv \psi}}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}
+\]
+となることが必要十分である．ここで，\(i = 1,2,\dots,n\)に対して\(c_i\)は\(a_i\)の名前である．
+また，
+\begin{align*}
+	                & \symcal{M} \satisfy \subst{\subst{\subst{\paren{\varphi \formulaequiv \psi}}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}                                                    \\
+	\metaequivalent & \symcal{M} \satisfy \subst{\subst{\subst{\varphi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n} \formulaequiv \subst{\subst{\subst{\psi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}.
+\end{align*}
+である．
+ここで，\(\subst{\subst{\subst{\varphi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}\)と
+\(\subst{\subst{\subst{\psi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}\)はともに閉論理式である．
+閉論理式については\cref{lemma:logicallyequivalentcharactarize}の主張が成り立つことはわかっているので，
+\(\varphi, \psi\)が閉論理式とは限らない場合については，\(\varphi, \psi\)が論理的に同値であるための必要十分条件が
+\begin{align*}
+	\symcal{M} \satisfy \subst{\subst{\subst{\varphi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n} \metaequivalent \symcal{M} \satisfy \subst{\subst{\subst{\psi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}
+\end{align*}
+となることがわかる．
+これは
+\begin{align*}
+	\symcal{M} \satisfy \varphi \metaequivalent \symcal{M} \satisfy \psi
+\end{align*}
+と等価であるから，\(\varphi, \psi\)が閉論理式とは限らない場合にも\cref{lemma:logicallyequivalentcharactarize}の主張が成り立つことがわかる．
 
 \subsection*{\Cref{Que:semanticpeircelaw}}
 
@@ -440,6 +473,7 @@
 
 \subsection*{\Cref{Que:expressionsubstitution}}
 
+以下のように示すことができる：
 \begin{align*}
 	\lnot \forall x \paren{\varphi \to \psi} & \logicallyequivalent \exists x \lnot \paren{\varphi \to \psi}    \\
 	                                         & \logicallyequivalent \exists x \paren{\varphi \land \lnot \psi}.
@@ -461,7 +495,7 @@
 	\item \(\varphi \to \psi, \lnot \paren{\lnot \varphi \lor \psi} \sequent \lnot \varphi \lor \psi\)\quad （7から(\(\lor\)I)による）
 	\item \(\varphi \to \psi, \lnot \paren{\lnot \varphi \lor \psi} \sequent \bot\)\quad （2, 8から(w), (\(\lnot\)E)による）
 	\item \(\varphi \to \psi \sequent \lnot \lnot \paren{\lnot \varphi \lor \psi}\)\quad （9から(e), (\(\lnot\)E)による）
-	\item \(\varphi \to \psi \sequent \lnot \varphi \lor \psi\)\quad （10から(DNF)による）
+	\item \(\varphi \to \psi \sequent \lnot \varphi \lor \psi\)\quad （10から(DNE)による）
 \end{enumerate}
 
 \(\lnot \varphi \lor \psi \sequent \varphi \to \psi\)の導出：
@@ -471,7 +505,7 @@
 	\item \(\lnot \varphi \sequent \lnot \varphi\)\quad (ID)
 	\item \(\lnot \psi, \varphi, \lnot \varphi \sequent \bot\)\quad （2, 3から(w), (e), (\(\lnot\)E)による）
 	\item \(\varphi, \lnot \varphi \sequent \lnot \lnot \psi\)\quad （4から(\(\lnot\)I)による）
-	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNF)による）
+	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNE)による）
 	\item \(\psi \sequent \psi\)\quad (ID)
 	\item \(\lnot \varphi \lor \psi, \varphi \sequent \psi\)\quad （1, 6, 7から(e), (\(\lor\)E), (c)による）
 	\item \(\lnot \varphi \lor \psi \sequent \varphi \to \psi\)\quad （8から(e), (\(\to\)I)による）
@@ -508,12 +542,12 @@
 	\item \(\lnot \varphi \sequent \lnot \varphi \lor \lnot \psi\)\quad （3から(\(\lor\)I)による）
 	\item \(\lnot \varphi, \lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \lnot \lnot \varphi\)\quad （5から(\(\lnot\)I)による）
-	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \varphi\)\quad （6から(DNF)による）
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \varphi\)\quad （6から(DNE)による）
 	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \psi\)\quad （上と同様にして導けるので省略）
 	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \varphi \land \psi\)\quad （7, 8から(\(\land\)I), (c)による）
 	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi}, \lnot \paren{\varphi \land \psi} \sequent \bot\)\quad （1, 9から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \lnot \paren{\lnot \varphi \lor \lnot \psi}\)\quad （10から(\(\lnot\)I)による）
-	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \varphi \lor \lnot \psi\)\quad （11から(DNF)による）
+	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \varphi \lor \lnot \psi\)\quad （11から(DNE)による）
 \end{enumerate}
 
 \(\lnot \varphi \lor \lnot \psi \sequent \lnot \paren{\varphi \land \psi}\)の導出：
@@ -536,11 +570,11 @@
 	\item \(\lnot \subst{\varphi}{a/x} \sequent \exists x \lnot \varphi\)\quad （3から(\(\exists\)E)による）
 	\item \(\lnot \subst{\varphi}{a/x}, \lnot \exists x \lnot \varphi \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \exists x \lnot \varphi \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （5から(\(\lnot\)I)による）
-	\item \(\lnot \exists x \lnot \varphi \sequent \subst{\varphi}{a/x}\)\quad （6から(DNF)による）
+	\item \(\lnot \exists x \lnot \varphi \sequent \subst{\varphi}{a/x}\)\quad （6から(DNE)による）
 	\item \(\lnot \exists x \lnot \varphi \sequent \forall x \varphi\)\quad （7から(\(\forall\)I)による）
 	\item \(\lnot \exists x \lnot \varphi, \lnot \forall x \varphi \sequent \bot\)\quad （1, 8から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \forall x \varphi \sequent \lnot \lnot \exists x \lnot \varphi\)\quad （9から(\(\lnot\)E)による）
-	\item \(\lnot \forall x \varphi \sequent \exists x \lnot \varphi\)\quad （10から(DNF)による）
+	\item \(\lnot \forall x \varphi \sequent \exists x \lnot \varphi\)\quad （10から(DNE)による）
 \end{enumerate}
 
 \(\exists x \lnot \varphi \sequent \lnot \forall x \varphi\)の導出：
@@ -670,7 +704,7 @@
 	\item \(\lnot \varphi \sequent \varphi \to \psi\)\quad （3, 5から(\(\to\)E)による）
 	\item \(\lnot \varphi, \lnot \paren{\varphi \to \psi} \sequent \bot\)\quad （1, 6から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \paren{\varphi \to \psi} \sequent \lnot \lnot \varphi\)\quad （7から(\(\lnot\)I)による）
-	\item \(\lnot \paren{\varphi \to \psi} \sequent \varphi\)\quad （8から(DNF)による）
+	\item \(\lnot \paren{\varphi \to \psi} \sequent \varphi\)\quad （8から(DNE)による）
 	\item \(\psi \sequent \psi\)\quad (ID)
 	\item \(\varphi, \psi \sequent \psi\)\quad (10から(w)による)
 	\item \(\psi \sequent \varphi \to \psi\)\quad (11から(\(\to\)I)による)
@@ -728,7 +762,7 @@
 	\item \(\lnot \psi, \lnot \psi \to \lnot \varphi \sequent \lnot \varphi\)\quad （1, 3から(\(\to\)E)による）
 	\item \(\lnot \psi, \varphi \lnot \psi \to \lnot \varphi \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
 	\item \(\varphi, \lnot \psi \to \lnot\varphi \sequent \lnot \lnot \psi\)\quad （5から(\(\lnot\)I)による）
-	\item \(\varphi, \lnot \psi \to \lnot \varphi \sequent \psi\)\quad （6から(DNF)による）
+	\item \(\varphi, \lnot \psi \to \lnot \varphi \sequent \psi\)\quad （6から(DNE)による）
 	\item \(\lnot \psi \to \lnot \varphi \sequent \varphi \to \psi\)\quad （7から(\(\to\)I)による）
 \end{enumerate}
 
@@ -800,19 +834,19 @@
 	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad (ID)
 	\item \(\lnot \psi, \subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \bot\)\quad （3, 4から(w), (e), (\(\lnot\)E)による）
 	\item \(\subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \lnot \lnot \psi\)\quad （5から(\(\lnot\)I)による）
-	\item \(\subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \psi\)\quad （6から(DNF)による）
+	\item \(\subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \psi\)\quad （6から(DNE)による）
 	\item \(\lnot \subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x} \to \psi\)\quad （7から(\(\to\)I)による）
 	\item \(\lnot \subst{\varphi}{a/x} \sequent \exists x \paren{\varphi \to \psi}\)\quad （8から(\(\exists\)I)による）
 	\item \(\lnot \subst{\varphi}{a/x}, \lnot \exists x \paren{\varphi \to \psi} \sequent \bot\)\quad （2, 9から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （10から(\(\lnot\)I)による）
-	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x}\)\quad （11から(DNF)による）
+	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x}\)\quad （11から(DNE)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \forall x \varphi\)\quad （12から(\(\forall\)I)による）
 	\item \(\subst{\varphi}{a/x}, \forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \psi\)\quad （1, 13から(\(\to\)E), (w)による）
 	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x} \to \psi\)\quad （14から(\(\to\)I)による）
 	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \exists x \paren{\varphi \to \psi}\)\quad （15から(\(\exists\)I)による）
 	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \bot\)\quad （2, 16から(w), (\(\lnot\)E)による）
 	\item \(\forall x \varphi \to \psi \sequent \lnot \lnot \exists x \paren{\varphi \to \psi}\)\quad （17から(e), (\(\lnot\)I)による）
-	\item \(\forall x \varphi \to \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （18から(DNF)による）
+	\item \(\forall x \varphi \to \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （18から(DNE)による）
 \end{enumerate}
 ここで，9と15の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
 \(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \to \psi\)が同じ論理式であることを用いた．
@@ -867,12 +901,12 @@
 	\item \(\varphi, \varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （4, 8から(\(\exists\)E)による）
 	\item \(\lnot \subst{\psi}{b/x}, \varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \bot\)\quad （2, 9から(w), (e), (\(\lnot\)E)による，ただし\(b\)は新しい変数記号）
 	\item \(\varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \lnot \lnot \subst{\psi}{b/x}\)\quad （10から(\(\lnot\)I)による）
-	\item \(\varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \subst{\psi}{b/x}\)\quad （11から(DNF)による）
+	\item \(\varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \subst{\psi}{b/x}\)\quad （11から(DNE)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \varphi \to \subst{\psi}{b/x}\)\quad （12から(\(\to\)I)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （13から(\(\exists\)I)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \bot\)\quad （2, 14から(w), (e), (\(\lnot\)I)による）
 	\item \(\varphi \to \exists x \psi \sequent \lnot \lnot \exists x \paren{\varphi \to \psi}\)\quad （15から(\(\lnot\)I)による）
-	\item \(\varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （16から(DNF)による）
+	\item \(\varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （16から(DNE)による）
 \end{enumerate}
 ここで，8, 14の導出にあたっては，\(\varphi\)に\(x\)が自由出現しないことにより
 \(\subst{\paren{\varphi \to \psi}}{a/x}, \subst{\paren{\varphi \to \psi}}{b/x}\)がそれぞれ
@@ -931,17 +965,17 @@
 	\item \(\lnot \psi \sequent \lnot \psi\)\quad (ID)
 	\item \(\lnot \subst{\varphi}{a/x}, \psi, \lnot \psi \sequent \bot\)\quad （5, 6から(w), (e), (\(\lnot\)E)による）
 	\item \(\psi, \lnot \psi \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （7から(\(\lnot\)I)による）
-	\item \(\psi, \lnot \psi \sequent \subst{\varphi}{a/x}\)\quad （8から(DNF)による）
+	\item \(\psi, \lnot \psi \sequent \subst{\varphi}{a/x}\)\quad （8から(DNE)による）
 	\item \(\forall x \paren{\varphi \lor \psi}, \lnot \psi \sequent \subst{\varphi}{a/x}\)\quad （3, 4, 9から(\(\lor\)E)による）
 	\item \(\forall x \paren{\varphi \lor \psi}, \lnot \psi \sequent \forall x \varphi\)\quad （10から(\(\forall\)I)による）
 	\item \(\forall x \paren{\varphi \lor \psi}, \lnot \psi \sequent \forall x \varphi \lor \psi\)\quad （11から(\(\lor\)I)による）
 	\item \(\lnot \psi, \lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \bot\)\quad （2, 12から(\(\lnot\)E)による）
 	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \lnot \lnot \psi\)\quad （13から(\(\lnot\)I)による）
-	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \psi\)\quad （14から(DNF)による）
+	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \psi\)\quad （14から(DNE)による）
 	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \forall x \varphi \lor \psi\)\quad （15から(\(\lor\)I)による）
 	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \bot\)\quad （2, 16から(w), (e), (\(\lnot\)E)による）
 	\item \(\forall x \paren{\varphi \lor \psi} \sequent \lnot \lnot \paren{\forall x \varphi \lor \psi}\)\quad （17から(\(\lnot\)I)による）
-	\item \(\forall x \paren{\varphi \lor \psi} \sequent \forall x \varphi \lor \psi\)\quad （18から(DNF)による）
+	\item \(\forall x \paren{\varphi \lor \psi} \sequent \forall x \varphi \lor \psi\)\quad （18から(DNE)による）
 \end{enumerate}
 ここで，3の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
 \(\subst{\paren{\varphi \lor \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \lor \psi\)が同じ論理式であることを用いた．
@@ -994,12 +1028,12 @@
 	\item \(\varphi \sequent \varphi\)\quad (ID)
 	\item \(\lnot \psi, \varphi, \lnot \varphi \sequent \bot\)\quad （2, 3から(w), (e), (\(\lnot\)E)による）
 	\item \(\varphi, \lnot \varphi \sequent \lnot \lnot \psi\)\quad （4から(\(\lnot\)I)による）
-	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNF)による）
+	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNE)による）
 	\item \(\lnot \varphi \sequent \varphi \to \psi\)\quad （6から(\(\to\)I)による）
 	\item \(\lnot \varphi, \paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （1, 7から(\(\to\)E)による）
 	\item \(\lnot \varphi, \paren{\varphi \to \psi} \to \varphi \sequent \bot\)\quad （2, 8から(w), (e), (\(\lnot\)E)による）
 	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \lnot \lnot \varphi\)\quad （9から(\(\lnot\)I)による）
-	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （10から(DNF)による）
+	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （10から(DNE)による）
 \end{enumerate}
 
 \subsection*{\Cref{Que:equalsignrelation}}
@@ -1071,10 +1105,11 @@
 対偶，すなわち\(\Gamma \provable \varphi\)でないと仮定して\(\Gamma \satisfy \varphi\)でないことを示す．
 \(\Gamma \provable \varphi\)でないので，\(\Gamma \cup \Set{\lnot \varphi}\)が無矛盾となる．
 実際，\(\Gamma \cup \Set{\lnot \varphi}\)が矛盾すると仮定すると(\(\lnot\)I)規則と
-(DNF)規則により\(\Gamma \provable \varphi\)となる．
+(DNE)規則により\(\Gamma \provable \varphi\)となる．
 \Cref{Thm:HenkinTheorem}により，\(\Gamma \cup \Set{\lnot \varphi}\)のモデル\(\symcal{M}\)が存在する．
 この\(\symcal{M}\)は\(\symcal{M} \satisfy \lnot \varphi\)を満たすので\(\symcal{M} \satisfy \varphi\)
 は成り立たず，従って\(\Gamma \satisfy \varphi\)ではない．
+
 
 \subsection*{\Cref{Que:Herbrandstructurewelldefineded}}
 
@@ -1092,7 +1127,7 @@
 以上より，\(\sim\)は\(X\)上の同値関係である．
 
 \Cref{eq:herbrandinterpretationconstantsymbol}から\cref{eq:herbrandinterpretationrelationsymbol}で
-定義された\(\symcal{L}\)の各記号の\(\symcal{M}\)による解釈が，その代表元のとりかたによらないことを示す．
+定義された\(\symcal{L}\)の各記号の\(\symcal{M}\)による解釈がその代表元のとりかたによらないことを示す．
 \Cref{eq:herbrandinterpretationconstantsymbol}における定数記号の解釈は，もともと代表元を使っての定義ではない．
 よって，\cref{eq:herbrandinterpretationfunctionsymbol}と\cref{eq:herbrandinterpretationrelationsymbol}についてのみ確かめればよい．
 まずは\cref{eq:herbrandinterpretationfunctionsymbol}について確かめよう．
@@ -1140,3 +1175,156 @@
 が成り立つことがわかる．
 従って，\cref{eq:herbrandinterpretationrelationsymbol}による
 \(r\)の\(\symcal{M}\)による解釈の定義はその代表元のとりかたに依存しない．
+
+
+\subsection*{\Cref{Que:herbrandsemantics}}
+
+1.を閉項\(t\)の構成に関する帰納法により示す．\(t\)が定数記号\(c\)ならば
+\(\interpretation{\symcal{M}}{c} = \equivclass{c}\)である．
+\(f\)をアリティ\(n\)の関数記号，閉項\(t_1, t_2, \dots, t_n\)に対して
+\(\apply{f}{t_1, t_2, \dots, t_n}\)と表される閉項\(t\)に対しては，帰納法の仮定により
+\begin{align*}
+	\interpretation{\symcal{M}}{t} & = \interpretation{\symcal{M}}{\apply{f}{t_1, t_2, \dots, t_n}}                                                                                        \\
+	                               & = \apply{\interpretation{\symcal{M}}{f}}{\interpretation{\symcal{M}}{t_1}, \interpretation{\symcal{M}}{t_2}, \dots, \interpretation{\symcal{M}}{t_n}} \\
+	                               & = \apply{\interpretation{\symcal{M}}{f}}{\equivclass{t_1}, \equivclass{t_2}, \dots, \equivclass{t_n}}                                                 \\
+	                               & = \equivclass{\apply{f}{t_1, t_2, \dots, t_n}}                                                                                                        \\
+	                               & = \equivclass{t}
+\end{align*}
+となる．よってすべての閉項\(t\)に対して\(\interpretation{\symcal{M}}{t} = \equivclass{t}\)が成り立つ．
+
+2.について，\(n = 1\)の場合に示そう．
+\(\symcal{M}\)の対象領域を\(M\)とする．
+以下，\(a \in M\)の名前を\(c_a\)で表す．
+論理式\(\psi\)の構成に関する帰納法で示す．
+\(\psi\)に\(x_1\)が自由出現しない場合には明らか．\(\psi\)に\(x_1\)が自由出現する場合を考える．
+\(\psi\)に自由出現する変数記号は\(x_1\)のみである．
+
+\(\psi\)が項\(s_1, s_2\)を用いた\(s_1 \objeq s_2\)の形である場合を考える．
+このとき
+\begin{align*}
+	                & \symcal{M} \satisfy \varphi                                                                                                          \\
+	\metaequivalent & \text{すべての\(a \in M\)に対して\(\symcal{M} \satisfy \subst{\varphi}{c_a/x_1}\)}                                                           \\
+	\metaequivalent & \text{すべての\(a \in M\)に対して\(\symcal{M} \satisfy \subst{s_1}{c_a/x_1} \objeq \subst{s_2}{c_a/x_1}\)}                                   \\
+	\metaequivalent & \text{すべての\(a \in M\)に対して\(\interpretation{\symcal{M}}{\subst{s_1}{c_a/x_1}} = \interpretation{\symcal{M}}{\subst{s_2}{c_a/x_1}}\)}.
+\end{align*}
+ここで，項の構成に関する帰納法によって\(\interpretation{\symcal{M}}{\subst{s_1}{c_a/x_1}} = \interpretation{\symcal{M}}{\subst{s_1}{a/x_1}}\)が成り立つことがわかる（\(s_2\)についても同様）ので，
+\[
+	\symcal{M} \satisfy \varphi \metaequivalent \text{すべての\(a \in M\)に対して\(\interpretation{\symcal{M}}{\subst{s_1}{a/x_1}} =
+		\interpretation{\symcal{M}}{\subst{s_2}{a/x_1}}\)}
+\]
+が成り立つ．各\(a \in M\)はある閉項\(t\)についての同値類\(\equivclass{t}\)なので，\(a = \equivclass{t_1}\)とすれば1.もあわせて
+\(\interpretation{\symcal{M}}{\subst{s_1}{a/x_1}} = \interpretation{\symcal{M}}{\subst{s_1}{t_1/x_1}}\)だから
+\[
+	\symcal{M} \satisfy \varphi \metaequivalent \text{すべての閉項\(t_1\)に対して\(\interpretation{\symcal{M}}{\subst{s_1}{t_1/x_1}} = \interpretation{\symcal{M}}{\subst{s_2}{t_1/x_1}}\)}
+\]
+となる．この主張は2.にほかならない．
+
+\(\psi\)がアリティ\(m\)の関係記号\(r\)と項\(s_1, s_2, \dots, s_n\)を用いた\(\apply{r}{s_1, s_2, \dots, s_n}\)の形である場合を考える．
+このとき
+\begin{align*}
+	                & \symcal{M} \satisfy \varphi                                                \\
+	\metaequivalent & \text{すべての\(a \in M\)に対して\(\symcal{M} \satisfy \subst{\varphi}{c_a/x_1}\)} \\
+	\metaequivalent & \text{すべての\(a \in M\)に対して\(\pair{
+			\interpretation{\symcal{M}}{\subst{s_1}{c_a/x_1}}, \interpretation{\symcal{M}}{\subst{s_2}{c_a/x_1}}, \dots, \interpretation{\symcal{M}}{\subst{s_n}{c_a/x_1}}
+		} \in \interpretation{\symcal{M}}{r}
+	\)}                                                                                          \\
+	\metaequivalent & \text{すべての閉項\(t_1\)に対して\(\pair{
+			\interpretation{\symcal{M}}{\subst{s_1}{t_1/x_1}}, \interpretation{\symcal{M}}{\subst{s_2}{t_1/x_1}}, \dots, \interpretation{\symcal{M}}{\subst{s_n}{t_1/x_1}}
+		}
+		\in \interpretation{\symcal{M}}{r}\)}
+\end{align*}
+となる．よって2.の主張が従う．
+
+\(\psi\)が複合論理式である場合を考える．論理記号\(\lnot, \land, \lor, \to\)については容易である．
+\(\psi\)が\(\forall y \chi\)の形である場合を考えよう．
+\(\psi\)に\(x_1\)が自由出現しているので，\(x, y\)は異なる変数記号である．
+閉項\(t_1\)を任意にとったとき，\(y\)は\(t_1\)に現れないとみなしてよい（そうでない場合，\(\varphi\)への代入を考える際にすでに\(y\)を別の変数記号で置き換えているはずである）．
+帰納法の仮定により\(\chi\)は2.の主張を満たすので，\cref{Def:semanticimplies}から明らかに\(\forall y \chi\)も2.の主張を満たす．
+\(\psi\)が\(\exists y \chi\)の形の場合も同様である．
+
+以上の議論により\(n = 1\)の場合には2.の主張が示された．一般の\(n\)の場合も代入する項の個数が増えるだけでまったく同様である．
+
+3.を示す．
+\(\varphi\)は以下の2つの場合が考えられる．
+\begin{itemize}
+	\item 閉項\(s_1, s_2\)を用いた\(s_1 \objeq s_2\)の形，
+	\item アリティ\(n\)の関係記号\(r\)と閉項\(t_1, t_2, \dots, t_n\)を用いた\(\apply{r}{t_1, t_2, \dots, t_n}\)の形．
+\end{itemize}
+1つ目については
+\begin{align*}
+	                & \symcal{M} \satisfy \varphi                                         \\
+	\metaequivalent & \symcal{M} \satisfy s_1 \objeq s_2                                  \\
+	\metaequivalent & \interpretation{\symcal{M}}{s_1} = \interpretation{\symcal{M}}{s_2} \\
+	\metaequivalent & \equivclass{s_1} = \equivclass{s_2}                                 \\
+	\metaequivalent & \Gamma \provable s_1 \objeq s_2
+\end{align*}
+となり，2つ目については
+\begin{align*}
+	                & \symcal{M} \satisfy \varphi                         \\
+	\metaequivalent & \symcal{M} \satisfy \apply{r}{s_1, s_2, \dots, s_n} \\
+	\metaequivalent & \pair{
+		\interpretation{\symcal{M}}{s_1}, \interpretation{\symcal{M}}{s_2}, \dots, \interpretation{\symcal{M}}{s_n}
+	} \in \interpretation{\symcal{M}}{r}                                  \\
+	\metaequivalent & \pair{
+		\equivclass{s_1}, \equivclass{s_2}, \dots, \equivclass{s_n}
+	} \in \interpretation{\symcal{M}}{r}                                  \\
+	\metaequivalent & \Gamma \provable \apply{r}{t_1, t_2, \dots, t_n}
+\end{align*}
+のように示すことができる．
+
+最後に4.を示そう．\(\varphi\)が原子論理式\(\apply{\psi}{x_1, x_2, \dots, x_n}\)の全称閉包であり，
+\(\varphi\)に自由出現する変数記号は\(x_1, x_2, \dots, x_n\)のみであるとする．
+2.により，すべての閉項\(t_1, t_2, \dots, t_n\)に対して\(\symcal{M} \satisfy \apply{\psi}{t_1, t_2, \dots, t_n}\)
+となることを示せば十分．
+さて，\(\Gamma \provable \forall x_1 \forall x_2 \dotsb \forall x_n \apply{\psi}{x_1, x_2, \dots, x_n}\)
+だから，(\(\forall\)E)規則を繰り返し用いて
+\(\Gamma \provable \apply{\psi}{t_1, t_2, \dots, t_n}\)を得る．
+\(\apply{\psi}{t_1, t_2, \dots, t_n}\)は原子論理式かつ閉論理式だから，3.により\(\symcal{M} \satisfy \apply{\psi}{t_1, t_2, \dots, t_n}\)となる．
+
+
+\subsection*{\Cref{Que:polynomialringherbrandmodel}}
+
+以降の議論では不定元は1つで十分である．それを\(x\)とおく．
+
+まずは\(\RealNumbers\)上の多項式環について考えよう．
+通常の数学では，以下のような多項式の計算は妥当なものとして扱われる：
+\[
+	\paren{2x + \sqrt{2}} \paren{x + \sqrt{2}} = \paren{2x^2 + 3 \sqrt{2} + 2}.
+\]
+この計算が妥当であることは，我々が\cref{Ex:polynomialringherbrandmodel}で定義した多項式環においては
+\[
+	\equivclass{\paren{2x \obj{+} \sqrt{2}} \obj{\cdot} \paren{x \obj{+} \sqrt{2}}}
+	= \equivclass{2 \obj{\cdot} x \obj{\cdot} x \obj{+} 3 \obj{\cdot} \sqrt{2} \obj{\cdot} x + 2}
+\]
+という主張に相当する．
+これが成り立つためには
+\[
+	\Gamma \provable
+	\paren{2x \obj{+} \sqrt{2}} \obj{\cdot} \paren{x \obj{+} \sqrt{2}}
+	\objeq
+	2 \obj{\cdot} x \obj{\cdot} x \obj{+} 3 \obj{\cdot} \sqrt{2} \obj{\cdot} x + 2
+\]
+が成り立つことが必要十分である．
+これを示すためには，理論\(\Ring\)で得られる一般論のほかに\(\RealNumbers\)で成り立っている
+\[
+	\sqrt{2} \cdot \sqrt{2} = 2
+\]
+といった事実を用いる必要がある．このような事実に相当する論理式は
+\(\apply{\Diag}{\RealNumbers}\)の元である．
+
+次に，\cref{Ex:polynomialringherbrandmodel}における\(\Gamma\)として，
+\(\Ring\)に\(\apply{\Diag}{\symcal{R}}\)ではなく\(\apply{\eDiag}{\symcal{R}}\)を加えた場合を考えよう．
+\(\symcal{R}\)としては剰余環\(\Integers/2\Integers\)を考える．
+よく知られているように，\(\Integers/2\Integers\)は
+\[
+	\Integers/2\Integers \satisfy \forall x \paren{x \obj{\cdot} x \obj{\cdot} x = x}
+\]
+を満たす．この論理式を\(\varphi\)としよう．
+\(\varphi\)は\(\apply{\eDiag}{\Integers/2\Integers}\)の元である．
+一方，\(\varphi\)は\(\forall\)を含むため\(\apply{\Diag}{\Integers/2\Integers}\)の元ではない．
+さて，通常の数学における\(\Integers/2\Integers\)上の多項式の計算では，
+多項式\(x\)と多項式\(x^3\)は異なる多項式とみなされる．
+よって，Herbrand構造を定義する際にベースとした理論\(\Gamma\)には\(\varphi\)が含まれていてはいけない．
+
+以上のような事情により，\cref{Ex:polynomialringherbrandmodel}では
+\(\Gamma\)として\(\Ring\)に\(\apply{\Diag}{\symcal{R}}\)を加えたのであった．

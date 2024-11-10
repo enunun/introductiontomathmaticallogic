@@ -280,37 +280,6 @@
 	「\(\symcal{L}\)項」や「\(\symcal{L}\)論理式」は単に「項」や「論理式」と呼称する．
 \end{Note}
 
-さらに記述を簡素化するために，追加で略記表現をを導入する．
-
-\index[sidx]{\(\formulaequiv\)：（論理式の）同値}
-\index[sidx]{\(\uexists\)：一意存在}
-\begin{Def} \label{Def:AbbreviatioForFormula}
-	論理式\(\varphi, \psi\)に対し，論理式
-	\begin{align*}
-		\paren{\varphi \to \psi} \land \paren{\psi \to \varphi}
-	\end{align*}
-	を
-	\begin{equation}
-		\varphi \formulaequiv \psi
-		\label{eq:formulaequiv}
-	\end{equation}
-	と略記する．
-	また，変数記号\(x, x_1, x_2\)を\(x_1, x_2\)が自由出現しない論理式\(\varphi\)に対し，論理式
-	\begin{align*}
-		\exists x \varphi \land \forall x \forall y \paren{\subst{\varphi}{x_1/x} \land \subst{\varphi}{x_2} \to x_1 \objeq x_2}
-	\end{align*}
-	を
-	\begin{equation}
-		\uexists x \varphi
-		\label{eq:uexists}
-	\end{equation}
-	と略記する．
-
-	\Cref{eq:formulaequiv}は「\(\varphi\)と\(\psi\)は同値である」
-	ことを表現することが期待される論理式で，
-	\cref{eq:uexists}は「\(\varphi\)となる\(x\)がただ1つ存在する」
-	ことを表現することが期待される論理式である．
-\end{Def}
 
 \section{変数の出現と代入可能性} \label{sec:substitution}
 
@@ -355,6 +324,9 @@
 	\term{閉論理式}，あるいは%
 	\index[widx]{ぶん@文|see{閉論理式}}%
 	\term{文}と呼ぶ．
+	一方，\(\forall, \exists\)を含まない論理式を%
+	\index[widx]{ろんりしき@論理式!かいろんりしき@開---}%
+	\term{開論理式}という．
 	\(\apply{\Var}{t} = \emptyset\)となる項\(t\)は%
 	\index[widx]{こう@項!へいこう@閉---}%
 	\term{閉項}であるという．
@@ -423,11 +395,19 @@
 \end{Ex}
 
 \index[sidx]{\(\subst{\varphi}{t/x}\)：論理式への代入}
+\index[sidx]{\(\subst{t}{s/x}\)：項への代入}
 \begin{Def} \label[Def]{Def:substitution}
 	論理式\(\varphi\)中の変数記号\(x\)に項\(t\)が代入可能であるとき，
 	\(\varphi\)に自由出現している\(x\)すべてを\(t\)に置き換えて得られる論理式を
 	\begin{equation}
 		\subst{\varphi}{t/x}
+	\end{equation}
+	と表す．
+
+	また，項\(t\)に現れる変数記号\(x\)すべてを項\(s\)に置き換えて得られる項も同様に
+	\begin{equation}
+		\subst{t}{s/x}
+		\label{eq:substterm}
 	\end{equation}
 	と表す．
 \end{Def}
@@ -442,6 +422,57 @@
 	\end{equation*}
 	である．また，\(\subst{\varphi}{\obj{e} / \obj{a}}\)と\(\subst{\varphi}{\obj{e} / \obj{y}}\)はいずれも\(\varphi\)そのものである．
 \end{Ex}
+
+\begin{Note}
+	\(\varphi\)を論理式，\(x_1, x_2, \dots, x_n\)を\(\varphi\)に束縛出現しない変数記号とするとき，
+	\(\varphi\)のことを
+	\begin{equation}
+		\apply{\varphi}{x_1, x_2, \dots, x_n}
+		\label{eq:freevariablefunction}
+	\end{equation}
+	と表すことがある．このとき，\(\varphi\)中の\(x_1, x_2, \dots, x_n\)に代入可能な項\(t_1, t_2, \dots, t_n\)を代入して得られる論理式は
+	\begin{equation}
+		\apply{\varphi}{t_1, t_2, \dots, t_n}
+		\label{eq:freevariablefunctionsubstitution}
+	\end{equation}
+	と表すことが多い．
+	ここで，\(t_1, t_2, \dots, t_n\)に現れる変数記号が\(\varphi\)に束縛出現する場合，その束縛出現する記号を別の変数記号に置き換え，
+	\(t_1, t_2, \dots, t_n\)に現れる変数記号が\(\varphi\)に束縛出現しないようにしておく．
+	このような置き換えは，しばしば暗黙的に行われる．
+	そのようにしても議論に影響がないことは\cref{chap:semantics}の\cref{Thm:alphaequivalent}による．
+\end{Note}
+
+記述を簡素化するために，追加で略記表現をを導入する．
+
+\index[sidx]{\(\formulaequiv\)：（論理式の）同値}
+\index[sidx]{\(\uexists\)：一意存在}
+\begin{Def} \label{Def:AbbreviatioForFormula}
+	論理式\(\varphi, \psi\)に対し，論理式
+	\begin{align*}
+		\paren{\varphi \to \psi} \land \paren{\psi \to \varphi}
+	\end{align*}
+	を
+	\begin{equation}
+		\varphi \formulaequiv \psi
+		\label{eq:formulaequiv}
+	\end{equation}
+	と略記する．
+	また，変数記号\(x_1, x_2\)が自由出現しない論理式\(\varphi\)に対し，論理式
+	\begin{align*}
+		\exists x \varphi \land \forall x \forall y \paren{\subst{\varphi}{x_1/x} \land \subst{\varphi}{x_2} \to x_1 \objeq x_2}
+	\end{align*}
+	を
+	\begin{equation}
+		\uexists x \varphi
+		\label{eq:uexists}
+	\end{equation}
+	と略記する．
+
+	\Cref{eq:formulaequiv}は「\(\varphi\)と\(\psi\)は同値である」
+	ことを表現することが期待される論理式で，
+	\cref{eq:uexists}は「\(\varphi\)となる\(x\)がただ1つ存在する」
+	ことを表現することが期待される論理式である．
+\end{Def}
 
 
 \section{理論とその例} \label[section]{sec:Theory}
@@ -488,6 +519,7 @@
 \end{Que}
 
 \index[sidx]{\(\Ring\)：環の理論}
+\index[sidx]{\(\CRing\)：可換環の理論}
 \index[sidx]{\(\symcal{L}_{\Ring}\)：環の言語}
 \begin{Ex} \label[Ex]{Ex:Ring}
 	環の言語を\(\symcal{L}_{\Ring} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}}\)とする．
@@ -506,6 +538,13 @@
 		      \paren{ \paren{\obj{x} \obj{+} \obj{y}} \obj{\cdot} \obj{z} \objeq \paren{\obj{x} \obj{\cdot} \obj{z}} \obj{+} \paren{\obj{y} \obj{\cdot} \obj{z}}}.\)
 	\end{enumerate}
 	最初の文3つは，\(\symcal{L}_{\GP}\)における\(\obj{\ast}\)を\(\obj{+}\)に置き換えたものであることに注意せよ．
+
+	なお，\(\Ring\)に閉論理式
+	\[
+		\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \obj{y} \objeq \obj{y} \obj{\cdot} \obj{x}}
+	\]
+	を加えたものは可換環の理論だと考えることができる．
+	この理論は\(\CRing\)と表すことにする．
 \end{Ex}
 
 \index[sidx]{\(\POSET\)：狭義の半順序の理論}
@@ -534,8 +573,8 @@
 	順序環の言語を\(\symcal{L}_{\OrderedRing} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}}\)とする．
 	順序環の理論\(\OrderedRing\)は，以下の文からなる\(\symcal{L}_{\OrderedRing}\)理論と考えることができる：
 	\begin{enumerate}
-		\item \Cref{Ex:Ring}で挙げた8つの論理式すべて，
-		\item \Cref{Ex:orderedset}で挙げた3つの論理式すべて，
+		\item \Cref{Ex:Ring}で挙げた理論\(\Ring\)の8つの論理式すべて，
+		\item \Cref{Ex:orderedset}で挙げた理論\(\TOSET\)の3つの論理式すべて，
 		\item \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \obj{y} \objeq \obj{y} \obj{\cdot} \obj{x}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
 		      \paren{\obj{x} \obj{<} \obj{y} \to \obj{x} \obj{+} \obj{z} \obj{<} \obj{y} \obj{+} \obj{z}},\)

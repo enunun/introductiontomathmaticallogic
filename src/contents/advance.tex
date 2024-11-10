@@ -104,7 +104,7 @@
 \end{Lemma}
 
 \begin{proof}
-	\(1 \metaimplies 2\)は(w)規則と(\(\lnot\)I)規則，および(DNF)規則から従う．
+	\(1 \metaimplies 2\)は(w)規則と(\(\lnot\)I)規則，および(DNE)規則から従う．
 	\(2 \metaimplies 3\)は明らか．\(3 \metaimplies 1\)は(\(\lnot\)E)規則から従う．
 \end{proof}
 
@@ -153,7 +153,7 @@
 
 \begin{proof}
 	\(\Gamma \cup \Set{\varphi}\)と\(\Gamma \cup \Set{\lnot \varphi}\)がともに矛盾していると仮定すると，
-	(\(\lnot\)I)規則と(DNF)規則によって\(\Gamma \provable \varphi\)かつ\(\Gamma \provable \lnot \varphi\)
+	(\(\lnot\)I)規則と(DNE)規則によって\(\Gamma \provable \varphi\)かつ\(\Gamma \provable \lnot \varphi\)
 	であることがわかる．よって\cref{Lemma:inconsistency}によって\(\Gamma\)が矛盾することがわかる．
 \end{proof}
 
@@ -455,7 +455,7 @@
 この「閉項全体の集合に同値関係を入れ，それらに解釈を付与することで構造を定義する」という手法については，
 完全性定理を証明するための単なる道具を超えた価値がある．そこで，以下のように定義しよう．
 
-\index[widx]{Herbrandこうぞう@Herbrand構造}
+\index[widx]{こうぞう@構造!Herbrandこうぞう@Herbrand---}
 \begin{Def} \label[Def]{Def:Herbrandstructure}
 	\(\symcal{L}\)を定数記号をもつ言語とし，\(\Gamma\)を\(\symcal{L}\)理論とする．
 	\(\symcal{L}\)閉項全体の集合\(X\)上の同値関係\(\sim\)を以下のように定義する：
@@ -522,7 +522,26 @@
 		      いずれも\(M\)の代表元のとりかたによらないこと．
 	\end{enumerate}
 \end{Que}
-=======
+
+\begin{Lemma} \label[Lemma]{lemma:herbrandsemantics}
+	\(\symcal{L}\)を定数記号をもつ言語とし，\(\Gamma\)を\(\symcal{L}\)理論とする．
+	\(\symcal{M}\)を\(\symcal{L}\)における\(\Gamma\)のHerbrand構造とする．
+	このとき，以下が成り立つ．
+	\begin{enumerate}
+		\item \(t\)を\(\symcal{L}\)閉項とするとき，\(\interpretation{\symcal{M}}{t} = \equivclass{t}\)である．
+		\item \(\symcal{L}\)文\(\varphi\)が\(\forall x_1 \forall x_2 \dotsb \forall x_n \apply{\psi}{x_1, x_2, \dots, x_n}\)
+		      の形の論理式であるならば，\(\symcal{M} \satisfy \varphi\)とすべての\(\symcal{L}\)閉項\(t_1, t_2, \dots, t_n\)に対して
+		      \(\symcal{M} \satisfy \apply{\psi}{t_1, t_2, \dots, t_n}\)であることは同値．
+		\item \(\symcal{L}\)文\(\varphi\)が原子論理式であるならば，\(\Gamma \provable \varphi\)と\(\symcal{M} \satisfy \varphi\)は同値．
+		\item \(\varphi\)が\(\symcal{L}\)原子論理式の全称閉包で\(\Gamma \provable \varphi\)ならば\(\symcal{M} \satisfy \varphi\)となる．
+	\end{enumerate}
+\end{Lemma}
+
+\begin{Que} \label{Que:herbrandsemantics}
+	\Cref{lemma:herbrandsemantics}を示せ．
+\end{Que}
+
+Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で述べる．
 
 \section{等式理論とHorn理論} \label{sec:equationaltheory}
 
@@ -546,7 +565,7 @@
 	\index[widx]{せつ@節}%
 	\term{節}%
 	といい，節に含まれる正のリテラルが高々1つである場合にはその節のことを%
-	\index[widx]{せつ@節!Hornせつ@Horn節}%
+	\index[widx]{せつ@節!Hornせつ@Horn---}%
 	\term{Horn節}という．
 
 	理論\(T\)の各文がすべてHorn節の全称閉包である場合，\(T\)は%
@@ -588,3 +607,97 @@
 	で置き換えると，これは1個の正のリテラルと2個の負のリテラルからなるHorn節の全称閉包なので，
 	この置き換えによって得られる理論は全称Horn理論である．
 \end{Ex}
+
+\begin{Thm} \label[Thm]{Thm:HornHerbrandmodel}
+	\(\symcal{L}\)を定数記号をもつ言語とする．
+	理論\(\Gamma, \Gamma'\)が\(\Gamma \subset \Gamma'\)を満たすとする．
+	\(\Gamma\)が無矛盾な全称Horn理論であるならば，
+	\(\symcal{L}\)における\(\Gamma'\)のHerbrand構造は\(\Gamma\)のモデルとなる．
+\end{Thm}
+
+\begin{proof}
+	\(\symcal{L}\)における\(\Gamma'\)のHerbrand構造を\(\symcal{M}\)とする．
+	\(\varphi \in \Gamma\)を任意にとる．
+	\(\varphi\)が正のリテラルを1つもつ場合を考える．
+	このとき，\(\varphi\)は原子論理式\(p_1, p_2, \dots, p_{n-1}, p_n\)を用いた以下の論理式\(\apply{\psi}{x_1, \dots, x_m}\)の全称閉包とみなせる：
+	\[
+		\lnot \apply{p_1}{x_1, \dots, x_m} \lor \lnot \apply{p_2}{x_1, \dots, x_m} \lor \dotsb \lor \lnot \apply{p_{n-1}}{x_1, \dots, x_m}
+		\lor \apply{p_{n}}{x_1, \dots, x_m}.
+	\]
+
+	さて，\(\symcal{M} \satisfy \varphi\)が成り立たないものとして矛盾を導く．
+	\Cref{lemma:herbrandsemantics}から閉項\(t_1, \dots, t_m\)で
+	\(\symcal{M} \satisfy \apply{\psi}{t_1, \dots, t_m}\)が成り立たないものが存在する．
+	よって\(i = 1, 2, \dots, n-1\)に対して\(\symcal{M} \satisfy \apply{p_i}{t_1, \dots, t_m}\)であり，
+	かつ\(\symcal{M} \satisfy \apply{p_n}{t_1, \dots, t_m}\)は成り立たない．
+	従って，\Cref{lemma:herbrandsemantics}から
+	\(i = 1,2,\dots, n-1\)については\(\Gamma \provable \apply{p_i}{t_1, \dots, t_m}\)であり，かつ
+	\(\Gamma \provable \apply{p_n}{t_1, \dots, t_m}\)は成り立たないことがわかる．
+	また，\(\varphi \in \Gamma\)と(\(\forall\)E)規則によって
+	\(\Gamma \provable \apply{\psi}{t_1, \dots, t_m}\)が得られる．
+	ここで，
+	\[
+		\apply{\psi}{t_1, \dots, t_m} \interderivable \apply{p_1}{t_1, \dots, t_m} \to \paren{\apply{p_2}{t_1, \dots, t_m} \to \paren{\dotsb \to \apply{p_n}{t_1, \dots, t_m}}}
+	\]
+	であるから
+	\[
+		\Gamma \provable \apply{p_1}{t_1, \dots, t_m} \to \paren{\apply{p_2}{t_1, \dots, t_m} \to \paren{\dotsb \to \apply{p_n}{t_1, \dots, t_m}}}
+	\]
+	となる．よって(\(\to\)E)規則を繰り返し適用することで
+	\[
+		\Gamma \provable \apply{p_n}{t_1, \dots, t_m}
+	\]
+	が得られ，矛盾する．
+	よって\(\symcal{M} \satisfy \varphi\)となる．
+	\(\varphi\)が正のリテラルをもたない場合も同様である（上記で\(p_n\)の代わりに\(\lnot p_n\)を考えればよい）．
+
+	以上の議論により，\(\symcal{M} \satisfy \Gamma\)が得られる．
+\end{proof}
+
+
+等式理論はすべて全称Horn理論である．よって，代数学で扱う多くの理論が全称Horn理論となる．
+\Cref{Thm:HornHerbrandmodel}の代数学への応用として，
+与えられた記号を使って定義される理論や構造を考えよう．
+
+\begin{Ex} \label[Ex]{Ex:generatorforgrouptheory}
+	記号\(a, b\)が与えられたとする．
+	このとき，群論の言語\(\symcal{L}_{\GP}\)に\(a,b\)を加えた言語
+	\(\symcal{L} = \symcal{L}_{\GP} \cup \Set{a, b}\)を考える．
+	\(\symcal{L}\)理論\(\Gamma\)として，\(\GP\)に対して
+	以下の3つの閉論理式を加えたものを考える：
+	\begin{align*}
+		\paren{a \obj{*} a} \obj{*} a & \objeq \obj{e},                      \\
+		b \obj{*} b                   & \objeq \obj{e},                      \\
+		b \obj{*} a                   & \objeq \paren{a \obj{*} a} \obj{*} b
+	\end{align*}
+	よく知られているように\(\GP\)はモデルをもつから無矛盾であり，
+	等式理論であるから全称Horn理論でもある．
+	よって，\cref{Thm:HornHerbrandmodel}から
+	\(\symcal{L}\)における\(\Gamma\)のHerbrand構造\(\symcal{M}\)が\(\GP\)のモデルであることがわかる．
+	なお，\(\symcal{M}\)は上で与えた3つの基本関係式に従う2つの生成元\(a, b\)によって
+	生成される位数6の二面体群となる．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:polynomialringherbrandmodel}
+	記号\(x_1, x_2, \dots, x_n\)が与えられたとする．
+	環の理論\(\Ring\)のモデル\(\symcal{R}\)をひとつとる．
+	環論の言語\(\symcal{L}_{\Ring}\)に\(x_1, x_2, \dots, x_n\)を加えて得られる
+	言語\(\symcal{L} = \symcal{L}_{\Ring} \cup \Set{x_1, x_2, \dots, x_n}\)を考える．
+	\(\languagewithname{\symcal{L}}{\symcal{R}}\)理論\(\Gamma\)を\(\Gamma = \Ring \cup \apply{\Diag}{\symcal{R}}\)と定めるとき，
+	\(\languagewithname{\symcal{L}}{\symcal{R}}\)における\(\Gamma\)のHerbrand構造は通常
+	\(x_1, x_2, \dots, x_n\)を不定元とする\(\symcal{R}\)上の多項式環と呼ばれ，
+	\(\polynomial{\symcal{R}}{x_1, x_2, \dots, x_n}\)と表記される．
+	\(\GP\)と同様に\(\Ring\)も無矛盾な全称Horn理論であるから，
+	\cref{Thm:HornHerbrandmodel}によって
+	\(\polynomial{\symcal{R}}{x_1, x_2, \dots, x_n}\)が\(\Ring\)のモデルであることがわかる．
+\end{Ex}
+
+\begin{Que} \label{Que:polynomialringherbrandmodel}
+	\Cref{Ex:polynomialringherbrandmodel}で多項式環を定義する際，
+	\(\Gamma\)として\(\Ring\)でも\(\Ring \cup \apply{\eDiag}{\symcal{R}}\)でもなく
+	\(\Ring \cup \apply{\Diag}{\symcal{R}}\)を考えた．
+	実数全体の集合を\(\RealNumbers\)を環とみなして得られる環上の多項式環や
+	剰余環\(\Integers/2\Integers\)上の多項式環の計算を思い出し，
+	なぜ\(\Ring\)だけではなく\(\apply{\Diag}{\symcal{R}}\)を加える必要があったのか，
+	そしてなぜ\(\apply{\eDiag}{\symcal{R}}\)を加えなかったのかを考えよ．
+\end{Que}

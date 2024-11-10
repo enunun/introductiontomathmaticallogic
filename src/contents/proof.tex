@@ -207,37 +207,38 @@
 \end{Def}
 
 \begin{Def}[論理規則その2] \label[Def]{Def:quantiferrule}
-	論理式の有限列\(\Gamma, \Delta\)と論理式\(\varphi, \psi\)および変数記号\(x\)と項\(a\)に対して，
+	論理式の有限列\(\Gamma, \Delta\)と論理式\(\varphi, \psi\)および変数記号\(x,y\)と項\(t\)に対して，
 	下記の4つは自然演繹式シークエント計算における推論規則である．
-	ここで，\(a\)は\(\varphi\)中の\(x\)に代入可能であるものとする．
+	ここで，\(t,y\)は\(\varphi\)中の\(x\)に代入可能であるものとし，
+	\(y\)は各推論規則において下部に書かれた追加の条件を満たすものとする．
 	\begin{multicols}{2}
 		\begin{prooftree}
-			\AxiomC{\(\Gamma \sequent \subst{\varphi}{a/x}\)}
+			\AxiomC{\(\Gamma \sequent \subst{\varphi}{y/x}\)}
 			\LeftLabel{(\(\forall\)I)}
 			\UnaryInfC{\(\Gamma \sequent \forall x \varphi\)}
 		\end{prooftree}
-		ただし，\(\apply{\Var}{a}\)の元は\(\Gamma\)中の各論理式や\(\varphi\)に自由出現しない．
+		ただし，\(y\)は\(\Gamma\)中の各論理式や\(\varphi\)に自由出現しない．
 		\columnbreak
 		\begin{prooftree}
 			\AxiomC{\(\Gamma \sequent \forall x \varphi\)}
 			\LeftLabel{(\(\forall\)E)}
-			\UnaryInfC{\(\Gamma \sequent \subst{\varphi}{a/x}\)}
+			\UnaryInfC{\(\Gamma \sequent \subst{\varphi}{t/x}\)}
 		\end{prooftree}
 	\end{multicols}
 	\begin{multicols}{2}
 		\begin{prooftree}
-			\AxiomC{\(\Gamma \sequent \subst{\varphi}{a/x}\)}
+			\AxiomC{\(\Gamma \sequent \subst{\varphi}{t/x}\)}
 			\LeftLabel{(\(\exists\)I)}
 			\UnaryInfC{\(\Gamma \sequent \exists x \varphi\)}
 		\end{prooftree}
 		\columnbreak
 		\begin{prooftree}
 			\AxiomC{\(\Gamma \sequent \exists x \varphi\)}
-			\AxiomC{\(\subst{\varphi}{a/x}, \Delta \sequent \psi\)}
+			\AxiomC{\(\subst{\varphi}{y/x}, \Delta \sequent \psi\)}
 			\LeftLabel{(\(\exists\)E)}
 			\BinaryInfC{\(\Gamma, \Delta \sequent \psi\)}
 		\end{prooftree}
-		ただし，\(\apply{\Var}{a}\)の元は\(\Gamma, \Delta\)中の各論理式と\(\exists x \varphi, \psi\)のいずれにも自由出現しない．
+		ただし，\(y\)は\(\Gamma, \Delta\)中の各論理式と\(\exists x \varphi, \psi\)のいずれにも自由出現しない．
 	\end{multicols}
 \end{Def}
 
@@ -368,6 +369,7 @@
 	\(\varphi \interderivable \psi\)ならば，任意の論理式の集合\(\Gamma\)に対して
 	\(\Gamma \provable \varphi\)と\(\Gamma \provable \psi\)が同値になるので
 	「どのような仮定から導くことができるか」という観点では両者を区別できないからである．
+	このことは，意味論における\(\logicallyequivalent\)の注意とほぼ同じであることに注意せよ．
 \end{Note}
 
 ここで定義した体系が我々の素朴的直観における「証明」を模倣できているかどうかは，
@@ -389,18 +391,18 @@
 		\AxiomC{\(\lnot \varphi, \Gamma \sequent \bot \)}
 		\LeftLabel{(\(\lnot\)I)}
 		\UnaryInfC{\(\Gamma \sequent \lnot \lnot \varphi\)}
-		\LeftLabel{(DNF)}
+		\LeftLabel{(DNE)}
 		\UnaryInfC{\(\Gamma \sequent \varphi\)}
 	\end{prooftree}
 	よって，シークエント\(\Gamma \sequent \varphi\)は導出可能である．
 \end{proof}
 
-\begin{Thm} \label[Thm]{Thm:DNFsequent}
+\begin{Thm} \label[Thm]{Thm:DNEsequent}
 	\(\varphi\)を論理式とするとき，シークエント\(\lnot \lnot \varphi \sequent \varphi\)と
 	\(\varphi \sequent \lnot \lnot \varphi\)はいずれも導出可能である，すなわち
 	\begin{equation}
 		\varphi \interderivable \lnot \lnot \varphi
-		\label{eq:DNFinterderivable}
+		\label{eq:DNEinterderivable}
 	\end{equation}
 	が成り立つ．
 \end{Thm}
@@ -411,7 +413,7 @@
 		\AxiomC{}
 		\LeftLabel{(ID)}
 		\UnaryInfC{\(\lnot \lnot \varphi \sequent \lnot \lnot \varphi\)}
-		\LeftLabel{(DNF)}
+		\LeftLabel{(DNE)}
 		\UnaryInfC{\(\lnot \lnot \varphi \sequent \varphi\)}
 	\end{prooftree}
 	次に，シークエント\(\varphi \sequent \lnot \lnot \varphi\)を導出する．
@@ -428,7 +430,7 @@
 		\UnaryInfC{\(\varphi \sequent \lnot \lnot \varphi\)}
 	\end{prooftree}
 	よって，
-	\cref{eq:DNFinterderivable}が成り立つ．
+	\cref{eq:DNEinterderivable}が成り立つ．
 \end{proof}
 
 シークエントの導出過程を示すとき，\cref{Thm:RAA}の証明のように各推論規則の適用過程を
@@ -466,7 +468,7 @@
 		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \varphi \lor \lnot \varphi\)\quad （8から(\(\lor\)I)による）
 		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \bot\)\quad （\(1,9\)から(\(\lnot\)E)による）
 		\item \(\sequent \lnot \lnot \paren{\varphi \lor \lnot \varphi}\)\quad （10から(\(\lnot\)I)による）
-		\item \(\sequent \varphi \lor \lnot \varphi\)\quad （11から(DNF)による）
+		\item \(\sequent \varphi \lor \lnot \varphi\)\quad （11から(DNE)による）
 	\end{enumerate}
 	よって\(\varphi \lor \lnot \varphi\)は証明可能である．
 \end{proof}
@@ -667,3 +669,15 @@
 \begin{Que} \label[Que]{Que:equalsignrelation}
 	\Cref{Thm:equalsign}と\cref{Thm:equalsignrelation}を証明せよ．
 \end{Que}
+
+意味論のときと同じように，\(\interderivable\)についても「置き換え」操作を行うことができる．
+ベースとなる主張もほぼ同じである．
+
+\begin{Thm} \label[Thm]{Thm:interderivablequivalentrelation}
+	\(\varphi_1, \varphi_2, \varphi_3\)を論理式とする．このとき，以下が成り立つ：
+	\begin{enumerate}
+		\item \(\varphi_1 \interderivable \varphi_1\),
+		\item \(\varphi_1 \interderivable \varphi_2 \metaimplies \varphi_2 \interderivable \varphi_1\),
+		\item \(\text{\(\varphi_1 \interderivable \varphi_2\)かつ\(\varphi_2 \interderivable \varphi_3 \metaimplies \varphi_1 \interderivable \varphi_3\)}\).
+	\end{enumerate}
+\end{Thm}

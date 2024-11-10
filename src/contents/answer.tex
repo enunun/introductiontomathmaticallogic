@@ -495,7 +495,7 @@
 	\item \(\varphi \to \psi, \lnot \paren{\lnot \varphi \lor \psi} \sequent \lnot \varphi \lor \psi\)\quad （7から(\(\lor\)I)による）
 	\item \(\varphi \to \psi, \lnot \paren{\lnot \varphi \lor \psi} \sequent \bot\)\quad （2, 8から(w), (\(\lnot\)E)による）
 	\item \(\varphi \to \psi \sequent \lnot \lnot \paren{\lnot \varphi \lor \psi}\)\quad （9から(e), (\(\lnot\)E)による）
-	\item \(\varphi \to \psi \sequent \lnot \varphi \lor \psi\)\quad （10から(DNF)による）
+	\item \(\varphi \to \psi \sequent \lnot \varphi \lor \psi\)\quad （10から(DNE)による）
 \end{enumerate}
 
 \(\lnot \varphi \lor \psi \sequent \varphi \to \psi\)の導出：
@@ -505,7 +505,7 @@
 	\item \(\lnot \varphi \sequent \lnot \varphi\)\quad (ID)
 	\item \(\lnot \psi, \varphi, \lnot \varphi \sequent \bot\)\quad （2, 3から(w), (e), (\(\lnot\)E)による）
 	\item \(\varphi, \lnot \varphi \sequent \lnot \lnot \psi\)\quad （4から(\(\lnot\)I)による）
-	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNF)による）
+	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNE)による）
 	\item \(\psi \sequent \psi\)\quad (ID)
 	\item \(\lnot \varphi \lor \psi, \varphi \sequent \psi\)\quad （1, 6, 7から(e), (\(\lor\)E), (c)による）
 	\item \(\lnot \varphi \lor \psi \sequent \varphi \to \psi\)\quad （8から(e), (\(\to\)I)による）
@@ -542,12 +542,12 @@
 	\item \(\lnot \varphi \sequent \lnot \varphi \lor \lnot \psi\)\quad （3から(\(\lor\)I)による）
 	\item \(\lnot \varphi, \lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \lnot \lnot \varphi\)\quad （5から(\(\lnot\)I)による）
-	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \varphi\)\quad （6から(DNF)による）
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \varphi\)\quad （6から(DNE)による）
 	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \psi\)\quad （上と同様にして導けるので省略）
 	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \varphi \land \psi\)\quad （7, 8から(\(\land\)I), (c)による）
 	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi}, \lnot \paren{\varphi \land \psi} \sequent \bot\)\quad （1, 9から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \lnot \paren{\lnot \varphi \lor \lnot \psi}\)\quad （10から(\(\lnot\)I)による）
-	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \varphi \lor \lnot \psi\)\quad （11から(DNF)による）
+	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \varphi \lor \lnot \psi\)\quad （11から(DNE)による）
 \end{enumerate}
 
 \(\lnot \varphi \lor \lnot \psi \sequent \lnot \paren{\varphi \land \psi}\)の導出：
@@ -570,11 +570,11 @@
 	\item \(\lnot \subst{\varphi}{a/x} \sequent \exists x \lnot \varphi\)\quad （3から(\(\exists\)E)による）
 	\item \(\lnot \subst{\varphi}{a/x}, \lnot \exists x \lnot \varphi \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \exists x \lnot \varphi \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （5から(\(\lnot\)I)による）
-	\item \(\lnot \exists x \lnot \varphi \sequent \subst{\varphi}{a/x}\)\quad （6から(DNF)による）
+	\item \(\lnot \exists x \lnot \varphi \sequent \subst{\varphi}{a/x}\)\quad （6から(DNE)による）
 	\item \(\lnot \exists x \lnot \varphi \sequent \forall x \varphi\)\quad （7から(\(\forall\)I)による）
 	\item \(\lnot \exists x \lnot \varphi, \lnot \forall x \varphi \sequent \bot\)\quad （1, 8から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \forall x \varphi \sequent \lnot \lnot \exists x \lnot \varphi\)\quad （9から(\(\lnot\)E)による）
-	\item \(\lnot \forall x \varphi \sequent \exists x \lnot \varphi\)\quad （10から(DNF)による）
+	\item \(\lnot \forall x \varphi \sequent \exists x \lnot \varphi\)\quad （10から(DNE)による）
 \end{enumerate}
 
 \(\exists x \lnot \varphi \sequent \lnot \forall x \varphi\)の導出：
@@ -704,7 +704,7 @@
 	\item \(\lnot \varphi \sequent \varphi \to \psi\)\quad （3, 5から(\(\to\)E)による）
 	\item \(\lnot \varphi, \lnot \paren{\varphi \to \psi} \sequent \bot\)\quad （1, 6から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \paren{\varphi \to \psi} \sequent \lnot \lnot \varphi\)\quad （7から(\(\lnot\)I)による）
-	\item \(\lnot \paren{\varphi \to \psi} \sequent \varphi\)\quad （8から(DNF)による）
+	\item \(\lnot \paren{\varphi \to \psi} \sequent \varphi\)\quad （8から(DNE)による）
 	\item \(\psi \sequent \psi\)\quad (ID)
 	\item \(\varphi, \psi \sequent \psi\)\quad (10から(w)による)
 	\item \(\psi \sequent \varphi \to \psi\)\quad (11から(\(\to\)I)による)
@@ -762,7 +762,7 @@
 	\item \(\lnot \psi, \lnot \psi \to \lnot \varphi \sequent \lnot \varphi\)\quad （1, 3から(\(\to\)E)による）
 	\item \(\lnot \psi, \varphi \lnot \psi \to \lnot \varphi \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
 	\item \(\varphi, \lnot \psi \to \lnot\varphi \sequent \lnot \lnot \psi\)\quad （5から(\(\lnot\)I)による）
-	\item \(\varphi, \lnot \psi \to \lnot \varphi \sequent \psi\)\quad （6から(DNF)による）
+	\item \(\varphi, \lnot \psi \to \lnot \varphi \sequent \psi\)\quad （6から(DNE)による）
 	\item \(\lnot \psi \to \lnot \varphi \sequent \varphi \to \psi\)\quad （7から(\(\to\)I)による）
 \end{enumerate}
 
@@ -834,19 +834,19 @@
 	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad (ID)
 	\item \(\lnot \psi, \subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \bot\)\quad （3, 4から(w), (e), (\(\lnot\)E)による）
 	\item \(\subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \lnot \lnot \psi\)\quad （5から(\(\lnot\)I)による）
-	\item \(\subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \psi\)\quad （6から(DNF)による）
+	\item \(\subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \psi\)\quad （6から(DNE)による）
 	\item \(\lnot \subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x} \to \psi\)\quad （7から(\(\to\)I)による）
 	\item \(\lnot \subst{\varphi}{a/x} \sequent \exists x \paren{\varphi \to \psi}\)\quad （8から(\(\exists\)I)による）
 	\item \(\lnot \subst{\varphi}{a/x}, \lnot \exists x \paren{\varphi \to \psi} \sequent \bot\)\quad （2, 9から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （10から(\(\lnot\)I)による）
-	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x}\)\quad （11から(DNF)による）
+	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x}\)\quad （11から(DNE)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \forall x \varphi\)\quad （12から(\(\forall\)I)による）
 	\item \(\subst{\varphi}{a/x}, \forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \psi\)\quad （1, 13から(\(\to\)E), (w)による）
 	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x} \to \psi\)\quad （14から(\(\to\)I)による）
 	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \exists x \paren{\varphi \to \psi}\)\quad （15から(\(\exists\)I)による）
 	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \bot\)\quad （2, 16から(w), (\(\lnot\)E)による）
 	\item \(\forall x \varphi \to \psi \sequent \lnot \lnot \exists x \paren{\varphi \to \psi}\)\quad （17から(e), (\(\lnot\)I)による）
-	\item \(\forall x \varphi \to \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （18から(DNF)による）
+	\item \(\forall x \varphi \to \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （18から(DNE)による）
 \end{enumerate}
 ここで，9と15の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
 \(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \to \psi\)が同じ論理式であることを用いた．
@@ -901,12 +901,12 @@
 	\item \(\varphi, \varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （4, 8から(\(\exists\)E)による）
 	\item \(\lnot \subst{\psi}{b/x}, \varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \bot\)\quad （2, 9から(w), (e), (\(\lnot\)E)による，ただし\(b\)は新しい変数記号）
 	\item \(\varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \lnot \lnot \subst{\psi}{b/x}\)\quad （10から(\(\lnot\)I)による）
-	\item \(\varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \subst{\psi}{b/x}\)\quad （11から(DNF)による）
+	\item \(\varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \subst{\psi}{b/x}\)\quad （11から(DNE)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \varphi \to \subst{\psi}{b/x}\)\quad （12から(\(\to\)I)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （13から(\(\exists\)I)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \bot\)\quad （2, 14から(w), (e), (\(\lnot\)I)による）
 	\item \(\varphi \to \exists x \psi \sequent \lnot \lnot \exists x \paren{\varphi \to \psi}\)\quad （15から(\(\lnot\)I)による）
-	\item \(\varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （16から(DNF)による）
+	\item \(\varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （16から(DNE)による）
 \end{enumerate}
 ここで，8, 14の導出にあたっては，\(\varphi\)に\(x\)が自由出現しないことにより
 \(\subst{\paren{\varphi \to \psi}}{a/x}, \subst{\paren{\varphi \to \psi}}{b/x}\)がそれぞれ
@@ -965,17 +965,17 @@
 	\item \(\lnot \psi \sequent \lnot \psi\)\quad (ID)
 	\item \(\lnot \subst{\varphi}{a/x}, \psi, \lnot \psi \sequent \bot\)\quad （5, 6から(w), (e), (\(\lnot\)E)による）
 	\item \(\psi, \lnot \psi \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （7から(\(\lnot\)I)による）
-	\item \(\psi, \lnot \psi \sequent \subst{\varphi}{a/x}\)\quad （8から(DNF)による）
+	\item \(\psi, \lnot \psi \sequent \subst{\varphi}{a/x}\)\quad （8から(DNE)による）
 	\item \(\forall x \paren{\varphi \lor \psi}, \lnot \psi \sequent \subst{\varphi}{a/x}\)\quad （3, 4, 9から(\(\lor\)E)による）
 	\item \(\forall x \paren{\varphi \lor \psi}, \lnot \psi \sequent \forall x \varphi\)\quad （10から(\(\forall\)I)による）
 	\item \(\forall x \paren{\varphi \lor \psi}, \lnot \psi \sequent \forall x \varphi \lor \psi\)\quad （11から(\(\lor\)I)による）
 	\item \(\lnot \psi, \lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \bot\)\quad （2, 12から(\(\lnot\)E)による）
 	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \lnot \lnot \psi\)\quad （13から(\(\lnot\)I)による）
-	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \psi\)\quad （14から(DNF)による）
+	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \psi\)\quad （14から(DNE)による）
 	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \forall x \varphi \lor \psi\)\quad （15から(\(\lor\)I)による）
 	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \bot\)\quad （2, 16から(w), (e), (\(\lnot\)E)による）
 	\item \(\forall x \paren{\varphi \lor \psi} \sequent \lnot \lnot \paren{\forall x \varphi \lor \psi}\)\quad （17から(\(\lnot\)I)による）
-	\item \(\forall x \paren{\varphi \lor \psi} \sequent \forall x \varphi \lor \psi\)\quad （18から(DNF)による）
+	\item \(\forall x \paren{\varphi \lor \psi} \sequent \forall x \varphi \lor \psi\)\quad （18から(DNE)による）
 \end{enumerate}
 ここで，3の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
 \(\subst{\paren{\varphi \lor \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \lor \psi\)が同じ論理式であることを用いた．
@@ -1028,12 +1028,12 @@
 	\item \(\varphi \sequent \varphi\)\quad (ID)
 	\item \(\lnot \psi, \varphi, \lnot \varphi \sequent \bot\)\quad （2, 3から(w), (e), (\(\lnot\)E)による）
 	\item \(\varphi, \lnot \varphi \sequent \lnot \lnot \psi\)\quad （4から(\(\lnot\)I)による）
-	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNF)による）
+	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNE)による）
 	\item \(\lnot \varphi \sequent \varphi \to \psi\)\quad （6から(\(\to\)I)による）
 	\item \(\lnot \varphi, \paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （1, 7から(\(\to\)E)による）
 	\item \(\lnot \varphi, \paren{\varphi \to \psi} \to \varphi \sequent \bot\)\quad （2, 8から(w), (e), (\(\lnot\)E)による）
 	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \lnot \lnot \varphi\)\quad （9から(\(\lnot\)I)による）
-	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （10から(DNF)による）
+	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （10から(DNE)による）
 \end{enumerate}
 
 \subsection*{\Cref{Que:equalsignrelation}}
@@ -1105,7 +1105,7 @@
 対偶，すなわち\(\Gamma \provable \varphi\)でないと仮定して\(\Gamma \satisfy \varphi\)でないことを示す．
 \(\Gamma \provable \varphi\)でないので，\(\Gamma \cup \Set{\lnot \varphi}\)が無矛盾となる．
 実際，\(\Gamma \cup \Set{\lnot \varphi}\)が矛盾すると仮定すると(\(\lnot\)I)規則と
-(DNF)規則により\(\Gamma \provable \varphi\)となる．
+(DNE)規則により\(\Gamma \provable \varphi\)となる．
 \Cref{Thm:HenkinTheorem}により，\(\Gamma \cup \Set{\lnot \varphi}\)のモデル\(\symcal{M}\)が存在する．
 この\(\symcal{M}\)は\(\symcal{M} \satisfy \lnot \varphi\)を満たすので\(\symcal{M} \satisfy \varphi\)
 は成り立たず，従って\(\Gamma \satisfy \varphi\)ではない．

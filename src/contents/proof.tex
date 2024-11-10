@@ -390,18 +390,18 @@
 		\AxiomC{\(\lnot \varphi, \Gamma \sequent \bot \)}
 		\LeftLabel{(\(\lnot\)I)}
 		\UnaryInfC{\(\Gamma \sequent \lnot \lnot \varphi\)}
-		\LeftLabel{(DNF)}
+		\LeftLabel{(DNE)}
 		\UnaryInfC{\(\Gamma \sequent \varphi\)}
 	\end{prooftree}
 	よって，シークエント\(\Gamma \sequent \varphi\)は導出可能である．
 \end{proof}
 
-\begin{Thm} \label[Thm]{Thm:DNFsequent}
+\begin{Thm} \label[Thm]{Thm:DNEsequent}
 	\(\varphi\)を論理式とするとき，シークエント\(\lnot \lnot \varphi \sequent \varphi\)と
 	\(\varphi \sequent \lnot \lnot \varphi\)はいずれも導出可能である，すなわち
 	\begin{equation}
 		\varphi \interderivable \lnot \lnot \varphi
-		\label{eq:DNFinterderivable}
+		\label{eq:DNEinterderivable}
 	\end{equation}
 	が成り立つ．
 \end{Thm}
@@ -412,7 +412,7 @@
 		\AxiomC{}
 		\LeftLabel{(ID)}
 		\UnaryInfC{\(\lnot \lnot \varphi \sequent \lnot \lnot \varphi\)}
-		\LeftLabel{(DNF)}
+		\LeftLabel{(DNE)}
 		\UnaryInfC{\(\lnot \lnot \varphi \sequent \varphi\)}
 	\end{prooftree}
 	次に，シークエント\(\varphi \sequent \lnot \lnot \varphi\)を導出する．
@@ -429,7 +429,7 @@
 		\UnaryInfC{\(\varphi \sequent \lnot \lnot \varphi\)}
 	\end{prooftree}
 	よって，
-	\cref{eq:DNFinterderivable}が成り立つ．
+	\cref{eq:DNEinterderivable}が成り立つ．
 \end{proof}
 
 シークエントの導出過程を示すとき，\cref{Thm:RAA}の証明のように各推論規則の適用過程を
@@ -467,7 +467,7 @@
 		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \varphi \lor \lnot \varphi\)\quad （8から(\(\lor\)I)による）
 		\item \(\lnot \paren{\varphi \lor \lnot \varphi} \sequent \bot\)\quad （\(1,9\)から(\(\lnot\)E)による）
 		\item \(\sequent \lnot \lnot \paren{\varphi \lor \lnot \varphi}\)\quad （10から(\(\lnot\)I)による）
-		\item \(\sequent \varphi \lor \lnot \varphi\)\quad （11から(DNF)による）
+		\item \(\sequent \varphi \lor \lnot \varphi\)\quad （11から(DNE)による）
 	\end{enumerate}
 	よって\(\varphi \lor \lnot \varphi\)は証明可能である．
 \end{proof}

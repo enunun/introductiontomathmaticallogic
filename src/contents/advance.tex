@@ -701,8 +701,11 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 	\(\Ring \cup \apply{\Diag}{\symcal{R}}\)を考えた．
 	実数全体の集合を\(\RealNumbers\)を環とみなして得られる環上の多項式環や
 	剰余環\(\Integers/2\Integers\)上の多項式環の計算を思い出し，
-	なぜ\(\Ring\)だけではなく\(\apply{\Diag}{\symcal{R}}\)を加える必要があったのか，
-	そしてなぜ\(\apply{\eDiag}{\symcal{R}}\)を加えなかったのかを考えよ．
+	\begin{itemize}
+		\item \(\Gamma\)として\(\Ring\)を選んだ場合，
+		\item \(\Gamma\)として\(\Ring \cup \apply{\eDiag}{\symcal{R}}\)を選んだ場合
+	\end{itemize}
+	のいずれの場合でも我々が素朴に考える「多項式」の定式化としては不適格であることを確かめよ．
 \end{Que}
 
 
@@ -749,10 +752,10 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 
 	\(r \in \symcal{L}' \setminus \symcal{L}\)をアリティ\(n\)の関係記号とする．
 	\(x_1, x_2, \dots, x_n\)以外の変数記号が自由出現しない
-	\(\symcal{L}\)論理式\(\apply{\varphi}{x_1, x_2, \dots, x_n}\)に対する
+	\(\symcal{L}\)論理式\(\apply{\rho}{x_1, x_2, \dots, x_n}\)に対する
 	\(\symcal{L}'\)論理式
 	\begin{equation}
-		\forall x_1 \forall x_2 \dotsb \forall x_n \paren{\apply{\varphi}{x_1, x_2, \dots, x_n} \formulaequiv \apply{r}{x_1, x_2, \dots, x_n}}.
+		\forall x_1 \forall x_2 \dotsb \forall x_n \paren{\apply{\rho}{x_1, x_2, \dots, x_n} \formulaequiv \apply{r}{x_1, x_2, \dots, x_n}}.
 		\label{eq:extensionbydefinitionrelationalsymbol}
 	\end{equation}
 	を，\(\symcal{L}, \Gamma\)における\(r\)の
@@ -797,10 +800,11 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 	\term{定義による拡大}という．
 \end{Def}
 
+以下，論理式\(\varphi\)の全称閉包を\(\forall \forall \varphi\)と表記することとする．
+
 \begin{Thm} \label[Thm]{Thm:extensionbydefinition}
 	\(\symcal{L}, \symcal{L}'\)を言語とし，\(\symcal{L} \subset \symcal{L}'\)であるとする．
 	また，\(\symcal{L}'\)理論\(\Gamma'\)を\(\symcal{L}\)理論\(\Gamma\)の定義による拡大とする．
-	以下，論理式\(\varphi\)の全称閉包を\(\forall \forall \varphi\)と表記することとする．
 	このとき，以下が成り立つ：
 	\begin{enumerate}
 		\item \(\Gamma'\)は\(\Gamma\)の保存拡大である．
@@ -816,10 +820,10 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 \end{Thm}
 
 \begin{proof}
-	まず1.を示す．\(\Gamma\)が矛盾している場合には明らか．
+	まず1.を示す．\(\Gamma\)が矛盾している場合には明らか．以下，\(\Gamma\)は無矛盾であるとする．
 	\(\Gamma \subset \Gamma'\)なので，\(\Gamma'\)は\(\Gamma\)の拡大である．
-	\(\Gamma' \provable \varphi\)を満たすが\(\Gamma \provable \varphi\)が成り立たない
-	\(\symcal{L}\)論理式\(\varphi\)が存在したと仮定する．
+	\(\Gamma'\)が\(\Gamma\)の保存拡大でないとすると，\(\Gamma' \provable \varphi\)を満たすが\(\Gamma \provable \varphi\)を満たさない
+	\(\symcal{L}\)論理式\(\varphi\)が存在する．
 	このとき，\(\Gamma\)理論\(\Gamma \cup \Set{\lnot \varphi}\)は無矛盾であるからHenkinの定理によって
 	そのモデル\(\symcal{M}\)が存在する．
 	\(\symcal{M}\)の対象領域を\(M\)とする．
@@ -829,15 +833,15 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 	\(r \in \symcal{L}' \setminus \symcal{L}\)がアリティ\(n\)の関係記号の場合を考える．
 	\(r\)の\(\symcal{M}'\)による解釈は，
 	\(\symcal{L}, \Gamma\)における\(r\)の定義となる\cref{eq:extensionbydefinitionrelationalsymbol}における
-	論理式\(\apply{\varphi}{x_1, x_2, \dots, x_n}\)を用いて
+	\(\symcal{L}\)論理式\(\apply{\rho}{x_1, x_2, \dots, x_n}\)を用いて
 	\[
-		\pair{t_1, t_2, \dots, t_n} \in \interpretation{\symcal{M}'}{r} \metaequivalent \symcal{M} \satisfy \apply{\varphi}{t_1, t_2, \dots, t_n}
+		\pair{t_1, t_2, \dots, t_n} \in \interpretation{\symcal{M}'}{r} \metaequivalent \symcal{M} \satisfy \apply{\rho}{t_1, t_2, \dots, t_n}
 	\]
 	によって定める．
 
 	\(c \in \symcal{L}' \setminus \symcal{L}\)が定数記号の場合を考える．
 	このとき，\(\symcal{L}, \Gamma\)における\(c\)の定義となる\cref{eq:extensionbydefinitionconstantsymbol}における
-	論理式\(\apply{\theta}{y}\)について，\cref{eq:definitionconstantsymbol}から
+	\(\symcal{L}\)論理式\(\apply{\theta}{y}\)について，\cref{eq:definitionconstantsymbol}から
 	\(\symcal{M} \satisfy \uexists y \apply{\theta}{y}\)だから\(\symcal{M} \satisfy \apply{\theta}{c_a}\)を満たす\(a \in M\)がただ1つ存在する．
 	ここで，\(c_a\)は\(a\)の名前である．
 	この\(a\)を用いて，\(c\)の\(\symcal{M}'\)による解釈は
@@ -848,7 +852,7 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 
 	\(f \in \symcal{L}' \setminus \symcal{L}\)がアリティ\(n\)の関数記号の場合を考える．
 	このとき，\(\symcal{L}, \Gamma\)における\(f\)の定義となる\cref{eq:extensionbydefinitionfunctionsymbol}における
-	論理式\(\apply{\theta}{x_1, x_2, \dots, x_n, y}\)について，\cref{eq:definitionfunctionsymbol}から
+	\(\symcal{L}\)論理式\(\apply{\theta}{x_1, x_2, \dots, x_n, y}\)について，\cref{eq:definitionfunctionsymbol}から
 	\[
 		\symcal{M} \satisfy \forall x_1 \forall x_2 \dotsb \forall x_n \uexists y \apply{\theta}{x_1, x_2, \dots, x_n, y}
 	\]
@@ -870,4 +874,46 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 
 \begin{Que} \label[Que]{Que:extensionbydefinition}
 	\Cref{Thm:extensionbydefinition}の2.と3.を証明せよ．
+\end{Que}
+
+さて，通常の数学では定義によって言語と理論を拡大し，追加した記号も使ってあらたな定義を行ってさらに拡大し，というように，
+定義による拡大を何度も繰り返すことがほとんどである．
+次の\cref{Thm:extensionbydefinitiononce}は，このような定義による拡大の連鎖がいつでも1回の定義による拡大によって表現できるという主張である．
+この主張により，定義による拡大を何回行っても拡大する前の理論と本質的には変わっていないことが保証される．
+
+\begin{Thm} \label[Thm]{Thm:extensionbydefinitiononce}
+	\(\symcal{L}, \symcal{L}', \symcal{L}''\)を言語とし，\(\symcal{L} \subset \symcal{L}' \subset \symcal{L}''\)であるとする．
+	\(\symcal{L}'\)理論\(\Gamma'\)が\(\symcal{L}\)理論\(\Gamma\)の定義による拡大であり，\(\symcal{L}''\)理論\(\Gamma''\)が
+	\(\Gamma'\)の定義による拡大であるならば，\(\Gamma''\)は\(\Gamma\)の
+	ある定義による拡大\(\Sigma\)と以下の2条件をともに満たすという意味で等価である：
+	\begin{itemize}
+		\item 任意の\(\varphi \in \Gamma''\)に対して\(\Sigma \provable \varphi\)である，
+		\item 任意の\(\varphi \in \Sigma\)に対して\(\Gamma'' \provable \varphi\)である．
+	\end{itemize}
+\end{Thm}
+
+\begin{proof}
+	\Cref{Thm:extensionbydefinition}を使って，\(\symcal{L}'' \setminus \symcal{L}'\)に属する各記号の\(\symcal{L}', \Gamma'\)における定義を
+	\(\symcal{L}, \Gamma\)における定義に置き換えればよい．
+\end{proof}
+
+\begin{Que} \label{Que:extensionbydefinitiononce}
+	\Cref{Thm:extensionbydefinitiononce}の証明を精密化せよ．
+\end{Que}
+
+\begin{Note} \label[Note]{Note:equivalentTheory}
+	理論\(\Gamma, \Sigma\)が
+	\begin{itemize}
+		\item 任意の\(\varphi \in \Gamma\)に対して\(\Sigma \provable \varphi\)である，
+		\item 任意の\(\varphi \in \Sigma\)に対して\(\Gamma \provable \varphi\)である
+	\end{itemize}
+	という2条件をともに満たすのであれば，任意の論理式\(\varphi\)に対して
+	\[
+		\Gamma \provable \varphi \metaequivalent \Sigma \provable \varphi
+	\]
+	が成り立つ．「どのような論理式を証明することができるか」という意味においては，\(\Gamma, \Sigma\)は等価な理論であるといえる．
+\end{Note}
+
+\begin{Que} \label{Que:equivalentTheory}
+	\Cref{Note:equivalentTheory}で述べた事実を確かめよ．
 \end{Que}

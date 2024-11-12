@@ -1328,3 +1328,117 @@
 
 以上のような事情により，\cref{Ex:polynomialringherbrandmodel}では
 \(\Gamma\)として\(\Ring\)に\(\apply{\Diag}{\symcal{R}}\)を加えたのであった．
+
+
+\subsection*{\Cref{Que:extensionbydefinition}}
+
+2.は\(\symcal{L}'\)項\(t\)の構成に関する帰納法によって示す．
+\(t\)が変数記号か定数記号である場合には，別の変数記号\(y\)をとって論理式\(\apply{\theta}{y}\)を\(y \objeq t\)と定めればよい．
+\(t\)がアリティ\(n\)の関数記号\(f\)と項\(t_1,t_2,\dots,t_n\)を用いて\(apply{f}{t_1,t_2,\dots,t_n}\)と表される場合を考える．
+\(t_1,t_2,\dots,t_n\)に対し，帰納法の仮定によってとれる2.の主張を満たす論理式をそれぞれ
+\(\apply{\theta_1}{y_1},\apply{\theta_2}{y_2},\dots,\apply{\theta_n}{y_n}\)とする．
+\(f \in \symcal{L}\)の場合には，\(t\)に対する2.を満たす\(\apply{\theta}{y}\)として
+\[
+	\exists y_1 \exists y_2 \dotsb \exists y_n \paren{y \objeq \apply{f}{y_1, y_2, \dots, y_n} \land \apply{\theta_1}{y_1} \land \apply{\theta_2}{y_2} \land \dotsb \land \apply{\theta_n}{y_n}}
+\]
+をとればよい．\(f \in \symcal{L}' \setminus \symcal{L}\)の場合には，上記\(\symcal{L}\)論理式中の\(y \objeq \apply{f}{y_1, y_2, \dots, y_n}\)を
+\(f\)の定義となる\cref{eq:extensionbydefinitionfunctionsymbol}における\(\symcal{L}\)論理式\(\apply{\theta}{x_1,x_2,\dots,x_n}\)を用いた
+\[
+	\apply{\theta}{y_1,y_2,\dots,y_n,y}
+\]
+に置き換えればよい．
+
+3.を示そう．\(\symcal{L}'\)論理式\(\varphi\)の構成に関する帰納法によって示す．
+\(\varphi\)が原子論理式の場合に示せばあとは容易である．
+\(\varphi\)が\(\bot\)である場合には，3.を満たす\(\hat{\varphi}\)として\(\bot\)をとればよい．
+\(\varphi\)が項\(t_1,t_2\)を用いた\(t_1 \objeq t_2\)の形である場合には，3.を満たす\(\symcal{L}\)論理式\(\hat{\varphi}\)としては
+\(t_1,t_2\)に対して2.を満たす\(\symcal{L}\)論理式\(\apply{\theta_1}{y_1},\apply{\theta_2}{y_2}\)をとって
+\[
+	\exists y_1 \exists y_2 \paren{t_1 \objeq t_2 \land \apply{\theta}{y_1} \land \apply{\theta}{y_2}}
+\]
+をとればよい．
+\(\varphi\)がアリティ\(n\)の関係記号\(r\)と項\(t_1,t_2,\dots,t_n\)を用いて
+\(\apply{r}{t_1,t_2,\dots,t_n}\)と表される場合を考える．
+\(t_1,t_2,\dots,t_n\)に対してとれる2.の主張を満たす論理式をそれぞれ
+\(\apply{\theta_1}{y_1},\apply{\theta_2}{y_2},\dots,\apply{\theta_n}{y_n}\)とする．
+\(r \in \symcal{L}\)である場合には，3.を満たす\(\symcal{L}\)論理式\(\hat{\varphi}\)としては
+\[
+	\exists y_1 \exists y_2 \dotsb \exists y_n \paren{\apply{r}{y_1,y_2,\dots,y_n} \land \apply{\theta_1}{y_1} \land \apply{\theta_2}{y_2} \land \dotsb \land \apply{\theta_n}{y_n}}
+\]
+をとればよい．
+\(r \in \symcal{L}' \setminus \symcal{L}\)である場合には，上記\(\symcal{L}\)論理式中の\(\apply{r}{y_1,y_2,\dots,y_n}\)を
+\(r\)の定義となる\cref{eq:extensionbydefinitionrelationalsymbol}における\(\symcal{L}\)論理式\(\apply{\rho}{x_1,x_2,\dots,x_n}\)を用いた
+\[
+	\apply{\rho}{y_1,y_2,\dots,y_n}
+\]
+に置き換えればよい．
+
+
+\subsection*{\Cref{Que:extensionbydefinitiononce}}
+
+\(\Gamma' \setminus \Gamma\)は，\(\symcal{L}' \setminus \symcal{L}\)に属する記号の\(\symcal{L}, \Gamma\)における定義全体の集合である．
+そこで，\(\Gamma'\)に\(s \in \symcal{L}'' \setminus \symcal{L}'\)に属する記号の\(\symcal{L}, \Gamma\)における定義を
+すでに与えられている\(\symcal{L}', \Gamma'\)と等価になるように定め，\(\Gamma\)の定義による拡大を得ることを考える．
+
+アリティ\(n\)の関係記号\(r \in \symcal{L}'' \setminus \symcal{L}'\)については，その定義となる\cref{eq:extensionbydefinitionrelationalsymbol}における
+\(\symcal{L}'\)論理式\(\rho\)をとる．この\(\apply{\rho}{x_1,x_2,\dots,x_n}\)に対して\cref{Thm:extensionbydefinition}によって
+\(\Gamma' \provable \forall \forall \paren{\apply{\rho}{x_1,x_2,\dots,x_n} \formulaequiv \apply{\hat{\rho}}{x_1,x_2,\dots,x_n}}\)となる
+\(\symcal{L}\)論理式\(\apply{\hat{\rho}}{x_1,x_2,\dots,x_n}\)がとれるので，
+\(r\)の\(\symcal{L}, \Gamma\)における定義を
+\[
+	\forall \forall \paren{\apply{r}{x_1,x_2,\dots,x_n} \formulaequiv \apply{\hat{\rho}}{x_1,x_2,\dots,x_n}}
+\]
+とする．
+
+定数記号\(c \in \symcal{L}'' \setminus \symcal{L}'\)については，
+その定義となる\cref{eq:extensionbydefinitionconstantsymbol}における
+\(\symcal{L}'\)論理式\(\apply{\theta}{y}\)をとる．
+この\(\apply{\theta}{y}\)に対して\cref{Thm:extensionbydefinition}によって
+\(\Gamma' \provable \forall \forall \paren{\apply{\theta}{y} \formulaequiv \apply{\hat{\theta}}{y}}\)
+となる
+\(\symcal{L}\)論理式\(\apply{\hat{\theta}}{y}\)がとれるので，
+\(c\)の\(\symcal{L}, \Gamma\)における定義を
+\[
+	\forall \forall \apply{\hat{\theta}}{c}
+\]
+とする．
+
+アリティ\(n\)の関数記号\(f \in \symcal{L}'' \setminus \symcal{L}'\)についても同様に行う．
+\(f\)の定義となる\cref{eq:extensionbydefinitionfunctionsymbol}における
+\(\symcal{L}'\)論理式\(\apply{\theta}{x_1,x_2,\dots,x_n,y}\)をとる．
+この\(\apply{\theta}{x_1,x_2,\dots,x_n,y}\)に対して\cref{Thm:extensionbydefinition}によって
+\(\Gamma' \provable \forall \forall \paren{\apply{\theta}{x_1,x_2,\dots,x_n,y} \formulaequiv \apply{\hat{\theta}}{x_1,x_2,\dots,x_n,y}}\)
+となる
+\(\symcal{L}\)論理式\(\apply{\hat{\theta}}{x_1,x_2,\dots,x_n,y}\)がとれるので，
+\(f\)の\(\symcal{L}, \Gamma\)における定義を
+\[
+	\apply{\hat{\theta}}{x_1,x_2,\dots,x_n, \apply{f}{x_1,x_2,\dots,x_n}}
+\]
+とする．
+
+さて，各\(s \in \symcal{L}'' \setminus \symcal{L}'\)に対して上記によって得られる定義全体の集合を\(\hat{\Theta}\)とし，
+\(\Sigma = \Gamma' \cup \hat{\Theta}\)とする．\(\Sigma\)は\(\Gamma\)の定義による拡大である．
+\(\Sigma\)が\(\Gamma''\)と\cref{Thm:extensionbydefinitiononce}の主張で示した意味で同値であることを示そう．
+\(\varphi \in \Gamma''\)を任意にとる．\(\varphi \in \Gamma'\)ならば\(\varphi \in \Sigma\)だから\(\Sigma \provable \varphi\)である．
+\(\varphi \in \Gamma'' \setminus \Gamma'\)とする．このとき，\(\varphi\)は\(\symcal{L}'' \setminus \symcal{L}'\)に属するある記号の\(\symcal{L}', \Gamma'\)における定義になっている．
+その記号が関係記号，定数記号，関係記号のいずれであっても，同じ記号の\(\Sigma\)に属する\(\symcal{L}, \Gamma\)における定義\(\hat{\varphi}\)は
+\(\Sigma \provable \varphi \formulaequiv \hat{\varphi}\)を満たす．
+\(\hat{\varphi} \in \Sigma\)だから\(\Sigma \provable \hat{\varphi}\)であり，よって\(\Sigma \provable \varphi\)となる．
+\(\varphi \in \Sigma\)ならば\(\Gamma \provable \varphi\)であることも同様に示すことができる．
+
+\subsection*{\Cref{Que:equivalentTheory}}
+
+\(\Gamma \provable \varphi\)とすると，有限個の\(\varphi_1, \varphi_2, \dots, \varphi_n \in \Gamma\)で
+シークエント
+\[
+	\varphi_1, \varphi_2, \dots, \varphi_n \sequent \varphi
+\]
+が導出可能となるものが存在する．
+よってシークエント
+\[
+	\sequent \varphi_1 \to \paren{\varphi_2 \to \paren{\dotsb \to \varphi_n}}
+\]
+は導出可能である．
+各\(i = 1,2,\dots,n\)に対してシークエント\(\Sigma \sequent \varphi_i\)は導出可能だから，
+(\(\to\)E)規則を繰り返し適用することで\(\Sigma \provable \varphi\)であることがわかる．
+\(\Sigma \provable \varphi\)ならば\(\Gamma \provable \varphi\)であることも同様にしてわかる．

@@ -709,30 +709,30 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 
 \begin{Ex} \label[Ex]{Ex:polynomialringherbrandmodel}
 	記号\(x_1, x_2, \dots, x_n\)が与えられたとする．
-	環の理論\(\Ring\)のモデル\(\symcal{R}\)をひとつとる．
+	可換環の理論\(\CRing\)のモデル\(\symcal{R}\)をひとつとる．
 	環論の言語\(\symcal{L}_{\Ring}\)に\(x_1, x_2, \dots, x_n\)を加えて得られる
 	言語\(\symcal{L} = \symcal{L}_{\Ring} \cup \Set{x_1, x_2, \dots, x_n}\)を考える．
-	\(\languagewithname{\symcal{L}}{\symcal{R}}\)理論\(\Gamma\)を\(\Gamma = \Ring \cup \apply{\Diag}{\symcal{R}}\)と定めるとき，
+	\(\languagewithname{\symcal{L}}{\symcal{R}}\)理論\(\Gamma\)を\(\Gamma = \CRing \cup \apply{\Diag}{\symcal{R}}\)と定めるとき，
 	\(\languagewithname{\symcal{L}}{\symcal{R}}\)における\(\Gamma\)のHerbrand構造は通常
 	\(x_1, x_2, \dots, x_n\)を不定元とする\(\symcal{R}\)上の多項式環と呼ばれ，
 	\(\polynomial{\symcal{R}}{x_1, x_2, \dots, x_n}\)と表記される．
-	\(\Ring\)も無矛盾な全称Horn理論であり，\(\symcal{R} \satisfy \Ring \cup \apply{\Diag}{\symcal{R}}\)
+	\(\CRing\)も無矛盾な全称Horn理論であり，\(\symcal{R} \satisfy \Ring \cup \apply{\Diag}{\symcal{R}}\)
 	だから\(\Gamma\)は無矛盾である．さらに，\(\apply{\Diag}{\symcal{R}}\)の元はすべて等式だから
 	\(\Gamma\)は無矛盾な全称Horn理論である．
 	ゆえに\cref{Thm:HornHerbrandmodel}によって
 	\(\polynomial{\symcal{R}}{x_1, x_2, \dots, x_n}\)が\(\Gamma\)のモデルであることがわかる．
-	\(\Ring \subset \Gamma\)だから，\(\polynomial{\symcal{R}}{x_1, x_2, \dots, x_n}\)は\(\Ring\)のモデルでもある．
+	\(\CRing \subset \Gamma\)だから，\(\polynomial{\symcal{R}}{x_1, x_2, \dots, x_n}\)は\(\CRing\)のモデルでもある．
 \end{Ex}
 
 \begin{Que} \label{Que:polynomialringherbrandmodel}
 	\Cref{Ex:polynomialringherbrandmodel}で多項式環を定義する際，
-	\(\Gamma\)として\(\Ring\)でも\(\Ring \cup \apply{\eDiag}{\symcal{R}}\)でもなく
-	\(\Ring \cup \apply{\Diag}{\symcal{R}}\)を考えた．
+	\(\Gamma\)として\(\CRing\)でも\(\Ring \cup \apply{\eDiag}{\symcal{R}}\)でもなく
+	\(\CRing \cup \apply{\Diag}{\symcal{R}}\)を考えた．
 	実数全体の集合を\(\RealNumbers\)を環とみなして得られる環上の多項式環や
 	剰余環\(\Integers/2\Integers\)上の多項式環の計算を思い出し，
 	\begin{itemize}
-		\item \(\Gamma\)として\(\Ring\)を選んだ場合，
-		\item \(\Gamma\)として\(\Ring \cup \apply{\eDiag}{\symcal{R}}\)を選んだ場合
+		\item \(\Gamma\)として\(\CRing\)を選んだ場合，
+		\item \(\Gamma\)として\(\CRing \cup \apply{\eDiag}{\symcal{R}}\)を選んだ場合
 	\end{itemize}
 	のいずれの場合でも我々が素朴に考える「多項式」の定式化としては不適格であることを確かめよ．
 \end{Que}

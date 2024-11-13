@@ -1110,6 +1110,20 @@
 この\(\symcal{M}\)は\(\symcal{M} \satisfy \lnot \varphi\)を満たすので\(\symcal{M} \satisfy \varphi\)
 は成り立たず，従って\(\Gamma \satisfy \varphi\)ではない．
 
+\subsection*{\Cref{Que:existsfinitestructure}}
+
+文中にあるような論理式\(\varphi\)が存在したと仮定する．
+このとき，閉論理式の無限集合\(T\)を以下のように定める：
+\[
+	T = \Set{\varphi,\varepsilon_1,\varepsilon_2,\dots,\varepsilon_n,\dots}.
+\]
+このとき，\(T\)の任意の有限部分集合はモデルをもつ．
+実際，\(T\)の任意の有限部分集合\(T'\)に対し，\(varepsilon_n \in T'\)となる\(n\)のうち最大のものを\(m\)とすれば，
+対象領域の要素数が\(m\)であるような構造は\(T'\)のモデルである．
+よってコンパクト性定理によって\(T\)もモデルをもつ．その1つを\(\symcal{M}\)とする．
+\(\symcal{M}\)の対象領域は有限集合であり，その要素数を\(n\)とすると\(\varepsilon_{n+1} \in T\)である．
+しかし\(\symcal{M}\)が\(\varepsilon_{n+1}\)を充足することはないので矛盾である．
+
 
 \subsection*{\Cref{Que:Herbrandstructurewelldefineded}}
 

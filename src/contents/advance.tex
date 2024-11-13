@@ -443,6 +443,35 @@
 	よってもとの主張も成り立つ．
 \end{proof}
 
+\begin{Que} \label{Que:existsfinitestructure}
+	与えられた正の整数\(n\)に対し，以下の論理式\(\apply{e_n}{x_1,x_2,\dots,x_n}\)を考える：
+	\begin{equation}
+		\begin{aligned}
+			 & \lnot \paren{x_1 \objeq x_2} \land \lnot \paren{x_1 \objeq x_3} \land \dotsb \land \lnot \paren{x_1 \objeq x_n}                                                            \\
+			 & \land \lnot \paren{x_2 \objeq x_3} \land \lnot \paren{x_2 \objeq x_4} \land \dotsb \land \lnot \paren{x_2 \objeq x_n} \land \dotsb \land \lnot \paren{x_{n-1} \objeq x_n}.
+		\end{aligned}
+		\label{eq:greaterthannrepresentation}
+	\end{equation}
+	このとき，論理式
+	\[
+		\exists x_1 \exists x_2 \dotsb \exists x_n \apply{e_n}{x_1,x_2,\dots,x_n}
+	\]
+	を\(\varepsilon_n\)とすると，構造\(\symcal{M}\)に対して
+	\[
+		\symcal{M} \satisfy \varepsilon_n \metaequivalent \text{\(\symcal{M}\)の対象領域は\(n\)個以上の元をもつ}
+	\]
+	が成り立つ．
+	ところが，以下の条件が任意の構造\(\symcal{M}\)に対して成り立つような論理式\(\varphi\)は存在しない．
+	\[
+		\symcal{M} \satisfy \varphi \metaequivalent \text{\(\symcal{M}\)の対象領域は有限集合である．}
+	\]
+	コンパクト性定理を用いて，上記を満たす論理式\(\varphi\)が存在しないことを証明せよ．
+
+	上記の事実は「有限集合である」や「無限集合である」といった主張が1階論理では表現できないということを示している．
+	このことは，通常の数学における「主張」を表現するには1階論理では表現力不足であるということにほかならない．
+\end{Que}
+
+
 \section{Herbrand構造} \label{sec:Herbrandstructure}
 
 完全性定理の証明で経由した\cref{Lemma:Henkinextensionhasmodel}において，\(\Gamma_{\infty}\)のモデルを構成する際に

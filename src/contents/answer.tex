@@ -1333,8 +1333,10 @@
 \subsection*{\Cref{Que:extensionbydefinition}}
 
 2.は\(\symcal{L}'\)項\(t\)の構成に関する帰納法によって示す．
-\(t\)が変数記号か定数記号である場合には，別の変数記号\(y\)をとって論理式\(\apply{\theta}{y}\)を\(y \objeq t\)と定めればよい．
-\(t\)がアリティ\(n\)の関数記号\(f\)と項\(t_1,t_2,\dots,t_n\)を用いて\(apply{f}{t_1,t_2,\dots,t_n}\)と表される場合を考える．
+\(t\)が変数記号である場合には，別の変数記号\(y\)をとって論理式\(\apply{\theta}{y}\)を\(y \objeq t\)と定めればよい．
+\(t\)が定数記号である場合には，\(t\)の定義となる\cref{eq:extensionbydefinitionconstantsymbol}における
+\(\symcal{L}\)論理式\(\apply{\theta}{y}\)をそのまま用いればよい．
+\(t\)がアリティ\(n\)の関数記号\(f\)と項\(t_1,t_2,\dots,t_n\)を用いて\(\apply{f}{t_1,t_2,\dots,t_n}\)と表される場合を考える．
 \(t_1,t_2,\dots,t_n\)に対し，帰納法の仮定によってとれる2.の主張を満たす論理式をそれぞれ
 \(\apply{\theta_1}{y_1},\apply{\theta_2}{y_2},\dots,\apply{\theta_n}{y_n}\)とする．
 \(f \in \symcal{L}\)の場合には，\(t\)に対する2.を満たす\(\apply{\theta}{y}\)として
@@ -1412,7 +1414,7 @@
 \(\symcal{L}\)論理式\(\apply{\hat{\theta}}{x_1,x_2,\dots,x_n,y}\)がとれるので，
 \(f\)の\(\symcal{L}, \Gamma\)における定義を
 \[
-	\apply{\hat{\theta}}{x_1,x_2,\dots,x_n, \apply{f}{x_1,x_2,\dots,x_n}}
+	\forall \forall \apply{\hat{\theta}}{x_1,x_2,\dots,x_n, \apply{f}{x_1,x_2,\dots,x_n}}
 \]
 とする．
 
@@ -1442,3 +1444,29 @@
 各\(i = 1,2,\dots,n\)に対してシークエント\(\Sigma \sequent \varphi_i\)は導出可能だから，
 (\(\to\)E)規則を繰り返し適用することで\(\Sigma \provable \varphi\)であることがわかる．
 \(\Sigma \provable \varphi\)ならば\(\Gamma \provable \varphi\)であることも同様にしてわかる．
+
+
+\subsection*{\Cref{Que:grouptheoryaxiomization}}
+
+よく知られているように，この\(\symcal{L}\)理論\(T\)では以下を導くことができる．
+\[
+	T \provable \uexists e \forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} \objeq \obj{x}}
+\]
+群論の教科書では本書のような形式的記号列の議論は一切していないが，完全性定理を適用すれば
+群論の標準的な教科書に載っている証明がそのまま通用する．
+どうしても直接的に示したければ群論の標準的な教科書に載っている証明に相当するモデルに対する証明をシークエント計算に翻訳すればよい．
+さて，上記の議論により\(\symcal{L}\)に定数記号\(\obj{e}\)を加えた言語を\(\symcal{L}'\)とし，\(T\)に以下の公理を加えて得られる
+\(\symcal{L}'\)理論\(T'\)は\(T\)の定義による拡大である：
+\[
+	\forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} \objeq \obj{x}}.
+\]
+さらに，この理論\(T'\)では以下を導くことができる：
+\[
+	T' \provable \forall \obj{x} \uexists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} \objeq \obj{e}}.
+\]
+よって\(\symcal{L}''\)にアリティ1の関数記号\({}^{\obj{-1}}\)を加えた言語を\(\symcal{L}''\)とし，\(T'\)に以下の公理を加えて得られる
+\(\symcal{L}''\)理論\(T''\)は\(T'\)の定義による拡大である：
+\[
+	\forall \obj{x} \paren{\obj{x}^{\obj{-1}} \obj{\ast} \obj{x} \objeq \obj{e}}.
+\]
+この\(\symcal{L}''\)理論\(T''\)は\(\symcal{L}_{\GP}\)理論\(\GP\)にほかならない．

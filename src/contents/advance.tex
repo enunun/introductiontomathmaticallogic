@@ -917,3 +917,16 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 \begin{Que} \label{Que:equivalentTheory}
 	\Cref{Note:equivalentTheory}で述べた事実を確かめよ．
 \end{Que}
+
+\begin{Que} \label{Que:grouptheoryaxiomization}
+	本書では，群論の公理化として単位元や逆元を表す記号も言語として含んだものを採用した．
+	別の手法としては，二項演算を表す記号のみを言語として採用することも可能である．
+	いま，言語\(\symcal{L}\)を\(\symcal{L} = \Set{\obj{\ast}}\)と定める．
+	ただし\(\obj{\ast}\)はアリティ2の関数記号である．
+	そして，以下の2つの論理式からなる\(\symcal{L}\)理論\(T\)を考える：
+	\begin{align*}
+		\forall \obj{x} \forall \obj{y} \forall \obj{z} \paren{\obj{x} \obj{\ast} \paren{\obj{y} \obj{\ast} \obj{z}} \objeq \paren{\obj{x} \obj{\ast} \obj{y}} \obj{\ast} \obj{z}}, \\
+		\exists \obj{e} \paren{\forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} \objeq \obj{x}} \land \forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} \objeq \obj{e}}}.
+	\end{align*}
+	この\(T\)の定義による拡大によって\cref{Ex:grouptheory}における理論\(\GP\)が得られることを確かめよ．
+\end{Que}

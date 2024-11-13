@@ -104,7 +104,7 @@
 \end{Lemma}
 
 \begin{proof}
-	\(1 \metaimplies 2\)は(w)規則と(\(\lnot\)I)規則，および(DNF)規則から従う．
+	\(1 \metaimplies 2\)は(w)規則と(\(\lnot\)I)規則，および(DNE)規則から従う．
 	\(2 \metaimplies 3\)は明らか．\(3 \metaimplies 1\)は(\(\lnot\)E)規則から従う．
 \end{proof}
 
@@ -153,7 +153,7 @@
 
 \begin{proof}
 	\(\Gamma \cup \Set{\varphi}\)と\(\Gamma \cup \Set{\lnot \varphi}\)がともに矛盾していると仮定すると，
-	(\(\lnot\)I)規則と(DNF)規則によって\(\Gamma \provable \varphi\)かつ\(\Gamma \provable \lnot \varphi\)
+	(\(\lnot\)I)規則と(DNE)規則によって\(\Gamma \provable \varphi\)かつ\(\Gamma \provable \lnot \varphi\)
 	であることがわかる．よって\cref{Lemma:inconsistency}によって\(\Gamma\)が矛盾することがわかる．
 \end{proof}
 
@@ -167,12 +167,12 @@
 \begin{proof}
 	\(\Gamma \cup \Set{\exists x \varphi \to \subst{\varphi}{c/x}}\)が矛盾すると仮定する．
 	\(\Gamma \provable \lnot \paren{\exists x \varphi \to \subst{\varphi}{c/x}}\)
-	なので\cref{Thm:equivlogicalexpression}の\cref{eq:lnotto}
+	なので\cref{Thm:prooflnotforallexistscontradiction}の\cref{eq:lnotto}
 	（と(\(\to\)I)規則や(\(\to\)E)規則）により\(\Gamma \provable \exists x \varphi \land \lnot \subst{\varphi}{c/x}\)
 	となる．このとき，(\(\land\)I)の形から\(\Gamma \provable \exists x \varphi\)かつ\(\Gamma \provable \lnot \subst{\varphi}{c/x}\)
 	となる．すると，\(\Gamma \provable \lnot \subst{\varphi}{c/x}\)から
 	(\(\forall\)I)規則によって\(\Gamma \provable \forall x \lnot \varphi\)
-	が得られるが，\cref{Thm:equivlogicalexpression}の\cref{eq:existsdemorgan}から
+	が得られるが，\cref{Thm:proofdemorganlaw}の\cref{eq:existsdemorgan}から
 	\(\Gamma \provable \lnot \exists x \varphi\)が得られるので\(\Gamma\)の無矛盾性に反する．
 \end{proof}
 
@@ -223,16 +223,17 @@
 	\Cref{Lemma:existsextend}により，\(\Gamma\)にHenkin公理を加えて得られる
 	\(\symcal{L} \cup \Set{c_{\exists x \varphi}}\)理論は無矛盾である．
 
-	さて，自然数\(n\)に対する言語\(\symcal{L}_n\)と\(\symcal{L}_n\)閉論理式の集合\(\H_n\)
-	を，および\(\symcal{L}_n\)理論\(\Gamma_n\)を以下のように帰納的に定義する：
+	さて，自然数\(n\)に対する言語\(\symcal{L}_n\)と\(\symcal{L}_n\)閉論理式からなる
+	Henkin公理の集合\(H_n\)，
+	および\(\symcal{L}_n\)理論\(\Gamma_n\)を以下のように帰納的に定義する：
 	まず，\(\symcal{L}_0 = \symcal{L}\)とし，
 	\(\exists x \varphi\)という形の\(\symcal{L}\)論理式に対するHenkin定数の全体を\(C_0\)，
 	Henkin公理の全体を\(H_0\)とする．
 	そして，\(\exists x \varphi\)という形の\(\symcal{L}_n\)論理式に対するHenkin定数の全体を\(C_n\)，
 	Henkin公理の全体を\(H_n\)として，\(\symcal{L}_{n+1} = \symcal{L}_n \cup C_n\)，\(\Gamma_n = \Gamma \cup H_n\)とする．
 	\cref{Lemma:existsextend}と帰納法によってすべての自然数\(n\)に対して\(\Gamma_n\)が無矛盾であることを示すことができる．
-	\(\symcal{L}_\infty = \bigcup_{n \in \Natural} \symcal{L}_n\)，\(\H_\infty = \bigcup_{n \in \Natural} H_n\)
-	とし，\(\Gamma_\infty = \bigcup_{n \in \Natural} \Gamma_n = \Gamma \cup H_\infty\)とする．
+	\(\symcal{L}_\infty = \bigcup_{n \in \NaturalNumbers} \symcal{L}_n\)，\(H_\infty = \bigcup_{n \in \NaturalNumbers} H_n\)
+	とし，\(\Gamma_\infty = \bigcup_{n \in \NaturalNumbers} \Gamma_n = \Gamma \cup H_\infty\)とする．
 	\(\symcal{L}_0 \subset \symcal{L}_1 \subset \symcal{L}_2 \subset \dotsb\)や
 	\(\Gamma_0 \subset\Gamma_1 \subset \Gamma_2 \subset \dotsb\)が成り立っている．
 
@@ -247,7 +248,7 @@
 		\metaimplies \text{\(\Gamma_\infty \provable \subst{\varphi}{c_{\exists x \varphi}/x}\)}.
 		\label{eq:henkincondition}
 	\end{equation}
-	\(\varphi\)は\(\symcal{L}_\infty = \bigcup_{n \in \Natural} \symcal{L}_n\)論理式であって
+	\(\varphi\)は\(\symcal{L}_\infty\)論理式であって
 	その記号列としての長さは有限である．また，\(\symcal{L}_0 \subset \symcal{L}_1 \dotsb\)なので，
 	\(\varphi\)が\(\symcal{L}_n\)論理式になるような自然数\(n\)が存在する．
 	\(\Gamma_\infty \provable \exists x \varphi\)だから\(\symcal{L}_\infty\)論理式の
@@ -285,7 +286,7 @@
 	まず，\(T_0 = \Gamma_\infty\)とする．
 	各自然数\(n\)に対し，\(T_n \cup \Set{\varphi_n} \provable \bot\)であれば\(T_{n + 1} = T_n \cup \Set{ \lnot \varphi_n}\)
 	とし，そうでなければ\(T_{n + 1} = T_n \cup \Set{\varphi_n}\)とする．
-	このように定義された自然数\(n\)に対する\(T_n\)を用いて\(T_\infty = \bigcup_{n \in \Natural} T_n\)と定義する．
+	このように定義された自然数\(n\)に対する\(T_n\)を用いて\(T_\infty = \bigcup_{n \in \NaturalNumbers} T_n\)と定義する．
 
 	\(\Gamma_\infty\)の無矛盾性と帰納法により，各\(n\)に対して\(T_n\)が無矛盾であることが従う．
 	また，\(\Gamma_\infty\)の無矛盾性と同様にして\(T_\infty\)の無矛盾性が従う．
@@ -364,7 +365,7 @@
 		 & \metaequivalent \apply{r}{t_1, t_2, \dots, t_n} \in \Gamma_\infty.
 	\end{align*}
 
-	\(\varphi\)が\(\exists \psi\)の形をしている場合を考える．
+	\(\varphi\)が\(\exists x \psi\)の形をしている場合を考える．
 	まず，\(\varphi \in \Gamma_\infty\)と仮定すると，
 	\(\exists x \psi \to \subst{\psi}{c_{\exists x \psi}/x} \in \Gamma_\infty\)である．
 	よって\(\varphi \in \Gamma_\infty\)から(\(\to\)E)規則によって
@@ -403,7 +404,7 @@
 \Cref{coro:consistencyfrommodel}と\cref{Lemma:Henkinextensionhasmodel}により，以下の帰結が得られる．
 
 \begin{Corollary} \label{coro:completeness}
-	\(\Gamma\)を理論とする．このとき，\(Gamma\)が無矛盾であることと\(\Gamma\)がモデルをもつことは同値である．
+	\(\Gamma\)を理論とする．このとき，\(\Gamma\)が無矛盾であることと\(\Gamma\)がモデルをもつことは同値である．
 \end{Corollary}
 
 \index[widx]{かんぜんせいていり@完全性定理}
@@ -423,6 +424,7 @@
 
 完全性定理の応用として，次のコンパクト性定理が得られる．
 
+\index[widx]{こんぱくとせいていり@コンパクト性定理}
 \begin{Thm}[コンパクト性定理] \label[Thm]{Thm:compact}
 	\(\Gamma\)を理論とする．
 	このとき，\(\Gamma\)のすべての有限部分集合がモデルをもつことと
@@ -430,10 +432,530 @@
 \end{Thm}
 
 \begin{proof}
+	対偶（もしくは裏）をとって，
+	\(\Gamma\)がモデルをもたないことと\(\Gamma\)の有限部分集合でモデルをもたないものが存在することが同値であることを示す．
 	\begin{align*}
 		                & \text{\(\Gamma\)がモデルをもたない}                 \\
 		\metaequivalent & \text{\(\Gamma\)は矛盾する}                     \\
 		\metaequivalent & \text{\(\Gamma\)のある有限部分集合で矛盾するものが存在する}     \\
 		\metaequivalent & \text{\(\Gamma\)のある有限部分集合でモデルをもたないものが存在する}
 	\end{align*}
+	よってもとの主張も成り立つ．
 \end{proof}
+
+\begin{Que} \label{Que:existsfinitestructure}
+	与えられた正の整数\(n\)に対し，以下の論理式\(\apply{e_n}{x_1,x_2,\dots,x_n}\)を考える：
+	\begin{equation}
+		\begin{aligned}
+			 & \lnot \paren{x_1 \objeq x_2} \land \lnot \paren{x_1 \objeq x_3} \land \dotsb \land \lnot \paren{x_1 \objeq x_n}                                                            \\
+			 & \land \lnot \paren{x_2 \objeq x_3} \land \lnot \paren{x_2 \objeq x_4} \land \dotsb \land \lnot \paren{x_2 \objeq x_n} \land \dotsb \land \lnot \paren{x_{n-1} \objeq x_n}.
+		\end{aligned}
+		\label{eq:greaterthannrepresentation}
+	\end{equation}
+	このとき，論理式
+	\[
+		\exists x_1 \exists x_2 \dotsb \exists x_n \apply{e_n}{x_1,x_2,\dots,x_n}
+	\]
+	を\(\varepsilon_n\)とすると，構造\(\symcal{M}\)に対して
+	\[
+		\symcal{M} \satisfy \varepsilon_n \metaequivalent \text{\(\symcal{M}\)の対象領域は\(n\)個以上の元をもつ}
+	\]
+	が成り立つ．
+	ところが，以下の条件が任意の構造\(\symcal{M}\)に対して成り立つような論理式\(\varphi\)は存在しない．
+	\[
+		\symcal{M} \satisfy \varphi \metaequivalent \text{\(\symcal{M}\)の対象領域は有限集合である．}
+	\]
+	コンパクト性定理を用いて，上記を満たす論理式\(\varphi\)が存在しないことを証明せよ．
+
+	上記の事実は「有限集合である」や「無限集合である」といった主張が1階論理では表現できないということを示している．
+	このことは，通常の数学における「主張」を表現するには1階論理では表現力不足であるということにほかならない．
+\end{Que}
+
+
+\section{Herbrand構造} \label{sec:Herbrandstructure}
+
+完全性定理の証明で経由した\cref{Lemma:Henkinextensionhasmodel}において，\(\Gamma_{\infty}\)のモデルを構成する際に
+閉項全体の集合に同値関係を入れることによって対象領域を定義した．
+このような手法を採用したのは，
+\cref{Lemma:Henkinextensionhasmodel}の証明中ではモデルとして提示したい構造の対象領域がアプリオリに与えられていなかったためである．
+単に閉項全体を対象領域として定義したのでは，理論の上では「等しい」項であっても構造の上では等しくならない．
+そこで，理論の上で「等しい」項を同一視するために同値関係を入れたのであった．
+
+この「閉項全体の集合に同値関係を入れ，それらに解釈を付与することで構造を定義する」という手法については，
+完全性定理を証明するための単なる道具を超えた価値がある．そこで，以下のように定義しよう．
+
+\index[widx]{こうぞう@構造!Herbrandこうぞう@Herbrand---}
+\begin{Def} \label[Def]{Def:Herbrandstructure}
+	\(\symcal{L}\)を定数記号をもつ言語とし，\(\Gamma\)を\(\symcal{L}\)理論とする．
+	\(\symcal{L}\)閉項全体の集合\(X\)上の同値関係\(\sim\)を以下のように定義する：
+	\begin{equation}
+		x \sim y \metaequivalent \Gamma \provable x \objeq y.
+		\label{eq:herbrandequivalencerelation}
+	\end{equation}
+	この同値関係\(\sim\)による\(X\)の商集合を\(M = X / \mathord{\sim}\)とする．
+	このとき，\(M\)を対象領域とする\(\symcal{L}\)構造\(\symcal{M}\)を
+	以下のように定める．
+
+	まず，定数記号\(c\)の\(\symcal{M}\)による解釈は
+	\begin{equation}
+		\interpretation{\symcal{M}}{c} = \equivclass{c}
+		\label{eq:herbrandinterpretationconstantsymbol}
+	\end{equation}
+	と定める．
+	次に，アリティ\(n\)の関数記号\(f\)の\(\symcal{M}\)による解釈は，\(t_1, t_2, \dots, t_n\)を\(\symcal{L}\)閉項として
+	\begin{equation}
+		\apply{\interpretation{\symcal{M}}{f}}{
+			\equivclass{t_1},
+			\equivclass{t_2},
+			\dots,
+			\equivclass{t_n}
+		}
+		=
+		\equivclass{
+			\apply{f}{t_1, t_2, \dots, t_n}
+		}
+		\label{eq:herbrandinterpretationfunctionsymbol}
+	\end{equation}
+	とする．
+	最後に，アリティ\(n\)の関数記号\(r\)の\(\symcal{M}\)による解釈は，\(t_1, t_2, \dots, t_n\)を\(\symcal{L}\)閉項として
+	\begin{equation}
+		\pair{
+			\equivclass{t_1},
+			\equivclass{t_2},
+			\dots,
+			\equivclass{t_n}
+		}
+		\in \interpretation{\symcal{M}}{r}
+		\metaequivalent
+		\Gamma \provable
+		\apply{r}{t_1, t_2, \dots, t_n}
+		\label{eq:herbrandinterpretationrelationsymbol}
+	\end{equation}
+	と定める．
+
+	以上のように定義される\(\symcal{L}\)構造\(\symcal{M}\)を
+	\(\symcal{L}\)における\(\Gamma\)の\term{Herbrand構造}という．
+\end{Def}
+
+\begin{Note}
+	\Cref{Def:Herbrandstructure}においては言語に定数記号が含まれることを要請している．
+	これは，構造の定義（\cref{Def:structure}）において対象領域が空でないことを要請していることに基づく．
+	定数記号を含まない言語におけるHerbrand構造を考えたい場合には，適当な定数記号をその言語に付け加えればよい．
+\end{Note}
+
+\begin{Que} \label[Que]{Que:Herbrandstructurewelldefineded}
+	\Cref{Def:Herbrandstructure}中の議論を正当化せよ．すなわち，以下を示せ：
+	\begin{enumerate}
+		\item \Cref{eq:herbrandequivalencerelation}で定義される\(X\)上の二項関係\(\sim\)が同値関係であること．
+		\item \Cref{eq:herbrandinterpretationconstantsymbol}から\Cref{eq:herbrandinterpretationrelationsymbol}の3つの定義が
+		      いずれも\(M\)の代表元のとりかたによらないこと．
+	\end{enumerate}
+\end{Que}
+
+\begin{Lemma} \label[Lemma]{lemma:herbrandsemantics}
+	\(\symcal{L}\)を定数記号をもつ言語とし，\(\Gamma\)を\(\symcal{L}\)理論とする．
+	\(\symcal{M}\)を\(\symcal{L}\)における\(\Gamma\)のHerbrand構造とする．
+	このとき，以下が成り立つ．
+	\begin{enumerate}
+		\item \(t\)を\(\symcal{L}\)閉項とするとき，\(\interpretation{\symcal{M}}{t} = \equivclass{t}\)である．
+		\item \(\symcal{L}\)文\(\varphi\)が\(\forall x_1 \forall x_2 \dotsb \forall x_n \apply{\psi}{x_1, x_2, \dots, x_n}\)
+		      の形の論理式であるならば，\(\symcal{M} \satisfy \varphi\)とすべての\(\symcal{L}\)閉項\(t_1, t_2, \dots, t_n\)に対して
+		      \(\symcal{M} \satisfy \apply{\psi}{t_1, t_2, \dots, t_n}\)であることは同値．
+		\item \(\symcal{L}\)文\(\varphi\)が原子論理式であるならば，\(\Gamma \provable \varphi\)と\(\symcal{M} \satisfy \varphi\)は同値．
+		\item \(\varphi\)が\(\symcal{L}\)原子論理式の全称閉包で\(\Gamma \provable \varphi\)ならば\(\symcal{M} \satisfy \varphi\)となる．
+	\end{enumerate}
+\end{Lemma}
+
+\begin{Que} \label{Que:herbrandsemantics}
+	\Cref{lemma:herbrandsemantics}を示せ．
+\end{Que}
+
+Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で述べる．
+
+\section{等式理論とHorn理論} \label{sec:equationaltheory}
+
+本節では，言語や公理に特別な制約を課した場合について考察する．
+
+\begin{Def} \label[Def]{Def:horntheory}
+	原子論理式のことを%
+	\index[widx]{りてらる@リテラル!せいのりてらる@正の---}%
+	\term{正のリテラル}といい，
+	原子論理式\(p\)の否定\(\lnot p\)のことを%
+	\index[widx]{りてらる@リテラル!ふのりてらる@負の---}%
+	\term{負のリテラル}という．
+	正のリテラルと負のリテラルを総称して%
+	\index[widx]{りてらる@リテラル}%
+	\term{リテラル}という．
+	また，リテラル\(p_1, p_2, \dots, p_n\)に対し，論理式
+	\begin{equation*}
+		p_1 \lor p_2 \lor \dotsb \lor p_n
+	\end{equation*}
+	を%
+	\index[widx]{せつ@節}%
+	\term{節}%
+	といい，節に含まれる正のリテラルが高々1つである場合にはその節のことを%
+	\index[widx]{せつ@節!Hornせつ@Horn---}%
+	\term{Horn節}という．
+
+	理論\(T\)の各文がすべてHorn節の全称閉包である場合，\(T\)は%
+	\index[widx]{りろん@理論!Hornりろん@全称Horn---}%
+	\term{全称Horn理論}であるという．
+\end{Def}
+
+全称Horn理論の特別な場合として，以下に示す等式理論も重要である．
+
+\begin{Def} \label[Def]{Def:equationaltheory}
+	\(\symcal{L}\)を言語とし，\(T\)を\(\symcal{L}\)理論とする．
+	このとき，\(T\)が%
+	\index[widx]{りろん@理論!とうしきりろん@等式---}%
+	\term{等式理論}であるとは，\(\symcal{L}\)が関係記号をもたず，
+	さらに\(T\)の各文がすべて等式（\(s \objeq t\)の形の論理式）の全称閉包になっていることをいう．
+	等式理論はその各文がすべてちょうど1つの正のリテラルであるため，全称Horn理論でもある．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:equationaltheory}
+	\Cref{Ex:grouptheory}における群の理論\(\GP\)と\cref{Ex:Ring}における環の理論\(\Ring\)はいずれも等式理論であり，
+	従って全称Horn理論でもある．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:horntheory}
+	\Cref{Ex:orderedset}における理論\(\POSET\)は，そのままでは全称Horn理論ではない．
+	1つ目の公理\(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{x}}\)
+	は0個の正のリテラルと1個の負のリテラルからなるHorn節の全称閉包であるが，
+	2つ目の公理
+	\[
+		\forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\obj{x} \obj{<} \obj{y} \land \obj{y} \obj{<} \obj{z} \to \obj{x} \obj{<} \obj{z}}
+	\]
+	はHorn節の全称閉包でもなければ節の全称閉包ですらないからである．
+	しかし，この公理を論理的に同値な
+	\[
+		\forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\lnot \paren{\obj{x} \obj{<} \obj{y}} \lor \lnot \paren{\obj{y} \obj{<} \obj{z}} \lor \obj{x} \obj{<} \obj{z}}
+	\]
+	で置き換えると，これは1個の正のリテラルと2個の負のリテラルからなるHorn節の全称閉包なので，
+	この置き換えによって得られる理論は全称Horn理論である．
+\end{Ex}
+
+\begin{Thm} \label[Thm]{Thm:HornHerbrandmodel}
+	\(\symcal{L}\)を定数記号をもつ言語とする．
+	\(\symcal{L}\)理論\(\Gamma\)が無矛盾な全称Horn理論であるならば，
+	\(\symcal{L}\)における\(\Gamma\)のHerbrand構造は\(\Gamma\)のモデルとなる．
+\end{Thm}
+
+\begin{proof}
+	\(\symcal{L}\)における\(\Gamma\)のHerbrand構造を\(\symcal{M}\)とする．
+	\(\varphi \in \Gamma\)を任意にとる．
+	\(\varphi\)が正のリテラルを1つもつ場合を考える．
+	このとき，\(\varphi\)は原子論理式\(p_1, p_2, \dots, p_{n-1}, p_n\)を用いた以下の論理式\(\apply{\psi}{x_1, \dots, x_m}\)の全称閉包とみなせる：
+	\[
+		\lnot \apply{p_1}{x_1, \dots, x_m} \lor \lnot \apply{p_2}{x_1, \dots, x_m} \lor \dotsb \lor \lnot \apply{p_{n-1}}{x_1, \dots, x_m}
+		\lor \apply{p_{n}}{x_1, \dots, x_m}.
+	\]
+
+	さて，\(\symcal{M} \satisfy \varphi\)が成り立たないものとして矛盾を導く．
+	\Cref{lemma:herbrandsemantics}から閉項\(t_1, \dots, t_m\)で
+	\(\symcal{M} \satisfy \apply{\psi}{t_1, \dots, t_m}\)が成り立たないものが存在する．
+	よって\(i = 1, 2, \dots, n-1\)に対して\(\symcal{M} \satisfy \apply{p_i}{t_1, \dots, t_m}\)であり，
+	かつ\(\symcal{M} \satisfy \apply{p_n}{t_1, \dots, t_m}\)は成り立たない．
+	従って，\Cref{lemma:herbrandsemantics}から
+	\(i = 1,2,\dots, n-1\)については\(\Gamma \provable \apply{p_i}{t_1, \dots, t_m}\)であり，かつ
+	\(\Gamma \provable \apply{p_n}{t_1, \dots, t_m}\)は成り立たないことがわかる．
+	また，\(\varphi \in \Gamma\)と(\(\forall\)E)規則によって
+	\(\Gamma \provable \apply{\psi}{t_1, \dots, t_m}\)が得られる．
+	ここで，
+	\[
+		\apply{\psi}{t_1, \dots, t_m} \interderivable \apply{p_1}{t_1, \dots, t_m} \to \paren{\apply{p_2}{t_1, \dots, t_m} \to \paren{\dotsb \to \apply{p_n}{t_1, \dots, t_m}}}
+	\]
+	であるから
+	\[
+		\Gamma \provable \apply{p_1}{t_1, \dots, t_m} \to \paren{\apply{p_2}{t_1, \dots, t_m} \to \paren{\dotsb \to \apply{p_n}{t_1, \dots, t_m}}}
+	\]
+	となる．よって(\(\to\)E)規則を繰り返し適用することで
+	\[
+		\Gamma \provable \apply{p_n}{t_1, \dots, t_m}
+	\]
+	が得られ，矛盾する．
+	よって\(\symcal{M} \satisfy \varphi\)となる．
+	\(\varphi\)が正のリテラルをもたない場合も同様である（上記で\(p_n\)の代わりに\(\lnot p_n\)を考えればよい）．
+
+	以上の議論により，\(\symcal{M} \satisfy \Gamma\)が得られる．
+\end{proof}
+
+
+等式理論はすべて全称Horn理論である．よって，代数学で扱う多くの理論が全称Horn理論となる．
+\Cref{Thm:HornHerbrandmodel}の代数学への応用として，
+与えられた記号を使って定義される理論や構造を考えよう．
+
+\begin{Ex} \label[Ex]{Ex:generatorforgrouptheory}
+	記号\(a, b\)が与えられたとする．
+	このとき，群論の言語\(\symcal{L}_{\GP}\)に\(a,b\)を加えた言語
+	\(\symcal{L} = \symcal{L}_{\GP} \cup \Set{a, b}\)を考える．
+	\(\symcal{L}\)理論\(\Gamma\)として，\(\GP\)に対して
+	以下の3つの閉論理式を加えたものを考える：
+	\begin{align*}
+		\paren{a \obj{*} a} \obj{*} a & \objeq \obj{e},                      \\
+		b \obj{*} b                   & \objeq \obj{e},                      \\
+		b \obj{*} a                   & \objeq \paren{a \obj{*} a} \obj{*} b
+	\end{align*}
+	\(\symcal{L}\)における\(\Gamma\)のHerbrand構造\(\symcal{M}\)を考える．
+	\(\GP\)の公理はすべて等式の全称閉包になっていることと\(\GP \subset \Gamma\)であることにより，
+	任意の\(\varphi \in \GP\)に対して\(\Gamma \provable \varphi\)となる．
+	従って\cref{lemma:herbrandsemantics}によって\(\symcal{M}\)は\(\GP\)の3つの公理すべてを充足する．
+	よって\(\symcal{M}\)は\(\GP\)のモデルである．
+	なお，\(\symcal{M}\)は上で与えた3つの基本関係式に従う2つの生成元\(a, b\)によって
+	生成される位数6の二面体群となる．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:polynomialringherbrandmodel}
+	記号\(x_1, x_2, \dots, x_n\)が与えられたとする．
+	可換環の理論\(\CRing\)のモデル\(\symcal{R}\)をひとつとる．
+	環論の言語\(\symcal{L}_{\Ring}\)に\(x_1, x_2, \dots, x_n\)を加えて得られる
+	言語\(\symcal{L} = \symcal{L}_{\Ring} \cup \Set{x_1, x_2, \dots, x_n}\)を考える．
+	\(\languagewithname{\symcal{L}}{\symcal{R}}\)理論\(\Gamma\)を\(\Gamma = \CRing \cup \apply{\Diag}{\symcal{R}}\)と定めるとき，
+	\(\languagewithname{\symcal{L}}{\symcal{R}}\)における\(\Gamma\)のHerbrand構造は通常
+	\(x_1, x_2, \dots, x_n\)を不定元とする\(\symcal{R}\)上の多項式環と呼ばれ，
+	\(\polynomial{\symcal{R}}{x_1, x_2, \dots, x_n}\)と表記される．
+	\(\CRing\)も無矛盾な全称Horn理論であり，\(\symcal{R} \satisfy \Ring \cup \apply{\Diag}{\symcal{R}}\)
+	だから\(\Gamma\)は無矛盾である．さらに，\(\apply{\Diag}{\symcal{R}}\)の元はすべて等式だから
+	\(\Gamma\)は無矛盾な全称Horn理論である．
+	ゆえに\cref{Thm:HornHerbrandmodel}によって
+	\(\polynomial{\symcal{R}}{x_1, x_2, \dots, x_n}\)が\(\Gamma\)のモデルであることがわかる．
+	\(\CRing \subset \Gamma\)だから，\(\polynomial{\symcal{R}}{x_1, x_2, \dots, x_n}\)は\(\CRing\)のモデルでもある．
+\end{Ex}
+
+\begin{Que} \label{Que:polynomialringherbrandmodel}
+	\Cref{Ex:polynomialringherbrandmodel}で多項式環を定義する際，
+	\(\Gamma\)として\(\CRing\)でも\(\Ring \cup \apply{\eDiag}{\symcal{R}}\)でもなく
+	\(\CRing \cup \apply{\Diag}{\symcal{R}}\)を考えた．
+	実数全体の集合を\(\RealNumbers\)を環とみなして得られる環上の多項式環や
+	剰余環\(\Integers/2\Integers\)上の多項式環の計算を思い出し，
+	\begin{itemize}
+		\item \(\Gamma\)として\(\CRing\)を選んだ場合，
+		\item \(\Gamma\)として\(\CRing \cup \apply{\eDiag}{\symcal{R}}\)を選んだ場合
+	\end{itemize}
+	のいずれの場合でも我々が素朴に考える「多項式」の定式化としては不適格であることを確かめよ．
+\end{Que}
+
+
+\section{定義による拡大} \label{sec:extensionbydefinition}
+
+数学では，理論の途中で関数や関係を表した新しい記号を定義して表記の簡素化を行うことがある．
+数理論理学においては，言語に関数記号や関係記号を追加してその記号の定義となる主張を新しく公理として組み込むことに相当する．
+すると，項や論理式が指すものに追加した記号を使用したものが追加されることになり，
+その理論が有する定理も追加した記号に関するものが登場するようになる．
+しかし，このような記号の導入によっては「理論は変わらない」と考えるのが普通であろう．
+本節では，このような「定義による拡大」によって「理論が本質的には変わらない」ということを検証することとする．
+
+まずは理論の拡大について定義しよう．
+
+\begin{Def} \label{Def:extensiontheory}
+	\(\symcal{L}, \symcal{L}'\)を言語とし，\(\symcal{L} \subset \symcal{L}'\)であるとする．
+	このとき，\(\symcal{L}'\)理論\(\Gamma\)が\(\symcal{L}\)理論\(\Gamma\)の%
+	\index[widx]{かくだい@（理論の）拡大}%
+	\term{拡大}であるとは，任意の\(\symcal{L}\)論理式\(\varphi\)に対して
+	\begin{equation}
+		\Gamma \satisfy \varphi \metaimplies \Gamma' \satisfy \varphi
+		\label{eq:extensiontheory}
+	\end{equation}
+	が成り立つことをいう．
+	また，\cref{eq:extensiontheory}に加えてその逆である
+	\begin{equation}
+		\Gamma' \satisfy \varphi \metaimplies \Gamma \satisfy \varphi
+		\label{eq:conservationextensiontheoryoneside}
+	\end{equation}
+	も成り立つ場合，\(\Gamma'\)は\(\Gamma\)の%
+	\index[widx]{かくだい@（理論の）拡大!ほぞんかくだい@保存---}%
+	\term{保存拡大}という．すなわち，\(\Gamma'\)が\(\Gamma\)の保存拡大であるとは，
+	任意の\(\symcal{L}\)論理式\(\varphi\)に対して
+	\begin{equation}
+		\Gamma \satisfy \varphi \metaequivalent \Gamma' \satisfy \varphi
+		\label{eq:conservationextensiontheory}
+	\end{equation}
+	が成り立つことをいう．
+\end{Def}
+
+\begin{Def} \label{Def:extensionbydefinition}
+	\(\symcal{L}\)を言語とし，\(\Gamma\)を\(\symcal{L}\)理論とする．
+	\(\symcal{L} \subset \symcal{L}'\)を満たす言語\(\symcal{L}'\)を考える．
+
+	\(r \in \symcal{L}' \setminus \symcal{L}\)をアリティ\(n\)の関係記号とする．
+	\(x_1, x_2, \dots, x_n\)以外の変数記号が自由出現しない
+	\(\symcal{L}\)論理式\(\apply{\rho}{x_1, x_2, \dots, x_n}\)に対する
+	\(\symcal{L}'\)論理式
+	\begin{equation}
+		\forall x_1 \forall x_2 \dotsb \forall x_n \paren{\apply{\rho}{x_1, x_2, \dots, x_n} \formulaequiv \apply{r}{x_1, x_2, \dots, x_n}}.
+		\label{eq:extensionbydefinitionrelationalsymbol}
+	\end{equation}
+	を，\(\symcal{L}, \Gamma\)における\(r\)の
+	\index[widx]{ていぎ@（理論の拡大における）定義}%
+	\term{定義}という．
+
+	\(c \in \symcal{L}' \setminus \symcal{L}\)を定数記号とする．
+	\begin{equation}
+		\Gamma \provable \uexists y \apply{\theta}{y}
+		\label{eq:definitionconstantsymbol}
+	\end{equation}
+	を満たす\(y\)以外の変数記号が自由出現しない
+	\(\symcal{L}\)論理式\(\apply{\theta}{y}\)に対する
+	\(\symcal{L}'\)論理式
+	\begin{equation}
+		\apply{\theta}{c}
+		\label{eq:extensionbydefinitionconstantsymbol}
+	\end{equation}
+	を，\(\symcal{L}, \Gamma\)における\(c\)の%
+	\index[widx]{ていぎ@（理論の拡大における）定義}%
+	\term{定義}という．
+
+	\(f \in \symcal{L}' \setminus \symcal{L}\)をアリティ\(n\)の関数記号とする．
+	\begin{equation}
+		\Gamma \provable \forall x_1 \forall x_2 \dotsb \forall x_n \uexists y \apply{\theta}{y}
+		\label{eq:definitionfunctionsymbol}
+	\end{equation}
+	を満たす\(x_1, x_2, \dots, x_n, y\)以外の変数記号が自由出現しない
+	\(\symcal{L}\)論理式\(\apply{\theta}{x_1, x_2, \dots, x_n, y}\)に対する
+	\(\symcal{L}'\)論理式
+	\begin{equation}
+		\forall x_1 \forall x_2 \dotsb \forall x_n \apply{\theta}{x_1, x_2, \dots, x_n, \apply{f}{x_1, x_2, \dots, x_n}}
+		\label{eq:extensionbydefinitionfunctionsymbol}
+	\end{equation}
+	を，\(\symcal{L}, \Gamma\)における\(f\)の%
+	\index[widx]{ていぎ@（理論の拡大における）定義}%
+	\term{定義}という．
+
+	\(\symcal{L}' \setminus \symcal{L}\)に属するすべての記号の定義を\(\Gamma\)に
+	加えて得られる\(\symcal{L}'\)理論を\(\Gamma\)の%
+	\index[widx]{かくだい@（理論の）拡大!ていぎによるかくだい@定義による---}%
+	\term{定義による拡大}という．
+\end{Def}
+
+以下，論理式\(\varphi\)の全称閉包を\(\forall \forall \varphi\)と表記することとする．
+
+\begin{Thm} \label[Thm]{Thm:extensionbydefinition}
+	\(\symcal{L}, \symcal{L}'\)を言語とし，\(\symcal{L} \subset \symcal{L}'\)であるとする．
+	また，\(\symcal{L}'\)理論\(\Gamma'\)を\(\symcal{L}\)理論\(\Gamma\)の定義による拡大とする．
+	このとき，以下が成り立つ：
+	\begin{enumerate}
+		\item \(\Gamma'\)は\(\Gamma\)の保存拡大である．
+		\item \(t\)を任意の\(\symcal{L}'\)項とするとき，
+		      \(t\)がもつ変数記号とそれらとは異なるもう1つの変数記号\(y\)が自由出現する
+		      \(\symcal{L}\)論理式\(\apply{\theta}{y}\)が存在して，
+		      \(\Gamma \provable \forall \forall \uexists y \apply{\theta}{y}\)かつ
+		      \(\Gamma' \provable \forall \forall \apply{\theta}{t}\)となる．
+		\item 任意の\(\symcal{L}'\)論理式\(\varphi\)に対して，\(\varphi\)と自由出現する変数記号が同じ
+		      \(\symcal{L}\)論理式\(\hat{\varphi}\)が存在して，
+		      \(\Gamma' \provable \forall \forall \paren{\varphi \formulaequiv \hat{\varphi}}\)が成り立つ．
+	\end{enumerate}
+\end{Thm}
+
+\begin{proof}
+	まず1.を示す．\(\Gamma\)が矛盾している場合には明らか．以下，\(\Gamma\)は無矛盾であるとする．
+	\(\Gamma \subset \Gamma'\)なので，\(\Gamma'\)は\(\Gamma\)の拡大である．
+	\(\Gamma'\)が\(\Gamma\)の保存拡大でないとすると，\(\Gamma' \provable \varphi\)を満たすが\(\Gamma \provable \varphi\)を満たさない
+	\(\symcal{L}\)論理式\(\varphi\)が存在する．
+	このとき，\(\Gamma\)理論\(\Gamma \cup \Set{\lnot \varphi}\)は無矛盾であるからHenkinの定理によって
+	そのモデル\(\symcal{M}\)が存在する．
+	\(\symcal{M}\)の対象領域を\(M\)とする．
+	いま，\(\symcal{L}' \setminus \symcal{L}\)の各記号の解釈を与え，
+	\(\symcal{L}\)構造\(\symcal{M}\)を\(\symcal{L}'\)構造\(\symcal{M}'\)に拡張する．
+
+	\(r \in \symcal{L}' \setminus \symcal{L}\)がアリティ\(n\)の関係記号の場合を考える．
+	\(r\)の\(\symcal{M}'\)による解釈は，
+	\(\symcal{L}, \Gamma\)における\(r\)の定義となる\cref{eq:extensionbydefinitionrelationalsymbol}における
+	\(\symcal{L}\)論理式\(\apply{\rho}{x_1, x_2, \dots, x_n}\)を用いて
+	\[
+		\pair{t_1, t_2, \dots, t_n} \in \interpretation{\symcal{M}'}{r} \metaequivalent \symcal{M} \satisfy \apply{\rho}{t_1, t_2, \dots, t_n}
+	\]
+	によって定める．
+
+	\(c \in \symcal{L}' \setminus \symcal{L}\)が定数記号の場合を考える．
+	このとき，\(\symcal{L}, \Gamma\)における\(c\)の定義となる\cref{eq:extensionbydefinitionconstantsymbol}における
+	\(\symcal{L}\)論理式\(\apply{\theta}{y}\)について，\cref{eq:definitionconstantsymbol}から
+	\(\symcal{M} \satisfy \uexists y \apply{\theta}{y}\)だから\(\symcal{M} \satisfy \apply{\theta}{c_a}\)を満たす\(a \in M\)がただ1つ存在する．
+	ここで，\(c_a\)は\(a\)の名前である．
+	この\(a\)を用いて，\(c\)の\(\symcal{M}'\)による解釈は
+	\[
+		\interpretation{\symcal{M}'}{c} = a
+	\]
+	と定める．
+
+	\(f \in \symcal{L}' \setminus \symcal{L}\)がアリティ\(n\)の関数記号の場合を考える．
+	このとき，\(\symcal{L}, \Gamma\)における\(f\)の定義となる\cref{eq:extensionbydefinitionfunctionsymbol}における
+	\(\symcal{L}\)論理式\(\apply{\theta}{x_1, x_2, \dots, x_n, y}\)について，\cref{eq:definitionfunctionsymbol}から
+	\[
+		\symcal{M} \satisfy \forall x_1 \forall x_2 \dotsb \forall x_n \uexists y \apply{\theta}{x_1, x_2, \dots, x_n, y}
+	\]
+	である．
+	ゆえに，任意の\(a_1, a_2, \dots, a_n\)に対して
+	\[
+		\symcal{M} \satisfy \apply{\theta}{c_1, c_2, \dots, c_n, c_b}
+	\]
+	を満たす\(b \in M\)がただ1つ存在する．ここで，\(i = 1, 2, \dots, n\)に対して\(c_i\)は\(a_i\)の名前であり，
+	\(c_b\)は\(b\)の名前である．
+	\(f\)の\(\symcal{M}\)による解釈は，\(a_1, a_2, \dots, a_n \in M\)を上記\(b \in M\)に対応させる写像とする．
+
+	上記によって定義された\(\symcal{M}'\)は\(\Gamma'\)のモデルであり，しかも\(\symcal{M}' \satisfy \lnot \varphi\)を満たす．
+	しかし\(\Gamma' \provable \varphi\)から健全性定理によって\(\symcal{M}' \satisfy \varphi\)が得られるので矛盾である．
+	ゆえに，\(\Gamma'\)は\(\Gamma\)の保存拡大である．
+
+	2.については項\(t\)の構成に関する帰納法により，3.については論理式\(\varphi\)の構成に関する帰納法によってそれぞれ示すことができる．
+\end{proof}
+
+\begin{Que} \label[Que]{Que:extensionbydefinition}
+	\Cref{Thm:extensionbydefinition}の2.と3.を証明せよ．
+\end{Que}
+
+さて，通常の数学では定義によって言語と理論を拡大し，追加した記号も使ってあらたな定義を行ってさらに拡大し，というように，
+定義による拡大を何度も繰り返すことがほとんどである．
+次の\cref{Thm:extensionbydefinitiononce}は，このような定義による拡大の連鎖がいつでも1回の定義による拡大によって表現できるという主張である．
+この主張により，定義による拡大を何回行っても拡大する前の理論と本質的には変わっていないことが保証される．
+
+\begin{Thm} \label[Thm]{Thm:extensionbydefinitiononce}
+	\(\symcal{L}, \symcal{L}', \symcal{L}''\)を言語とし，\(\symcal{L} \subset \symcal{L}' \subset \symcal{L}''\)であるとする．
+	\(\symcal{L}'\)理論\(\Gamma'\)が\(\symcal{L}\)理論\(\Gamma\)の定義による拡大であり，\(\symcal{L}''\)理論\(\Gamma''\)が
+	\(\Gamma'\)の定義による拡大であるならば，\(\Gamma''\)は\(\Gamma\)の
+	ある定義による拡大\(\Sigma\)と以下の2条件をともに満たすという意味で等価である：
+	\begin{itemize}
+		\item 任意の\(\varphi \in \Gamma''\)に対して\(\Sigma \provable \varphi\)である，
+		\item 任意の\(\varphi \in \Sigma\)に対して\(\Gamma'' \provable \varphi\)である．
+	\end{itemize}
+\end{Thm}
+
+\begin{proof}
+	\Cref{Thm:extensionbydefinition}を使って，\(\symcal{L}'' \setminus \symcal{L}'\)に属する各記号の\(\symcal{L}', \Gamma'\)における定義を
+	\(\symcal{L}, \Gamma\)における定義に置き換えればよい．
+\end{proof}
+
+\begin{Que} \label{Que:extensionbydefinitiononce}
+	\Cref{Thm:extensionbydefinitiononce}の証明を精密化せよ．
+\end{Que}
+
+\begin{Note} \label[Note]{Note:equivalentTheory}
+	理論\(\Gamma, \Sigma\)が
+	\begin{itemize}
+		\item 任意の\(\varphi \in \Gamma\)に対して\(\Sigma \provable \varphi\)である，
+		\item 任意の\(\varphi \in \Sigma\)に対して\(\Gamma \provable \varphi\)である
+	\end{itemize}
+	という2条件をともに満たすのであれば，任意の論理式\(\varphi\)に対して
+	\[
+		\Gamma \provable \varphi \metaequivalent \Sigma \provable \varphi
+	\]
+	が成り立つ．「どのような論理式を証明することができるか」という意味においては，\(\Gamma, \Sigma\)は等価な理論であるといえる．
+\end{Note}
+
+\begin{Que} \label{Que:equivalentTheory}
+	\Cref{Note:equivalentTheory}で述べた事実を確かめよ．
+\end{Que}
+
+\begin{Que} \label{Que:grouptheoryaxiomization}
+	本書では，群論の公理化として単位元や逆元を表す記号も言語として含んだものを採用した．
+	別の手法としては，二項演算を表す記号のみを言語として採用することも可能である．
+	いま，言語\(\symcal{L}\)を\(\symcal{L} = \Set{\obj{\ast}}\)と定める．
+	ただし\(\obj{\ast}\)はアリティ2の関数記号である．
+	そして，以下の2つの論理式からなる\(\symcal{L}\)理論\(T\)を考える：
+	\begin{align*}
+		\forall \obj{x} \forall \obj{y} \forall \obj{z} \paren{\obj{x} \obj{\ast} \paren{\obj{y} \obj{\ast} \obj{z}} \objeq \paren{\obj{x} \obj{\ast} \obj{y}} \obj{\ast} \obj{z}}, \\
+		\exists \obj{e} \paren{\forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} \objeq \obj{x}} \land \forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} \objeq \obj{e}}}.
+	\end{align*}
+	この\(T\)の定義による拡大によって\cref{Ex:grouptheory}における理論\(\GP\)が得られることを確かめよ．
+\end{Que}

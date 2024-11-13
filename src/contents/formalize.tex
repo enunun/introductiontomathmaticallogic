@@ -444,8 +444,8 @@
 今後我々が議論の対象とするのは「意味」をもたない形式的な記号列である．
 まずはこの「形式的な記号列」の数学的定式化を述べておく．
 以後，「自然数」といえば0も含むので注意されたい．%
-\index[sidx]{\(\Natural\)：自然数全体の集合}%
-また，自然数全体の集合を\(\Natural\)と表記する．
+\index[sidx]{\(\NaturalNumbers\)：自然数全体の集合}%
+また，自然数全体の集合を\(\NaturalNumbers\)と表記する．
 
 \begin{Def} \label{Def:formallanguage}
 	記号の集合\(\Sigma\)が与えられたとする．\(w\)が\(\Sigma\)上の%
@@ -496,7 +496,7 @@
 	\end{equation}
 	と表記することとする．
 
-	さらに，\(\Sigma\)上の記号列の全体\(\bigcup_{n \in \Natural} \Sigma^{\Set{0,1,\dots, n-1}}\)を
+	さらに，\(\Sigma\)上の記号列の全体\(\bigcup_{n \in \NaturalNumbers} \Sigma^{\Set{0,1,\dots, n-1}}\)を
 	\(\Sigma\)の%
 	\index[widx]{Kleeneへいほう@Kleene閉包}%
 	\term{Kleene閉包}%
@@ -559,57 +559,123 @@
 実際に定義したいものよりも広い範囲の対象が定義から外れることが明文化されない
 \footnote{%
 	例えば，偶数全体の集合\(A\)を「\(0 \in A\)であり，\(n \in A\)ならば\(n + 2 \in A\)かつ\(n - 2 \in A\)である」などとして
-	定義しようとしたとき，整数全体の集合\(\Zahlen\)もカギカッコ内の条件自体は満たしている．
+	定義しようとしたとき，整数全体の集合\(\Integers\)もカギカッコ内の条件自体は満たしている．
 }%
 ．
 とはいえ，この形式での定義においてこの宣言が必要なくなることはありえないので，自明であるとして省略されることも多い．
 
+\begin{Note}
+	プログラミングに近しい文脈では，\cref{Ex:recursivedefinition}における帰納的定義を
+	\begin{equation*}
+		\anglebrackets{\text{数式}} \Coloneq \anglebrackets{\text{数字}} \mathbin{|}
+		\paren{\anglebrackets{\text{数式}} \obj{+} \anglebrackets{\text{数式}}}
+	\end{equation*}
+	のように表記することがある．この表記はBNF記法と呼ばれている．
+\end{Note}
+
 \begin{Que} \label{Que:recursivedefinition}
 	\Cref{Ex:recursivedefinition}で述べた数式の定義を集合論のことばで正当化してみよう．
-	次のような集合\(L \subset \KleeneClosure{\Sigma}\)の存在を示せば十分である：
+	自然数\(n\)に対する集合\(L_n \subset \KleeneClosure{\Sigma}\)を，以下の条件を満たすように定義できることを示せば十分である：
 	\begin{enumerate}
-		\item \(t \in \Sigma\)が数字ならば\(t \in L\)である．
-		\item 任意の\(t_1, t_2 \in L\)に対して\(\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen} \in L\)である．
-		\item \(L\)は上記の性質を満たす\(\KleeneClosure{\Sigma}\)の部分集合として包含関係に関して最小のものである．
+		\item \(L_0\)は数字全体の集合である．
+		\item 各\(n\)について，任意の\(t_1, t_2 \in L_n\)に対して\(\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen} \in L_{n+1}\)を満たす．
+		\item 各\(n\)について，\(L_{n+1}\)は\(L_n \subset L_{n+1}\)と上記2を満たす包含関係に関して最小の集合である．
 	\end{enumerate}
-	1, 2, 3をすべて満たす集合\(L\)の存在を示せ．
+	1, 2, 3をすべて満たす集合\(L_n\)の存在を示し，それを使って\cref{Ex:recursivedefinition}で述べた数式全体の集合\(L\)をつくれ．
 \end{Que}
 
+\begin{Note} \label[Note]{Note:recursivedefinitiondepth}
+	単に数式全体の集合\(L\)をつくるだけであれば，以下の条件を満たす\(\KleeneClosure{\Sigma}\)の部分集合で包含関係に対して最小のものをとることによってもできる：
+	\begin{enumerate}
+		\item \(t\)が数字ならば\(t \in L\)である．
+		\item 任意の\(t_1, t_2 \in L\)に対して\(\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen} \in L\)となる．
+	\end{enumerate}
+	このような集合\(L\)のなかで包含関係に関して最小のものは上記条件を満たす\(\KleeneClosure{\Sigma}\)の部分集合全体の共通部分をとることで得られる．
+	共通部分がとれることは，\(\KleeneClosure{\Sigma}\)自身が上記1, 2を満たすことからわかる．
+
+	しかし今回は，各\(t \in L\)に対して\(t \in L_{n}\)を満たす自然数\(n\)がとれるという事実が重要である．
+	何が重要かは\cref{Que:well-foundedexample}で述べることとする．
+\end{Note}
+
 \begin{Que} \label{Que:well-foundedexample}
-	\Cref{Ex:recursivedefinition}で述べた「数式」の定義からは自然に整礎な半順序が得られる．
+	\Cref{Ex:recursivedefinition}で述べた数式の定義からは自然に整礎な半順序が得られる．
 	これを示そう．
+
 	\Cref{Que:recursivedefinition}で述べた集合\(L\)について，
 	\(L\)上の二項関係\(\prec\)を以下のように定義する：
 	任意の\(t_1, t_2 \in L\)に対して
 	\(t_1 \prec \obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}\)かつ
 	\(t_2 \prec \obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}\)であり，
 	各\(x, y \in L\)に対して\(x \prec y\)となるのは上記のみである．
-	このとき，\(\prec\)の推移閉包\(\prec'\)は\(L\)上の二項関係として整礎な半順序であることを示せ
-	（ヒント：\(\prec'\)が\(L\)上の半順序であることはすぐにわかるので，\(L\)の部分集合\(L'\)が与えられたときの自然数\(n\)に対する主張
-	「\(L'\)が（記号列としての）長さ\(n\)以下の元をもつならば，\(L'\)は（\(L\)上の二項関係\(\prec'\)に関する）極小元をもつ」
-	がすべての自然数\(n\)に対して成り立つことを自然数に関する通常の数学的帰納法によって示すとよい）．
+	このとき，\(\prec\)の推移閉包\(\prec'\)は\(L\)上の二項関係として整礎な半順序であることを示せ．
+
+	証明にあたっては，以下のことに注意するとよい：
+	\Cref{Note:recursivedefinitiondepth}で述べたように，各\(t \in L\)に対して
+	\(t \in L_{n}\)となる自然数\(n\)がとれる．そのため，そのような\(n\)のなかで最小のものをとることができる．
+	この自然数\(n\)は\(t \in L\)に対して一意に定まるので，\(n + 1\)を\(t\)の複雑さと定義して
+	\(\apply{\depth}{t}\)と表すことにすると，
+	\begin{equation}
+		t_1 \prec' t_2 \metaequivalent \apply{\depth}{t_1} < \apply{\depth}{t_2}
+		\label{eq:recursivedefinitiondepthorder}
+	\end{equation}
+	が成り立っている．
+	よく知られているように，自然数全体の集合\(\NaturalNumbers\)上の通常の大小関係\(\mathord{<}\)は整礎な半順序であるから，
+	それを使って\(\prec'\)が整礎な半順序であることを示すことができる．
 \end{Que}
 
-なお，\cref{Que:well-foundedexample}における整礎な半順序\(\prec'\)は，\(L\)の構造から自然に与えられるものである．
+\begin{Note} \label[Note]{Note:recursivedefinitiondepthdef}
+	\Cref{Que:well-foundedexample}
+	における\(\apply{\depth}{t}\)は，帰納的定義における階層の「深さ」を表すものであると考えることができる．
+	実際，\(t\)が数字である場合には\(\apply{\depth}{t} = 1\)であり，\cref{Ex:recursivedefinition}における規則2を
+	1回適用するごとに\(\apply{\depth}{t}\)の値は1ずつ増加する．
+\end{Note}
+
+\begin{Que} \label[Que]{Que:recursivedefinitiondepth}
+	\Cref{Que:well-foundedexample}における数式の複雑さを表す写像\(\mathalpha{\depth} \colon L \to \NaturalNumbers\)は，以下の条件を満たすことを証明せよ．
+	\begin{align}
+		\apply{\depth}{t}                                           & = 1, \quad \text{(\(t\)が数字のとき)}
+		\label{eq:Que:recursivedefinitiondepth_numeral}                                                                                                           \\
+		\apply{\depth}{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}} & = \max\Set{\apply{\depth}{t_1}, \apply{\depth}{t_2}} + 1. \quad \text{(\(t_1, t_2 \in L\))}
+		\label{eq:Que:recursivedefinitiondepth_inductionstep}
+	\end{align}
+
+	なお，この写像\(\depth\)は\cref{eq:Que:recursivedefinitiondepth_numeral}と
+	\cref{eq:Que:recursivedefinitiondepth_inductionstep}を満たす写像として，
+	\cref{Thm:inductivedifinition}を通して特徴づけることができる．
+	しかし，そのようにして写像\(\depth\)を定義したい場合には，
+	\cref{Que:well-foundedexample}とは異なる方法で\(L\)上の順序\(\prec'\)の整礎性を証明する必要がある．
+\end{Que}
+
+\cref{Que:well-foundedexample}における整礎な半順序\(\prec'\)は，\(L\)の構造から自然に与えられるものである．
 このように，帰納的に定義した集合に付随して与えられる整礎な半順序についての整礎帰納法を
 特に%
 \index[widx]{こうぞうきのうほう@構造帰納法}%
 \term{構造帰納法}と呼ぶ．
 
 \begin{Que} \label{Que:inductivedifinition}
-	\NewDocumentCommand{\Comp}{}{\mathop{\symup{Comp}}}
-	\NewDocumentCommand{\expr}{}{\text{\textit{expr}}}
 	\Cref{Thm:inductivedifinition}によって，\cref{Ex:recursivedefinition}で述べた
-	集合\(L\)の元\(\expr\)に対する以下の定義を正当化せよ．
+	集合\(L\)の元\(t\)に対する以下の定義を正当化せよ．
 
-	数式\(\expr\)に対し，その複雑さ\(\apply{\Comp}{\expr}\)を以下のように定義する：
-	\(\expr\)が数字ならば，
+	数式\(t\)に対し，その大きさ\(\apply{\size}{t}\)を以下のように定義する：
+	\(t\)が数字ならば，
 	\[
-		\apply{\Comp}{\expr} = 0
+		\apply{\size}{t} = 1
 	\]と定める．
-	\(\expr\)が数字以外のとき，\(\expr\)は2つの数式\(\expr_1, \expr_2\)を用いて\(\obj{\lparen} \expr_1 \obj{+} \expr_2 \obj{\rparen}\)
-	と表されるので，\(\expr\)の複雑さを\(\expr_1, \expr_2\)の複雑さを用いて
+	\(t\)が数字以外のとき，\(t\)は2つの数式\(t_1, t_2\)を用いて\(\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}\)
+	と表されるので，\(t\)の大きさを\(t_1, t_2\)の大きさを用いて
 	\[
-		\apply{\Comp}{\expr} = \max\Set{\apply{\Comp}{\expr_1}, \apply{\Comp}{\expr_2}} + 1
+		\apply{\size}{t} = \apply{\size}{t_1} + \apply{\size}{t_2} + 1
 	\]と定める．
+\end{Que}
+
+\begin{Que} \label{Que:structuralinductionexample}
+	任意の数式\(t\)に対し，
+	\cref{Que:well-foundedexample}における数式の複雑さ\(\apply{\depth}{t}\)と
+	\cref{Que:inductivedifinition}における
+	数式の大きさ\(\apply{\size}{t}\)との間に成り立つ関係式
+	\begin{equation}
+		\apply{\size}{t} \leq 2^{\apply{\depth}{t}} - 1
+		\label{eq:sizedepthinequality}
+	\end{equation}
+	を，数式の構造に関する帰納法（\(L\)上の整礎な半順序\(\prec'\)における整礎帰納法）によって証明せよ．
 \end{Que}

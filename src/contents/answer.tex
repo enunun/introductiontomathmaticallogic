@@ -6,7 +6,20 @@
 
 \(X\)上の二項関係として直積集合\(X \times X\)を考えると，\(X \times X\)は\(\prec\)を含む推移的な\(X\)上の二項関係である．
 よって，\(\prec\)を含む推移的な\(X\)上の二項関係の全体を\(\symcal{R}\)とおくと，\(\symcal{R}\)は空でない．
-\(\mathord{\prec'} = \bigcap \symcal{R}\)は，\(\prec\)を含む推移的な\(X\)上の二項関係で包含関係に対して最小のものである．
+\(\mathord{\prec'} = \bigcap \symcal{R}\)は，\(\prec\)を含む推移的な\(X\)上の二項関係で包含関係に対して最小のものである．これを示そう．
+
+まず，\(\prec'\)が\(\prec\)を含む推移的な\(X\)上の二項関係であることを示す．
+\(x \prec y\)とする．このとき，すべての\(R \in \symcal{R}\)に対して
+\(x \mathrel{R} y\)となるので\(x \prec' y\)となる．
+\(\prec' \subset X \times X\)であることもあわせて\(\prec'\)は\(\prec\)を含む\(X\)上の二項関係であることがわかる．
+\(\prec'\)の推移性を示す．\(x \prec' y\)かつ\(y \prec' z\)とする．
+任意の\(R \in \symcal{R}\)に対し，\(x \mathrel{R} y\)かつ\(y \mathrel{R} z\)となる．
+\(R\)は推移的なので\(x \mathrel{R} z\)である．ゆえに\(x \prec' z\)となり，\(\prec'\)が推移的であることが従う．
+
+最後に\(\prec'\)が\(\prec\)を含む推移的な\(X\)上の二項関係で包含関係に関して最小のものであることを示そう．
+\(x \prec' y\)とする．\(\prec\)を含む推移的な\(X\)上の二項関係\(R\)を任意にとる．
+このとき，\(R \in \symcal{R}\)であるから\(x \mathrel{R} y\)でなければならない．
+従って，集合として\(\prec' \subset R\)が成り立つので，\(\prec'\)が\(\prec\)を含む推移的な\(X\)上の二項関係で包含関係に対して最小のものであることがわかる．
 
 \subsection*{\Cref{que:proofinductivedefinition}}
 
@@ -45,47 +58,77 @@
 
 \subsection*{\Cref{Que:recursivedefinition}}
 
-\(\Sigma\)のKleene閉包\(\KleeneClosure{\Sigma}\)は，1, 2を満たす．
-よって，\(\KleeneClosure{\Sigma}\)の部分集合で1, 2を満たすものの全体を
-\(\symcal{S}\)とおくと，\(\symcal{S}\)は空でない．
-\(L = \bigcap \symcal{S}\)とおくと\(L\)は1, 2を満たす\(\KleeneClosure{\Sigma}\)
-の部分集合で包含関係に対して最小のものである．
+自然数\(n\)に対する集合\(L_n \subset \KleeneClosure{\Sigma}\)を，以下のように帰納的に定義する：
+まず，\(L_0\)を数字全体の集合とする．各\(n\)について，\(L_n\)から\(L_{n+1}\)を
+\begin{equation*}
+	L_{n+1} = L_n \cup \Set{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen} | t_1, t_2 \in L_n}
+\end{equation*}
+によって定める．
+
+このようにして定義される列\(L_0, L_1, \dots\)は，\Cref{Que:recursivedefinition}における規則1, 2, 3をすべて満たす．
+数式全体の集合\(L\)は，この列\(L_0, L_1, \dots\)を使って
+\begin{equation*}
+	L = \bigcup_{n \in \NaturalNumbers} L_n
+\end{equation*}
+と定義できる．
 
 \subsection*{\Cref{Que:well-foundedexample}}
 
-任意の\(t_1, t_2 \in L\)に対して\(\length{t_1} < \length{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}}\)
-かつ
-\(\length{t_2} < \length{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}}\)
-が成り立つので，すべての\(t \in L\)に対して\(t \not\prec' t\)が成り立つ．よって\(\prec'\)は非反射的である．
-\(\prec'\)は\(\prec\)の推移閉包なので推移的であり，\(\prec'\)が半順序であることが従う．
+まず，\(\prec'\)の非反射性を示そう．
+\(t \prec' t\)となる\(t \in L\)が存在すると仮定すると，\cref{eq:recursivedefinitiondepthorder}により
+この\(t\)は\(\apply{\depth}{t} < \apply{\depth}{t}\)
+を満たさなければならず\(<\)の非反射性に矛盾する．よって\(\prec'\)は非反射的である．
 
-\(\prec'\)が整礎であることを示そう．まず，すべての自然数\(n\)に対して
-「\(L'\)が（記号列としての）長さ\(n\)以下の元をもつならば，\(L'\)は（\(L\)上の二項関係\(\prec'\)に関する）極小元をもつ」
-という主張が成り立つことを自然数に関する数学的帰納法によって示す：
-\(n=0\)のとき，\(L'\)は長さ0の文字列\(\emptystring\)を元にもつ．
-\(x \prec' y\)を満たす任意の\(x, y \in L\)に対して\(\length{x} < \length{y}\)が成り立つので，
-\(\emptystring\)は\(L'\)の極小元である．
-\(L'\)が長さ\(n\)以下の元をもつときに\(L'\)が極小元をもつと仮定して，
-\(L'\)が長さ\(n + 1\)以下の元\(t\)を持つ場合を考える．\(t\)が極小元ならば，
-\(L'\)は極小元\(t\)をもつ．\(t\)が極小元でないならば，
-\(t = \obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}\)なる\(t_1, t_2 \in L'\)が存在する．
-このとき，\(\length{t_1} < \length{t}\)かつ\(\length{t_2} < \length{t}\)なので
-\(t_1, t_2\)の長さは\(n\)以下であり，\(L'\)は長さ\(n\)以下の元\(t_1, t_2\)をもつことがわかる．
-よって帰納法の仮定により，\(L'\)は極小元をもつ．
-以上の議論により「\(L'\)が（記号列としての）長さ\(n\)以下の元をもつならば，\(L'\)は（\(L\)上の二項関係\(\prec'\)に関する）極小元をもつ」
-という主張がすべての自然数\(n\)に対して成り立つことがわかった．
+次に，\(\prec'\)の推移性を示す．
+\(t_1 \prec' t_2\)かつ\(t_2 \prec' t_3\)となる\(t_1, t_2, t_3 \in L\)を任意にとる．
+このとき，\cref{eq:recursivedefinitiondepthorder}により
+\(\apply{\depth}{t_1} < \apply{\depth}{t_2}\)かつ\(\apply{\depth}{t_2} < \apply{\depth}{t_3}\)である．
+よって\(<\)の推移性から\(\apply{\depth}{t_1} < \apply{\depth}{t_3}\)となるので，\cref{eq:recursivedefinitiondepthorder}から
+\(t_1 \prec' t_3\)となることがわかる．従って，\(\prec'\)は推移的である．
 
-さて，\(L'\)を\(L\)の空でない部分集合とし，その元\(t\)をとる．
-すると，\(L'\)は長さ\(\length{t}\)以下の元をもつので
-\(L'\)は極小元をもつ．従って，\(\prec'\)は整礎な半順序である．
+\(\prec'\)が整礎であることを示そう．
+\(L'\)を\(L\)の空でない部分集合とする．このとき，\(\NaturalNumbers\)の部分集合
+\begin{equation*}
+	N = \Set{\apply{\depth}{t} | t \in L'}
+\end{equation*}
+は空でない．よって，\(\NaturalNumbers\)上の通常の大小関係\(<\)の整礎性から\(N\)の極小元\(x\)をとることができる．
+\(x = \apply{\depth}{t}\)を満たす\(t\)が1つとれるが，
+\(x\)が\(N\)の極小元であることから\(y < x\)を満たす\(N\)の元\(y\)
+は存在せず，\cref{eq:recursivedefinitiondepthorder}から\(u \prec' t\)
+を満たす\(u \in L'\)も存在しない．
+従って\(t\)は\(L'\)の極小元であることから，\(\prec'\)は整礎な半順序であることがわかる．
+
+なお，上記\(t\)は\(L'\)に対して一意であるとは限らない．
+例えば，\(L'\)が数字を元としてもつならば，その数字すべてが\(L'\)の極小元である．
+
+\subsection*{\Cref{Que:recursivedefinitiondepth}}
+
+\(t\)が数字ならば\(t \in L_0\)なので，\(\apply{\depth}{t} = 0 + 1 = 1\)であり，
+\cref{eq:Que:recursivedefinitiondepth_numeral}が成り立つ．
+\(t_1, t_2 \in L\)とする．
+このとき，\(t_1 \in L_n\)となる\(n\)のうち最小のもの\(m = \apply{\depth}{t_1} - 1\)と，
+\(t_2 \in L_n\)となる\(n\)のうち最小のもの\(l = \apply{\depth}{t_2} - 1\)がそれぞれとれる．
+\(m \leq l\)ならば，\(l\)は\(t_1 \in L_n\)と\(t_2 \in L_n\)をともに満たす\(n\)のうち最小のものである．
+よって\(l + 1\)は\(\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen} \in L_n\)を満たす\(n\)のうち最小のものであって，
+\begin{equation*}
+	\apply{\depth}{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}} = l + 1 + 1 = \apply{\depth}{t_2} + 1
+\end{equation*}
+となる．\(l < m\)の場合も同様に
+\begin{equation*}
+	\apply{\depth}{\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}} = \apply{\depth}{t_1} + 1
+\end{equation*}
+となる．
+\(m \leq l\)のときは\(\apply{\depth}{t_1} \leq \apply{\depth}{t_2}\)であり
+\(l < m\)のときは\(\apply{\depth}{t_2} < \apply{\depth}{t_1}\)であるから，
+\cref{eq:Que:recursivedefinitiondepth_inductionstep}が成り立つことがわかる．
 
 \subsection*{\Cref{Que:inductivedifinition}}
 
 \Cref{Que:well-foundedexample}の結果により，\(\prec\)の推移閉包\(\prec'\)は整礎な半順序である．
 そこで，
-写像\(G \colon \bigcup_{t \in L} \Natural^{\Set{s \in L | s \prec' t }} \to \Natural\)を次のように定める：
-\(f \in \bigcup_{t \in L} \Natural^{\Set{s \in | s \prec' t}}\)をとると，
-\(f\)はある\(t \in L\)についての\(\Set{s \in | s \prec' t}\)から\(\Natural\)への写像である．
+写像\(G \colon \bigcup_{t \in L} \NaturalNumbers^{\Set{s \in L | s \prec' t }} \to \NaturalNumbers\)を次のように定める：
+\(f \in \bigcup_{t \in L} \NaturalNumbers^{\Set{s \in | s \prec' t}}\)をとると，
+\(f\)はある\(t \in L\)についての\(\Set{s \in | s \prec' t}\)から\(\NaturalNumbers\)への写像である．
 \(t\)が極小元である場合，すなわち\(f\)が空写像である場合は
 \[
 	\apply{G}{f} = 0
@@ -96,19 +139,38 @@
 このとき，\(t_1 \prec t\)となる\(t_1 \in L\)もとれるので\(t_2 \prec t\)となる\(t_2 \in L\)
 もとれる．このような\(t_1, t_2\)の組は一意に定まるので，
 \[
-	\apply{G}{f} = \max \Set{\apply{f}{t_1}, \apply{f}{t_2}} + 1
+	\apply{G}{f} = \apply{f}{t_1} + \apply{f}{t_2} + 1
 \]
 とする．
-\begingroup
-\NewDocumentCommand{\Comp}{}{\mathop{\symup{Comp}}}
-このとき，\cref{Thm:inductivedifinition}により，写像\({\Comp} \colon L \to \Natural\)
+このとき，\cref{Thm:inductivedifinition}により，写像\({\size} \colon L \to \NaturalNumbers\)
 で任意の\(t \in L\)に対して
 \[
-	\apply{\Comp}{t} = \apply{G}{ \Comp \restriction \Set{s \in L | s \prec' t}}
+	\apply{\size}{t} = \apply{G}{ \size \restriction \Set{s \in L | s \prec' t}}
 \]
 を満たすものがただ1つ定まる．
-この\(\Comp\)が\cref{Que:inductivedifinition}で定義しようとした数式の複雑さを表す写像にほかならない．
-\endgroup
+この\(\size\)が\cref{Que:inductivedifinition}で定義しようとした数式の大きさを表す写像にほかならない．
+
+
+\subsection*{\Cref{Que:structuralinductionexample}}
+
+\(t \in L\)を1つとり，\(u \prec' t\)を満たすすべての\(u\)に対して\cref{eq:sizedepthinequality}が成り立つと仮定する．
+このとき，この\(t\)についても\cref{eq:sizedepthinequality}が成り立つことを示す．
+
+\(t\)が数字ならば，\(\apply{\size}{t}\)と\(\apply{\depth}{t}\)はともに1なので\cref{eq:sizedepthinequality}は成り立つ．
+\(t\)が数字でないとき，\(t\)は\(t_1, t_2 \in L\)を用いて\(\obj{\lparen} t_1 \obj{+} t_2 \obj{\rparen}\)と表される．
+このとき，\(t_1 \prec' t\)かつ\(t_2 \prec' t\)なので，\(t_1, t_2\)はともに\cref{eq:sizedepthinequality}を満たす．
+よって
+\begin{align*}
+	\apply{\size}{t} & = \apply{\size}{t_1} + \apply{\size}{t_2} + 1                      \\
+	                 & \leq 2^{\apply{\depth}{t_1}} - 1 + 2^{\apply{\depth}{t_2}} - 1 + 1 \\
+	                 & = 2^{\max\Set{\apply{\depth}{t_1}, \apply{\depth}{t_2}} + 1} - 1   \\
+	                 & = 2^{\apply{\depth}{t}} - 1
+\end{align*}
+だから，この\(t\)についても\cref{eq:sizedepthinequality}が成り立つ．
+
+以上より，整礎帰納法によって
+すべての\(t \in L\)に対して\cref{eq:sizedepthinequality}が成り立つ．
+
 
 \section*{\Cref{chap:syntax}}
 
@@ -185,11 +247,42 @@
 なぜそうしなければならないのか，
 そしてなぜそうすれば「よい」のかについては，この段階ではわからない．
 
+\subsection*{\Cref{Que:ProjectiveGeometrydual}}
+
+\begin{enumerate}
+	\NewDocumentCommand{\LiesOn}{}{\mathrel{\obj{\varepsilon}}}
+	\item \(\forall \obj{x} \paren{\apply{\obj{L}}{\obj{x}} \formulaequiv \lnot \apply{\obj{P}}{\obj{x}}},\)
+	\item \(\forall \obj{x} \forall \obj{y} \paren{\obj{y} \LiesOn \obj{x} \to \apply{\obj{L}}{\obj{x}} \land \apply{\obj{P}}{\obj{y}}},\)
+	\item \(\forall \obj{x} \forall \obj{y} \paren{\apply{\obj{L}}{\obj{x}} \land \apply{\obj{L}}{\obj{y}} \land \lnot \paren{\obj{x} \objeq \obj{y}}
+		      \to \uexists z \paren{\obj{z} \LiesOn \obj{x} \land \obj{z} \LiesOn \obj{y}}},\)
+	\item \(\forall \obj{x} \forall \obj{y} \paren{\paren{\apply{\obj{P}}{\obj{x}} \land \apply{\obj{P}}{y}} \land \lnot \paren{\obj{x} \objeq \obj{y}}
+		      \to \uexists z \paren{\obj{x} \LiesOn \obj{z} \land \obj{y} \LiesOn \obj{z}}},\)
+	\item \(C'\)を
+	      \[
+		      \lnot \exists \obj{w} \paren{\obj{w} \LiesOn x \land \obj{w} \LiesOn y \land \obj{w} \LiesOn z}
+	      \]
+	      の略記としたときの
+	      \begin{align*}
+		       & \exists \obj{a} \exists \obj{b} \exists \obj{c} \exists \obj{d} \\
+		       & \paren{
+			      \apply{n}{\obj{a}, \obj{b}, \obj{c}, \obj{d}}
+			      \land \apply{C'}{\obj{a}, \obj{b}, \obj{c}}
+			      \land \apply{C'}{\obj{a}, \obj{b}, \obj{d}}
+			      \land \apply{C'}{\obj{a}, \obj{c}, \obj{d}}
+			      \land \apply{C'}{\obj{b}, \obj{c}, \obj{d}}
+		      }.
+	      \end{align*}
+\end{enumerate}
+
+双対をとる操作によって，1と2は意味が変わらず，3と4は互いに入れ替わり，5については
+「どの3直線も共線でないような相異なる4直線が存在する」という主張に対応する論理式になったことに注意しよう．
+上記\(\apply{C'}{x, y, z}\)は「3直線\(x, y, z\)は共点でない」という主張に対応すると考えることができる．
+
 \section*{\Cref{chap:semantics}}
 
 \subsection*{\Cref{Que:satisfy}}
 
-\(\symcal{M}\)が\cref{Ex:grouptheory}で述べた3つの\(\symcal{L}\)文すべてを充足することを確かめよう．
+\(\symcal{M}\)が\cref{Ex:grouptheory}で述べた3つの\(\symcal{L}_{\GP}\)文すべてを充足することを確かめよう．
 
 \begin{align*}
 	\varphi_1 \colon & \forall \obj{x} \forall \obj{y} \forall \obj{z}
@@ -207,37 +300,37 @@
 となるための必要十分条件を考える．
 まず\(\varphi_1\)については
 \begin{align*}
-	                & \symcal{M} \satisfy \varphi_1                                                                                                               \\
-	\metaequivalent & \text{すべての\(a \in \Zahlen\)に対して\(\symcal{M} \satisfy \forall \obj{y} \forall \obj{z} \subst{\varphi_1}{c_a / \obj{x}}\)}                    \\
-	\metaequivalent & \text{すべての\(a, b \in \Zahlen\)に対して\(\symcal{M} \satisfy \forall \obj{z} \subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}\)}          \\
-	\metaequivalent & \text{すべての\(a, b, c\in \Zahlen\)に対して\(\symcal{M} \satisfy \subst{\subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}}{c_c / \obj{z}}\)} \\
-	\metaequivalent & \text{すべての\(a, b, c\in \Zahlen\)に対して
+	                & \symcal{M} \satisfy \varphi_1                                                                                                                 \\
+	\metaequivalent & \text{すべての\(a \in \Integers\)に対して\(\symcal{M} \satisfy \forall \obj{y} \forall \obj{z} \subst{\varphi_1}{c_a / \obj{x}}\)}                    \\
+	\metaequivalent & \text{すべての\(a, b \in \Integers\)に対して\(\symcal{M} \satisfy \forall \obj{z} \subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}\)}          \\
+	\metaequivalent & \text{すべての\(a, b, c\in \Integers\)に対して\(\symcal{M} \satisfy \subst{\subst{\subst{\varphi_1}{c_a / \obj{x}}}{c_b / \obj{y}}}{c_c / \obj{z}}\)} \\
+	\metaequivalent & \text{すべての\(a, b, c\in \Integers\)に対して
 		\(\interpretation{\symcal{M}}{\paren{\paren{c_a \obj{\ast} c_b} \obj{\ast} c_c}}
-	= \interpretation{\symcal{M}}{\paren{c_a \obj{\ast} \paren{c_b \obj{\ast} c_c}}}\)}                                                                           \\
-	\metaequivalent & \text{すべての\(a, b, c \in \Zahlen\)に対して
+	= \interpretation{\symcal{M}}{\paren{c_a \obj{\ast} \paren{c_b \obj{\ast} c_c}}}\)}                                                                             \\
+	\metaequivalent & \text{すべての\(a, b, c \in \Integers\)に対して
 		\(\interpretation{\symcal{M}}{\paren{c_a \obj{\ast} c_b}} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{c_c}
-	= \interpretation{\symcal{M}}{c_a} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{\paren{c_b \obj{\ast} c_c}} \)}                        \\
-	\metaequivalent & \text{すべての\(a, b, c \in \Zahlen\)に対して\(
+	= \interpretation{\symcal{M}}{c_a} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{\paren{c_b \obj{\ast} c_c}} \)}                          \\
+	\metaequivalent & \text{すべての\(a, b, c \in \Integers\)に対して\(
 		\paren{\interpretation{\symcal{M}}{c_a} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{c_b}} + c
 		= a + \paren{\interpretation{\symcal{M}}{c_b} \interpretation{\symcal{M}}{\obj{\ast}} \interpretation{\symcal{M}}{c_c}}
-	\)}                                                                                                                                                           \\
-	\metaequivalent & \text{すべての\(a, b, c \in \Zahlen\)に対して\(
+	\)}                                                                                                                                                             \\
+	\metaequivalent & \text{すべての\(a, b, c \in \Integers\)に対して\(
 		\paren{a + b} + c = a + \paren{b + c}
 		\)}
 \end{align*}
 となる．\(\varphi_2, \varphi_3\)についても同様にして
 \begin{align*}
-	\symcal{M} \satisfy \varphi_2 & \metaequivalent \text{すべての\(a \in \Zahlen\)に対して\(0 + a = a\)},         \\
-	\symcal{M} \satisfy \varphi_3 & \metaequivalent \text{すべての\(a \in \Zahlen\)に対して\(\paren{-a} + a = 0\)}
+	\symcal{M} \satisfy \varphi_2 & \metaequivalent \text{すべての\(a \in \Integers\)に対して\(0 + a = a\)},         \\
+	\symcal{M} \satisfy \varphi_3 & \metaequivalent \text{すべての\(a \in \Integers\)に対して\(\paren{-a} + a = 0\)}
 \end{align*}
 となることがわかるので，\(\symcal{M}\)が\(\varphi_1, \varphi_2, \varphi_3\)のすべてを充足することがわかる．
-\Cref{Ex:satisfy}で述べた\(\symcal{L}\)構造\(\symcal{M}'\)が\(\varphi_1\)のみを充足することも同様にして確かめられる．
+\Cref{Ex:satisfy}で述べた\(\symcal{L}_{\GP}\)構造\(\symcal{M}'\)が\(\varphi_1\)のみを充足することも同様にして確かめられる．
 
 \subsection*{\Cref{Que:model}}
 
-\Cref{Ex:satisfy}で挙げた\(\symcal{L}\)構造\(\symcal{M}\)は\(\varphi\)を充足する\(T\)のモデルである．
+\Cref{Ex:satisfy}で挙げた\(\symcal{L}_{\GP}\)構造\(\symcal{M}\)は\(\varphi\)を充足する\(\GP\)のモデルである．
 また，有限集合\(I_n = \Set{1, 2, \dots, n}\)上の置換（全単射）\(\sigma \colon I_n \to I_n\)全体の集合\(S_n\)を対象領域とする
-\(\symcal{L}\)構造\(\symcal{M}'\)を次のように定義する：
+\(\symcal{L}_{\GP}\)構造\(\symcal{M}'\)を次のように定義する：
 \begin{align*}
 	\interpretation{\symcal{M}'}{\obj{e}}       & = \symup{id}, \\
 	\interpretation{\symcal{M}'}{\obj{\ast}}    & = \circ,      \\
@@ -246,7 +339,7 @@
 ここで，\(\symup{id} \colon S_n \to S_n\)は\(S_n\)上の恒等写像（つまり\(x \mapsto x\)という写像），
 \(\circ \colon S_n \to S_n\)は写像の合成をとる写像，
 \({}^{-1} \colon S_n \to S_n\)は逆写像をとる写像である．
-このようにして定義される\(\symcal{L}\)構造\(\symcal{M}'\)は，\(n \geq 3\)ならば\(\varphi\)を充足しない\(T\)のモデルである．
+このようにして定義される\(\symcal{L}_{\GP}\)構造\(\symcal{M}'\)は，\(n \geq 3\)ならば\(\varphi\)を充足しない\(\GP\)のモデルである．
 
 \Cref{Que:model}は，通常の数学における「可換な群とそうでない群を1つずつ挙げよ」という問題に相当することに注意せよ．
 
@@ -278,6 +371,114 @@
 このため，\(\symcal{M}\)による\(\obj{e}, {}^{\obj{-1}}\)の解釈をどのように定めても，
 \(\symcal{M}\)が\(T\)のモデルになることはない．
 
+\subsection*{\Cref{Que:validformula}}
+
+整数全体の集合\(\Integers\)を対象領域とする\(\symcal{L}_{\OrderedRing}\)構造\(\symcal{M}\)を考える．
+ただし，\(\symcal{M}\)による\(\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}\)の解釈はそれぞれ\(\Integers\)
+における通常の\(\mathord{+}, \mathord{\cdot}, 0, 1\)とし，\(\obj{<}\)の\(\symcal{M}\)による解釈は
+\(\Integers\)における通常の等号付き大小関係\(\leq\)とする．
+このとき，閉論理式\(\varphi \colon \forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{x}}\)について
+\[
+	\symcal{M} \satisfy \varphi \metaequivalent \text{すべての\(a \in \Integers\)に対して\(a \leq a\)でない}
+\]
+となるが，例えば\(a = 1\)のときにこれは成り立たない．
+よって\(\symcal{M}\)はこの\(\varphi\)を充足しない．
+
+\subsection*{\Cref{Que:truthtableforequivalent}}
+
+\(\varphi \formulaequiv \psi\)の真理値表を以下に示す
+（\(\varphi \formulaequiv \psi\)は\(\paren{\varphi \to \psi} \land \paren{\psi \to \varphi}\)の略記であったことを思い出そう）．
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{cc|ccc}
+		\hline
+		\(\varphi\) & \(\psi\) & \(\varphi \to \psi\) & \(\psi \to \varphi\) & \(\varphi \formulaequiv \psi\) \\ \hline
+		0           & 0        & 1                    & 1                    & 1                              \\
+		0           & 1        & 1                    & 0                    & 0                              \\
+		1           & 0        & 0                    & 1                    & 0                              \\
+		1           & 1        & 1                    & 1                    & 1                              \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection*{\Cref{Que:semanticlawofexcludedmiddle}}
+
+\(\varphi \lor \lnot \varphi\)の真理値表を以下に示す．
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{c|cc}
+		\hline
+		\(\varphi\) & \(\lnot \varphi\) & \(\varphi \lor \lnot \varphi\) \\ \hline
+		0           & 1                 & 1                              \\
+		1           & 0                 & 1                              \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\(\varphi \lor \lnot \varphi\)の真理値はつねに1になるため，\(\varphi \lor \lnot \varphi\)が恒真式であることがわかる．
+
+\subsection*{\Cref{Que:logicallyequivalentcharactarize}}
+
+\(\apply{\FV}{\varphi} \cup \apply{\FV}{\psi} = \Set{x_1, x_2, \dots, x_n}\)とする．
+\(\symcal{M}\)を任意の構造とし，\(M\)をその対象領域とする．
+このとき，
+\[
+	\symcal{M} \satisfy \varphi \formulaequiv \psi
+\]
+であるためには，任意の\(a_1,a_2, \dots, a_n\)に対して
+\[
+	\symcal{M} \satisfy \subst{\subst{\subst{\paren{\varphi \formulaequiv \psi}}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}
+\]
+となることが必要十分である．ここで，\(i = 1,2,\dots,n\)に対して\(c_i\)は\(a_i\)の名前である．
+また，
+\begin{align*}
+	                & \symcal{M} \satisfy \subst{\subst{\subst{\paren{\varphi \formulaequiv \psi}}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}                                                    \\
+	\metaequivalent & \symcal{M} \satisfy \subst{\subst{\subst{\varphi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n} \formulaequiv \subst{\subst{\subst{\psi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}.
+\end{align*}
+である．
+ここで，\(\subst{\subst{\subst{\varphi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}\)と
+\(\subst{\subst{\subst{\psi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}\)はともに閉論理式である．
+閉論理式については\cref{lemma:logicallyequivalentcharactarize}の主張が成り立つことはわかっているので，
+\(\varphi, \psi\)が閉論理式とは限らない場合については，\(\varphi, \psi\)が論理的に同値であるための必要十分条件が
+\begin{align*}
+	\symcal{M} \satisfy \subst{\subst{\subst{\varphi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n} \metaequivalent \symcal{M} \satisfy \subst{\subst{\subst{\psi}{c_1/x_1}}{c_2/x_2} \dotsb}{c_n/x_n}
+\end{align*}
+となることがわかる．
+これは
+\begin{align*}
+	\symcal{M} \satisfy \varphi \metaequivalent \symcal{M} \satisfy \psi
+\end{align*}
+と等価であるから，\(\varphi, \psi\)が閉論理式とは限らない場合にも\cref{lemma:logicallyequivalentcharactarize}の主張が成り立つことがわかる．
+
+\subsection*{\Cref{Que:semanticpeircelaw}}
+
+\(\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi\)の真理値表を以下に示す．
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{cc|ccc}
+		\hline
+		\(\varphi\) & \(\psi\) & \(\varphi \to \psi\) & \(\paren{\varphi \to \psi} \to \varphi\) & \(\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi\) \\ \hline
+		0           & 0        & 1                    & 0                                        & 1                                                            \\
+		0           & 1        & 1                    & 0                                        & 1                                                            \\
+		1           & 0        & 0                    & 1                                        & 1                                                            \\
+		1           & 1        & 1                    & 1                                        & 1                                                            \\
+		\hline
+	\end{tabular}
+\end{table}
+
+よって\(\paren{\paren{\varphi \to \psi} \to \varphi} \to \varphi\)は恒真式である．
+
+\subsection*{\Cref{Que:expressionsubstitution}}
+
+以下のように示すことができる：
+\begin{align*}
+	\lnot \forall x \paren{\varphi \to \psi} & \logicallyequivalent \exists x \lnot \paren{\varphi \to \psi}    \\
+	                                         & \logicallyequivalent \exists x \paren{\varphi \land \lnot \psi}.
+\end{align*}
+
 \section*{\Cref{chap:proof}}
 
 \subsection*{\Cref{Que:sequent}}
@@ -294,7 +495,7 @@
 	\item \(\varphi \to \psi, \lnot \paren{\lnot \varphi \lor \psi} \sequent \lnot \varphi \lor \psi\)\quad （7から(\(\lor\)I)による）
 	\item \(\varphi \to \psi, \lnot \paren{\lnot \varphi \lor \psi} \sequent \bot\)\quad （2, 8から(w), (\(\lnot\)E)による）
 	\item \(\varphi \to \psi \sequent \lnot \lnot \paren{\lnot \varphi \lor \psi}\)\quad （9から(e), (\(\lnot\)E)による）
-	\item \(\varphi \to \psi \sequent \lnot \varphi \lor \psi\)\quad （10から(DNF)による）
+	\item \(\varphi \to \psi \sequent \lnot \varphi \lor \psi\)\quad （10から(DNE)による）
 \end{enumerate}
 
 \(\lnot \varphi \lor \psi \sequent \varphi \to \psi\)の導出：
@@ -304,7 +505,7 @@
 	\item \(\lnot \varphi \sequent \lnot \varphi\)\quad (ID)
 	\item \(\lnot \psi, \varphi, \lnot \varphi \sequent \bot\)\quad （2, 3から(w), (e), (\(\lnot\)E)による）
 	\item \(\varphi, \lnot \varphi \sequent \lnot \lnot \psi\)\quad （4から(\(\lnot\)I)による）
-	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNF)による）
+	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNE)による）
 	\item \(\psi \sequent \psi\)\quad (ID)
 	\item \(\lnot \varphi \lor \psi, \varphi \sequent \psi\)\quad （1, 6, 7から(e), (\(\lor\)E), (c)による）
 	\item \(\lnot \varphi \lor \psi \sequent \varphi \to \psi\)\quad （8から(e), (\(\to\)I)による）
@@ -341,12 +542,12 @@
 	\item \(\lnot \varphi \sequent \lnot \varphi \lor \lnot \psi\)\quad （3から(\(\lor\)I)による）
 	\item \(\lnot \varphi, \lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \lnot \lnot \varphi\)\quad （5から(\(\lnot\)I)による）
-	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \varphi\)\quad （6から(DNF)による）
+	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \varphi\)\quad （6から(DNE)による）
 	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \psi\)\quad （上と同様にして導けるので省略）
 	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi} \sequent \varphi \land \psi\)\quad （7, 8から(\(\land\)I), (c)による）
 	\item \(\lnot \paren{\lnot \varphi \lor \lnot \psi}, \lnot \paren{\varphi \land \psi} \sequent \bot\)\quad （1, 9から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \lnot \paren{\lnot \varphi \lor \lnot \psi}\)\quad （10から(\(\lnot\)I)による）
-	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \varphi \lor \lnot \psi\)\quad （11から(DNF)による）
+	\item \(\lnot \paren{\varphi \land \psi} \sequent \lnot \varphi \lor \lnot \psi\)\quad （11から(DNE)による）
 \end{enumerate}
 
 \(\lnot \varphi \lor \lnot \psi \sequent \lnot \paren{\varphi \land \psi}\)の導出：
@@ -369,11 +570,11 @@
 	\item \(\lnot \subst{\varphi}{a/x} \sequent \exists x \lnot \varphi\)\quad （3から(\(\exists\)E)による）
 	\item \(\lnot \subst{\varphi}{a/x}, \lnot \exists x \lnot \varphi \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \exists x \lnot \varphi \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （5から(\(\lnot\)I)による）
-	\item \(\lnot \exists x \lnot \varphi \sequent \subst{\varphi}{a/x}\)\quad （6から(DNF)による）
+	\item \(\lnot \exists x \lnot \varphi \sequent \subst{\varphi}{a/x}\)\quad （6から(DNE)による）
 	\item \(\lnot \exists x \lnot \varphi \sequent \forall x \varphi\)\quad （7から(\(\forall\)I)による）
 	\item \(\lnot \exists x \lnot \varphi, \lnot \forall x \varphi \sequent \bot\)\quad （1, 8から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \forall x \varphi \sequent \lnot \lnot \exists x \lnot \varphi\)\quad （9から(\(\lnot\)E)による）
-	\item \(\lnot \forall x \varphi \sequent \exists x \lnot \varphi\)\quad （10から(DNF)による）
+	\item \(\lnot \forall x \varphi \sequent \exists x \lnot \varphi\)\quad （10から(DNE)による）
 \end{enumerate}
 
 \(\exists x \lnot \varphi \sequent \lnot \forall x \varphi\)の導出：
@@ -503,7 +704,7 @@
 	\item \(\lnot \varphi \sequent \varphi \to \psi\)\quad （3, 5から(\(\to\)E)による）
 	\item \(\lnot \varphi, \lnot \paren{\varphi \to \psi} \sequent \bot\)\quad （1, 6から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \paren{\varphi \to \psi} \sequent \lnot \lnot \varphi\)\quad （7から(\(\lnot\)I)による）
-	\item \(\lnot \paren{\varphi \to \psi} \sequent \varphi\)\quad （8から(DNF)による）
+	\item \(\lnot \paren{\varphi \to \psi} \sequent \varphi\)\quad （8から(DNE)による）
 	\item \(\psi \sequent \psi\)\quad (ID)
 	\item \(\varphi, \psi \sequent \psi\)\quad (10から(w)による)
 	\item \(\psi \sequent \varphi \to \psi\)\quad (11から(\(\to\)I)による)
@@ -561,7 +762,7 @@
 	\item \(\lnot \psi, \lnot \psi \to \lnot \varphi \sequent \lnot \varphi\)\quad （1, 3から(\(\to\)E)による）
 	\item \(\lnot \psi, \varphi \lnot \psi \to \lnot \varphi \sequent \bot\)\quad （2, 4から(w), (e), (\(\lnot\)E)による）
 	\item \(\varphi, \lnot \psi \to \lnot\varphi \sequent \lnot \lnot \psi\)\quad （5から(\(\lnot\)I)による）
-	\item \(\varphi, \lnot \psi \to \lnot \varphi \sequent \psi\)\quad （6から(DNF)による）
+	\item \(\varphi, \lnot \psi \to \lnot \varphi \sequent \psi\)\quad （6から(DNE)による）
 	\item \(\lnot \psi \to \lnot \varphi \sequent \varphi \to \psi\)\quad （7から(\(\to\)I)による）
 \end{enumerate}
 
@@ -633,19 +834,19 @@
 	\item \(\subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x}\)\quad (ID)
 	\item \(\lnot \psi, \subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \bot\)\quad （3, 4から(w), (e), (\(\lnot\)E)による）
 	\item \(\subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \lnot \lnot \psi\)\quad （5から(\(\lnot\)I)による）
-	\item \(\subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \psi\)\quad （6から(DNF)による）
+	\item \(\subst{\varphi}{a/x}, \lnot \subst{\varphi}{a/x} \sequent \psi\)\quad （6から(DNE)による）
 	\item \(\lnot \subst{\varphi}{a/x} \sequent \subst{\varphi}{a/x} \to \psi\)\quad （7から(\(\to\)I)による）
 	\item \(\lnot \subst{\varphi}{a/x} \sequent \exists x \paren{\varphi \to \psi}\)\quad （8から(\(\exists\)I)による）
 	\item \(\lnot \subst{\varphi}{a/x}, \lnot \exists x \paren{\varphi \to \psi} \sequent \bot\)\quad （2, 9から(w), (e), (\(\lnot\)E)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （10から(\(\lnot\)I)による）
-	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x}\)\quad （11から(DNF)による）
+	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x}\)\quad （11から(DNE)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi} \sequent \forall x \varphi\)\quad （12から(\(\forall\)I)による）
 	\item \(\subst{\varphi}{a/x}, \forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \psi\)\quad （1, 13から(\(\to\)E), (w)による）
 	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \subst{\varphi}{a/x} \to \psi\)\quad （14から(\(\to\)I)による）
 	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \exists x \paren{\varphi \to \psi}\)\quad （15から(\(\exists\)I)による）
 	\item \(\forall x \varphi \to \psi, \lnot \exists x \paren{\varphi \to \psi} \sequent \bot\)\quad （2, 16から(w), (\(\lnot\)E)による）
 	\item \(\forall x \varphi \to \psi \sequent \lnot \lnot \exists x \paren{\varphi \to \psi}\)\quad （17から(e), (\(\lnot\)I)による）
-	\item \(\forall x \varphi \to \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （18から(DNF)による）
+	\item \(\forall x \varphi \to \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （18から(DNE)による）
 \end{enumerate}
 ここで，9と15の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
 \(\subst{\paren{\varphi \to \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \to \psi\)が同じ論理式であることを用いた．
@@ -700,12 +901,12 @@
 	\item \(\varphi, \varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （4, 8から(\(\exists\)E)による）
 	\item \(\lnot \subst{\psi}{b/x}, \varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \bot\)\quad （2, 9から(w), (e), (\(\lnot\)E)による，ただし\(b\)は新しい変数記号）
 	\item \(\varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \lnot \lnot \subst{\psi}{b/x}\)\quad （10から(\(\lnot\)I)による）
-	\item \(\varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \subst{\psi}{b/x}\)\quad （11から(DNF)による）
+	\item \(\varphi, \lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \subst{\psi}{b/x}\)\quad （11から(DNE)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \varphi \to \subst{\psi}{b/x}\)\quad （12から(\(\to\)I)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （13から(\(\exists\)I)による）
 	\item \(\lnot \exists x \paren{\varphi \to \psi}, \varphi \to \exists x \psi \sequent \bot\)\quad （2, 14から(w), (e), (\(\lnot\)I)による）
 	\item \(\varphi \to \exists x \psi \sequent \lnot \lnot \exists x \paren{\varphi \to \psi}\)\quad （15から(\(\lnot\)I)による）
-	\item \(\varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （16から(DNF)による）
+	\item \(\varphi \to \exists x \psi \sequent \exists x \paren{\varphi \to \psi}\)\quad （16から(DNE)による）
 \end{enumerate}
 ここで，8, 14の導出にあたっては，\(\varphi\)に\(x\)が自由出現しないことにより
 \(\subst{\paren{\varphi \to \psi}}{a/x}, \subst{\paren{\varphi \to \psi}}{b/x}\)がそれぞれ
@@ -764,17 +965,17 @@
 	\item \(\lnot \psi \sequent \lnot \psi\)\quad (ID)
 	\item \(\lnot \subst{\varphi}{a/x}, \psi, \lnot \psi \sequent \bot\)\quad （5, 6から(w), (e), (\(\lnot\)E)による）
 	\item \(\psi, \lnot \psi \sequent \lnot \lnot \subst{\varphi}{a/x}\)\quad （7から(\(\lnot\)I)による）
-	\item \(\psi, \lnot \psi \sequent \subst{\varphi}{a/x}\)\quad （8から(DNF)による）
+	\item \(\psi, \lnot \psi \sequent \subst{\varphi}{a/x}\)\quad （8から(DNE)による）
 	\item \(\forall x \paren{\varphi \lor \psi}, \lnot \psi \sequent \subst{\varphi}{a/x}\)\quad （3, 4, 9から(\(\lor\)E)による）
 	\item \(\forall x \paren{\varphi \lor \psi}, \lnot \psi \sequent \forall x \varphi\)\quad （10から(\(\forall\)I)による）
 	\item \(\forall x \paren{\varphi \lor \psi}, \lnot \psi \sequent \forall x \varphi \lor \psi\)\quad （11から(\(\lor\)I)による）
 	\item \(\lnot \psi, \lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \bot\)\quad （2, 12から(\(\lnot\)E)による）
 	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \lnot \lnot \psi\)\quad （13から(\(\lnot\)I)による）
-	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \psi\)\quad （14から(DNF)による）
+	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \psi\)\quad （14から(DNE)による）
 	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \forall x \varphi \lor \psi\)\quad （15から(\(\lor\)I)による）
 	\item \(\lnot \paren{\forall x \varphi \lor \psi}, \forall x \paren{\varphi \lor \psi} \sequent \bot\)\quad （2, 16から(w), (e), (\(\lnot\)E)による）
 	\item \(\forall x \paren{\varphi \lor \psi} \sequent \lnot \lnot \paren{\forall x \varphi \lor \psi}\)\quad （17から(\(\lnot\)I)による）
-	\item \(\forall x \paren{\varphi \lor \psi} \sequent \forall x \varphi \lor \psi\)\quad （18から(DNF)による）
+	\item \(\forall x \paren{\varphi \lor \psi} \sequent \forall x \varphi \lor \psi\)\quad （18から(DNE)による）
 \end{enumerate}
 ここで，3の導出にあたっては，\(\psi\)に\(x\)が自由出現しないことにより
 \(\subst{\paren{\varphi \lor \psi}}{a/x}\)と\(\subst{\varphi}{a/x} \lor \psi\)が同じ論理式であることを用いた．
@@ -827,12 +1028,12 @@
 	\item \(\varphi \sequent \varphi\)\quad (ID)
 	\item \(\lnot \psi, \varphi, \lnot \varphi \sequent \bot\)\quad （2, 3から(w), (e), (\(\lnot\)E)による）
 	\item \(\varphi, \lnot \varphi \sequent \lnot \lnot \psi\)\quad （4から(\(\lnot\)I)による）
-	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNF)による）
+	\item \(\varphi, \lnot \varphi \sequent \psi\)\quad （5から(DNE)による）
 	\item \(\lnot \varphi \sequent \varphi \to \psi\)\quad （6から(\(\to\)I)による）
 	\item \(\lnot \varphi, \paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （1, 7から(\(\to\)E)による）
 	\item \(\lnot \varphi, \paren{\varphi \to \psi} \to \varphi \sequent \bot\)\quad （2, 8から(w), (e), (\(\lnot\)E)による）
 	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \lnot \lnot \varphi\)\quad （9から(\(\lnot\)I)による）
-	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （10から(DNF)による）
+	\item \(\paren{\varphi \to \psi} \to \varphi \sequent \varphi\)\quad （10から(DNE)による）
 \end{enumerate}
 
 \subsection*{\Cref{Que:equalsignrelation}}
@@ -904,7 +1105,382 @@
 対偶，すなわち\(\Gamma \provable \varphi\)でないと仮定して\(\Gamma \satisfy \varphi\)でないことを示す．
 \(\Gamma \provable \varphi\)でないので，\(\Gamma \cup \Set{\lnot \varphi}\)が無矛盾となる．
 実際，\(\Gamma \cup \Set{\lnot \varphi}\)が矛盾すると仮定すると(\(\lnot\)I)規則と
-(DNF)規則により\(\Gamma \provable \varphi\)となる．
+(DNE)規則により\(\Gamma \provable \varphi\)となる．
 \Cref{Thm:HenkinTheorem}により，\(\Gamma \cup \Set{\lnot \varphi}\)のモデル\(\symcal{M}\)が存在する．
 この\(\symcal{M}\)は\(\symcal{M} \satisfy \lnot \varphi\)を満たすので\(\symcal{M} \satisfy \varphi\)
 は成り立たず，従って\(\Gamma \satisfy \varphi\)ではない．
+
+\subsection*{\Cref{Que:existsfinitestructure}}
+
+文中にあるような論理式\(\varphi\)が存在したと仮定する．
+このとき，閉論理式の無限集合\(T\)を以下のように定める：
+\[
+	T = \Set{\varphi,\varepsilon_1,\varepsilon_2,\dots,\varepsilon_n,\dots}.
+\]
+このとき，\(T\)の任意の有限部分集合はモデルをもつ．
+実際，\(T\)の任意の有限部分集合\(T'\)に対し，\(varepsilon_n \in T'\)となる\(n\)のうち最大のものを\(m\)とすれば，
+対象領域の要素数が\(m\)であるような構造は\(T'\)のモデルである．
+よってコンパクト性定理によって\(T\)もモデルをもつ．その1つを\(\symcal{M}\)とする．
+\(\symcal{M}\)の対象領域は有限集合であり，その要素数を\(n\)とすると\(\varepsilon_{n+1} \in T\)である．
+しかし\(\symcal{M}\)が\(\varepsilon_{n+1}\)を充足することはないので矛盾である．
+
+
+\subsection*{\Cref{Que:Herbrandstructurewelldefineded}}
+
+まずは\cref{eq:herbrandequivalencerelation}で定義される二項関係\(\sim\)が同値関係であることを示す．
+\(x \in X\)を1つとる．このとき，等号に関する公理(REFL)によって\(\Gamma \provable x \objeq x\)だから\(x \sim x\)である．
+次に\(x, y \in X\)を任意にとり，\(x \sim y\)とする．このとき\(\Gamma \provable x \objeq y\)であるから，
+\cref{Thm:equalsignrelation}の\cref{eq:equalsignsymmetry}が導出可能であることや
+(\(\to\)I), (\(\to\)E)規則などによって\(\Gamma \provable y \objeq x\)であることが従う．
+よって\(y \sim x\)である．
+最後に\(x, y, z \in X\)を任意にとり，\(x \sim y\)かつ\(y \sim z\)であるとする．
+このとき，\(\Gamma \provable x \objeq y\)かつ\(\Gamma \provable y \objeq z\)である．
+\cref{eq:equalsigntransitivity}が導出可能であることや
+(\(\land\)I), (\(\to\)I), (\(\to\)E)規則などによって\(\Gamma \provable x \objeq z\)となることがわかる．
+ゆえに\(x \sim z\)である．
+以上より，\(\sim\)は\(X\)上の同値関係である．
+
+\Cref{eq:herbrandinterpretationconstantsymbol}から\cref{eq:herbrandinterpretationrelationsymbol}で
+定義された\(\symcal{L}\)の各記号の\(\symcal{M}\)による解釈がその代表元のとりかたによらないことを示す．
+\Cref{eq:herbrandinterpretationconstantsymbol}における定数記号の解釈は，もともと代表元を使っての定義ではない．
+よって，\cref{eq:herbrandinterpretationfunctionsymbol}と\cref{eq:herbrandinterpretationrelationsymbol}についてのみ確かめればよい．
+まずは\cref{eq:herbrandinterpretationfunctionsymbol}について確かめよう．
+閉項\(t_1, t_2, \dots, t_n, s_1, s_2, \dots, s_n\)について，\(i = 1, 2, \dots, n\)に対して\(t_i \sim s_i\)であるとする．
+このとき，\(\apply{f}{t_1, t_2, \dots, t_n} \sim \apply{f}{s_1, s_2, \dots, s_n}\)であることを示せばよい．
+\(t_1, t_2, \dots, t_n, s_1, s_2, \dots, t_n\)のいずれにも出現しない，つまり自由出現も束縛出現もしない変数記号
+\(x_1, x_2, \dots, x_n\)をとり，以下の論理式を\(\varphi\)とする：
+\[
+	\apply{f}{t_1, t_2, \dots, t_n} \objeq \apply{f}{x_1, x_2, \dots, x_n}
+\]
+このとき，\cref{Que:equalsignrelation}と同様にして，シークエント
+\[
+	\paren{t_1 \objeq s_1} \land \paren{t_2 \objeq s_2} \land \dotsb \land \paren{t_n \objeq s_n}
+	\sequent \apply{f}{t_1, t_2, \dots, t_n} \objeq \apply{f}{s_1, s_2, \dots, s_n}
+\]
+が導出可能であることがわかる（\cref{Que:equalsignrelation}の議論をもとにして\(f\)のアリティ\(n\)に関する数学的帰納法を適用すればよい）．
+(\(\land\)I), (\(\to\)I), (\(\to\)E)などの規則と\(f\)のアリティ\(n\)に関する数学的帰納法によって
+\[
+	\Gamma \provable \apply{f}{t_1, t_2, \dots, t_n} \objeq \apply{f}{s_1, s_2, \dots, s_n}
+\]
+が成り立つことがわかる．
+以上より\(\apply{f}{t_1, t_2, \dots, t_n} \sim \apply{f}{s_1, s_2, \dots, s_n}\)であって，
+\cref{eq:herbrandinterpretationfunctionsymbol}による定義が代表元のとりかたに依存しないことがわかる．
+次に\cref{eq:herbrandinterpretationrelationsymbol}について確かめよう．
+閉項\(t_1, t_2, \dots, t_n, s_1, s_2, \dots, s_n\)について，\(i = 1, 2, \dots, n\)に対して\(t_i \sim s_i\)であるとする．
+このとき，
+\[
+	\Gamma \provable \apply{r}{t_1, t_2, \dots, t_n} \metaequivalent \Gamma \provable \apply{r}{s_1, s_2, \dots, s_n}
+\]
+であることを示せばよい．\(\sim\)が同値関係であることを踏まえれば，
+\[
+	\Gamma \provable \apply{r}{t_1, t_2, \dots, t_n} \metaimplies \Gamma \provable \apply{r}{s_1, s_2, \dots, s_n}
+\]
+を示せば十分である．いま，
+\[
+	\Gamma \provable \apply{r}{t_1, t_2, \dots, t_n}
+\]
+と仮定する．
+\(t_1, t_2, \dots, t_n, s_1, s_2, \dots, t_n\)のいずれにも出現しない，つまり自由出現も束縛出現もしない変数記号
+\(x_1, x_2, \dots, x_n\)をとる．
+このとき，(SUBST)などの規則と\(r\)のアリティ\(n\)に関する数学的帰納法によって
+\[
+	\Gamma \provable \apply{r}{s_1, s_2, \dots, s_n}
+\]
+が成り立つことがわかる．
+従って，\cref{eq:herbrandinterpretationrelationsymbol}による
+\(r\)の\(\symcal{M}\)による解釈の定義はその代表元のとりかたに依存しない．
+
+
+\subsection*{\Cref{Que:herbrandsemantics}}
+
+1.を閉項\(t\)の構成に関する帰納法により示す．\(t\)が定数記号\(c\)ならば
+\(\interpretation{\symcal{M}}{c} = \equivclass{c}\)である．
+\(f\)をアリティ\(n\)の関数記号，閉項\(t_1, t_2, \dots, t_n\)に対して
+\(\apply{f}{t_1, t_2, \dots, t_n}\)と表される閉項\(t\)に対しては，帰納法の仮定により
+\begin{align*}
+	\interpretation{\symcal{M}}{t} & = \interpretation{\symcal{M}}{\apply{f}{t_1, t_2, \dots, t_n}}                                                                                        \\
+	                               & = \apply{\interpretation{\symcal{M}}{f}}{\interpretation{\symcal{M}}{t_1}, \interpretation{\symcal{M}}{t_2}, \dots, \interpretation{\symcal{M}}{t_n}} \\
+	                               & = \apply{\interpretation{\symcal{M}}{f}}{\equivclass{t_1}, \equivclass{t_2}, \dots, \equivclass{t_n}}                                                 \\
+	                               & = \equivclass{\apply{f}{t_1, t_2, \dots, t_n}}                                                                                                        \\
+	                               & = \equivclass{t}
+\end{align*}
+となる．よってすべての閉項\(t\)に対して\(\interpretation{\symcal{M}}{t} = \equivclass{t}\)が成り立つ．
+
+2.について，\(n = 1\)の場合に示そう．
+\(\symcal{M}\)の対象領域を\(M\)とする．
+以下，\(a \in M\)の名前を\(c_a\)で表す．
+論理式\(\psi\)の構成に関する帰納法で示す．
+\(\psi\)に\(x_1\)が自由出現しない場合には明らか．\(\psi\)に\(x_1\)が自由出現する場合を考える．
+\(\psi\)に自由出現する変数記号は\(x_1\)のみである．
+
+\(\psi\)が項\(s_1, s_2\)を用いた\(s_1 \objeq s_2\)の形である場合を考える．
+このとき
+\begin{align*}
+	                & \symcal{M} \satisfy \varphi                                                                                                          \\
+	\metaequivalent & \text{すべての\(a \in M\)に対して\(\symcal{M} \satisfy \subst{\varphi}{c_a/x_1}\)}                                                           \\
+	\metaequivalent & \text{すべての\(a \in M\)に対して\(\symcal{M} \satisfy \subst{s_1}{c_a/x_1} \objeq \subst{s_2}{c_a/x_1}\)}                                   \\
+	\metaequivalent & \text{すべての\(a \in M\)に対して\(\interpretation{\symcal{M}}{\subst{s_1}{c_a/x_1}} = \interpretation{\symcal{M}}{\subst{s_2}{c_a/x_1}}\)}.
+\end{align*}
+ここで，項の構成に関する帰納法によって\(\interpretation{\symcal{M}}{\subst{s_1}{c_a/x_1}} = \interpretation{\symcal{M}}{\subst{s_1}{a/x_1}}\)が成り立つことがわかる（\(s_2\)についても同様）ので，
+\[
+	\symcal{M} \satisfy \varphi \metaequivalent \text{すべての\(a \in M\)に対して\(\interpretation{\symcal{M}}{\subst{s_1}{a/x_1}} =
+		\interpretation{\symcal{M}}{\subst{s_2}{a/x_1}}\)}
+\]
+が成り立つ．各\(a \in M\)はある閉項\(t\)についての同値類\(\equivclass{t}\)なので，\(a = \equivclass{t_1}\)とすれば1.もあわせて
+\(\interpretation{\symcal{M}}{\subst{s_1}{a/x_1}} = \interpretation{\symcal{M}}{\subst{s_1}{t_1/x_1}}\)だから
+\[
+	\symcal{M} \satisfy \varphi \metaequivalent \text{すべての閉項\(t_1\)に対して\(\interpretation{\symcal{M}}{\subst{s_1}{t_1/x_1}} = \interpretation{\symcal{M}}{\subst{s_2}{t_1/x_1}}\)}
+\]
+となる．この主張は2.にほかならない．
+
+\(\psi\)がアリティ\(m\)の関係記号\(r\)と項\(s_1, s_2, \dots, s_n\)を用いた\(\apply{r}{s_1, s_2, \dots, s_n}\)の形である場合を考える．
+このとき
+\begin{align*}
+	                & \symcal{M} \satisfy \varphi                                                \\
+	\metaequivalent & \text{すべての\(a \in M\)に対して\(\symcal{M} \satisfy \subst{\varphi}{c_a/x_1}\)} \\
+	\metaequivalent & \text{すべての\(a \in M\)に対して\(\pair{
+			\interpretation{\symcal{M}}{\subst{s_1}{c_a/x_1}}, \interpretation{\symcal{M}}{\subst{s_2}{c_a/x_1}}, \dots, \interpretation{\symcal{M}}{\subst{s_n}{c_a/x_1}}
+		} \in \interpretation{\symcal{M}}{r}
+	\)}                                                                                          \\
+	\metaequivalent & \text{すべての閉項\(t_1\)に対して\(\pair{
+			\interpretation{\symcal{M}}{\subst{s_1}{t_1/x_1}}, \interpretation{\symcal{M}}{\subst{s_2}{t_1/x_1}}, \dots, \interpretation{\symcal{M}}{\subst{s_n}{t_1/x_1}}
+		}
+		\in \interpretation{\symcal{M}}{r}\)}
+\end{align*}
+となる．よって2.の主張が従う．
+
+\(\psi\)が複合論理式である場合を考える．論理記号\(\lnot, \land, \lor, \to\)については容易である．
+\(\psi\)が\(\forall y \chi\)の形である場合を考えよう．
+\(\psi\)に\(x_1\)が自由出現しているので，\(x, y\)は異なる変数記号である．
+閉項\(t_1\)を任意にとったとき，\(y\)は\(t_1\)に現れないとみなしてよい（そうでない場合，\(\varphi\)への代入を考える際にすでに\(y\)を別の変数記号で置き換えているはずである）．
+帰納法の仮定により\(\chi\)は2.の主張を満たすので，\cref{Def:semanticimplies}から明らかに\(\forall y \chi\)も2.の主張を満たす．
+\(\psi\)が\(\exists y \chi\)の形の場合も同様である．
+
+以上の議論により\(n = 1\)の場合には2.の主張が示された．一般の\(n\)の場合も代入する項の個数が増えるだけでまったく同様である．
+
+3.を示す．
+\(\varphi\)は以下の2つの場合が考えられる．
+\begin{itemize}
+	\item 閉項\(s_1, s_2\)を用いた\(s_1 \objeq s_2\)の形，
+	\item アリティ\(n\)の関係記号\(r\)と閉項\(t_1, t_2, \dots, t_n\)を用いた\(\apply{r}{t_1, t_2, \dots, t_n}\)の形．
+\end{itemize}
+1つ目については
+\begin{align*}
+	                & \symcal{M} \satisfy \varphi                                         \\
+	\metaequivalent & \symcal{M} \satisfy s_1 \objeq s_2                                  \\
+	\metaequivalent & \interpretation{\symcal{M}}{s_1} = \interpretation{\symcal{M}}{s_2} \\
+	\metaequivalent & \equivclass{s_1} = \equivclass{s_2}                                 \\
+	\metaequivalent & \Gamma \provable s_1 \objeq s_2
+\end{align*}
+となり，2つ目については
+\begin{align*}
+	                & \symcal{M} \satisfy \varphi                         \\
+	\metaequivalent & \symcal{M} \satisfy \apply{r}{s_1, s_2, \dots, s_n} \\
+	\metaequivalent & \pair{
+		\interpretation{\symcal{M}}{s_1}, \interpretation{\symcal{M}}{s_2}, \dots, \interpretation{\symcal{M}}{s_n}
+	} \in \interpretation{\symcal{M}}{r}                                  \\
+	\metaequivalent & \pair{
+		\equivclass{s_1}, \equivclass{s_2}, \dots, \equivclass{s_n}
+	} \in \interpretation{\symcal{M}}{r}                                  \\
+	\metaequivalent & \Gamma \provable \apply{r}{t_1, t_2, \dots, t_n}
+\end{align*}
+のように示すことができる．
+
+最後に4.を示そう．\(\varphi\)が原子論理式\(\apply{\psi}{x_1, x_2, \dots, x_n}\)の全称閉包であり，
+\(\varphi\)に自由出現する変数記号は\(x_1, x_2, \dots, x_n\)のみであるとする．
+2.により，すべての閉項\(t_1, t_2, \dots, t_n\)に対して\(\symcal{M} \satisfy \apply{\psi}{t_1, t_2, \dots, t_n}\)
+となることを示せば十分．
+さて，\(\Gamma \provable \forall x_1 \forall x_2 \dotsb \forall x_n \apply{\psi}{x_1, x_2, \dots, x_n}\)
+だから，(\(\forall\)E)規則を繰り返し用いて
+\(\Gamma \provable \apply{\psi}{t_1, t_2, \dots, t_n}\)を得る．
+\(\apply{\psi}{t_1, t_2, \dots, t_n}\)は原子論理式かつ閉論理式だから，3.により\(\symcal{M} \satisfy \apply{\psi}{t_1, t_2, \dots, t_n}\)となる．
+
+
+\subsection*{\Cref{Que:polynomialringherbrandmodel}}
+
+以降の議論では不定元は1つで十分である．それを\(x\)とおく．
+
+まずは\(\RealNumbers\)上の多項式環について考えよう．
+通常の数学では，以下のような多項式の計算は妥当なものとして扱われる：
+\[
+	\paren{2x + \sqrt{2}} \paren{x + \sqrt{2}} = \paren{2x^2 + 3 \sqrt{2} + 2}.
+\]
+この計算が妥当であることは，我々が\cref{Ex:polynomialringherbrandmodel}で定義した多項式環においては
+\[
+	\equivclass{\paren{2x \obj{+} \sqrt{2}} \obj{\cdot} \paren{x \obj{+} \sqrt{2}}}
+	= \equivclass{2 \obj{\cdot} x \obj{\cdot} x \obj{+} 3 \obj{\cdot} \sqrt{2} \obj{\cdot} x + 2}
+\]
+という主張に相当する．
+これが成り立つためには
+\[
+	\Gamma \provable
+	\paren{2x \obj{+} \sqrt{2}} \obj{\cdot} \paren{x \obj{+} \sqrt{2}}
+	\objeq
+	2 \obj{\cdot} x \obj{\cdot} x \obj{+} 3 \obj{\cdot} \sqrt{2} \obj{\cdot} x + 2
+\]
+が成り立つことが必要十分である．
+これを示すためには，理論\(\Ring\)で得られる一般論のほかに\(\RealNumbers\)で成り立っている
+\[
+	\sqrt{2} \cdot \sqrt{2} = 2
+\]
+といった事実を用いる必要がある．このような事実に相当する論理式は
+\(\apply{\Diag}{\RealNumbers}\)の元である．
+
+次に，\cref{Ex:polynomialringherbrandmodel}における\(\Gamma\)として，
+\(\CRing\)に\(\apply{\Diag}{\symcal{R}}\)ではなく\(\apply{\eDiag}{\symcal{R}}\)を加えた場合を考えよう．
+\(\symcal{R}\)としては剰余環\(\Integers/2\Integers\)を考える．
+よく知られているように，\(\Integers/2\Integers\)は
+\[
+	\Integers/2\Integers \satisfy \forall x \paren{x \obj{\cdot} x \obj{\cdot} x = x}
+\]
+を満たす．この論理式を\(\varphi\)としよう．
+\(\varphi\)は\(\apply{\eDiag}{\Integers/2\Integers}\)の元である．
+一方，\(\varphi\)は\(\forall\)を含むため\(\apply{\Diag}{\Integers/2\Integers}\)の元ではない．
+さて，通常の数学における\(\Integers/2\Integers\)上の多項式の計算では，
+多項式\(x\)と多項式\(x^3\)は異なる多項式とみなされる．
+よって，Herbrand構造を定義する際にベースとした理論\(\Gamma\)には\(\varphi\)が含まれていてはいけない．
+
+以上のような事情により，\cref{Ex:polynomialringherbrandmodel}では
+\(\Gamma\)として\(\CRing\)に\(\apply{\Diag}{\symcal{R}}\)を加えたのであった．
+
+
+\subsection*{\Cref{Que:extensionbydefinition}}
+
+2.は\(\symcal{L}'\)項\(t\)の構成に関する帰納法によって示す．
+\(t\)が変数記号である場合には，別の変数記号\(y\)をとって論理式\(\apply{\theta}{y}\)を\(y \objeq t\)と定めればよい．
+\(t\)が定数記号である場合には，\(t\)の定義となる\cref{eq:extensionbydefinitionconstantsymbol}における
+\(\symcal{L}\)論理式\(\apply{\theta}{y}\)をそのまま用いればよい．
+\(t\)がアリティ\(n\)の関数記号\(f\)と項\(t_1,t_2,\dots,t_n\)を用いて\(\apply{f}{t_1,t_2,\dots,t_n}\)と表される場合を考える．
+\(t_1,t_2,\dots,t_n\)に対し，帰納法の仮定によってとれる2.の主張を満たす論理式をそれぞれ
+\(\apply{\theta_1}{y_1},\apply{\theta_2}{y_2},\dots,\apply{\theta_n}{y_n}\)とする．
+\(f \in \symcal{L}\)の場合には，\(t\)に対する2.を満たす\(\apply{\theta}{y}\)として
+\[
+	\exists y_1 \exists y_2 \dotsb \exists y_n \paren{y \objeq \apply{f}{y_1, y_2, \dots, y_n} \land \apply{\theta_1}{y_1} \land \apply{\theta_2}{y_2} \land \dotsb \land \apply{\theta_n}{y_n}}
+\]
+をとればよい．\(f \in \symcal{L}' \setminus \symcal{L}\)の場合には，上記\(\symcal{L}\)論理式中の\(y \objeq \apply{f}{y_1, y_2, \dots, y_n}\)を
+\(f\)の定義となる\cref{eq:extensionbydefinitionfunctionsymbol}における\(\symcal{L}\)論理式\(\apply{\theta}{x_1,x_2,\dots,x_n}\)を用いた
+\[
+	\apply{\theta}{y_1,y_2,\dots,y_n,y}
+\]
+に置き換えればよい．
+
+3.を示そう．\(\symcal{L}'\)論理式\(\varphi\)の構成に関する帰納法によって示す．
+\(\varphi\)が原子論理式の場合に示せばあとは容易である．
+\(\varphi\)が\(\bot\)である場合には，3.を満たす\(\hat{\varphi}\)として\(\bot\)をとればよい．
+\(\varphi\)が項\(t_1,t_2\)を用いた\(t_1 \objeq t_2\)の形である場合には，3.を満たす\(\symcal{L}\)論理式\(\hat{\varphi}\)としては
+\(t_1,t_2\)に対して2.を満たす\(\symcal{L}\)論理式\(\apply{\theta_1}{y_1},\apply{\theta_2}{y_2}\)をとって
+\[
+	\exists y_1 \exists y_2 \paren{t_1 \objeq t_2 \land \apply{\theta}{y_1} \land \apply{\theta}{y_2}}
+\]
+をとればよい．
+\(\varphi\)がアリティ\(n\)の関係記号\(r\)と項\(t_1,t_2,\dots,t_n\)を用いて
+\(\apply{r}{t_1,t_2,\dots,t_n}\)と表される場合を考える．
+\(t_1,t_2,\dots,t_n\)に対してとれる2.の主張を満たす論理式をそれぞれ
+\(\apply{\theta_1}{y_1},\apply{\theta_2}{y_2},\dots,\apply{\theta_n}{y_n}\)とする．
+\(r \in \symcal{L}\)である場合には，3.を満たす\(\symcal{L}\)論理式\(\hat{\varphi}\)としては
+\[
+	\exists y_1 \exists y_2 \dotsb \exists y_n \paren{\apply{r}{y_1,y_2,\dots,y_n} \land \apply{\theta_1}{y_1} \land \apply{\theta_2}{y_2} \land \dotsb \land \apply{\theta_n}{y_n}}
+\]
+をとればよい．
+\(r \in \symcal{L}' \setminus \symcal{L}\)である場合には，上記\(\symcal{L}\)論理式中の\(\apply{r}{y_1,y_2,\dots,y_n}\)を
+\(r\)の定義となる\cref{eq:extensionbydefinitionrelationalsymbol}における\(\symcal{L}\)論理式\(\apply{\rho}{x_1,x_2,\dots,x_n}\)を用いた
+\[
+	\apply{\rho}{y_1,y_2,\dots,y_n}
+\]
+に置き換えればよい．
+
+
+\subsection*{\Cref{Que:extensionbydefinitiononce}}
+
+\(\Gamma' \setminus \Gamma\)は，\(\symcal{L}' \setminus \symcal{L}\)に属する記号の\(\symcal{L}, \Gamma\)における定義全体の集合である．
+そこで，\(\Gamma'\)に\(s \in \symcal{L}'' \setminus \symcal{L}'\)に属する記号の\(\symcal{L}, \Gamma\)における定義を
+すでに与えられている\(\symcal{L}', \Gamma'\)と等価になるように定め，\(\Gamma\)の定義による拡大を得ることを考える．
+
+アリティ\(n\)の関係記号\(r \in \symcal{L}'' \setminus \symcal{L}'\)については，その定義となる\cref{eq:extensionbydefinitionrelationalsymbol}における
+\(\symcal{L}'\)論理式\(\rho\)をとる．この\(\apply{\rho}{x_1,x_2,\dots,x_n}\)に対して\cref{Thm:extensionbydefinition}によって
+\(\Gamma' \provable \forall \forall \paren{\apply{\rho}{x_1,x_2,\dots,x_n} \formulaequiv \apply{\hat{\rho}}{x_1,x_2,\dots,x_n}}\)となる
+\(\symcal{L}\)論理式\(\apply{\hat{\rho}}{x_1,x_2,\dots,x_n}\)がとれるので，
+\(r\)の\(\symcal{L}, \Gamma\)における定義を
+\[
+	\forall \forall \paren{\apply{r}{x_1,x_2,\dots,x_n} \formulaequiv \apply{\hat{\rho}}{x_1,x_2,\dots,x_n}}
+\]
+とする．
+
+定数記号\(c \in \symcal{L}'' \setminus \symcal{L}'\)については，
+その定義となる\cref{eq:extensionbydefinitionconstantsymbol}における
+\(\symcal{L}'\)論理式\(\apply{\theta}{y}\)をとる．
+この\(\apply{\theta}{y}\)に対して\cref{Thm:extensionbydefinition}によって
+\(\Gamma' \provable \forall \forall \paren{\apply{\theta}{y} \formulaequiv \apply{\hat{\theta}}{y}}\)
+となる
+\(\symcal{L}\)論理式\(\apply{\hat{\theta}}{y}\)がとれるので，
+\(c\)の\(\symcal{L}, \Gamma\)における定義を
+\[
+	\forall \forall \apply{\hat{\theta}}{c}
+\]
+とする．
+
+アリティ\(n\)の関数記号\(f \in \symcal{L}'' \setminus \symcal{L}'\)についても同様に行う．
+\(f\)の定義となる\cref{eq:extensionbydefinitionfunctionsymbol}における
+\(\symcal{L}'\)論理式\(\apply{\theta}{x_1,x_2,\dots,x_n,y}\)をとる．
+この\(\apply{\theta}{x_1,x_2,\dots,x_n,y}\)に対して\cref{Thm:extensionbydefinition}によって
+\(\Gamma' \provable \forall \forall \paren{\apply{\theta}{x_1,x_2,\dots,x_n,y} \formulaequiv \apply{\hat{\theta}}{x_1,x_2,\dots,x_n,y}}\)
+となる
+\(\symcal{L}\)論理式\(\apply{\hat{\theta}}{x_1,x_2,\dots,x_n,y}\)がとれるので，
+\(f\)の\(\symcal{L}, \Gamma\)における定義を
+\[
+	\forall \forall \apply{\hat{\theta}}{x_1,x_2,\dots,x_n, \apply{f}{x_1,x_2,\dots,x_n}}
+\]
+とする．
+
+さて，各\(s \in \symcal{L}'' \setminus \symcal{L}'\)に対して上記によって得られる定義全体の集合を\(\hat{\Theta}\)とし，
+\(\Sigma = \Gamma' \cup \hat{\Theta}\)とする．\(\Sigma\)は\(\Gamma\)の定義による拡大である．
+\(\Sigma\)が\(\Gamma''\)と\cref{Thm:extensionbydefinitiononce}の主張で示した意味で同値であることを示そう．
+\(\varphi \in \Gamma''\)を任意にとる．\(\varphi \in \Gamma'\)ならば\(\varphi \in \Sigma\)だから\(\Sigma \provable \varphi\)である．
+\(\varphi \in \Gamma'' \setminus \Gamma'\)とする．このとき，\(\varphi\)は\(\symcal{L}'' \setminus \symcal{L}'\)に属するある記号の\(\symcal{L}', \Gamma'\)における定義になっている．
+その記号が関係記号，定数記号，関係記号のいずれであっても，同じ記号の\(\Sigma\)に属する\(\symcal{L}, \Gamma\)における定義\(\hat{\varphi}\)は
+\(\Sigma \provable \varphi \formulaequiv \hat{\varphi}\)を満たす．
+\(\hat{\varphi} \in \Sigma\)だから\(\Sigma \provable \hat{\varphi}\)であり，よって\(\Sigma \provable \varphi\)となる．
+\(\varphi \in \Sigma\)ならば\(\Gamma \provable \varphi\)であることも同様に示すことができる．
+
+\subsection*{\Cref{Que:equivalentTheory}}
+
+\(\Gamma \provable \varphi\)とすると，有限個の\(\varphi_1, \varphi_2, \dots, \varphi_n \in \Gamma\)で
+シークエント
+\[
+	\varphi_1, \varphi_2, \dots, \varphi_n \sequent \varphi
+\]
+が導出可能となるものが存在する．
+よってシークエント
+\[
+	\sequent \varphi_1 \to \paren{\varphi_2 \to \paren{\dotsb \to \varphi_n}}
+\]
+は導出可能である．
+各\(i = 1,2,\dots,n\)に対してシークエント\(\Sigma \sequent \varphi_i\)は導出可能だから，
+(\(\to\)E)規則を繰り返し適用することで\(\Sigma \provable \varphi\)であることがわかる．
+\(\Sigma \provable \varphi\)ならば\(\Gamma \provable \varphi\)であることも同様にしてわかる．
+
+
+\subsection*{\Cref{Que:grouptheoryaxiomization}}
+
+よく知られているように，この\(\symcal{L}\)理論\(T\)では以下を導くことができる．
+\[
+	T \provable \uexists e \forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} \objeq \obj{x}}
+\]
+群論の教科書では本書のような形式的記号列の議論は一切していないが，完全性定理を適用すれば
+群論の標準的な教科書に載っている証明がそのまま通用する．
+どうしても直接的に示したければ群論の標準的な教科書に載っている証明に相当するモデルに対する証明をシークエント計算に翻訳すればよい．
+さて，上記の議論により\(\symcal{L}\)に定数記号\(\obj{e}\)を加えた言語を\(\symcal{L}'\)とし，\(T\)に以下の公理を加えて得られる
+\(\symcal{L}'\)理論\(T'\)は\(T\)の定義による拡大である：
+\[
+	\forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} \objeq \obj{x}}.
+\]
+さらに，この理論\(T'\)では以下を導くことができる：
+\[
+	T' \provable \forall \obj{x} \uexists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} \objeq \obj{e}}.
+\]
+よって\(\symcal{L}''\)にアリティ1の関数記号\({}^{\obj{-1}}\)を加えた言語を\(\symcal{L}''\)とし，\(T'\)に以下の公理を加えて得られる
+\(\symcal{L}''\)理論\(T''\)は\(T'\)の定義による拡大である：
+\[
+	\forall \obj{x} \paren{\obj{x}^{\obj{-1}} \obj{\ast} \obj{x} \objeq \obj{e}}.
+\]
+この\(\symcal{L}''\)理論\(T''\)は\(\symcal{L}_{\GP}\)理論\(\GP\)にほかならない．

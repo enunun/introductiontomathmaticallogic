@@ -29,14 +29,9 @@
 \setsansfont[Ligatures=TeX]{Libertinus Sans}
 \setmathfont{Libertinus Math}[math-style=ISO, bold-style=ISO]
 \setmathfont{TeX Gyre Pagella Math}[range=bb]
-\DeclareFontFamily{OML}{nxlmi}{\skewchar \font =127}
-\DeclareFontShape{OML}{nxlmi}{m}{it}{
-	<-6.3>  nxlmi035
-	<6.3-8.6> nxlmi037
-	<8.6->  nxlmi03
-}{}
-\DeclareSymbolFont{gletters}{OML}{nxlmi}{m}{it}
-\DeclareMathSymbol{g}{\mathalpha}{gletters}{`g}
+\setmathfont{TeX Gyre Pagella Math}[range={\DashVDash}]
+\setmathfont{TeX Gyre Pagella Math}[range={\dashVdash}]
+\setmathfont{Garamond Math}[range={\Coloneq}]
 \usepackage[HaranoAji]{luatexja-preset}
 \ltjsetparameter{jacharrange={-2,-3}}
 \usepackage{amsthm}
@@ -53,6 +48,7 @@
 \usepackage{bussproofs}
 \usepackage{multicol}
 \usepackage{framed}
+\usepackage{numbersets}
 
 %\delimitershortfall=-.3pt
 
@@ -86,13 +82,14 @@
 
 \NewDocumentCommand{\obj}{m}{\symtt{#1}}
 
-\NewDocumentCommand{\Natural}{}{\omega}
-
-\NewDocumentCommand{\Zahlen}{}{\symbb{Z}}
-
 \DeclareMathOperator{\FV}{FV}
 \DeclareMathOperator{\BV}{BV}
 \DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\depth}{depth}
+\DeclareMathOperator{\size}{size}
+\DeclareMathOperator{\Th}{Th}
+\DeclareMathOperator{\eDiag}{eDiag}
+\DeclareMathOperator{\Diag}{Diag}
 
 \NewDocumentCommand{\subst}{smm}{%
 \IfBooleanTF{#1}{#2[{#3}]%
@@ -109,7 +106,7 @@
 \NewDocumentCommand{\pair}{m}{\langle #1 \rangle}
 
 \NewDocumentCommand{\provable}{}{\vdash}
-\NewDocumentCommand{\interderivable}{}{\dashv\vdash}
+\NewDocumentCommand{\interderivable}{}{\dashVdash}
 
 \NewDocumentCommand{\KleeneClosure}{m}{{#1}^{\ast}}
 
@@ -131,7 +128,7 @@
 	}%
 }
 
-\NewDocumentCommand{\equivclass}{sm}{%
+\NewDocumentCommand{\squarebrackets}{sm}{%
 	\IfBooleanTF{#1}{%
 		\mathopen{} [#2] \mathclose{}%
 	}%
@@ -139,11 +136,43 @@
 		\mathopen{} \left[ #2 \right] \mathclose{}%
 	}%
 }
+
+\NewDocumentCommand{\equivclass}{sm}{%
+	\IfBooleanTF{#1}{%
+		\squarebrackets*{#2}
+	}%
+	{%
+		\squarebrackets{#2}
+	}%
+}
+
+\NewDocumentCommand{\polynomial}{smm}{%
+	\IfBooleanTF{#1}{%
+		#2 \squarebrackets*{#3}
+	}%
+	{%
+		#2 \squarebrackets{#3}
+	}%
+}
+
+\NewDocumentCommand{\anglebrackets}{sm}{%
+	\IfBooleanTF{#1}{%
+		\mathopen{} \langle #2\rangle \mathclose{}%
+	}%
+	{%
+		\mathopen{} \left\langle #2\right\rangle \mathclose{}%
+	}%
+}
+
 \NewDocumentCommand{\emptystring}{}{\varepsilon}
 
 \NewDocumentCommand{\restriction}{}{\upharpoonright}
 
 \NewDocumentCommand{\objeq}{}{\equiv}
+
+\NewDocumentCommand{\formulaequiv}{}{\leftrightarrow}
+
+\NewDocumentCommand{\uexists}{}{{\exists !}}
 
 \NewDocumentCommand{\powerset}{m}{\apply{\symfrak{P}}{#1}}
 
@@ -157,9 +186,35 @@
 
 \NewDocumentCommand{\satisfy}{}{\vDash}
 
+\NewDocumentCommand{\logicallyequivalent}{}{\DashVDash}
+
 \NewDocumentCommand{\isomorphic}{}{\cong}
 
 \NewDocumentCommand{\elementarilyequivalent}{}{\equiv}
+
+\NewDocumentCommand{\GP}{}{\symup{GP}}
+
+\NewDocumentCommand{\Ring}{}{\symup{Ring}}
+
+\NewDocumentCommand{\CRing}{}{\symup{CRing}}
+
+\NewDocumentCommand{\OrderedRing}{}{\symup{OR}}
+
+\NewDocumentCommand{\ProjectiveGeometryPart}{}{\symup{B}}
+
+\NewDocumentCommand{\ZF}{}{\symup{ZF}}
+
+\NewDocumentCommand{\ZFC}{}{\symup{ZFC}}
+
+\NewDocumentCommand{\RArithmetic}{}{\symup{R}}
+
+\NewDocumentCommand{\Robinson}{}{\symup{Q}}
+
+\NewDocumentCommand{\PA}{}{\symup{PA}}
+
+\NewDocumentCommand{\POSET}{}{\symup{POSET}}
+
+\NewDocumentCommand{\TOSET}{}{\symup{TOSET}}
 %
 %%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
 %
@@ -195,7 +250,7 @@
 %%
 %%%%%%%%%%%%%%========hyperref============%%%%%%%%%%
 %
-\usepackage[unicode, pdfusetitle, hidelinks, draft = true]{hyperref} % hyperlink
+\usepackage[unicode, pdfusetitle, hidelinks, draft = false]{hyperref} % hyperlink
 
 \hypersetup{% setting hyperref
 	bookmarksnumbered=true,
@@ -233,6 +288,8 @@
 \crefname{Lemma}{補題}{補題}
 \Crefname{Corollary}{系}{系}
 \crefname{Corollary}{系}{系}
+\Crefname{Note}{注意}{注意}
+\crefname{Note}{注意}{注意}
 \crefname{section}{\presectionname}{\presectionname}
 \Crefname{section}{\presectionname}{\presectionname}
 \crefname{subsection}{\presubsectionname}{\presubsectionname}
@@ -303,12 +360,12 @@
 
 \begin{document}
 
-%\begin{titlepage}
-%	\title{0から始める数理論理学入門}
-%	\author{野口匠}
-%	\date{2024年8月7日}
-%	\maketitle
-%\end{titlepage}
+\begin{titlepage}
+	\title{0から始める数理論理学入門 第2.5版}
+	\author{野口匠}
+	\date{2024年11月14日}
+	\maketitle
+\end{titlepage}
 
 \frontmatter
 

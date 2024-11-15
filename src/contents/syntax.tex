@@ -522,22 +522,23 @@
 \index[sidx]{\(\CRing\)：可換環の理論}
 \index[sidx]{\(\symcal{L}_{\Ring}\)：環の言語}
 \begin{Ex} \label[Ex]{Ex:Ring}
-	環の言語を\(\symcal{L}_{\Ring} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}}\)とする．
+	環の言語を\(\symcal{L}_{\Ring} = \Set{\obj{+}, \obj{-}, \obj{\cdot}, \obj{0}, \obj{1}}\)とする．
+	ここで，\(\obj{+}, \obj{\cdot}\)はアリティ2の関数記号，\(\obj{-}\)はアリティ1の関数記号，\(\obj{0}, \obj{1}\)は定数記号である．
 	環の理論\(\Ring\)は，以下の文からなる\(\symcal{L}_{\Ring}\)理論であると考えることができる：
 	\begin{enumerate}
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z} \paren{\paren{\obj{x} \obj{+} \obj{y}} \obj{+} \obj{z} \objeq \obj{x} \obj{+} \paren{\obj{y} \obj{+} \obj{z}}},\)
 		\item \(\forall \obj{x} \paren{\obj{0} \obj{+} \obj{x} \objeq \obj{x}},\)
-		\item \(\forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{+} \obj{x} \objeq \obj{0}},\)
+		\item \(\forall \obj{x} \paren{\paren{\obj{-} \obj{x}} \obj{+} \obj{x} \objeq \obj{0}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{y} \objeq \obj{y} \obj{+} \obj{x}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
 		      \paren{\paren{\obj{x} \obj{\cdot} \obj{y}} \obj{\cdot} \obj{z} \objeq \obj{x} \obj{\cdot} \paren{\obj{y} \obj{\cdot} \obj{z}}},\)
-		\item \(\forall \obj{x} \paren{\paren{\obj{1} \obj{\cdot} \obj{x} \objeq \obj{x}} \land \paren{\obj{x} \obj{\cdot} \obj{1} \objeq \obj{x}}},\)
+		\item \(\forall \obj{x} \paren{\obj{1} \obj{\cdot} \obj{x} \objeq \obj{x}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
 		      \paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{+} \obj{z}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{+} \paren{\obj{x} \obj{\cdot} \obj{z}}},\)
 		\item \(\forall \obj{x} \forall \obj{y} \forall \obj{z}
 		      \paren{ \paren{\obj{x} \obj{+} \obj{y}} \obj{\cdot} \obj{z} \objeq \paren{\obj{x} \obj{\cdot} \obj{z}} \obj{+} \paren{\obj{y} \obj{\cdot} \obj{z}}}.\)
 	\end{enumerate}
-	最初の文3つは，\(\symcal{L}_{\GP}\)における\(\obj{\ast}\)を\(\obj{+}\)に置き換えたものであることに注意せよ．
+	最初の文3つは，\(\symcal{L}_{\GP}\)における\(\obj{\ast}\)を\(\obj{+}\)に，\({}^{\obj{-1}}\)を\(\obj{-}\)に置き換えたものであることに注意せよ．
 
 	なお，\(\Ring\)に閉論理式
 	\[
@@ -550,8 +551,9 @@
 \index[sidx]{\(\POSET\)：狭義の半順序の理論}
 \index[sidx]{\(\TOSET\)：狭義の全順序の理論}
 \index[sidx]{\(\symcal{L}_{\POSET}\)：狭義の半順序の言語}
-\begin{Ex} \label{Ex:orderedset}
+\begin{Ex} \label[Ex]{Ex:orderedset}
 	狭義の半順序の言語を\(\symcal{L}_{\POSET} = \Set{\obj{<}}\)とする．
+	ここで，\(\obj{<}\)はアリティ2の関係記号である．
 	狭義の半順序の理論\(\POSET\)は，以下の2つの文からなる\(\symcal{L}_{\POSET}\)理論と考えることができる．
 	\begin{enumerate}
 		\item \(\forall \obj{x} \lnot \paren{x \obj{<} \obj{x}},\)
@@ -570,7 +572,9 @@
 \index[sidx]{\(\OrderedRing\)：順序環の理論}
 \index[sidx]{\(\symcal{L}_{\OrderedRing}\)：順序環の言語}
 \begin{Ex} \label[Ex]{Ex:OrderedRing}
-	順序環の言語を\(\symcal{L}_{\OrderedRing} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}}\)とする．
+	順序環の言語を\(\symcal{L}_{\OrderedRing} = \Set{\obj{+}, \obj{-}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}}\)とする．
+	ここで，\(\obj{<}\)はアリティ2の関係記号，\(\obj{+}, \obj{\cdot}\)はアリティ2の関数記号，
+	\(\obj{-}\)はアリティ1の関数記号，\(\obj{0},\obj{1}\)は定数記号である．
 	順序環の理論\(\OrderedRing\)は，以下の文からなる\(\symcal{L}_{\OrderedRing}\)理論と考えることができる：
 	\begin{enumerate}
 		\item \Cref{Ex:Ring}で挙げた理論\(\Ring\)の8つの論理式すべて，

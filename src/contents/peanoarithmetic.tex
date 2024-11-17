@@ -28,7 +28,7 @@
 \begin{Def} \label{Def:peanoarithmetic}
 	1階Peano算術の言語を\(\symcal{L}_{\PA} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}}\)とする．
 	ここで，\(\obj{+}, \obj{\cdot}\)はアリティ2の関数記号，\(\obj{0}, \obj{1}\)は定数記号，\(\obj{<}\)はアリティ2の関数記号である．
-	1階Peano算術\(\PA\)は，以下の公理からなる\(\symcal{L}_{\PA}\)理論である：
+	\term{1階Peano算術}\(\PA\)は，以下の公理からなる\(\symcal{L}_{\PA}\)理論である：
 	\begin{description}
 		\item[A1.] \(\forall \obj{x} \lnot \paren{\obj{x} \obj{+} \obj{1} \objeq \obj{0}},\)
 		\item[A2.] \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{1} \objeq \obj{y} \obj{+} \obj{1} \to \obj{x} \objeq \obj{y}},\)
@@ -38,9 +38,9 @@
 		\item[A6.] \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{+} \obj{1}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{+} \obj{1}},\)
 		\item[A7.] \(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{0}},\)
 		\item[A8.] \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{<} \obj{y} \obj{+} \obj{1} \formulaequiv \obj{x} \obj{<} \obj{y} \lor \obj{x} \objeq \obj{y}},\)
-		\item[A9.] 変数記号\(\obj{x}\)が自由出現するような\(\symcal{L}_{\PA}\)論理式\(\apply{\varphi}{\obj{x}}\)に対する論理式
+		\item[A9.] 変数記号\(x\)が束縛出現しない\(\symcal{L}_{\PA}\)論理式\(\apply{\varphi}{x}\)に対する論理式
 		      \begin{equation}
-			      \apply{\varphi}{\obj{0}} \land \forall \obj{x} \paren{\apply{\varphi}{\obj{x}} \to \apply{\varphi}{\obj{x} \obj{+} \obj{1}}} \to \forall \obj{x} \apply{\varphi}{\obj{x}}
+			      \apply{\varphi}{\obj{0}} \land \forall x \paren{\apply{\varphi}{x} \to \apply{\varphi}{x \obj{+} \obj{1}}} \to \forall x \apply{\varphi}{x}
 			      \label{eq:inductionscheme}
 		      \end{equation}
 		      の全称閉包すべて．
@@ -64,7 +64,8 @@
 	そのままでは1階理論として表現することはできない．
 	しかも，書き方の違いだけかといえばそうではない．質的に大きく異なる点として，例えば以下の2つを挙げることができる：
 	\begin{enumerate}
-		\item Peanoの公理はPeano構造を特徴づけるが，\(\PA\)は通常の意味での自然数全体の集合\(\NaturalNumbers\)（に種々の構造を入れたもの）を特徴づける公理系ではない．
+		\item いわゆる「Peanoの公理」はPeano構造を特徴づける公理系であるが，
+		      \(\PA\)は通常の意味での自然数全体の集合\(\NaturalNumbers\)（に種々の構造を入れたもの）を特徴づける公理系ではない．
 		\item Peano構造上の加法は0と後者関数（「次の数」をとる関数）だけから定義できるが，1階の理論ではそれは不可能である．
 	\end{enumerate}
 
@@ -89,3 +90,49 @@
 	用語としての「Peanoの公理」は一般の知名度自体はそれなりに高いものの，それゆえかかなり雑に使われがちなようである．
 	本書ではPeano構造については取り扱わないが，世間的な「Peanoの公理」のイメージに惑わされて1階Peano算術\(\PA\)とPeano構造とを混同しないように注意されたい．
 \end{Note}
+
+\(\PA\)の公理図式(A9)は，（変数記号\(x\)が束縛出現しない）すべての\(\symcal{L}_{\PA}\)論理式に対して要請されるものである．
+ここに制限を加えることによって\(\PA\)の部分体系を得ることを考えよう．
+まず最初に思いつくのは\(\PA\)から公理図式(A9)を取り除いた体系である．
+
+\index[sidx]{\(\Robinson\)：Robinson算術}
+\index[widx]{Robinsonさんじゅつ@Robinson算術}
+\begin{Def} \label{Def:robinsonarithmetic}
+	\term{Robinson算術}\(\Robinson\)は，\(\PA\)における公理(A1)から(A8)に以下の公理を加えて得られる\(\symcal{L}_{\PA}\)理論である：
+	\begin{description}
+		\item[A10.] \(\forall \obj{x} \paren{\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}},\)
+	\end{description}
+\end{Def}
+
+\begin{Lemma} \label{lemma:paa10redudant}
+	\(\PA\)においては(A10)は証明できる．すなわち，
+	\[
+		\PA \provable \text{(A10)}
+	\]
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\(\obj{x}\)を変数記号とし，論理式\(\apply{\varphi}{\obj{x}}\)を\(\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}\)と定める．
+	\(\symcal{M}\)を\(M\)を対象領域とする\(\PA\)の任意のモデルとする．\(\symcal{M} \satisfy \apply{\varphi}{\obj{0}}\)は明らか．
+	\(x \in M\)を任意にとり，その名前を\(c_x\)とする．
+	\(\symcal{M} \satisfy \exists \obj{y} \paren{c_x \obj{+} \obj{1} \objeq \obj{y} \obj{+} \obj{1}}\)だから
+	\(\symcal{M} \satisfy \apply{\varphi}{c_x \obj{+} \obj{1}}\)であり，
+	\[
+		\symcal{M} \satisfy \apply{\varphi}{\obj{0}} \land \forall \obj{x} \paren{\apply{\varphi}{\obj{x}} \to \apply{\varphi}{\obj{x} \obj{+} \obj{1}}}
+	\]
+	となる．ゆえに(A9)から\(\symcal{M} \satisfy \forall \obj{x} \apply{\varphi}{\obj{x}}\)を得る．従って完全性定理から\(\PA \provable \text{(A10)}\)となる．
+\end{proof}
+
+\begin{Note}
+	\Cref{lemma:paa10redudant}の証明のように，形式体系において具体的な定理を証明する際は完全性定理を使ったモデル経由の証明の方が書きやすい．
+	表記を簡素化するため，以下のように記述を省略して書くことにする：
+	\begin{enumerate}
+		\item 構造\(\symcal{M}\)の対象領域\(M\)の元\(x \in M\)の名前をそのまま\(x\)と表す．
+		\item 構造\(\symcal{M}\)において，タイプライタ体で書かれた各記号の解釈はその記号をタイプライタ体でない通常の書体で表すことによって表現する．
+		      例えば，\(\symcal{L}_{\PA}\)の定数記号\(\obj{0}\)の解釈は\(0\)と表現する．
+		\item 構造は\(\symcal{M}\)は表に出さず，\(\symcal{M} \satisfy \varphi\)であることを「\(\varphi\)が成り立つ」などのように表記する．
+	\end{enumerate}
+\end{Note}
+
+

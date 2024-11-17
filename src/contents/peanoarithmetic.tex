@@ -107,7 +107,7 @@
 \begin{Lemma} \label{lemma:paa10redudant}
 	\(\PA\)においては(A10)は証明できる．すなわち，
 	\[
-		\PA \provable \text{(A10)}
+		\PA \provable \text{A10}
 	\]
 	が成り立つ．
 \end{Lemma}
@@ -128,11 +128,74 @@
 	\Cref{lemma:paa10redudant}の証明のように，形式体系において具体的な定理を証明する際は完全性定理を使ったモデル経由の証明の方が書きやすい．
 	表記を簡素化するため，以下のように記述を省略して書くことにする：
 	\begin{enumerate}
-		\item 構造\(\symcal{M}\)の対象領域\(M\)の元\(x \in M\)の名前をそのまま\(x\)と表す．
+		\item 構造\(\symcal{M}\)の対象領域\(M\)の元\(x \in M\)の名前をそのまま\(x\)で表す．
 		\item 構造\(\symcal{M}\)において，タイプライタ体で書かれた各記号の解釈はその記号をタイプライタ体でない通常の書体で表すことによって表現する．
 		      例えば，\(\symcal{L}_{\PA}\)の定数記号\(\obj{0}\)の解釈は\(0\)と表現する．
-		\item 構造は\(\symcal{M}\)は表に出さず，\(\symcal{M} \satisfy \varphi\)であることを「\(\varphi\)が成り立つ」などのように表記する．
+		\item 構造\(\symcal{M}\)は表に出さず，\(\symcal{M} \satisfy \varphi\)であることを「\(\varphi\)が成り立つ」などのように表記する．
 	\end{enumerate}
+
+	この簡素化やのちに述べる数項や算術化により，メタとオブジェクトの区別がますますつけづらくなる．
+	どちらの立場で議論しているのかはこまめに確認することを推奨する．
 \end{Note}
 
+Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない理論である．
+以降，公理図式(A9)を一部だけ含む\(\PA\)の部分体系を考えよう．
+その前に，論理式の分類を考える．
 
+\begin{Def} \label{Def:boundedformula}
+	\(\symcal{L}\)をアリティ2の関係記号\(<\)をもつ言語とする．
+	変数記号\(x\)と\(x\)を含まない\(\symcal{L}\)項\(t\)，および\(\symcal{L}\)論理式\(\varphi\)に対し，
+	\(\forall x \paren{x < t \to \varphi}\)と\(\exists x \paren{x < t \land \varphi}\)をそれぞれ
+	\begin{align}
+		\forall x < t \varphi,
+		\label{eq:boundedformulaforall} \\
+		\exists x < t \varphi
+		\label{eq:boundedformulaexists}
+	\end{align}
+	と略記する．
+	\(\symcal{L}\)論理式\(\varphi\)が%
+	\index[widx]{ろんりしき@論理式!ゆうかいろんりしき@有界---}%
+	\term{有界論理式}であるとは，
+	\(\varphi\)に含まれる量化子\(\forall, \exists\)がすべて\(\forall x < t\)か\(\exists x < t\)
+	の形で現れていることをいう%
+	\footnote{%
+		この定義も帰納的定義によって比較的容易に精密化できる．
+	}%
+	．
+\end{Def}
+
+\index[sidx]{\(\SigmaFormula_n\)：\(\SigmaFormula_n\)論理式全体の集合}
+\index[sidx]{\(\PiFormula_n\)：\(\PiFormula_n\)論理式全体の集合}
+\index[sidx]{\(\DeltaFormula_n\)：\(\PiFormula_n\)論理式全体の集合}
+\index[widx]{ろんりしき@論理式!\(\SigmaFormula_n\)ろんりしき@\(\SigmaFormula_n\)---}
+\index[widx]{ろんりしき@論理式!\(\PiFormula_n\)ろんりしき@\(\PiFormula_n\)---}
+\index[widx]{ろんりしき@論理式!\(\DeltaFormula_n\)ろんりしき@\(\DeltaFormula_n\)---}
+\begin{Def}
+	自然数\(n\)に対して，\(\symcal{L}_{\PA}\)論理式の分類\(\SigmaFormula_n\)論理式，\(\PiFormula_n\)論理式を以下のように帰納的に定義する．
+	\begin{enumerate}
+		\item \(\symcal{L}_{\PA}\)開論理式はすべて\(\SigmaFormula_0\)論理式であり，かつ\(\PiFormula_0\)論理式でもある．
+		\item \(\varphi\)が\(\SigmaFormula_n\)論理式であるとき，正の整数\(k\)と変数記号\(x_1, x_2, \dots, x_k\)に対する論理式
+		      \[
+			      \forall x_1 \forall x_2 \dotsb \forall x_k \varphi
+		      \]
+		      と論理的に同値な\(\symcal{L}_{\PA}\)論理式は\(\PiFormula_n\)論理式である．
+		\item \(\varphi\)が\(\PiFormula_n\)論理式であるとき，正の整数\(k\)と変数記号\(x_1, x_2, \dots, x_k\)に対する論理式
+		      \[
+			      \exists x_1 \exists x_2 \dotsb \exists x_k \varphi
+		      \]
+		      と論理的に同値な\(\symcal{L}_{\PA}\)論理式は\(\PiFormula_n\)論理式である．
+	\end{enumerate}
+	\(\SigmaFormula_n\)論理式全体の集合，\(\PiFormula_n\)論理式全体の集合をそれぞれ\(\SigmaFormula_n, \PiFormula_n\)と表す．
+
+	\(\symcal{L}_{\PA}\)論理式\(\varphi\)が\(\SigmaFormula_n\)論理式であり，かつ\(\PiFormula_n\)論理式でもある場合，
+	\(\varphi\)は\(\DeltaFormula_n\)論理式であるという．
+	\(\DeltaFormula_n\)論理式全体の集合を\(\DeltaFormula_n\)と表す．
+\end{Def}
+
+
+
+\index[sidx]{I\(\symup{\Gamma}\)：\(\PA\)の部分体系}
+\begin{Def} \label{Def:paa9restriction}
+	\(\PA\)の公理のうち，公理図式(A9)における論理式\(\varphi\)を論理式の集合\(\symup{\Gamma}\)に制限した\(\symcal{L}_{\PA}\)理論を
+	I\(\symup{\Gamma}\)と表す．
+\end{Def}

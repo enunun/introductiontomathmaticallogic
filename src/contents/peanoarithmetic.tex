@@ -65,7 +65,7 @@
 	しかも，書き方の違いだけかといえばそうではない．質的に大きく異なる点として，例えば以下の2つを挙げることができる：
 	\begin{enumerate}
 		\item いわゆる「Peanoの公理」はPeano構造を特徴づける公理系であるが，
-		      \(\PA\)は通常の意味での自然数全体の集合\(\NaturalNumbers\)（に種々の構造を入れたもの）を特徴づける公理系ではない．
+		      \(\PA\)は通常の意味での自然数全体の集合\(\NaturalNumbers\)（に通常の意味での演算や大小関係の構造を入れたもの）を特徴づける公理系ではない．
 		\item Peano構造上の加法は0と後者関数（「次の数」をとる関数）だけから定義できるが，1階の理論ではそれは不可能である．
 	\end{enumerate}
 
@@ -121,7 +121,7 @@
 	\[
 		\symcal{M} \satisfy \apply{\varphi}{\obj{0}} \land \forall \obj{x} \paren{\apply{\varphi}{\obj{x}} \to \apply{\varphi}{\obj{x} \obj{+} \obj{1}}}
 	\]
-	となる．ゆえに\cref{item:PAA9}から\(\symcal{M} \satisfy \forall \obj{x} \apply{\varphi}{\obj{x}}\)を得る．従って完全性定理から\(\PA \provable \text{\cref{item:PAA10}}\)となる．
+	となる．ゆえに\cref{item:PAA9}から\(\symcal{M} \satisfy \forall \obj{x} \apply{\varphi}{\obj{x}}\)を得る．従って完全性定理によって\(\PA \provable \text{\cref{item:PAA10}}\)となる．
 \end{proof}
 
 \begin{Note}
@@ -136,6 +136,127 @@
 	この簡素化やのちに述べる数項や算術化により，メタとオブジェクトの区別がますますつけづらくなる．
 	どちらの立場で議論しているのかはこまめに確認することを推奨する．
 \end{Note}
+
+\index[widx]{もでる@モデル!ひょうじゅんもでる@標準---}
+\index[widx]{もでる@モデル!ちょうじゅんもでる@超準---}
+\index[sidx]{\(\standardmodel\)：\(\PA\)の標準モデル}
+\begin{Def} \label{Def:standardstructure}
+	自然数全体の集合\(\NaturalNumbers\)を対象領域とし，\(\symcal{L}_{\PA}\)の各記号\(\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}\)の解釈をそれぞれ
+	自然数における通常の意味での\(\mathord{+}, \mathord{\cdot}, 0, 1, \mathord{<}\)定めることにより得られる\(\symcal{L}_{\PA}\)構造は\(\PA\)のモデルである．
+	このモデル（およびこのモデルと同型なモデル）を\(\PA\)の\term{標準モデル}といい，本書では
+	\begin{equation}
+		\standardmodel
+		\label{eq:standardmodel}
+	\end{equation}
+	と表す．
+	また，\(\standardmodel\)と同型ではない\(\PA\)のモデルを
+	\(\PA\)の\term{超準モデル}という．
+
+	\(\PA\)の標準モデルは，通常の意味での自然数全体の集合（に通常の意味での演算や大小関係の構造を入れたもの）のことである．
+\end{Def}
+
+\begin{Note}
+	とくに誤解のおそれがないときは，標準モデル\(\standardmodel\)と自然数全体の集合\(\NaturalNumbers\)を区別しないことも多い．
+	これは，\(\NaturalNumbers\)に通常の意味での演算や大小関係の構造が入っていないという文脈は考えにくいからである．
+\end{Note}
+
+\index[sidx]{\(\numeral{n}\)：数項}
+\index[widx]{こう@項!すうこう@数---}
+\begin{Def} \label{Def:numeral}
+	\(n\)を自然数とする．\(n\)に対する\(\symcal{L}_{\PA}\)項\(\numeral{n}\)を以下のように帰納的に定義する：
+	\begin{align}
+		\numeral{0}     & = \obj{0},
+		\label{eq:numeral0}                                                                    \\
+		\numeral{n + 1} & = \paren{\numeral{n} \obj{+} \obj{1}} \quad (n \in \NaturalNumbers).
+		\label{eq:numeralnext}
+	\end{align}
+	ここで，\cref{eq:numeral0}において，左辺の\(0\)はメタ側の（つまり通常の意味での）自然数\(0\)であり，右辺の\(\obj{0}\)は\(\symcal{L}_{\PA}\)の定数記号\(\obj{0}\)である．
+	\(\numeral{0}\)は\(\obj{0}\)と同一の\(\symcal{L}_{\PA}\)項であることにも注意しよう．
+	\cref{eq:numeralnext}において，左辺の\(n, \mathord{+}, 1\)はそれぞれメタ側の（つまり通常の意味での）自然数\(n\)，加法\(+\)，および自然数\(1\)であり，
+	左辺の\(\numeral{n}, \obj{+}, \obj{1}\)はそれぞれ\(\symcal{L}_{\PA}\)項\(\numeral{n}\)，関数記号\(\obj{+}\)，および定数記号\(\obj{1}\)であることに注意しよう．
+
+	自然数\(n\)に対する\(\numeral{n}\)を，\(n\)に対する\term{数項}と呼ぶ．
+\end{Def}
+
+\begin{Note}
+	\NewDocumentCommand{\Num}{}{\operatorname{Num}}
+	\Cref{Def:numeral}における「帰納的定義」を正当化するのは，メタ側の（つまり通常の意味での自然数上での）帰納的定義である．
+	フォーマルに書けば，\(\standardmodel\)における帰納的定義を使って
+	\begin{align*}
+		\apply{\Num}{0}      & = \obj{0},                                                              \\
+		\apply{\Num}{n  + 1} & = \paren{\apply{\Num}{n} \obj{+} \obj{1}} \quad (n \in \NaturalNumbers)
+	\end{align*}
+	を満たす写像\(\Num \colon \NaturalNumbers \to \symcal{T}\)を定義したことに相当する（\cref{Def:numeral}における\(\numeral{n}\)は上記\(\apply{\Num}{n}\)に相当する）．
+	ここで，\(\symcal{T}\)は\(\symcal{L}_{\PA}\)項全体の集合である．
+\end{Note}
+
+\begin{Ex} \label[Ex]{Ex:numeral}
+	数項\(\numeral{1}, \numeral{2}, \numeral{3}\)の定義はそれぞれ
+	\begin{align*}
+		\numeral{1} & = \obj{0} \obj{+} \obj{1},                                                        \\
+		\numeral{2} & = \paren{\paren{\obj{0} \obj{+} \obj{1}} \obj{+} \obj{1}},                        \\
+		\numeral{3} & = \paren{\paren{\paren{\obj{0} \obj{+} \obj{1}} \obj{+} \obj{1}} \obj{+} \obj{1}}
+	\end{align*}
+	である．
+\end{Ex}
+
+Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない．
+しかし，メタ側の（つまり通常の意味での自然数上での）数学的帰納法はそもそも\(\Robinson\)内での主張でも\(\PA\)内の主張でもない．
+このことに注意して，以下のことを証明してみよう．
+
+\begin{Thm} \label[Thm]{Thm:Robinsonnumeraltheorem}
+	\(n, m\)を自然数とする．このとき，\(\Robinson\)において以下が成り立つ．
+	\begin{align}
+		\Robinson & \provable \numeral{n} \obj{+} \numeral{m} \objeq \numeral{n + m},
+		\label{eq:Robinsonnumeraltheoremaddition}                                                                                                                                                     \\
+		\Robinson & \provable \numeral{n} \obj{\cdot} \numeral{m} \objeq \numeral{n \cdot m},
+		\label{eq:Robinsonnumeraltheoremmultiplication}                                                                                                                                               \\
+		\Robinson & \provable \lnot \paren{\numeral{n} \objeq \numeral{m}} \quad (n \neq m),
+		\label{eq:Robinsonnumeraltheoremnumeralterm}                                                                                                                                                  \\
+		\Robinson & \provable \forall \obj{x} \paren{\obj{x} \obj{+} \obj{1} \obj{<} \numeral{n + 1} \to \obj{x} \obj{<} \numeral{n}},
+		\label{eq:Robinsonnumeraltheoremorderbase}                                                                                                                                                    \\
+		\Robinson & \provable \forall \obj{x} \paren{\obj{x} < \numeral{n + 1} \formulaequiv \obj{x} \objeq \numeral{0} \lor \obj{x} \objeq \numeral{1} \lor \dotsb \lor \obj{x} \objeq \numeral{n}},
+		\label{eq:Robinsonnumeraltheoremorder}                                                                                                                                                        \\
+		\Robinson & \provable \forall \obj{x} \paren{\paren{\obj{x} \obj{+} \obj{1}} \obj{+} \numeral{n} \objeq \obj{x} \obj{+} \numeral{n + 1}},
+		\label{eq:Robinsonnumeraltheoremlinerorderbase}                                                                                                                                               \\
+		\Robinson & \provable \forall \obj{x} \paren{\obj{x} \obj{<} \numeral{n} \lor \numeral{n} < \obj{x} \lor \obj{x} \objeq \numeral{n}}.
+		\label{eq:Robinsonnumeraltheoremlinerorder}
+	\end{align}
+\end{Thm}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\Robinson\)の任意のモデルとする．完全性定理により，\(\symcal{M}\)が右辺の論理式を充足することを示せば十分である．
+
+	まずは\cref{eq:Robinsonnumeraltheoremaddition}を示そう．
+	自然数\(n\)を任意に1つとったとき，
+	任意の自然数\(m\)に対して\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{m} \objeq \numeral{n + m}\)が成り立つことを\(m\)に関する数学的帰納法によって示す．
+	\(m = 0\)のとき，\(\numeral{0}\)は\(\obj{0}\)のことなので，\cref{item:PAA3}から\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{0} \objeq \numeral{n}\)が得られる．
+	各\(m\)に対して，\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{m} \objeq \numeral{n+m}\)が成り立つと仮定すると，
+	\cref{item:PAA4}から\(\symcal{M}\)においては
+	\begin{align*}
+		\numeral{n} \obj{+} \numeral{m + 1} & \objeq \numeral{n} \obj{+} \paren{\numeral{m} \obj{+} \obj{1}} \\
+		                                    & \objeq \paren{\numeral{n} \obj{+} \numeral{m}} \obj{+} \obj{1} \\
+		                                    & \objeq \numeral{n + \paren{m + 1}}
+	\end{align*}
+	が成り立つことがわかるので，\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{m + 1} \objeq \numeral{n + \paren{m + 1}}\)となる．
+	以上より，数学的帰納法によって任意の自然数\(n, m\)に対して\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{m} \objeq \numeral{n + m}\)が成り立つ．
+	\Cref{eq:Robinsonnumeraltheoremmultiplication}も同様である．
+
+	\Cref{eq:Robinsonnumeraltheoremnumeralterm}を示そう．
+	自然数\(n\)を任意に1つとったとき，
+	\(n \neq m\)を満たす任意の自然数\(m\)に対して\(\symcal{M} \satisfy \lnot \paren{\numeral{n} \objeq \numeral{m}}\)が成り立つことを\(m\)に関する数学的帰納法によって示す．
+	\(m = 0\)のとき，\(n \neq 0\)なので\(n = n_0 + 1\)となる自然数\(n_0\)がとれる．
+	すると\cref{item:PAA1}から\(\symcal{M} \satisfy \lnot \paren{\numeral{n_0} \obj{+} \obj{1} \objeq \numeral{0}}\)が成り立つので
+	\(\symcal{M} \satisfy \lnot \paren{\numeral{n} \objeq \numeral{0}}\)は成り立つ．
+	各\(m\)について，\(n \neq m\)ならば\(\symcal{M} \satisfy \lnot \paren{\numeral{n} \objeq \numeral{m}}\)が成り立つと仮定する．
+	\(n \neq m + 1\)とすると，\(n = 0\)のときには\cref{item:PAA1}から\(\symcal{M} \satisfy \lnot \paren{\numeral{m} \obj{+} \obj{1} \objeq \numeral{0}}\)
+	が得られる．よって\(\symcal{M} \satisfy \lnot \paren{\numeral{0} \objeq \numeral{m + 1}}\)となる．
+	\(n \neq 0\)のとき，\(n = n_0 + 1\)となる自然数\(n_0\)がとれる．\(n \neq m + 1\)より\(n_0 \neq m\)だから，
+	帰納法の仮定により\(\symcal{M} \satisfy \lnot \paren{\numeral{n_0} \objeq \numeral{m}}\)となる．
+	従って\cref{item:PAA2}（の対偶に相当するもの）によって\(\symcal{M} \satisfy \lnot \paren{\numeral{n} \objeq \numeral{m + 1}}\)が成り立つ．
+	以上より，数学的帰納法によって任意の自然数\(n, m\)に対して\(\symcal{M} \satisfy \lnot \paren{\numeral{n} \objeq \numeral{m}}\)が成り立つ．
+\end{proof}
+
 
 Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない理論である．
 以降，公理図式\cref{item:PAA9}を一部だけ含む\(\PA\)の部分体系を考えよう．
@@ -196,7 +317,6 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 
 	また，\(\symcal{L}_{\PA}\)開論理式全体の集合を\(\OpenFormulaSet\)と表す．
 \end{Def}
-
 
 
 \index[sidx]{I\(\symup{\Gamma}\)：\(\PA\)の部分体系}

@@ -99,7 +99,7 @@
 \index[widx]{Robinsonさんじゅつ@Robinson算術}
 \begin{Def} \label{Def:robinsonarithmetic}
 	\term{Robinson算術}\(\Robinson\)は，\(\PA\)における公理\cref{item:PAA1}から\cref{item:PAA8}に以下の公理を加えて得られる\(\symcal{L}_{\PA}\)理論である：
-	\begin{enumerate}[label=A\arabic*.,ref=A\arabic*,resume*,start=9]
+	\begin{enumerate}[label=A\arabic*.,ref=A\arabic*,resume*,start=10]
 		\item \label{item:PAA10} \(\forall \obj{x} \paren{\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}},\)
 	\end{enumerate}
 \end{Def}
@@ -154,13 +154,17 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	と略記する．
 	\(\symcal{L}\)論理式\(\varphi\)が%
 	\index[widx]{ろんりしき@論理式!ゆうかいろんりしき@有界---}%
-	\term{有界論理式}であるとは，
+	\(\symcal{L}\)\term{有界論理式}であるとは，
 	\(\varphi\)に含まれる量化子\(\forall, \exists\)がすべて\(\forall x < t\)か\(\exists x < t\)
 	の形で現れていることをいう%
 	\footnote{%
 		この定義も帰納的定義によって比較的容易に精密化できる．
 	}%
 	．
+	言語\(\symcal{L}\)が明らかな場合，もしくは誤解のおそれがない場合には，\(\symcal{L}\)有界論理式のことを
+	単に有界論理式と呼ぶことがある．
+
+	量化子\(\forall, \exists\)を含まない論理式，すなわち開論理式はすべて有界論理式でもある．
 \end{Def}
 
 \index[sidx]{\(\SigmaFormula_n\)：\(\SigmaFormula_n\)論理式全体の集合}
@@ -170,25 +174,27 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 \index[widx]{ろんりしき@論理式!\(\PiFormula_n\)ろんりしき@\(\PiFormula_n\)---}
 \index[widx]{ろんりしき@論理式!\(\DeltaFormula_n\)ろんりしき@\(\DeltaFormula_n\)---}
 \begin{Def}
-	自然数\(n\)に対して，\(\symcal{L}_{\PA}\)論理式の分類\(\SigmaFormula_n\)論理式，\(\PiFormula_n\)論理式を以下のように帰納的に定義する．
+	自然数\(n\)に対して，\(\SigmaFormula_n\)論理式，\(\PiFormula_n\)論理式を以下のように帰納的に定義する：
 	\begin{enumerate}
-		\item \(\symcal{L}_{\PA}\)開論理式はすべて\(\SigmaFormula_0\)論理式であり，かつ\(\PiFormula_0\)論理式でもある．
+		\item \(\symcal{L}_{\PA}\)有界論理式はすべて\(\SigmaFormula_0\)論理式であり，かつ\(\PiFormula_0\)論理式でもある．
 		\item \(\varphi\)が\(\SigmaFormula_n\)論理式であるとき，正の整数\(k\)と変数記号\(x_1, x_2, \dots, x_k\)に対する論理式
 		      \[
 			      \forall x_1 \forall x_2 \dotsb \forall x_k \varphi
 		      \]
-		      と論理的に同値な\(\symcal{L}_{\PA}\)論理式は\(\PiFormula_n\)論理式である．
+		      と論理的に同値な\(\symcal{L}_{\PA}\)論理式は\(\PiFormula_{n+1}\)論理式である．
 		\item \(\varphi\)が\(\PiFormula_n\)論理式であるとき，正の整数\(k\)と変数記号\(x_1, x_2, \dots, x_k\)に対する論理式
 		      \[
 			      \exists x_1 \exists x_2 \dotsb \exists x_k \varphi
 		      \]
-		      と論理的に同値な\(\symcal{L}_{\PA}\)論理式は\(\PiFormula_n\)論理式である．
+		      と論理的に同値な\(\symcal{L}_{\PA}\)論理式は\(\PiFormula_{n+1}\)論理式である．
 	\end{enumerate}
 	\(\SigmaFormula_n\)論理式全体の集合，\(\PiFormula_n\)論理式全体の集合をそれぞれ\(\SigmaFormula_n, \PiFormula_n\)と表す．
 
 	\(\symcal{L}_{\PA}\)論理式\(\varphi\)が\(\SigmaFormula_n\)論理式であり，かつ\(\PiFormula_n\)論理式でもある場合，
 	\(\varphi\)は\(\DeltaFormula_n\)論理式であるという．
 	\(\DeltaFormula_n\)論理式全体の集合を\(\DeltaFormula_n\)と表す．
+
+	また，\(\symcal{L}_{\PA}\)開論理式全体の集合を\(\OpenFormulaSet\)と表す．
 \end{Def}
 
 

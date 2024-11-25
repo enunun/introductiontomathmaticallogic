@@ -29,29 +29,29 @@
 	1階Peano算術の言語を\(\symcal{L}_{\PA} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}}\)とする．
 	ここで，\(\obj{+}, \obj{\cdot}\)はアリティ2の関数記号，\(\obj{0}, \obj{1}\)は定数記号，\(\obj{<}\)はアリティ2の関数記号である．
 	\term{1階Peano算術}\(\PA\)は，以下の公理からなる\(\symcal{L}_{\PA}\)理論である：
-	\begin{description}
-		\item[A1.] \(\forall \obj{x} \lnot \paren{\obj{x} \obj{+} \obj{1} \objeq \obj{0}},\)
-		\item[A2.] \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{1} \objeq \obj{y} \obj{+} \obj{1} \to \obj{x} \objeq \obj{y}},\)
-		\item[A3.] \(\forall \obj{x} \paren{\obj{x} \obj{+} \obj{0} \objeq \obj{x}},\)
-		\item[A4.] \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \paren{\obj{y} + \obj{1}} \objeq \paren{\obj{x} \obj{+} \obj{y}} \obj{+} \obj{1}},\)
-		\item[A5.] \(\forall \obj{x} \paren{\obj{x} \obj{\cdot} \obj{0} \objeq \obj{0}},\)
-		\item[A6.] \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{+} \obj{1}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{+} \obj{1}},\)
-		\item[A7.] \(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{0}},\)
-		\item[A8.] \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{<} \obj{y} \obj{+} \obj{1} \formulaequiv \obj{x} \obj{<} \obj{y} \lor \obj{x} \objeq \obj{y}},\)
-		\item[A9.] 変数記号\(x\)が束縛出現しない\(\symcal{L}_{\PA}\)論理式\(\apply{\varphi}{x}\)に対する論理式
+	\begin{enumerate}[label=A\arabic*.,ref=A\arabic*]
+		\item \label{item:PAA1} \(\forall \obj{x} \lnot \paren{\obj{x} \obj{+} \obj{1} \objeq \obj{0}},\)
+		\item \label{item:PAA2} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{1} \objeq \obj{y} \obj{+} \obj{1} \to \obj{x} \objeq \obj{y}},\)
+		\item \label{item:PAA3} \(\forall \obj{x} \paren{\obj{x} \obj{+} \obj{0} \objeq \obj{x}},\)
+		\item \label{item:PAA4} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \paren{\obj{y} + \obj{1}} \objeq \paren{\obj{x} \obj{+} \obj{y}} \obj{+} \obj{1}},\)
+		\item \label{item:PAA5} \(\forall \obj{x} \paren{\obj{x} \obj{\cdot} \obj{0} \objeq \obj{0}},\)
+		\item \label{item:PAA6} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{+} \obj{1}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{+} \obj{1}},\)
+		\item \label{item:PAA7} \(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{0}},\)
+		\item \label{item:PAA8} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{<} \obj{y} \obj{+} \obj{1} \formulaequiv \obj{x} \obj{<} \obj{y} \lor \obj{x} \objeq \obj{y}},\)
+		\item \label{item:PAA9} 変数記号\(x\)が束縛出現しない\(\symcal{L}_{\PA}\)論理式\(\apply{\varphi}{x}\)に対する論理式
 		      \begin{equation}
 			      \apply{\varphi}{\obj{0}} \land \forall x \paren{\apply{\varphi}{x} \to \apply{\varphi}{x \obj{+} \obj{1}}} \to \forall x \apply{\varphi}{x}
 			      \label{eq:inductionscheme}
 		      \end{equation}
 		      の全称閉包すべて．
-	\end{description}
+	\end{enumerate}
 \end{Def}
 
-\(\PA\)の各公理の役割を述べておこう．まず，(A1), (A2)は通常の数学における「次の数」に相当する「\(\obj{x} + \obj{1}\)」に関する公理である．
-(A3), (A4)は加法に関する公理であり，通常の数学における加法の帰納的定義に相当するものである．
-(A5), (A6)と(A7), (A8)は，それぞれ通常の数学における乗法と大小関係の帰納的定義に相当する公理である．
-(A1)から(A8)までは\(\symcal{L}_{\PA}\)の各記号の定義ともいえる公理であるが，(A9)だけは特異的である．
-意味的には数学的帰納法に相当するものであるが，(A9)は単一の公理ではなく可算無限個ある論理式すべてに対する公理をまとめて書いた%
+\(\PA\)の各公理の役割を述べておこう．まず，\cref{item:PAA1}, \cref{item:PAA2}は通常の数学における「次の数」に相当する「\(\obj{x} + \obj{1}\)」に関する公理である．
+\cref{item:PAA3}, \cref{item:PAA4}は加法に関する公理であり，通常の数学における加法の帰納的定義に相当するものである．
+\cref{item:PAA5}, \cref{item:PAA6}と\cref{item:PAA7}, \cref{item:PAA8}は，それぞれ通常の数学における乗法と大小関係の帰納的定義に相当する公理である．
+\cref{item:PAA1}から\cref{item:PAA8}までは\(\symcal{L}_{\PA}\)の各記号の定義ともいえる公理であるが，\cref{item:PAA9}だけは特異的である．
+意味的には数学的帰納法に相当するものであるが，\cref{item:PAA9}は単一の公理ではなく可算無限個ある論理式すべてに対する公理をまとめて書いた%
 \index[widx]{こうり@公理!こうりずしき@---図式}%
 \term{公理図式}である．
 この公理図式のために，\(\PA\)は有限個の論理式からなる理論ではなく可算無限個の公理からなる理論になっている．
@@ -76,8 +76,8 @@
 	}%
 	\(\omega\)に対し，\(\omega\)上の2項関係\(<\)と写像\(S \colon \omega \to \omega\)を以下のように定める：
 	\begin{align*}
-		\alpha < \beta \metaequivalent \alpha \in \beta, \\
-		\apply{S}{\alpha} = \alpha \cup \Set{\alpha}.
+		\alpha < \beta \metaequivalent \alpha \in \beta \quad & (\alpha, \beta \in \omega), \\
+		\apply{S}{\alpha} = \alpha \cup \Set{\alpha} \quad    & (\alpha \in \omega).
 	\end{align*}
 	\(\obj{<}, \obj{S}\)の解釈をそれぞれ上で定義した\(\mathord{<}, S\)と定めることで，
 	\(\omega\)を対象領域とする\(\symcal{L}\)構造\(\symcal{N}\)を定義することができる．
@@ -91,23 +91,23 @@
 	本書ではPeano構造については取り扱わないが，世間的な「Peanoの公理」のイメージに惑わされて1階Peano算術\(\PA\)とPeano構造とを混同しないように注意されたい．
 \end{Note}
 
-\(\PA\)の公理図式(A9)は，（変数記号\(x\)が束縛出現しない）すべての\(\symcal{L}_{\PA}\)論理式に対して要請されるものである．
+\(\PA\)の公理図式\cref{item:PAA9}は，（変数記号\(x\)が束縛出現しない）すべての\(\symcal{L}_{\PA}\)論理式に対して要請されるものである．
 ここに制限を加えることによって\(\PA\)の部分体系を得ることを考えよう．
-まず最初に思いつくのは\(\PA\)から公理図式(A9)を取り除いた体系である．
+まず最初に思いつくのは\(\PA\)から公理図式\cref{item:PAA9}を取り除いた体系である．
 
 \index[sidx]{\(\Robinson\)：Robinson算術}
 \index[widx]{Robinsonさんじゅつ@Robinson算術}
 \begin{Def} \label{Def:robinsonarithmetic}
-	\term{Robinson算術}\(\Robinson\)は，\(\PA\)における公理(A1)から(A8)に以下の公理を加えて得られる\(\symcal{L}_{\PA}\)理論である：
-	\begin{description}
-		\item[A10.] \(\forall \obj{x} \paren{\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}},\)
-	\end{description}
+	\term{Robinson算術}\(\Robinson\)は，\(\PA\)における公理\cref{item:PAA1}から\cref{item:PAA8}に以下の公理を加えて得られる\(\symcal{L}_{\PA}\)理論である：
+	\begin{enumerate}[label=A\arabic*.,ref=A\arabic*,resume*,start=9]
+		\item \label{item:PAA10} \(\forall \obj{x} \paren{\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}},\)
+	\end{enumerate}
 \end{Def}
 
-\begin{Lemma} \label{lemma:paa10redudant}
-	\(\PA\)においては(A10)は証明できる．すなわち，
+\begin{Lemma} \label[Lemma]{lemma:paa10redudant}
+	\(\PA\)において\cref{item:PAA10}は証明できる．すなわち，
 	\[
-		\PA \provable \text{A10}
+		\PA \provable \text{\cref{item:PAA10}}
 	\]
 	が成り立つ．
 \end{Lemma}
@@ -121,7 +121,7 @@
 	\[
 		\symcal{M} \satisfy \apply{\varphi}{\obj{0}} \land \forall \obj{x} \paren{\apply{\varphi}{\obj{x}} \to \apply{\varphi}{\obj{x} \obj{+} \obj{1}}}
 	\]
-	となる．ゆえに(A9)から\(\symcal{M} \satisfy \forall \obj{x} \apply{\varphi}{\obj{x}}\)を得る．従って完全性定理から\(\PA \provable \text{(A10)}\)となる．
+	となる．ゆえに\cref{item:PAA9}から\(\symcal{M} \satisfy \forall \obj{x} \apply{\varphi}{\obj{x}}\)を得る．従って完全性定理から\(\PA \provable \text{\cref{item:PAA10}}\)となる．
 \end{proof}
 
 \begin{Note}
@@ -131,7 +131,6 @@
 		\item 構造\(\symcal{M}\)の対象領域\(M\)の元\(x \in M\)の名前をそのまま\(x\)で表す．
 		\item 構造\(\symcal{M}\)において，タイプライタ体で書かれた各記号の解釈はその記号をタイプライタ体でない通常の書体で表すことによって表現する．
 		      例えば，\(\symcal{L}_{\PA}\)の定数記号\(\obj{0}\)の解釈は\(0\)と表現する．
-		\item 構造\(\symcal{M}\)は表に出さず，\(\symcal{M} \satisfy \varphi\)であることを「\(\varphi\)が成り立つ」などのように表記する．
 	\end{enumerate}
 
 	この簡素化やのちに述べる数項や算術化により，メタとオブジェクトの区別がますますつけづらくなる．
@@ -139,7 +138,7 @@
 \end{Note}
 
 Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない理論である．
-以降，公理図式(A9)を一部だけ含む\(\PA\)の部分体系を考えよう．
+以降，公理図式\cref{item:PAA9}を一部だけ含む\(\PA\)の部分体系を考えよう．
 その前に，論理式の分類を考える．
 
 \begin{Def} \label{Def:boundedformula}
@@ -196,6 +195,6 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 
 \index[sidx]{I\(\symup{\Gamma}\)：\(\PA\)の部分体系}
 \begin{Def} \label{Def:paa9restriction}
-	\(\PA\)の公理のうち，公理図式(A9)における論理式\(\varphi\)を論理式の集合\(\symup{\Gamma}\)に制限した\(\symcal{L}_{\PA}\)理論を
+	\(\PA\)の公理のうち，公理図式\cref{item:PAA9}における論理式\(\varphi\)を論理式の集合\(\symup{\Gamma}\)に制限した\(\symcal{L}_{\PA}\)理論を
 	I\(\symup{\Gamma}\)と表す．
 \end{Def}

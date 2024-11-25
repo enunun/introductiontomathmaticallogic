@@ -610,7 +610,7 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 	\index[widx]{りろん@理論!とうしきりろん@等式---}%
 	\term{等式理論}であるとは，\(\symcal{L}\)が関係記号をもたず，
 	さらに\(T\)の各文がすべて等式（\(s \objeq t\)の形の論理式）の全称閉包になっていることをいう．
-	等式理論はその各文がすべてちょうど1つの正のリテラルであるため，全称Horn理論でもある．
+	等式理論はその各文がすべてちょうど1つの正のリテラルの全称閉包であるため，全称Horn理論でもある．
 \end{Def}
 
 \begin{Ex} \label[Ex]{Ex:equationaltheory}
@@ -694,9 +694,9 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 	\(\symcal{L}\)理論\(\Gamma\)として，\(\GP\)に対して
 	以下の3つの閉論理式を加えたものを考える：
 	\begin{align*}
-		\paren{a \obj{*} a} \obj{*} a & \objeq \obj{e},                      \\
-		b \obj{*} b                   & \objeq \obj{e},                      \\
-		b \obj{*} a                   & \objeq \paren{a \obj{*} a} \obj{*} b
+		\paren{a \obj{*} a} \obj{*} a & \objeq \obj{e},                       \\
+		b \obj{*} b                   & \objeq \obj{e},                       \\
+		b \obj{*} a                   & \objeq \paren{a \obj{*} a} \obj{*} b.
 	\end{align*}
 	\(\symcal{L}\)における\(\Gamma\)のHerbrand構造\(\symcal{M}\)を考える．
 	\(\GP\)の公理はすべて等式の全称閉包になっていることと\(\GP \subset \Gamma\)であることにより，

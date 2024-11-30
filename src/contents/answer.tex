@@ -1098,7 +1098,7 @@
 	\item \(\paren{s \objeq t} \land \paren{t \objeq u} \sequent \subst{\varphi}{s/x}\)\quad （4, 5から(SUBST)による）
 \end{enumerate}
 
-\section*{\Cref{chap:advanced}}
+\section*{\Cref{chap:completeness}}
 
 \subsection*{\Cref{Que:completeness}}
 
@@ -1118,7 +1118,7 @@
 	T = \Set{\varphi,\varepsilon_1,\varepsilon_2,\dots,\varepsilon_n,\dots}.
 \]
 このとき，\(T\)の任意の有限部分集合はモデルをもつ．
-実際，\(T\)の任意の有限部分集合\(T'\)に対し，\(varepsilon_n \in T'\)となる\(n\)のうち最大のものを\(m\)とすれば，
+実際，\(T\)の任意の有限部分集合\(T'\)に対し，\(\varepsilon_n \in T'\)となる\(n\)のうち最大のものを\(m\)とすれば，
 対象領域の要素数が\(m\)であるような構造は\(T'\)のモデルである．
 よってコンパクト性定理によって\(T\)もモデルをもつ．その1つを\(\symcal{M}\)とする．
 \(\symcal{M}\)の対象領域は有限集合であり，その要素数を\(n\)とすると\(\varepsilon_{n+1} \in T\)である．
@@ -1179,10 +1179,8 @@
 \[
 	\Gamma \provable \apply{r}{t_1, t_2, \dots, t_n}
 \]
-と仮定する．
-\(t_1, t_2, \dots, t_n, s_1, s_2, \dots, t_n\)のいずれにも出現しない，つまり自由出現も束縛出現もしない変数記号
-\(x_1, x_2, \dots, x_n\)をとる．
-このとき，(SUBST)などの規則と\(r\)のアリティ\(n\)に関する数学的帰納法によって
+と仮定すると，
+(SUBST)などの規則と\(r\)のアリティ\(n\)に関する数学的帰納法によって
 \[
 	\Gamma \provable \apply{r}{s_1, s_2, \dots, s_n}
 \]
@@ -1452,11 +1450,25 @@
 が導出可能となるものが存在する．
 よってシークエント
 \[
-	\sequent \varphi_1 \to \paren{\varphi_2 \to \paren{\dotsb \to \varphi_n}}
+	\sequent \varphi_1 \to \paren{\varphi_2 \to \paren{\dotsb \to \paren{\varphi_n \to \varphi}}}
 \]
 は導出可能である．
-各\(i = 1,2,\dots,n\)に対してシークエント\(\Sigma \sequent \varphi_i\)は導出可能だから，
-(\(\to\)E)規則を繰り返し適用することで\(\Sigma \provable \varphi\)であることがわかる．
+各\(i = 1,2,\dots,n\)に対して\(\Sigma \provable \varphi_i\)だから，
+有限個の\(\psi_1, \psi_2, \dots, \psi_m \in \Sigma\)で
+\(n\)個のシークエント
+\begin{align*}
+	\psi_1, \psi_2, \dots, \psi_m & \sequent \varphi_1, \\
+	\psi_1, \psi_2, \dots, \psi_m & \sequent \varphi_2, \\
+	\dots                                               \\
+	\psi_1, \psi_2, \dots, \psi_m & \sequent \varphi_n  \\
+\end{align*}
+がすべて導出可能であるものが存在する．
+ゆえに
+(\(\to\)E)規則を繰り返し適用することでシークエント
+\[
+	\psi_1, \psi_2, \dots, \psi_m \sequent \varphi
+\]
+が導出可能であることがわかるので，\(\Sigma \provable \varphi\)となる．
 \(\Sigma \provable \varphi\)ならば\(\Gamma \provable \varphi\)であることも同様にしてわかる．
 
 
@@ -1464,7 +1476,7 @@
 
 よく知られているように，この\(\symcal{L}\)理論\(T\)では以下を導くことができる．
 \[
-	T \provable \uexists e \forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} \objeq \obj{x}}
+	T \provable \uexists e \forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} \objeq \obj{x}}.
 \]
 群論の教科書では本書のような形式的記号列の議論は一切していないが，完全性定理を適用すれば
 群論の標準的な教科書に載っている証明がそのまま通用する．
@@ -1483,4 +1495,9 @@
 \[
 	\forall \obj{x} \paren{\obj{x}^{\obj{-1}} \obj{\ast} \obj{x} \objeq \obj{e}}.
 \]
-この\(\symcal{L}''\)理論\(T''\)は\(\symcal{L}_{\GP}\)理論\(\GP\)にほかならない．
+この\(\symcal{L}''\)理論\(T''\)は\(\GP\)に余分な公理
+\[
+	\exists \obj{e} \paren{\forall \obj{x} \paren{\obj{e} \obj{\ast} \obj{x} \objeq \obj{x}} \land \forall \obj{x} \exists \obj{y} \paren{\obj{y} \obj{\ast} \obj{x} \objeq \obj{e}}}
+\]
+が加わったものであるが，この公理は\(\GP\)上で（\(\provable\)という意味で）証明することができるので，
+削除しても理論としては等価である．こうして得られる理論は\(\symcal{L}_{\GP}\)理論\(\GP\)にほかならない．

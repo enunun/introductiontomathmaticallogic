@@ -114,28 +114,19 @@
 
 \begin{proof}
 	\(\obj{x}\)を変数記号とし，論理式\(\apply{\varphi}{\obj{x}}\)を\(\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}\)と定める．
-	\(\symcal{M}\)を\(M\)を対象領域とする\(\PA\)の任意のモデルとする．\(\symcal{M} \satisfy \apply{\varphi}{\obj{0}}\)は明らか．
+	\(\symcal{M}\)を\(M\)を対象領域とする\(\PA\)の任意のモデルとする．\(\interpretation{\symcal{M}}{\obj{0}} = \interpretation{\symcal{M}}{\obj{0}}\)だから
+	\(\symcal{M} \satisfy \obj{0} \objeq \obj{0}\)であり，
+	\(\symcal{M} \satisfy \apply{\varphi}{\obj{0}}\)が成り立つ．
 	\(x \in M\)を任意にとり，その名前を\(c_x\)とする．
-	\(\symcal{M} \satisfy \exists \obj{y} \paren{c_x \obj{+} \obj{1} \objeq \obj{y} \obj{+} \obj{1}}\)だから
-	\(\symcal{M} \satisfy \apply{\varphi}{c_x \obj{+} \obj{1}}\)であり，
+	\(x \mathbin{\interpretation{\symcal{M}}{\obj{+}}} \interpretation{\symcal{M}}{\obj{1}} = x \mathbin{\interpretation{\symcal{M}}{\obj{+}}} \interpretation{\symcal{M}}{\obj{1}}\)だから
+	\(\symcal{M} \satisfy c_x \obj{+} \obj{1} \objeq c_x \obj{+} \obj{1}\)となり，
+	\(\symcal{M} \satisfy \exists \obj{y} \paren{c_x \obj{+} \obj{1} \objeq \obj{y} \obj{+} \obj{1}}\)である．
+	よって\(\symcal{M} \satisfy \apply{\varphi}{c_x \obj{+} \obj{1}}\)となる．従って
 	\[
 		\symcal{M} \satisfy \apply{\varphi}{\obj{0}} \land \forall \obj{x} \paren{\apply{\varphi}{\obj{x}} \to \apply{\varphi}{\obj{x} \obj{+} \obj{1}}}
 	\]
-	となる．ゆえに\cref{item:PAA9}から\(\symcal{M} \satisfy \forall \obj{x} \apply{\varphi}{\obj{x}}\)を得る．従って完全性定理によって\(\PA \provable \text{\cref{item:PAA10}}\)となる．
+	となり，\cref{item:PAA9}から\(\symcal{M} \satisfy \forall \obj{x} \apply{\varphi}{\obj{x}}\)を得る．従って完全性定理によって\(\PA \provable \text{\cref{item:PAA10}}\)となる．
 \end{proof}
-
-\begin{Note}
-	\Cref{lemma:paa10redudant}の証明のように，形式体系において具体的な定理を証明する際は完全性定理を使ったモデル経由の証明の方が書きやすい．
-	表記を簡素化するため，以下のように記述を省略して書くことにする：
-	\begin{enumerate}
-		\item 構造\(\symcal{M}\)の対象領域\(M\)の元\(x \in M\)の名前をそのまま\(x\)で表す．
-		\item 構造\(\symcal{M}\)において，タイプライタ体で書かれた各記号の解釈はその記号をタイプライタ体でない通常の書体で表すことによって表現する．
-		      例えば，\(\symcal{L}_{\PA}\)の定数記号\(\obj{0}\)の解釈は\(0\)と表現する．
-	\end{enumerate}
-
-	この簡素化やのちに述べる数項や算術化により，メタとオブジェクトの区別がますますつけづらくなる．
-	どちらの立場で議論しているのかはこまめに確認することを推奨する．
-\end{Note}
 
 \index[widx]{もでる@モデル!ひょうじゅんもでる@標準---}
 \index[widx]{もでる@モデル!ちょうじゅんもでる@超準---}
@@ -159,6 +150,23 @@
 	とくに誤解のおそれがないときは，標準モデル\(\standardmodel\)と自然数全体の集合\(\NaturalNumbers\)を区別しないことも多い．
 	これは，\(\NaturalNumbers\)に通常の意味での演算や大小関係の構造が入っていないという文脈は考えにくいからである．
 \end{Note}
+
+\begin{Note}
+	\Cref{lemma:paa10redudant}の証明のように，形式体系において具体的な定理を証明する際は完全性定理を使ったモデル経由の証明の方が書きやすい．
+	表記を簡素化するため，以下のように記述を省略して書くことにする：
+	\begin{enumerate}
+		\item 構造\(\symcal{M}\)の対象領域\(M\)の元\(x \in M\)の名前をそのまま\(x\)で表す．
+		\item \(\symcal{L}_{\PA}\)の各記号の構造\(\symcal{M}\)による解釈はその記号をタイプライタ体でない通常の書体で書くことによって表現する．
+		      例えば，\(\symcal{L}_{\PA}\)の記号\(\obj{0}, \obj{+}\)の\(\symcal{M}\)による
+		      解釈\(\interpretation{\symcal{M}}{\obj{0}}, \interpretation{\symcal{M}}{\obj{+}}\)をそれぞれ単に\(0, +\)と表記する．
+	\end{enumerate}
+
+	この簡素化やのちに述べる数項や算術化により，メタとオブジェクトの区別がますますつけづらくなる．
+	どちらの立場で議論しているのかはこまめに確認することを推奨する．
+	また，メタ側の場合には標準モデルでの議論なのかそうでないのかの区別も重要である．
+\end{Note}
+
+
 
 \index[sidx]{\(\numeral{n}\)：数項}
 \index[widx]{こう@項!すうこう@数---}
@@ -193,12 +201,28 @@
 \begin{Ex} \label[Ex]{Ex:numeral}
 	数項\(\numeral{1}, \numeral{2}, \numeral{3}\)の定義はそれぞれ
 	\begin{align*}
-		\numeral{1} & = \obj{0} \obj{+} \obj{1},                                                        \\
+		\numeral{1} & = \paren{\obj{0} \obj{+} \obj{1}},                                                \\
 		\numeral{2} & = \paren{\paren{\obj{0} \obj{+} \obj{1}} \obj{+} \obj{1}},                        \\
 		\numeral{3} & = \paren{\paren{\paren{\obj{0} \obj{+} \obj{1}} \obj{+} \obj{1}} \obj{+} \obj{1}}
 	\end{align*}
 	である．
 \end{Ex}
+
+\begin{Note}
+	数項は，\(\symcal{L}_{\PA}\)項の略記表現である．従って「意味的には」同じであろうと思われる項であっても項として（つまり記号列として）等しいとは限らない．
+	例えば，自然数1に対する数項\(\numeral{1}\)と\(\symcal{L}_{\PA}\)の定数記号\(\obj{1}\)は項としては等しくない．
+	つまり\(\numeral{1} \neq \obj{1}\)である．
+	一方で，
+	\begin{equation}
+		\Robinson \provable \numeral{1} \objeq \obj{1}
+		\label{eq:robinson1numeric}
+	\end{equation}
+	は成り立っている．「Robinson算術\(\Robinson\)という体系内では」自然数1に対する数項\(\numeral{1}\)と\(\symcal{L}_{\PA}\)の定数記号\(\obj{1}\)は等しくなる．
+\end{Note}
+
+\begin{Que} \label[Que]{Que:robinson1numeric}
+	\Cref{eq:robinson1numeric}を示せ．
+\end{Que}
 
 Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない．
 しかし，メタ側の（つまり通常の意味での自然数上での）数学的帰納法はそもそも\(\Robinson\)内での主張でも\(\PA\)内の主張でもない．
@@ -225,18 +249,22 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 \end{Thm}
 
 \begin{proof}
-	\(\symcal{M}\)を\(\Robinson\)の任意のモデルとする．完全性定理により，\(\symcal{M}\)が右辺の論理式を充足することを示せば十分である．
+	\(\symcal{M}\)を\(\Robinson\)の任意のモデルとする．\(\symcal{M}\)が右辺の論理式を充足することを示せば十分である．
 
-	まずは\cref{eq:Robinsonnumeraltheoremaddition}を示そう．
+	\cref{eq:Robinsonnumeraltheoremaddition}を示す．
 	自然数\(n\)を任意に1つとったとき，
 	任意の自然数\(m\)に対して\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{m} \objeq \numeral{n + m}\)が成り立つことを\(m\)に関する数学的帰納法によって示す．
 	\(m = 0\)のとき，\(\numeral{0}\)は\(\obj{0}\)のことなので，\cref{item:PAA3}から\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{0} \objeq \numeral{n}\)が得られる．
 	各\(m\)に対して，\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{m} \objeq \numeral{n+m}\)が成り立つと仮定すると，
-	\cref{item:PAA4}から\(\symcal{M}\)においては
+	\cref{item:PAA4}から
 	\begin{align*}
-		\numeral{n} \obj{+} \numeral{m + 1} & \objeq \numeral{n} \obj{+} \paren{\numeral{m} \obj{+} \obj{1}} \\
-		                                    & \objeq \paren{\numeral{n} \obj{+} \numeral{m}} \obj{+} \obj{1} \\
-		                                    & \objeq \numeral{n + \paren{m + 1}}
+		\interpretation{\symcal{M}}{\paren{\numeral{n} + \numeral{m + 1}}}
+		 & = \interpretation{\symcal{M}}{\numeral{n}} + \interpretation{\symcal{M}}{\numeral{m + 1}}               \\
+		 & = \interpretation{\symcal{M}}{\numeral{n}} + \interpretation{\symcal{M}}{\paren{\numeral{m} + \obj{1}}} \\
+		 & = \interpretation{\symcal{M}}{\numeral{n}} + \paren{\interpretation{\symcal{M}}{\numeral{m}} + 1}       \\
+		 & = \paren{\interpretation{\symcal{M}}{\numeral{n}} + \interpretation{\symcal{M}}{\numeral{m}}} + 1       \\
+		 & = \interpretation{\symcal{M}}{\numeral{n + m}}  + 1                                                     \\
+		 & = \interpretation{\symcal{M}}{\paren{\numeral{n + \paren{m + 1}}}}
 	\end{align*}
 	が成り立つことがわかるので，\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{m + 1} \objeq \numeral{n + \paren{m + 1}}\)となる．
 	以上より，数学的帰納法によって任意の自然数\(n, m\)に対して\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{m} \objeq \numeral{n + m}\)が成り立つ．
@@ -254,7 +282,7 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	\(n \neq 0\)のとき，\(n = n_0 + 1\)となる自然数\(n_0\)がとれる．\(n \neq m + 1\)より\(n_0 \neq m\)だから，
 	帰納法の仮定により\(\symcal{M} \satisfy \lnot \paren{\numeral{n_0} \objeq \numeral{m}}\)となる．
 	従って\cref{item:PAA2}（の対偶に相当するもの）によって\(\symcal{M} \satisfy \lnot \paren{\numeral{n} \objeq \numeral{m + 1}}\)が成り立つ．
-	以上より，数学的帰納法によって任意の自然数\(n, m\)に対して\(\symcal{M} \satisfy \lnot \paren{\numeral{n} \objeq \numeral{m}}\)が成り立つ．
+	以上より，数学的帰納法によって\(n \neq m\)を満たす任意の自然数\(n, m\)に対して\(\symcal{M} \satisfy \lnot \paren{\numeral{n} \objeq \numeral{m}}\)が成り立つ．
 \end{proof}
 
 

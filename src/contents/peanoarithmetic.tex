@@ -35,7 +35,7 @@
 		\item \label{item:PAA3} \(\forall \obj{x} \paren{\obj{x} \obj{+} \obj{0} \objeq \obj{x}},\)
 		\item \label{item:PAA4} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \paren{\obj{y} + \obj{1}} \objeq \paren{\obj{x} \obj{+} \obj{y}} \obj{+} \obj{1}},\)
 		\item \label{item:PAA5} \(\forall \obj{x} \paren{\obj{x} \obj{\cdot} \obj{0} \objeq \obj{0}},\)
-		\item \label{item:PAA6} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{+} \obj{1}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{+} \obj{1}},\)
+		\item \label{item:PAA6} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{+} \obj{1}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{+} \obj{x}},\)
 		\item \label{item:PAA7} \(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{0}},\)
 		\item \label{item:PAA8} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{<} \obj{y} \obj{+} \obj{1} \formulaequiv \obj{x} \obj{<} \obj{y} \lor \obj{x} \objeq \obj{y}},\)
 		\item \label{item:PAA9} 変数記号\(x\)が束縛出現しない\(\symcal{L}_{\PA}\)論理式\(\apply{\varphi}{x}\)に対する論理式
@@ -86,26 +86,28 @@
 		\symcal{N} \satisfy \apply{\varphi}{\alpha, \beta, \gamma} \metaequivalent \alpha + \beta = \gamma.
 	\]
 	なお，有限順序数の加法については\(\PA\)における(A3), (A4)と同じようにして帰納的に定義できる．
-
-	用語としての「Peanoの公理」は一般の知名度自体はそれなりに高いものの，それゆえかかなり雑に使われがちなようである．
-	本書ではPeano構造については取り扱わないが，世間的な「Peanoの公理」のイメージに惑わされて1階Peano算術\(\PA\)とPeano構造とを混同しないように注意されたい．
 \end{Note}
 
 \(\PA\)の公理図式\cref{item:PAA9}は，（変数記号\(x\)が束縛出現しない）すべての\(\symcal{L}_{\PA}\)論理式に対して要請されるものである．
 ここに制限を加えることによって\(\PA\)の部分体系を得ることを考えよう．
-まず最初に思いつくのは\(\PA\)から公理図式\cref{item:PAA9}を取り除いた体系である．
 
 \index[sidx]{\(\Robinson\)：Robinson算術}
 \index[widx]{Robinsonさんじゅつ@Robinson算術}
 \begin{Def} \label{Def:robinsonarithmetic}
-	\term{Robinson算術}\(\Robinson\)は，\(\PA\)における公理\cref{item:PAA1}から\cref{item:PAA8}に以下の公理を加えて得られる\(\symcal{L}_{\PA}\)理論である：
-	\begin{enumerate}[label=A\arabic*.,ref=A\arabic*,resume*,start=10]
+	\term{Robinson算術}\(\Robinson\)は，\(\PA\)における公理\cref{item:PAA1}から\cref{item:PAA6}に
+	以下の公理を加えた8個の閉論理式からなる\(\symcal{L}_{\PA}\)理論である：
+	\begin{enumerate}[label=A\arabic*.,ref=A\arabic*,start=10]
 		\item \label{item:PAA10} \(\forall \obj{x} \paren{\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}},\)
+		\item \label{item:PAA11} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{<} \obj{y} \formulaequiv \exists \obj{z} \paren{\obj{z} \obj{+} \paren{\obj{x} \obj{+} \obj{1}}\objeq \obj{y}}}.\)
 	\end{enumerate}
 \end{Def}
 
 \begin{Lemma} \label[Lemma]{lemma:paa10redudant}
-	\(\PA\)において\cref{item:PAA10}は証明できる．すなわち，
+	\(\PA\)において\cref{item:PAA10}は証明できる%
+	\footnote{%
+		\Cref{item:PAA11}も証明できるが，ここでは省略する．
+	}%
+	．すなわち，
 	\[
 		\PA \provable \text{\cref{item:PAA10}}
 	\]
@@ -113,8 +115,10 @@
 \end{Lemma}
 
 \begin{proof}
+	\(\symcal{M}\)を\(M\)を対象領域とする\(\PA\)の任意のモデルとする．
+	完全性定理により，\(\symcal{M} \satisfy \text{\cref{item:PAA10}}\)を示せば十分である．
 	\(\obj{x}\)を変数記号とし，論理式\(\apply{\varphi}{\obj{x}}\)を\(\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}\)と定める．
-	\(\symcal{M}\)を\(M\)を対象領域とする\(\PA\)の任意のモデルとする．\(\interpretation{\symcal{M}}{\obj{0}} = \interpretation{\symcal{M}}{\obj{0}}\)だから
+	\(\interpretation{\symcal{M}}{\obj{0}} = \interpretation{\symcal{M}}{\obj{0}}\)だから
 	\(\symcal{M} \satisfy \obj{0} \objeq \obj{0}\)であり，
 	\(\symcal{M} \satisfy \apply{\varphi}{\obj{0}}\)が成り立つ．
 	\(x \in M\)を任意にとり，その名前を\(c_x\)とする．
@@ -125,7 +129,7 @@
 	\[
 		\symcal{M} \satisfy \apply{\varphi}{\obj{0}} \land \forall \obj{x} \paren{\apply{\varphi}{\obj{x}} \to \apply{\varphi}{\obj{x} \obj{+} \obj{1}}}
 	\]
-	となり，\cref{item:PAA9}から\(\symcal{M} \satisfy \forall \obj{x} \apply{\varphi}{\obj{x}}\)を得る．従って完全性定理によって\(\PA \provable \text{\cref{item:PAA10}}\)となる．
+	となり，\cref{item:PAA9}から\(\symcal{M} \satisfy \forall \obj{x} \apply{\varphi}{\obj{x}}\)を得る．
 \end{proof}
 
 \index[widx]{もでる@モデル!ひょうじゅんもでる@標準---}
@@ -154,12 +158,11 @@
 \begin{Note}
 	\Cref{lemma:paa10redudant}の証明のように，形式体系において具体的な定理を証明する際は完全性定理を使ったモデル経由の証明の方が書きやすい．
 	表記を簡素化するため，以下のように記述を省略して書くことにする：
-	\begin{enumerate}
-		\item 構造\(\symcal{M}\)の対象領域\(M\)の元\(x \in M\)の名前をそのまま\(x\)で表す．
+	\begin{itemize}
 		\item \(\symcal{L}_{\PA}\)の各記号の構造\(\symcal{M}\)による解釈はその記号をタイプライタ体でない通常の書体で書くことによって表現する．
 		      例えば，\(\symcal{L}_{\PA}\)の記号\(\obj{0}, \obj{+}\)の\(\symcal{M}\)による
 		      解釈\(\interpretation{\symcal{M}}{\obj{0}}, \interpretation{\symcal{M}}{\obj{+}}\)をそれぞれ単に\(0, +\)と表記する．
-	\end{enumerate}
+	\end{itemize}
 
 	この簡素化やのちに述べる数項や算術化により，メタとオブジェクトの区別がますますつけづらくなる．
 	どちらの立場で議論しているのかはこまめに確認することを推奨する．
@@ -228,6 +231,136 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 しかし，メタ側の（つまり通常の意味での自然数上での）数学的帰納法はそもそも\(\Robinson\)内での主張でも\(\PA\)内の主張でもない．
 このことに注意して，以下のことを証明してみよう．
 
+\begin{Lemma} \label{Lemma:Robinsonnumerallemma}
+	\(n\)を自然数とする．\(\Robinson\)において以下が成り立つ．
+	\begin{align}
+		\Robinson & \provable \forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{y} \objeq \obj{0} \to \obj{x} \objeq \obj{0} \land \obj{y} \objeq \obj{0}},
+		\label{eq:Robinsonnumerallemmaadd0}                                                                                                                              \\
+		\Robinson & \provable \forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \obj{y} \objeq \obj{0} \to \obj{x} \objeq \obj{0} \lor \obj{y} \objeq \obj{0}},
+		\label{eq:Robinsonnumerallemmacdot0}                                                                                                                             \\
+		\Robinson & \provable \forall \obj{x} \paren{\obj{x} \objeq \obj{0} \lor \obj{0} \obj{<} \obj{x}},
+		\label{eq:Robinsonnumerallemmaorder}                                                                                                                             \\
+		\Robinson & \provable \forall \obj{x} \paren{\obj{x} \obj{+} \obj{1} \obj{<} \numeral{n + 1} \to \obj{x} \obj{<} \numeral{n}},
+		\label{eq:Robinsonnumerallemmaordern}                                                                                                                            \\
+		\Robinson & \provable \forall \obj{x} \paren{\paren{\obj{x} \obj{+} \obj{1}} \obj{+} \numeral{n} \objeq \obj{x} \obj{+} \numeral{n + 1}},
+		\label{eq:Robinsonnumerallemmalinerorderbase}                                                                                                                    \\
+		\Robinson & \provable \obj{0} \obj{+} \numeral{n} \objeq \numeral{n},
+		\label{eq:Robinsonnumerallemmaadd0commutativelaw}                                                                                                                \\
+		\Robinson & \provable \forall \obj{x} \paren{\numeral{n} \obj{<} \obj{x} \to \obj{x} \objeq \numeral{n + 1} \lor \numeral{n + 1} \obj{<} \obj{x}}.
+		\label{eq:Robinsonnumerallemmalinerorderbase2}
+	\end{align}
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\Robinson\)の任意のモデルとする．\(\symcal{M}\)が右辺の論理式を充足することを示せば十分である．
+	\(\symcal{M}\)の対象領域を\(M\)とおく．
+
+	\Cref{eq:Robinsonnumerallemmaadd0}を示そう．\(x, y \in M\)が\(x + y = 0\)を満たすとする．
+	\(y \neq 0\)であるとすると，\cref{item:PAA10}から\(y = z + 1\)となる\(z \in M\)が存在する．
+	このとき，\cref{item:PAA4}から
+	\(x + y = x + \paren{z + 1} = \paren{x + z} + 1 = 0\)
+	となり\cref{item:PAA1}に矛盾する．
+	よって\(y = 0\)でなければならない．さらに，\(x \neq 0\)であると仮定すると\cref{item:PAA10}から\(x = w + 1\)となる\(w \in M\)が存在する．
+	\Cref{item:PAA3}, \cref{item:PAA4}から
+	\(x + y = x + 0 = x = w + 1 = 0\)
+	だから\cref{item:PAA1}に矛盾する．
+	従って\(x = 0\)である．
+
+	\Cref{eq:Robinsonnumerallemmacdot0}を示す．\(x, y \in M\)が\(x \cdot y = 0\)を満たすとする．
+	\(x \neq 0\)かつ\(y \neq 0\)であるとすると，\(x = w + 1\)かつ\(y = z + 1\)となる\(w, z \in M\)が存在する．
+	\Cref{item:PAA4}, \cref{item:PAA6}から
+	\begin{align*}
+		x \cdot y & = \paren{w + 1} \cdot \paren{z + 1}             \\
+		          & = \paren{\paren{w + 1} \cdot z} + \paren{w + 1} \\
+		          & = \paren{\paren{\paren{w + 1} \cdot z} + w} + 1 \\
+		          & = 0
+	\end{align*}
+	となり\cref{item:PAA1}に矛盾する．
+
+	\Cref{eq:Robinsonnumerallemmaorder}は\cref{item:PAA10}と\cref{item:PAA11}から明らかである．
+
+	\Cref{eq:Robinsonnumerallemmaordern}を示す．
+	任意の\(x \in M\)に対し，\(x + 1 < \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)であるとする．
+	このとき，\(y + \paren{\paren{x + 1} + 1} = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)となる\(y \in M\)が存在する．
+	\Cref{item:PAA4}と\cref{eq:numeralnext}から
+	\(\paren{y + \paren{x + 1}} + 1 = \interpretation{\symcal{M}}{\numeral{n}} + 1\)である．
+	従って\cref{item:PAA2}から\(y + \paren{x + 1} = \interpretation{\symcal{M}}{\numeral{n}}\)なので\(x < \interpretation{\symcal{M}}{\numeral{n}}\)である．
+
+	\Cref{eq:Robinsonnumerallemmalinerorderbase}を示そう．
+	任意の自然数\(n\)に対して
+	\(\paren{x + 1} + \interpretation{\symcal{M}}{\numeral{n}} = x + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)が
+	成り立つことを\(n\)に関する数学的帰納法によって示す．
+	\(n = 0\)のとき，\cref{item:PAA3}, \cref{item:PAA4}と\cref{eq:numeral0}から
+	\begin{align*}
+		\paren{x + 1} + \interpretation{\symcal{M}}{\numeral{0}}
+		 & = \paren{x + 1} + 0                            \\
+		 & = x + 1,                                       \\
+		x + \interpretation{\symcal{M}}{\paren{\numeral{0 + 1}}}
+		 & = x + \interpretation{\symcal{M}}{\numeral{1}} \\
+		 & = x + \paren{0 + 1}                            \\
+		 & = \paren{x + 0} + 1                            \\
+		 & = x + 1
+	\end{align*}
+	だから\(\paren{x + 1} + \interpretation{\symcal{M}}{{\numeral{0}}} = x + \interpretation{\symcal{M}}{\paren{\numeral{0 + 1}}}\)である．
+	各\(n\)について，
+	\(\paren{x + 1} + \interpretation{\symcal{M}}{\numeral{n}} = x + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)が成り立つと仮定する．
+	このとき
+	\begin{align*}
+		\paren{x + 1} + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}
+		 & = \paren{x + 1} + \paren{\interpretation{\symcal{M}}{\numeral{n}} + 1}  \\
+		 & = \paren{\paren{x + 1} + \interpretation{\symcal{M}}{\numeral{n}}} + 1  \\
+		 & = \paren{x + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}} + 1  \\
+		 & = x + \paren{\interpretation{\symcal{M}}{\paren{\numeral{n + 1}}} + 1}  \\
+		 & = x + \interpretation{\symcal{M}}{\paren{\numeral{\paren{n + 1} + 1}}}.
+	\end{align*}
+	従って，数学的帰納法によって任意の自然数\(n\)に対して
+	\(\paren{x + 1} + \interpretation{\symcal{M}}{\numeral{n}} = x + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)が成り立つ．
+	\begin{align*}
+		\interpretation{\symcal{M}}{\paren{\paren{x + \obj{1}} + \numeral{n}}} & = \paren{x + 1} + \interpretation{\symcal{M}}{\numeral{n}}, \\
+		\interpretation{\symcal{M}}{\paren{x + \numeral{n + 1}}}               & = x + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}
+	\end{align*}
+	だから\cref{eq:Robinsonnumerallemmalinerorderbase}を得る．
+
+	\Cref{eq:Robinsonnumerallemmaadd0commutativelaw}について，
+	任意の自然数\(n\)に対して\(0 + \interpretation{\symcal{M}}{\numeral{n}} = \interpretation{\symcal{M}}{\numeral{n}}\)が成り立つことを
+	\(n\)に関する数学的帰納法によって示す．
+	\(\numeral{0}\)は定数記号\(\obj{0}\)のことなので，\(n = 0\)の場合は\cref{item:PAA3}から従う．
+	各\(n\)について，\(0 + \interpretation{\symcal{M}}{\numeral{n}} = \interpretation{\symcal{M}}{\numeral{n}}\)が成り立つと仮定すると
+	\cref{item:PAA4}から
+	\begin{align*}
+		0 + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}
+		 & = 0 + \interpretation{\symcal{M}}{\paren{\numeral{n} + 1}} \\
+		 & = \paren{0 + \interpretation{\symcal{M}}{\numeral{n}}} + 1 \\
+		 & = \interpretation{\symcal{M}}{\numeral{n}} + 1             \\
+		 & = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}
+	\end{align*}
+	だから\(0 + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}} = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)が成り立つ．
+	よって数学的帰納法により\cref{eq:Robinsonnumerallemmaadd0commutativelaw}を得る．
+
+	最後に\cref{eq:Robinsonnumerallemmalinerorderbase2}を示そう．
+	任意の\(x \in M\)に対し，\(\interpretation{\symcal{M}}{\numeral{n}} < x\)かつ\(x \neq \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)ならば
+	\(\interpretation{\symcal{M}}{\paren{\numeral{n + 1}}} < x\)であることを示せばよい．
+	\(\interpretation{\symcal{M}}{\numeral{n}} < x\)だから\cref{item:PAA10}により
+	\(y + \paren{\interpretation{\symcal{M}}{\numeral{n}} + 1} = x\)となる\(y \in M\)が存在する．
+	\(y = 0\)であると仮定すると，\cref{eq:Robinsonnumerallemmaadd0commutativelaw}から
+	\(x = \interpretation{\symcal{M}}{\numeral{n}} + 1 = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)となって矛盾する．
+	従って\(y \neq 0\)でなければならない．
+	よって\cref{item:PAA10}から\(y = z + 1\)となる\(z \in M\)がとれて，
+	\cref{eq:Robinsonnumerallemmaadd0commutativelaw}から\(z + \paren{\interpretation{\symcal{M}}{\paren{\numeral{n + 1}}} + 1} = x\)となる．
+	ゆえに\cref{eq:Robinsonnumerallemmalinerorderbase2}は成り立つ．
+\end{proof}
+
+\begin{Note}
+	\Cref{Lemma:Robinsonnumerallemma}の証明における\(M\)の元としての\(0, 1\)や\(M\)上の二項演算および二項関係\(+, <\)は，
+	通常の自然数のものと同じとは限らない．
+	あくまで表記を簡素化するために通常の自然数と同じ表記にしているだけであることに注意しよう．
+	表記が同じだけなので，通常の自然数において成り立っていた種々の性質がそのまま成り立つとは限らない．
+	\(M\)の元としての\(0,1\)が通常の自然数としての\(0,1\)であるとは限らないし，
+	\(M\)上の二項演算および二項関係\(+, <\)が通常の自然数における加法，大小関係であるとも限らない．
+	また，自然数\(n\)に対する数項\(\numeral{n}\)の\(\symcal{M}\)による解釈\(\interpretation{\symcal{M}}{\numeral{n}}\)が\(n\)であるとも限らない．
+	使えるのは，\(\symcal{M}\)は\(\Robinson\)のモデルであるという仮定のみである．
+\end{Note}
+
 \begin{Thm} \label[Thm]{Thm:Robinsonnumeraltheorem}
 	\(n, m\)を自然数とする．このとき，\(\Robinson\)において以下が成り立つ．
 	\begin{align}
@@ -237,12 +370,8 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 		\label{eq:Robinsonnumeraltheoremmultiplication}                                                                                                                                               \\
 		\Robinson & \provable \lnot \paren{\numeral{n} \objeq \numeral{m}} \quad (n \neq m),
 		\label{eq:Robinsonnumeraltheoremnumeralterm}                                                                                                                                                  \\
-		\Robinson & \provable \forall \obj{x} \paren{\obj{x} \obj{+} \obj{1} \obj{<} \numeral{n + 1} \to \obj{x} \obj{<} \numeral{n}},
-		\label{eq:Robinsonnumeraltheoremorderbase}                                                                                                                                                    \\
 		\Robinson & \provable \forall \obj{x} \paren{\obj{x} < \numeral{n + 1} \formulaequiv \obj{x} \objeq \numeral{0} \lor \obj{x} \objeq \numeral{1} \lor \dotsb \lor \obj{x} \objeq \numeral{n}},
 		\label{eq:Robinsonnumeraltheoremorder}                                                                                                                                                        \\
-		\Robinson & \provable \forall \obj{x} \paren{\paren{\obj{x} \obj{+} \obj{1}} \obj{+} \numeral{n} \objeq \obj{x} \obj{+} \numeral{n + 1}},
-		\label{eq:Robinsonnumeraltheoremlinerorderbase}                                                                                                                                               \\
 		\Robinson & \provable \forall \obj{x} \paren{\obj{x} \obj{<} \numeral{n} \lor \numeral{n} < \obj{x} \lor \obj{x} \objeq \numeral{n}}.
 		\label{eq:Robinsonnumeraltheoremlinerorder}
 	\end{align}
@@ -250,39 +379,163 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 
 \begin{proof}
 	\(\symcal{M}\)を\(\Robinson\)の任意のモデルとする．\(\symcal{M}\)が右辺の論理式を充足することを示せば十分である．
+	\(\symcal{M}\)の対象領域を\(M\)とする．
 
 	\cref{eq:Robinsonnumeraltheoremaddition}を示す．
 	自然数\(n\)を任意に1つとったとき，
-	任意の自然数\(m\)に対して\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{m} \objeq \numeral{n + m}\)が成り立つことを\(m\)に関する数学的帰納法によって示す．
-	\(m = 0\)のとき，\(\numeral{0}\)は\(\obj{0}\)のことなので，\cref{item:PAA3}から\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{0} \objeq \numeral{n}\)が得られる．
-	各\(m\)に対して，\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{m} \objeq \numeral{n+m}\)が成り立つと仮定すると，
+	任意の自然数\(m\)に対して
+	\(
+	\interpretation{\symcal{M}}{\paren{\numeral{n} + \numeral{m}}} = \interpretation{\symcal{M}}{\paren{\numeral{n + m}}}
+	\)
+	が成り立つことを\(m\)に関する数学的帰納法によって示す．
+	\(m = 0\)のとき，\(\numeral{0}\)は\(\obj{0}\)のことなので，\cref{item:PAA3}から
+	\(
+	\interpretation{\symcal{M}}{\paren{\numeral{n} + \numeral{0}}} = \interpretation{\symcal{M}}{\numeral{n}}
+	\)
+	が得られる．
+	各\(m\)に対して，
+	\(
+	\interpretation{\symcal{M}}{\paren{\numeral{n} + \numeral{m}}} = \interpretation{\symcal{M}}{\paren{\numeral{n + m}}}
+	\)
+	が成り立つと仮定する．
 	\cref{item:PAA4}から
 	\begin{align*}
-		\interpretation{\symcal{M}}{\paren{\numeral{n} + \numeral{m + 1}}}
-		 & = \interpretation{\symcal{M}}{\numeral{n}} + \interpretation{\symcal{M}}{\numeral{m + 1}}               \\
+		\interpretation{\symcal{M}}{\paren{\numeral{n} \obj{+} \numeral{m + 1}}}
+		 & = \interpretation{\symcal{M}}{\numeral{n}} + \interpretation{\symcal{M}}{\paren{\numeral{m + 1}}}       \\
 		 & = \interpretation{\symcal{M}}{\numeral{n}} + \interpretation{\symcal{M}}{\paren{\numeral{m} + \obj{1}}} \\
 		 & = \interpretation{\symcal{M}}{\numeral{n}} + \paren{\interpretation{\symcal{M}}{\numeral{m}} + 1}       \\
 		 & = \paren{\interpretation{\symcal{M}}{\numeral{n}} + \interpretation{\symcal{M}}{\numeral{m}}} + 1       \\
-		 & = \interpretation{\symcal{M}}{\numeral{n + m}}  + 1                                                     \\
+		 & = \interpretation{\symcal{M}}{\paren{\numeral{n + m}}}  + 1                                             \\
 		 & = \interpretation{\symcal{M}}{\paren{\numeral{n + \paren{m + 1}}}}
 	\end{align*}
-	が成り立つことがわかるので，\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{m + 1} \objeq \numeral{n + \paren{m + 1}}\)となる．
-	以上より，数学的帰納法によって任意の自然数\(n, m\)に対して\(\symcal{M} \satisfy \numeral{n} \obj{+} \numeral{m} \objeq \numeral{n + m}\)が成り立つ．
+	となる．
+	以上より，数学的帰納法によって任意の自然数\(n, m\)に対して
+	\(
+	\interpretation{\symcal{M}}{\paren{\numeral{n} + \numeral{m}}} = \interpretation{\symcal{M}}{\paren{\numeral{n + m}}}
+	\)
+	となることがわかるので，\cref{eq:Robinsonnumeraltheoremaddition}が得られる．
 	\Cref{eq:Robinsonnumeraltheoremmultiplication}も同様である．
 
 	\Cref{eq:Robinsonnumeraltheoremnumeralterm}を示そう．
 	自然数\(n\)を任意に1つとったとき，
-	\(n \neq m\)を満たす任意の自然数\(m\)に対して\(\symcal{M} \satisfy \lnot \paren{\numeral{n} \objeq \numeral{m}}\)が成り立つことを\(m\)に関する数学的帰納法によって示す．
+	\(n \neq m\)を満たす任意の自然数\(m\)に対して
+	\(
+	\interpretation{\symcal{M}}{\numeral{n}} \neq \interpretation{\symcal{M}}{\numeral{m}}
+	\)
+	が成り立つことを\(m\)に関する数学的帰納法によって示す．
 	\(m = 0\)のとき，\(n \neq 0\)なので\(n = n_0 + 1\)となる自然数\(n_0\)がとれる．
-	すると\cref{item:PAA1}から\(\symcal{M} \satisfy \lnot \paren{\numeral{n_0} \obj{+} \obj{1} \objeq \numeral{0}}\)が成り立つので
-	\(\symcal{M} \satisfy \lnot \paren{\numeral{n} \objeq \numeral{0}}\)は成り立つ．
-	各\(m\)について，\(n \neq m\)ならば\(\symcal{M} \satisfy \lnot \paren{\numeral{n} \objeq \numeral{m}}\)が成り立つと仮定する．
-	\(n \neq m + 1\)とすると，\(n = 0\)のときには\cref{item:PAA1}から\(\symcal{M} \satisfy \lnot \paren{\numeral{m} \obj{+} \obj{1} \objeq \numeral{0}}\)
-	が得られる．よって\(\symcal{M} \satisfy \lnot \paren{\numeral{0} \objeq \numeral{m + 1}}\)となる．
+	すると\cref{item:PAA1}から
+	\(
+	\interpretation{\symcal{M}}{\numeral{n}} = \interpretation{\symcal{M}}{\paren{\numeral{n_0} \obj{+} \obj{1}}} \neq \interpretation{\symcal{M}}{\numeral{0}}
+	\)
+	が成り立つので
+	\(
+	\interpretation{\symcal{M}}{\numeral{n}} \neq \interpretation{\symcal{M}}{\numeral{0}}
+	\)
+	は成り立つ．
+	各\(m\)について，\(n \neq m\)ならば
+	\(
+	\interpretation{\symcal{M}}{\numeral{n}} \neq \interpretation{\symcal{M}}{\numeral{m}}
+	\)
+	が成り立つと仮定する．
+	\(n \neq m + 1\)とすると，\(n = 0\)のときには\cref{item:PAA1}から
+	\(
+	\interpretation{\symcal{M}}{\paren{\numeral{m} \obj{+} \obj{1}}} \neq \interpretation{\symcal{M}}{\numeral{0}}
+	\)
+	が得られる．よって
+	\(
+	\interpretation{\symcal{M}}{\paren{\numeral{0}}} \neq \interpretation{\symcal{M}}{\paren{\numeral{m + 1}}}\)となる．
 	\(n \neq 0\)のとき，\(n = n_0 + 1\)となる自然数\(n_0\)がとれる．\(n \neq m + 1\)より\(n_0 \neq m\)だから，
-	帰納法の仮定により\(\symcal{M} \satisfy \lnot \paren{\numeral{n_0} \objeq \numeral{m}}\)となる．
-	従って\cref{item:PAA2}（の対偶に相当するもの）によって\(\symcal{M} \satisfy \lnot \paren{\numeral{n} \objeq \numeral{m + 1}}\)が成り立つ．
-	以上より，数学的帰納法によって\(n \neq m\)を満たす任意の自然数\(n, m\)に対して\(\symcal{M} \satisfy \lnot \paren{\numeral{n} \objeq \numeral{m}}\)が成り立つ．
+	帰納法の仮定により
+	\(
+	\interpretation{\symcal{M}}{\numeral{n_0}} = \interpretation{\symcal{M}}{\numeral{m}}
+	\)
+	となる．
+	従って\cref{item:PAA2}（の対偶に相当するもの）によって
+	\(
+	\interpretation{\symcal{M}}{\numeral{n}} \neq \interpretation{\symcal{M}}{\paren{\numeral{m + 1}}}
+	\)
+	が成り立つ．
+	以上より，数学的帰納法によって\(n \neq m\)を満たす任意の自然数\(n, m\)に対して
+	\(
+	\interpretation{\symcal{M}}{\numeral{n}} \neq \interpretation{\symcal{M}}{\numeral{m}}
+	\)
+	となることがわかるので，\cref{eq:Robinsonnumeraltheoremnumeralterm}が得られる．
+
+	\Cref{eq:Robinsonnumeraltheoremorder}を示そう．
+	以下の主張が任意の自然数\(n\)に対して成り立つことを
+	\(n\)に関する数学的帰納法によって示す：
+	すべての\(x \in M\)に対し，\(x < \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)が成り立つことと
+	\begin{align*}
+		x & = \interpretation{\symcal{M}}{\numeral{0}}, \\
+		x & = \interpretation{\symcal{M}}{\numeral{1}}, \\
+		  & \dots                                       \\
+		x & = \interpretation{\symcal{M}}{\numeral{n}}
+	\end{align*}
+	のいずれかが成り立つことが同値である．
+	\(n = 0\)のとき，\cref{eq:Robinsonnumerallemmaadd0}などによって
+	\begin{align*}
+		                & x < \interpretation{\symcal{M}}{\numeral{1}}                  \\
+		\metaequivalent & \text{\(y + \paren{x + 1} = \numeral{1}\)となる\(y \in M\)が存在する} \\
+		\metaequivalent & \text{\(\paren{y + x} + 1 = 0 + 1\)となる\(y \in M\)が存在する}       \\
+		\metaequivalent & \text{\(y + x = 0\)となる\(y \in M\)が存在する}                       \\
+		\metaequivalent & \text{\(y = 0\)かつ\(x = 0\)となる\(y \in M\)が存在する}                \\
+		\metaequivalent & x = 0
+	\end{align*}
+	だからこの主張は成り立つ．
+	この主張が\(n\)について成り立つと仮定する．
+	まず，
+	\begin{align*}
+		x & = \interpretation{\symcal{M}}{\numeral{0}},            \\
+		x & = \interpretation{\symcal{M}}{\numeral{1}},            \\
+		  & \dots                                                  \\
+		x & = \interpretation{\symcal{M}}{\numeral{n}},            \\
+		x & = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}
+	\end{align*}
+	のいずれかが成り立つと仮定すると，\(x = \interpretation{\symcal{M}}{m}\)かつ\(m < n + 2\)となる自然数\(m\)が存在する．
+	このとき，\cref{eq:Robinsonnumeraltheoremaddition}から
+	\(\interpretation{\symcal{M}}{\paren{\numeral{n - m + 2}}} + x = \interpretation{\symcal{M}}{\paren{\numeral{n + 2}}}\)
+	だから\cref{item:PAA11}によって
+	\(x < \interpretation{\symcal{M}}{\paren{\numeral{\paren{n + 1} + 1}}}\)が成り立つ．
+	逆に，\(x < \interpretation{\symcal{M}}{\paren{\numeral{\paren{n + 1} + 1}}}\)が成り立つと仮定する．
+	もし\(x = 0\)ならば\(x = \interpretation{\symcal{M}}{\numeral{0}}\)が成り立っている．
+	\(x \neq 0\)ならば，\cref{item:PAA10}から\(x = y + 1\)となる\(y \in M\)が存在する．
+	このとき，\cref{eq:Robinsonnumerallemmaordern}から\(y < \interpretation{\symcal{M}}{\numeral{n + 1}}\)となる．
+	帰納法の仮定から，
+	\begin{align*}
+		y & = \interpretation{\symcal{M}}{\numeral{0}}, \\
+		y & = \interpretation{\symcal{M}}{\numeral{1}}, \\
+		  & \dots                                       \\
+		y & = \interpretation{\symcal{M}}{\numeral{n}}
+	\end{align*}
+	のいずれかが成り立つ．\(x = y + 1\)だから，
+	\begin{align*}
+		x & = \interpretation{\symcal{M}}{\numeral{1}},            \\
+		x & = \interpretation{\symcal{M}}{\numeral{2}},            \\
+		  & \dots                                                  \\
+		x & = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}
+	\end{align*}
+	のいずれかが成り立つ．
+	ゆえに数学的帰納法により，すべての自然数\(n\)に対して上記主張が成り立つことがわかり，\cref{eq:Robinsonnumeraltheoremorder}が得られる．
+
+	最後に\cref{eq:Robinsonnumeraltheoremlinerorder}を示そう．
+	すべての\(x \in M\)に対し，
+	\(x < \interpretation{\symcal{M}}{\numeral{n}}\), \(\interpretation{\symcal{M}}{\numeral{n}} < x\), \(x = \interpretation{\symcal{M}}{\numeral{n}}\)
+	のいずれかが成り立つことを\(n\)に関する数学的帰納法によって示す．
+	\(n = 0\)のとき，\cref{eq:Robinsonnumerallemmaorder}からこの主張は従う．
+	この主張が\(n\)のとき成り立つと仮定する．
+	すべての\(x \in M\)について，帰納法の仮定により
+	\(x < \interpretation{\symcal{M}}{\numeral{n}}\), \(\interpretation{\symcal{M}}{\numeral{n}} < x\), \(x = \interpretation{\symcal{M}}{\numeral{n}}\)
+	のいずれかが成り立つ．
+	\(x < \interpretation{\symcal{M}}{\numeral{n}}\)のとき，
+	\cref{eq:Robinsonnumeraltheoremaddition}と\cref{eq:Robinsonnumeraltheoremorder}から
+	\(x < \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)である．
+	\(\interpretation{\symcal{M}}{\numeral{n}} < x\)のとき，
+	\cref{eq:Robinsonnumerallemmalinerorderbase2}から\(x = \interpretation{\symcal{M}}{\numeral{n + 1}}\)か
+	\(\interpretation{\symcal{M}}{\paren{\numeral{n + 1}}} < x\)が成り立つ．
+	\(x = \interpretation{\symcal{M}}{\numeral{n}}\)のとき，\cref{eq:Robinsonnumerallemmaadd0commutativelaw}から
+	\(0 + \paren{x + 1} = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)なので\(x < \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)である．
+	ゆえに数学的帰納法から，任意の自然数\(n\)に対して上記主張が成り立つことがわかり，\cref{eq:Robinsonnumeraltheoremlinerorder}が得られる．
 \end{proof}
 
 
@@ -345,7 +598,6 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 
 	また，\(\symcal{L}_{\PA}\)開論理式全体の集合を\(\OpenFormulaSet\)と表す．
 \end{Def}
-
 
 \index[sidx]{I\(\symup{\Gamma}\)：\(\PA\)の部分体系}
 \begin{Def} \label{Def:paa9restriction}

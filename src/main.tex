@@ -231,6 +231,16 @@
 
 \NewDocumentCommand{\DeltaFormula}{}{\symup{\Delta}}
 
+\NewDocumentCommand{\InductionLimitedTheory}{m}{\symup{I}#1}
+
+\NewDocumentCommand{\OpenFormulaInduction}{}{\InductionLimitedTheory{\OpenFormulaSet}}
+
+\NewDocumentCommand{\SigmaFormulaInduction}{}{\InductionLimitedTheory{\SigmaFormula}}
+
+\NewDocumentCommand{\PiFormulaInduction}{}{\InductionLimitedTheory{\PiFormula}}
+
+\NewDocumentCommand{\DeltaFormulaInduction}{}{\InductionLimitedTheory{\DeltaFormula}}
+
 %
 %%%%%%%%%%%%%%=======================theorem==================%%%%%%%%%%%%%
 %

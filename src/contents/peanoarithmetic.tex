@@ -36,9 +36,8 @@
 		\item \label{item:PAA4} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \paren{\obj{y} + \obj{1}} \objeq \paren{\obj{x} \obj{+} \obj{y}} \obj{+} \obj{1}},\)
 		\item \label{item:PAA5} \(\forall \obj{x} \paren{\obj{x} \obj{\cdot} \obj{0} \objeq \obj{0}},\)
 		\item \label{item:PAA6} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{+} \obj{1}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{+} \obj{x}},\)
-		\item \label{item:PAA7} \(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{0}},\)
-		\item \label{item:PAA8} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{<} \obj{y} \obj{+} \obj{1} \formulaequiv \obj{x} \obj{<} \obj{y} \lor \obj{x} \objeq \obj{y}},\)
-		\item \label{item:PAA9} 変数記号\(x\)が束縛出現しない\(\symcal{L}_{\PA}\)論理式\(\apply{\varphi}{x}\)に対する論理式
+		\item \label{item:PAA7} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{<} \obj{y} \formulaequiv \exists \obj{z} \paren{\obj{z} \obj{+} \paren{\obj{x} \obj{+} \obj{1}}\objeq \obj{y}}}.\)
+		\item \label{item:PAA8} 変数記号\(x\)が束縛出現しない\(\symcal{L}_{\PA}\)論理式\(\apply{\varphi}{x}\)に対する論理式
 		      \begin{equation}
 			      \apply{\varphi}{\obj{0}} \land \forall x \paren{\apply{\varphi}{x} \to \apply{\varphi}{x \obj{+} \obj{1}}} \to \forall x \apply{\varphi}{x}
 			      \label{eq:inductionscheme}
@@ -47,11 +46,12 @@
 	\end{enumerate}
 \end{Def}
 
-\(\PA\)の各公理の役割を述べておこう．まず，\cref{item:PAA1}, \cref{item:PAA2}は通常の数学における「次の数」に相当する「\(\obj{x} + \obj{1}\)」に関する公理である．
-\cref{item:PAA3}, \cref{item:PAA4}は加法に関する公理であり，通常の数学における加法の帰納的定義に相当するものである．
-\cref{item:PAA5}, \cref{item:PAA6}と\cref{item:PAA7}, \cref{item:PAA8}は，それぞれ通常の数学における乗法と大小関係の帰納的定義に相当する公理である．
-\cref{item:PAA1}から\cref{item:PAA8}までは\(\symcal{L}_{\PA}\)の各記号の定義ともいえる公理であるが，\cref{item:PAA9}だけは特異的である．
-意味的には数学的帰納法に相当するものであるが，\cref{item:PAA9}は単一の公理ではなく可算無限個ある論理式すべてに対する公理をまとめて書いた%
+\(\PA\)の各公理の役割を述べておこう．まず，\cref{item:PAA1}, \cref{item:PAA2}は通常の自然数における「次の数」に相当する「\(\obj{x} + \obj{1}\)」に関する公理である．
+\cref{item:PAA3}, \cref{item:PAA4}と\cref{item:PAA5}, \cref{item:PAA6}は，
+それぞれ通常の自然数における自然数の加法と乗法の帰納的定義に相当する公理である．
+また，\cref{item:PAA7}は通常の自然数における大小関係の定義に相当する公理である．
+\cref{item:PAA1}から\cref{item:PAA7}までは\(\symcal{L}_{\PA}\)の各記号の定義ともいえる公理であるが，\cref{item:PAA8}だけは特異的である．
+意味的には数学的帰納法に相当するものであるが，\cref{item:PAA8}は単一の公理ではなく可算無限個ある論理式すべてに対する公理をまとめて書いた%
 \index[widx]{こうり@公理!こうりずしき@---図式}%
 \term{公理図式}である．
 この公理図式のために，\(\PA\)は有限個の論理式からなる理論ではなく可算無限個の公理からなる理論になっている．
@@ -85,38 +85,33 @@
 	\[
 		\symcal{N} \satisfy \apply{\varphi}{\alpha, \beta, \gamma} \metaequivalent \alpha + \beta = \gamma.
 	\]
-	なお，有限順序数の加法については\(\PA\)における(A3), (A4)と同じようにして帰納的に定義できる．
+	なお，有限順序数の加法については\(\PA\)における\cref{item:PAA3}, \cref{item:PAA4}と同じようにして帰納的に定義できる．
 \end{Note}
 
-\(\PA\)の公理図式\cref{item:PAA9}は，（変数記号\(x\)が束縛出現しない）すべての\(\symcal{L}_{\PA}\)論理式に対して要請されるものである．
+\(\PA\)の公理図式\cref{item:PAA8}は，（変数記号\(x\)が束縛出現しない）すべての\(\symcal{L}_{\PA}\)論理式に対して要請されるものである．
 ここに制限を加えることによって\(\PA\)の部分体系を得ることを考えよう．
 
 \index[sidx]{\(\Robinson\)：Robinson算術}
 \index[widx]{Robinsonさんじゅつ@Robinson算術}
 \begin{Def} \label{Def:robinsonarithmetic}
-	\term{Robinson算術}\(\Robinson\)は，\(\PA\)における公理\cref{item:PAA1}から\cref{item:PAA6}に
+	\term{Robinson算術}\(\Robinson\)は，\(\PA\)における公理\cref{item:PAA1}から\cref{item:PAA7}に
 	以下の公理を加えた8個の閉論理式からなる\(\symcal{L}_{\PA}\)理論である：
-	\begin{enumerate}[label=A\arabic*.,ref=A\arabic*,start=10]
-		\item \label{item:PAA10} \(\forall \obj{x} \paren{\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}},\)
-		\item \label{item:PAA11} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{<} \obj{y} \formulaequiv \exists \obj{z} \paren{\obj{z} \obj{+} \paren{\obj{x} \obj{+} \obj{1}}\objeq \obj{y}}}.\)
+	\begin{enumerate}[label=A\arabic*.,ref=A\arabic*,start=9]
+		\item \label{item:PAA9} \(\forall \obj{x} \paren{\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}},\)
 	\end{enumerate}
 \end{Def}
 
-\begin{Lemma} \label[Lemma]{lemma:paa10redudant}
-	\(\PA\)において\cref{item:PAA10}は証明できる%
-	\footnote{%
-		\Cref{item:PAA11}も証明できるが，ここでは省略する．
-	}%
-	．すなわち，
+\begin{Lemma} \label[Lemma]{lemma:paa9redudant}
+	\(\PA\)において\cref{item:PAA9}は証明できる．すなわち，
 	\[
-		\PA \provable \text{\cref{item:PAA10}}
+		\PA \provable \text{\cref{item:PAA9}}
 	\]
 	が成り立つ．
 \end{Lemma}
 
 \begin{proof}
 	\(\symcal{M}\)を\(M\)を対象領域とする\(\PA\)の任意のモデルとする．
-	完全性定理により，\(\symcal{M} \satisfy \text{\cref{item:PAA10}}\)を示せば十分である．
+	完全性定理により，\(\symcal{M} \satisfy \text{\cref{item:PAA9}}\)を示せば十分である．
 	\(\obj{x}\)を変数記号とし，論理式\(\apply{\varphi}{\obj{x}}\)を\(\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}\)と定める．
 	\(\interpretation{\symcal{M}}{\obj{0}} = \interpretation{\symcal{M}}{\obj{0}}\)だから
 	\(\symcal{M} \satisfy \obj{0} \objeq \obj{0}\)であり，
@@ -129,7 +124,7 @@
 	\[
 		\symcal{M} \satisfy \apply{\varphi}{\obj{0}} \land \forall \obj{x} \paren{\apply{\varphi}{\obj{x}} \to \apply{\varphi}{\obj{x} \obj{+} \obj{1}}}
 	\]
-	となり，\cref{item:PAA9}から\(\symcal{M} \satisfy \forall \obj{x} \apply{\varphi}{\obj{x}}\)を得る．
+	となり，\cref{item:PAA8}から\(\symcal{M} \satisfy \forall \obj{x} \apply{\varphi}{\obj{x}}\)を得る．
 \end{proof}
 
 \index[widx]{もでる@モデル!ひょうじゅんもでる@標準---}
@@ -156,7 +151,7 @@
 \end{Note}
 
 \begin{Note}
-	\Cref{lemma:paa10redudant}の証明のように，形式体系において具体的な定理を証明する際は完全性定理を使ったモデル経由の証明の方が書きやすい．
+	\Cref{lemma:paa9redudant}の証明のように，形式体系において具体的な定理を証明する際は完全性定理を使ったモデル経由の証明の方が書きやすい．
 	表記を簡素化するため，以下のように記述を省略して書くことにする：
 	\begin{itemize}
 		\item \(\symcal{L}_{\PA}\)の各記号の構造\(\symcal{M}\)による解釈はその記号をタイプライタ体でない通常の書体で書くことによって表現する．
@@ -256,11 +251,11 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	\(\symcal{M}\)の対象領域を\(M\)とおく．
 
 	\Cref{eq:Robinsonnumerallemmaadd0}を示そう．\(x, y \in M\)が\(x + y = 0\)を満たすとする．
-	\(y \neq 0\)であるとすると，\cref{item:PAA10}から\(y = z + 1\)となる\(z \in M\)が存在する．
+	\(y \neq 0\)であるとすると，\cref{item:PAA9}から\(y = z + 1\)となる\(z \in M\)が存在する．
 	このとき，\cref{item:PAA4}から
 	\(x + y = x + \paren{z + 1} = \paren{x + z} + 1 = 0\)
 	となり\cref{item:PAA1}に矛盾する．
-	よって\(y = 0\)でなければならない．さらに，\(x \neq 0\)であると仮定すると\cref{item:PAA10}から\(x = w + 1\)となる\(w \in M\)が存在する．
+	よって\(y = 0\)でなければならない．さらに，\(x \neq 0\)であると仮定すると\cref{item:PAA9}から\(x = w + 1\)となる\(w \in M\)が存在する．
 	\Cref{item:PAA3}, \cref{item:PAA4}から
 	\(x + y = x + 0 = x = w + 1 = 0\)
 	だから\cref{item:PAA1}に矛盾する．
@@ -277,7 +272,7 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	\end{align*}
 	となり\cref{item:PAA1}に矛盾する．
 
-	\Cref{eq:Robinsonnumerallemmaorder}は\cref{item:PAA10}と\cref{item:PAA11}から明らかである．
+	\Cref{eq:Robinsonnumerallemmaorder}は\cref{item:PAA9}と\cref{item:PAA7}から明らかである．
 
 	\Cref{eq:Robinsonnumerallemmaordern}を示す．
 	任意の\(x \in M\)に対し，\(x + 1 < \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)であるとする．
@@ -340,12 +335,12 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	最後に\cref{eq:Robinsonnumerallemmalinerorderbase2}を示そう．
 	任意の\(x \in M\)に対し，\(\interpretation{\symcal{M}}{\numeral{n}} < x\)かつ\(x \neq \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)ならば
 	\(\interpretation{\symcal{M}}{\paren{\numeral{n + 1}}} < x\)であることを示せばよい．
-	\(\interpretation{\symcal{M}}{\numeral{n}} < x\)だから\cref{item:PAA10}により
+	\(\interpretation{\symcal{M}}{\numeral{n}} < x\)だから\cref{item:PAA9}により
 	\(y + \paren{\interpretation{\symcal{M}}{\numeral{n}} + 1} = x\)となる\(y \in M\)が存在する．
 	\(y = 0\)であると仮定すると，\cref{eq:Robinsonnumerallemmaadd0commutativelaw}から
 	\(x = \interpretation{\symcal{M}}{\numeral{n}} + 1 = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)となって矛盾する．
 	従って\(y \neq 0\)でなければならない．
-	よって\cref{item:PAA10}から\(y = z + 1\)となる\(z \in M\)がとれて，
+	よって\cref{item:PAA9}から\(y = z + 1\)となる\(z \in M\)がとれて，
 	\cref{eq:Robinsonnumerallemmaadd0commutativelaw}から\(z + \paren{\interpretation{\symcal{M}}{\paren{\numeral{n + 1}}} + 1} = x\)となる．
 	ゆえに\cref{eq:Robinsonnumerallemmalinerorderbase2}は成り立つ．
 \end{proof}
@@ -495,11 +490,11 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	のいずれかが成り立つと仮定すると，\(x = \interpretation{\symcal{M}}{m}\)かつ\(m < n + 2\)となる自然数\(m\)が存在する．
 	このとき，\cref{eq:Robinsonnumeraltheoremaddition}から
 	\(\interpretation{\symcal{M}}{\paren{\numeral{n - m + 2}}} + x = \interpretation{\symcal{M}}{\paren{\numeral{n + 2}}}\)
-	だから\cref{item:PAA11}によって
+	だから\cref{item:PAA7}によって
 	\(x < \interpretation{\symcal{M}}{\paren{\numeral{\paren{n + 1} + 1}}}\)が成り立つ．
 	逆に，\(x < \interpretation{\symcal{M}}{\paren{\numeral{\paren{n + 1} + 1}}}\)が成り立つと仮定する．
 	もし\(x = 0\)ならば\(x = \interpretation{\symcal{M}}{\numeral{0}}\)が成り立っている．
-	\(x \neq 0\)ならば，\cref{item:PAA10}から\(x = y + 1\)となる\(y \in M\)が存在する．
+	\(x \neq 0\)ならば，\cref{item:PAA9}から\(x = y + 1\)となる\(y \in M\)が存在する．
 	このとき，\cref{eq:Robinsonnumerallemmaordern}から\(y < \interpretation{\symcal{M}}{\numeral{n + 1}}\)となる．
 	帰納法の仮定から，
 	\begin{align*}
@@ -540,7 +535,7 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 
 
 Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない理論である．
-以降，公理図式\cref{item:PAA9}を一部だけ含む\(\PA\)の部分体系を考えよう．
+以降，公理図式\cref{item:PAA8}を一部だけ含む\(\PA\)の部分体系を考えよう．
 その前に，論理式の分類を考える．
 
 \begin{Def} \label{Def:boundedformula}
@@ -599,8 +594,172 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	また，\(\symcal{L}_{\PA}\)開論理式全体の集合を\(\OpenFormulaSet\)と表す．
 \end{Def}
 
+\begin{Ex} \label[Ex]{Ex:primenumberformula}
+	「\(x\)は素数である」という主張は，以下の\(\SigmaFormula_0\)論理式によって表現できる：
+	\[
+		\lnot \exists \obj{d} < \obj{x} \exists \obj{e} < \obj{x} \paren{\obj{d} \obj{\cdot} \obj{e} \objeq \obj{x}} \land \lnot \paren{\obj{x} \objeq 0} \land \lnot \paren{\obj{x} \objeq 1}.
+	\]
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:dividedformula}
+	「\(x\)は\(y\)を割り切る」という主張は，以下の\(\SigmaFormula_0\)論理式によって表現できる：
+	\[
+		\exists \obj{z} < \obj{x} \paren{\obj{x} \obj{\cdot} \obj{z} \objeq \obj{y}}
+	\]
+\end{Ex}
+
 \index[sidx]{I\(\symup{\Gamma}\)：\(\PA\)の部分体系}
-\begin{Def} \label{Def:paa9restriction}
-	\(\PA\)の公理のうち，公理図式\cref{item:PAA9}における論理式\(\varphi\)を論理式の集合\(\symup{\Gamma}\)に制限した\(\symcal{L}_{\PA}\)理論を
-	I\(\symup{\Gamma}\)と表す．
+\begin{Def} \label{Def:paa8restriction}
+	\(\PA\)の公理のうち，公理図式\cref{item:PAA8}における論理式\(\varphi\)を論理式の集合\(\symup{\Gamma}\)の元に制限して得られる\(\symcal{L}_{\PA}\)理論を
+	\(\InductionLimitedTheory{\symup{\Gamma}}\)と表す．
 \end{Def}
+
+\begin{Thm} \label[Thm]{Thm:IOpenInduction}
+	\(\OpenFormulaInduction\)において，以下が成り立つ：
+	\begin{align}
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y}
+		\paren{\obj{x} \obj{+} \obj{y} \objeq \obj{y} \obj{+} \obj{x}},
+		\label{eq:iopenadditioncommutativelaw}                                                                                                                                                            \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z} \paren{\obj{x} \obj{+} \paren{\obj{y} \obj{+} \obj{z}} \objeq \paren{\obj{x} \obj{+} \obj{y}} \obj{+} \obj{z}},
+		\label{eq:iopenadditionassociativelaw}                                                                                                                                                            \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y}
+		\paren{\obj{x} \obj{\cdot} \obj{y} \objeq \obj{y} \obj{\cdot} \obj{x}},
+		\label{eq:iopenmultcommutativelaw}                                                                                                                                                                \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{\cdot} \obj{z}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{\cdot} \obj{z}},
+		\label{eq:iopenmultassociativelaw}                                                                                                                                                                \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{+} \obj{z}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{+} \paren{\obj{x} \obj{\cdot} \obj{z}}},
+		\label{eq:iopendistributivelaw}                                                                                                                                                                   \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\obj{x} \obj{+} \obj{y} \objeq \obj{x} \obj{+} \obj{z} \to \obj{y} \objeq \obj{z}},
+		\label{eq:iopendifference}                                                                                                                                                                        \\
+		\OpenFormulaInduction & \provable \forall \obj{x}
+		\lnot \paren{\obj{x} \obj{<} \obj{x}},
+		\label{eq:iopennonreflexivityraw}                                                                                                                                                                 \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\obj{x} \obj{<} \obj{y} \land \obj{y} \obj{<} \obj{z} \to \obj{x} \obj{<} \obj{z}},
+		\label{eq:iopentransitionraw}                                                                                                                                                                     \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y}
+		\paren{\obj{x} \obj{<} \obj{y} \lor \obj{x} \objeq \obj{y} \lor \obj{y} \obj{<} \obj{x}},
+		\label{eq:iopenlinerorder}                                                                                                                                                                        \\
+		\OpenFormulaInduction & \provable \forall \obj{x}
+		\paren{\obj{x} \objeq \obj{0} \lor \obj{0} \obj{<} \obj{x}},
+		\label{eq:iopen0minimum}                                                                                                                                                                          \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\obj{x} \obj{<} \obj{y} \formulaequiv \obj{x} \obj{+} \obj{z} \obj{<} \obj{y} \obj{+} \obj{z}},
+		\label{eq:iopencalcorderaddition}                                                                                                                                                                 \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\lnot \paren{\obj{z} \objeq \obj{0}} \to \paren{\obj{x} \obj{<} \obj{y} \formulaequiv \obj{x} \obj{\cdot} \obj{z} \obj{<} \obj{y} \obj{\cdot} \obj{z}}},
+		\label{eq:iopencalcordermult}                                                                                                                                                                     \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\lnot \paren{\obj{z} \objeq \obj{0}} \land \obj{x} \obj{\cdot} \obj{z} \objeq \obj{y} \obj{\cdot} \obj{z} \to \obj{x} \objeq \obj{y}}.
+		\label{eq:iopendivision}
+	\end{align}
+\end{Thm}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\OpenFormulaInduction\)の任意のモデルとする．\(\symcal{M}\)が右辺の論理式を充足することを示せば十分である．
+	\(\symcal{M}\)の対象領域を\(M\)とする．
+
+	\Cref{eq:iopenadditioncommutativelaw}を示そう．
+	まず，論理式\(\apply{\varphi}{\obj{x}}\)を\(\obj{0} \obj{+} \obj{x} \objeq \obj{x}\)と定めると，\(\apply{\varphi}{\obj{x}}\)は開論理式である．
+	そこで，\(\obj{x}\)に着目して\cref{item:PAA8}を適用する，すなわち\(x\)に関する帰納法によって任意の\(x \in M\)に対して\(0 + x = x\)となることを示そう．
+	\(\apply{\varphi}{\obj{0}}\)は\(\obj{0} \obj{+} \obj{0} \objeq \obj{0}\)のことであり，\cref{item:PAA3}から\(0 + 0 = 0\)は成り立つ．
+	各\(x \in M\)について，\(0 + x = x\)であると仮定すると，帰納法の仮定と\cref{item:PAA4}などにより
+	\(0 + \paren{x + 1} = \paren{0 + x} + 1 = x + 1\)となる．
+	よって\cref{item:PAA8}から任意の\(x \in M\)に対して\(0 + x = 0\)となることがわかる．
+	次に，論理式\(\apply{\psi}{\obj{y}}\)を\(\paren{\obj{x} \obj{+} \obj{1}} \obj{+} \obj{y} \objeq \paren{\obj{x} \obj{+} \obj{y}} \obj{+} \obj{1}\)と定めると，
+	\(\apply{\psi}{\obj{y}}\)は開論理式である．
+	そこで，\(y\)に関する帰納法によって任意の\(x, y \in M\)に対して\(\paren{x + 1} + y = \paren{x + y} + 1\)が成り立つことを示す．
+	\(x \in M\)を任意に1つとって固定しておく．
+	まず，\cref{item:PAA3}から\(\paren{x + 1} + 0 = \paren{x + 0} + 1\)が従う．
+	各\(y \in M\)に対し，\(\paren{x + 1} + y = \paren{x + y} + 1\)であると仮定する．
+	このとき，帰納法の仮定と\cref{item:PAA4}から
+	\(\paren{x + 1} + \paren{y + 1} = \paren{\paren{x + 1} + y} + 1 = \paren{\paren{x + y} + 1} + 1 = \paren{x + \paren{y + 1}} + 1\)となる．
+	よって\cref{item:PAA8}から任意の\(x, y \in M\)に対して\(\paren{x + 1} + y = \paren{x + y} + 1\)が成り立つことがわかる．
+	最後に，論理式\(\apply{\chi}{\obj{y}}\)を\(\obj{x} \obj{+} \obj{y} \objeq \obj{y} \obj{+} \obj{x}\)と定めると，
+	\(\apply{\chi}{\obj{y}}\)は開論理式である．
+	そこで，\(y\)に関する帰納法によって任意の\(x, y \in M\)に対して\(x + y = y + x\)となることを示そう．
+	\(x \in M\)を1つとって固定しておく．
+	\(x + 0 = 0 + x\)であることは，\cref{item:PAA3}と上で示した\(0 + x = 0\)から従う．
+	各\(y \in M\)に対し，\(x + y = y + x\)であると仮定する．
+	このとき，\cref{item:PAA4}や上で示した\(\paren{x + 1} + y = \paren{x + y} + 1\)と帰納法の仮定により
+	\(x + \paren{y + 1} = \paren{x + y} + 1 = \paren{y + x} + 1 = \paren{y + 1} + 1\)となる．
+	ゆえに\cref{item:PAA8}から任意の\(x, y \in M\)に対して\(x + y = y + x\)となることがわかる．
+	以上より\cref{eq:iopenadditioncommutativelaw}が得られる．
+
+	\Cref{eq:iopenadditionassociativelaw}については，
+	任意の\(x, y, z\)に対して\(x + \paren{y + z} = \paren{x + y} + z\)が成り立つことを\(z\)に関する帰納法によって示せばよい．
+	\Cref{eq:iopenmultcommutativelaw},  \cref{eq:iopenmultassociativelaw}, \cref{eq:iopendistributivelaw}, \cref{eq:iopendifference}
+	もすべて同様に，\(\obj{z}\)に着目して\cref{item:PAA8}を適用することによって得られる．
+
+	\Cref{eq:iopennonreflexivityraw}は\(x\)についての帰納法で示せる．
+
+	\Cref{eq:iopentransitionraw}を示そう．任意の\(x, y, z \in M\)に対して，
+	\(x < y\)かつ\(y < z\)であると仮定する．
+	このとき，\cref{item:PAA7}から\(y = u + \paren{x + 1}\)となる\(u \in M\)と\(z = v + \paren{y + 1}\)となる\(v \in M\)が存在する．
+	よって，\cref{item:PAA4}や\cref{eq:iopenadditionassociativelaw}
+	\(z = \paren{v + \paren{u + 1}} \paren{x + 1}\)が得られる．よって\(x < z\)である．
+
+	\Cref{eq:iopenlinerorder}についても，\(\obj{y}\)に着目して\cref{item:PAA8}を適用することで得られる．
+	具体的な証明も\cref{eq:Robinsonnumeraltheoremlinerorder}と同様にできる．
+	\Cref{eq:Robinsonnumeraltheoremlinerorder}を導く過程で\cref{Lemma:Robinsonnumerallemma}や\cref{Thm:Robinsonnumeraltheorem}の
+	\cref{eq:Robinsonnumeraltheoremlinerorder}以外の式を利用しているが，
+	そこで利用した各論理式の自然数\(n\)に対する数項\(\numeral{n}\)を使用している部分を変数記号\(\obj{y}\)に，
+	数項\(\numeral{n + 1}\)を使用している部分は\(\obj{y} \obj{+} \obj{1}\)にそれぞれ置き換えて得られる論理式を\(\OpenFormulaInduction\)上で証明すればよい．
+	数項がなくなるため通常の自然数に関する数学的帰納法は使えないが，
+	代わりに\cref{item:PAA8}を利用すればまったく同様にして証明できる．
+
+	\Cref{eq:iopen0minimum}は\(x\)に関する帰納法によって示すことができる．
+
+	\Cref{eq:iopencalcorderaddition}を示す．\(x, y, z \in M\)を任意にとる．
+	\(x < y\)と仮定すると，\(y = w + \paren{x + 1}\)となる\(w \in M\)が存在する．
+	このとき，\cref{eq:iopenadditioncommutativelaw}や\cref{eq:iopenadditionassociativelaw}などから
+	\(y + z = w + \paren{\paren{x + z} + 1}\)となるから\(x + z < y + z\)である．
+	\(x + z < y + z\)ならば\(x < y\)であることについては，\(z\)に関する帰納法によって示せる．
+
+	\Cref{eq:iopencalcordermult}を示す．
+	\(z\)に関する帰納法により，\(z \neq 0\)となる任意の\(x, y, z\)に対し，\(x < y\)ならば\(x \cdot z < y \cdot z\)となること示そう．
+	\(z = 0\)の場合は仮定と矛盾するのでこの主張は成り立つ．
+	\(z \neq 0\)となる各\(z\)について，\(x < y\)ならば\(x \cdot z < y \cdot z\)であると仮定する．
+	\(x < y\)と仮定すると，\cref{item:PAA7}により\(y = u + \paren{x + 1}\)となる\(u \in M\)が存在する．また，
+	\(x \cdot z < y \cdot z\)だから\cref{item:PAA7}により\(y \cdot z = v + \paren{\paren{x \cdot z} + 1}\)となる\(v \in M\)がとれる．
+	このとき，
+	\begin{align*}
+		y \cdot \paren{z + 1}
+		 & = \paren{y \cdot z} + y                                                 \\
+		 & = \paren{v + \paren{\paren{x \cdot z} + 1}} + \paren{u + \paren{x + 1}} \\
+		 & = x \cdot \paren{z + 1} + \paren{\paren{u + v} + 1}
+	\end{align*}
+	となるから\(x \cdot z < y \cdot z\)である．
+	この逆となる\(z \neq 0\)となる任意の\(x, y, z\)に対し，\(x \cdot z < y \cdot z\)ならば\(x < y\)となることについては，
+	\cref{eq:iopenlinerorder}から\(x \cdot z < y \cdot z\)のとき\(x = y\)でも\(y < x\)でもないことを示せばよい．
+	\(x = y\)ならば\(x \cdot z = y \cdot z\)となり\cref{eq:iopennonreflexivityraw}に矛盾し，
+	\(y < x\)ならば\(y \cdot z < x \cdot z\)となり\cref{eq:iopentransitionraw}から\(x \cdot z < x \cdot z\)
+	が得られるのでやはり\cref{eq:iopennonreflexivityraw}に矛盾する．
+
+	\Cref{eq:iopendivision}を示そう．
+	対偶をとって任意の\(x, y, z\)に対して\(x \neq y\)ならば\(z = 0\)または\(x \cdot z \neq y \cdot z\)であることを示す．
+	\(x \neq y\)かつ\(z \neq 0\)ならば\(x \cdot z \neq y \cdot z\)であることを示せばよい．
+	\cref{eq:iopenlinerorder}から\(x < y\)または\(y < x\)である．
+	よって\cref{eq:iopencalcordermult}から\(x \cdot z < y \cdot z\)または\(y \cdot z < x \cdot z\)である．
+	ゆえに\cref{eq:iopencalcordermult}を示したときと同様にして\(x \cdot z \neq y \cdot z\)が従う．
+\end{proof}
+
+\begin{Lemma} \label{Lemma:iopenPAA9redudant}
+	\(\OpenFormulaInduction\)において，以下が成り立つ．
+	\begin{equation}
+		\OpenFormulaInduction \provable \text{\cref{item:PAA9}}.
+		\label{eq:iopenPAA9redudant}
+	\end{equation}
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\OpenFormulaInduction\)の任意のモデルとする．\(\symcal{M}\)が右辺の論理式を充足することを示せば十分である．
+	\(\symcal{M}\)の対象領域を\(M\)とする．
+
+	任意の\(x \in M\)に対し，\(x \neq 0\)とすると\cref{eq:iopen0minimum}から\(0 < x\)である．
+	ゆえに\cref{item:PAA7}から\(x = y + \paren{0 + 1}\)となる\(y \in M\)が存在する．
+	このとき，\cref{item:PAA3}や\cref{item:PAA4}から\(x = \paren{y + 0} + 1 = y + 1\)となる．
+\end{proof}

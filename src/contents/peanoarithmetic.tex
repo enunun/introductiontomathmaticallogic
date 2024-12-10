@@ -23,12 +23,12 @@
 まずは，Peano算術を1階理論として定義しよう．
 
 \index[sidx]{\(\PA\)：1階Peano算術}
-\index[sidx]{\(\symcal{L}_{\PA}\)：1階Peano算術の言語}
+\index[sidx]{\(\symcal{L}_{\Ar}\)：1階Peano算術の言語}
 \index[widx]{1かいPeanoさんじゅつ@1階Peano算術}
 \begin{Def} \label{Def:peanoarithmetic}
-	1階Peano算術の言語を\(\symcal{L}_{\PA} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}}\)とする．
+	1階Peano算術の言語を\(\symcal{L}_{\Ar} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}}\)とする．
 	ここで，\(\obj{+}, \obj{\cdot}\)はアリティ2の関数記号，\(\obj{0}, \obj{1}\)は定数記号，\(\obj{<}\)はアリティ2の関数記号である．
-	\term{1階Peano算術}\(\PA\)は，以下の公理からなる\(\symcal{L}_{\PA}\)理論である：
+	\term{1階Peano算術}\(\PA\)は，以下の公理からなる\(\symcal{L}_{\Ar}\)理論である：
 	\begin{enumerate}[label=A\arabic*.,ref=A\arabic*]
 		\item \label{item:PAA1} \(\forall \obj{x} \lnot \paren{\obj{x} \obj{+} \obj{1} \objeq \obj{0}},\)
 		\item \label{item:PAA2} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{1} \objeq \obj{y} \obj{+} \obj{1} \to \obj{x} \objeq \obj{y}},\)
@@ -37,7 +37,7 @@
 		\item \label{item:PAA5} \(\forall \obj{x} \paren{\obj{x} \obj{\cdot} \obj{0} \objeq \obj{0}},\)
 		\item \label{item:PAA6} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{+} \obj{1}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{+} \obj{x}},\)
 		\item \label{item:PAA7} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{<} \obj{y} \formulaequiv \exists \obj{z} \paren{\obj{z} \obj{+} \paren{\obj{x} \obj{+} \obj{1}}\objeq \obj{y}}}.\)
-		\item \label{item:PAA8} 変数記号\(x\)が束縛出現しない\(\symcal{L}_{\PA}\)論理式\(\apply{\varphi}{x}\)に対する論理式
+		\item \label{item:PAA8} 変数記号\(x\)が束縛出現しない\(\symcal{L}_{\Ar}\)論理式\(\apply{\varphi}{x}\)に対する論理式
 		      \begin{equation}
 			      \apply{\varphi}{\obj{0}} \land \forall x \paren{\apply{\varphi}{x} \to \apply{\varphi}{x \obj{+} \obj{1}}} \to \forall x \apply{\varphi}{x}
 			      \label{eq:inductionscheme}
@@ -50,7 +50,7 @@
 \cref{item:PAA3}, \cref{item:PAA4}と\cref{item:PAA5}, \cref{item:PAA6}は，
 それぞれ通常の自然数における自然数の加法と乗法の帰納的定義に相当する公理である．
 また，\cref{item:PAA7}は通常の自然数における大小関係の定義に相当する公理である．
-\cref{item:PAA1}から\cref{item:PAA7}までは\(\symcal{L}_{\PA}\)の各記号の定義ともいえる公理であるが，\cref{item:PAA8}だけは特異的である．
+\cref{item:PAA1}から\cref{item:PAA7}までは\(\symcal{L}_{\Ar}\)の各記号の定義ともいえる公理であるが，\cref{item:PAA8}だけは特異的である．
 意味的には数学的帰納法に相当するものであるが，\cref{item:PAA8}は単一の公理ではなく可算無限個ある論理式すべてに対する公理をまとめて書いた%
 \index[widx]{こうり@公理!こうりずしき@---図式}%
 \term{公理図式}である．
@@ -88,14 +88,14 @@
 	なお，有限順序数の加法については\(\PA\)における\cref{item:PAA3}, \cref{item:PAA4}と同じようにして帰納的に定義できる．
 \end{Note}
 
-\(\PA\)の公理図式\cref{item:PAA8}は，（変数記号\(x\)が束縛出現しない）すべての\(\symcal{L}_{\PA}\)論理式に対して要請されるものである．
+\(\PA\)の公理図式\cref{item:PAA8}は，（変数記号\(x\)が束縛出現しない）すべての\(\symcal{L}_{\Ar}\)論理式に対して要請されるものである．
 ここに制限を加えることによって\(\PA\)の部分体系を得ることを考えよう．
 
 \index[sidx]{\(\Robinson\)：Robinson算術}
 \index[widx]{Robinsonさんじゅつ@Robinson算術}
 \begin{Def} \label{Def:robinsonarithmetic}
 	\term{Robinson算術}\(\Robinson\)は，\(\PA\)における公理\cref{item:PAA1}から\cref{item:PAA7}に
-	以下の公理を加えた8個の閉論理式からなる\(\symcal{L}_{\PA}\)理論である：
+	以下の公理を加えた8個の閉論理式からなる\(\symcal{L}_{\Ar}\)理論である：
 	\begin{enumerate}[label=A\arabic*.,ref=A\arabic*,start=9]
 		\item \label{item:PAA9} \(\forall \obj{x} \paren{\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}},\)
 	\end{enumerate}
@@ -131,8 +131,8 @@
 \index[widx]{もでる@モデル!ちょうじゅんもでる@超準---}
 \index[sidx]{\(\standardmodel\)：\(\PA\)の標準モデル}
 \begin{Def} \label{Def:standardstructure}
-	自然数全体の集合\(\NaturalNumbers\)を対象領域とし，\(\symcal{L}_{\PA}\)の各記号\(\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}\)の解釈をそれぞれ
-	自然数における通常の意味での\(\mathord{+}, \mathord{\cdot}, 0, 1, \mathord{<}\)定めることにより得られる\(\symcal{L}_{\PA}\)構造は\(\PA\)のモデルである．
+	自然数全体の集合\(\NaturalNumbers\)を対象領域とし，\(\symcal{L}_{\Ar}\)の各記号\(\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}\)の解釈をそれぞれ
+	自然数における通常の意味での\(\mathord{+}, \mathord{\cdot}, 0, 1, \mathord{<}\)定めることにより得られる\(\symcal{L}_{\Ar}\)構造は\(\PA\)のモデルである．
 	このモデル（およびこのモデルと同型なモデル）を\(\PA\)の\term{標準モデル}といい，本書では
 	\begin{equation}
 		\standardmodel
@@ -154,8 +154,8 @@
 	\Cref{lemma:paa9redudant}の証明のように，形式体系において具体的な定理を証明する際は完全性定理を使ったモデル経由の証明の方が書きやすい．
 	表記を簡素化するため，以下のように記述を省略して書くことにする：
 	\begin{itemize}
-		\item \(\symcal{L}_{\PA}\)の各記号の構造\(\symcal{M}\)による解釈はその記号をタイプライタ体でない通常の書体で書くことによって表現する．
-		      例えば，\(\symcal{L}_{\PA}\)の記号\(\obj{0}, \obj{+}\)の\(\symcal{M}\)による
+		\item \(\symcal{L}_{\Ar}\)の各記号の構造\(\symcal{M}\)による解釈はその記号をタイプライタ体でない通常の書体で書くことによって表現する．
+		      例えば，\(\symcal{L}_{\Ar}\)の記号\(\obj{0}, \obj{+}\)の\(\symcal{M}\)による
 		      解釈\(\interpretation{\symcal{M}}{\obj{0}}, \interpretation{\symcal{M}}{\obj{+}}\)をそれぞれ単に\(0, +\)と表記する．
 	\end{itemize}
 
@@ -169,17 +169,17 @@
 \index[sidx]{\(\numeral{n}\)：数項}
 \index[widx]{こう@項!すうこう@数---}
 \begin{Def} \label{Def:numeral}
-	\(n\)を自然数とする．\(n\)に対する\(\symcal{L}_{\PA}\)項\(\numeral{n}\)を以下のように帰納的に定義する：
+	\(n\)を自然数とする．\(n\)に対する\(\symcal{L}_{\Ar}\)項\(\numeral{n}\)を以下のように帰納的に定義する：
 	\begin{align}
 		\numeral{0}     & = \obj{0},
 		\label{eq:numeral0}                                                                    \\
 		\numeral{n + 1} & = \paren{\numeral{n} \obj{+} \obj{1}} \quad (n \in \NaturalNumbers).
 		\label{eq:numeralnext}
 	\end{align}
-	ここで，\cref{eq:numeral0}において，左辺の\(0\)はメタ側の（つまり通常の意味での）自然数\(0\)であり，右辺の\(\obj{0}\)は\(\symcal{L}_{\PA}\)の定数記号\(\obj{0}\)である．
-	\(\numeral{0}\)は\(\obj{0}\)と同一の\(\symcal{L}_{\PA}\)項であることにも注意しよう．
+	ここで，\cref{eq:numeral0}において，左辺の\(0\)はメタ側の（つまり通常の意味での）自然数\(0\)であり，右辺の\(\obj{0}\)は\(\symcal{L}_{\Ar}\)の定数記号\(\obj{0}\)である．
+	\(\numeral{0}\)は\(\obj{0}\)と同一の\(\symcal{L}_{\Ar}\)項であることにも注意しよう．
 	\cref{eq:numeralnext}において，左辺の\(n, \mathord{+}, 1\)はそれぞれメタ側の（つまり通常の意味での）自然数\(n\)，加法\(+\)，および自然数\(1\)であり，
-	左辺の\(\numeral{n}, \obj{+}, \obj{1}\)はそれぞれ\(\symcal{L}_{\PA}\)項\(\numeral{n}\)，関数記号\(\obj{+}\)，および定数記号\(\obj{1}\)であることに注意しよう．
+	左辺の\(\numeral{n}, \obj{+}, \obj{1}\)はそれぞれ\(\symcal{L}_{\Ar}\)項\(\numeral{n}\)，関数記号\(\obj{+}\)，および定数記号\(\obj{1}\)であることに注意しよう．
 
 	自然数\(n\)に対する\(\numeral{n}\)を，\(n\)に対する\term{数項}と呼ぶ．
 \end{Def}
@@ -193,7 +193,7 @@
 		\apply{\Num}{n  + 1} & = \paren{\apply{\Num}{n} \obj{+} \obj{1}} \quad (n \in \NaturalNumbers)
 	\end{align*}
 	を満たす写像\(\Num \colon \NaturalNumbers \to \symcal{T}\)を定義したことに相当する（\cref{Def:numeral}における\(\numeral{n}\)は上記\(\apply{\Num}{n}\)に相当する）．
-	ここで，\(\symcal{T}\)は\(\symcal{L}_{\PA}\)項全体の集合である．
+	ここで，\(\symcal{T}\)は\(\symcal{L}_{\Ar}\)項全体の集合である．
 \end{Note}
 
 \begin{Ex} \label[Ex]{Ex:numeral}
@@ -207,15 +207,15 @@
 \end{Ex}
 
 \begin{Note}
-	数項は，\(\symcal{L}_{\PA}\)項の略記表現である．従って「意味的には」同じであろうと思われる項であっても項として（つまり記号列として）等しいとは限らない．
-	例えば，自然数1に対する数項\(\numeral{1}\)と\(\symcal{L}_{\PA}\)の定数記号\(\obj{1}\)は項としては等しくない．
+	数項は，\(\symcal{L}_{\Ar}\)項の略記表現である．従って「意味的には」同じであろうと思われる項であっても項として（つまり記号列として）等しいとは限らない．
+	例えば，自然数1に対する数項\(\numeral{1}\)と\(\symcal{L}_{\Ar}\)の定数記号\(\obj{1}\)は項としては等しくない．
 	つまり\(\numeral{1} \neq \obj{1}\)である．
 	一方で，
 	\begin{equation}
 		\Robinson \provable \numeral{1} \objeq \obj{1}
 		\label{eq:robinson1numeric}
 	\end{equation}
-	は成り立っている．「Robinson算術\(\Robinson\)という体系内では」自然数1に対する数項\(\numeral{1}\)と\(\symcal{L}_{\PA}\)の定数記号\(\obj{1}\)は等しくなる．
+	は成り立っている．「Robinson算術\(\Robinson\)という体系内では」自然数1に対する数項\(\numeral{1}\)と\(\symcal{L}_{\Ar}\)の定数記号\(\obj{1}\)は等しくなる．
 \end{Note}
 
 \begin{Que} \label[Que]{Que:robinson1numeric}
@@ -229,6 +229,8 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 \begin{Lemma} \label{Lemma:Robinsonnumerallemma}
 	\(n\)を自然数とする．\(\Robinson\)において以下が成り立つ．
 	\begin{align}
+		\Robinson & \provable \forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{0}},
+		\label{eq:Robinsonnumerallemmaminimum}                                                                                                                           \\
 		\Robinson & \provable \forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{y} \objeq \obj{0} \to \obj{x} \objeq \obj{0} \land \obj{y} \objeq \obj{0}},
 		\label{eq:Robinsonnumerallemmaadd0}                                                                                                                              \\
 		\Robinson & \provable \forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \obj{y} \objeq \obj{0} \to \obj{x} \objeq \obj{0} \lor \obj{y} \objeq \obj{0}},
@@ -249,6 +251,10 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 \begin{proof}
 	\(\symcal{M}\)を\(\Robinson\)の任意のモデルとする．\(\symcal{M}\)が右辺の論理式を充足することを示せば十分である．
 	\(\symcal{M}\)の対象領域を\(M\)とおく．
+
+	\Cref{eq:Robinsonnumerallemmaminimum}を示そう．\(x \in M\)が\(x < 0\)を満たすと仮定する．
+	このとき，\cref{item:PAA7}から\(y + \paren{x + 1} = 0\)となる\(y \in M\)が存在する．
+	よって\cref{item:PAA4}から\(\paren{y + x} + 1 = 0\)となるが，これは\cref{item:PAA1}と矛盾する．
 
 	\Cref{eq:Robinsonnumerallemmaadd0}を示そう．\(x, y \in M\)が\(x + y = 0\)を満たすとする．
 	\(y \neq 0\)であるとすると，\cref{item:PAA9}から\(y = z + 1\)となる\(z \in M\)が存在する．
@@ -573,25 +579,25 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 \begin{Def}
 	自然数\(n\)に対して，\(\SigmaFormula_n\)論理式，\(\PiFormula_n\)論理式を以下のように帰納的に定義する：
 	\begin{enumerate}
-		\item \(\symcal{L}_{\PA}\)有界論理式はすべて\(\SigmaFormula_0\)論理式であり，かつ\(\PiFormula_0\)論理式でもある．
+		\item \(\symcal{L}_{\Ar}\)有界論理式はすべて\(\SigmaFormula_0\)論理式であり，かつ\(\PiFormula_0\)論理式でもある．
 		\item \(\varphi\)が\(\SigmaFormula_n\)論理式であるとき，正の整数\(k\)と変数記号\(x_1, x_2, \dots, x_k\)に対する論理式
 		      \[
 			      \forall x_1 \forall x_2 \dotsb \forall x_k \varphi
 		      \]
-		      と論理的に同値な\(\symcal{L}_{\PA}\)論理式は\(\PiFormula_{n+1}\)論理式である．
+		      と論理的に同値な\(\symcal{L}_{\Ar}\)論理式は\(\PiFormula_{n+1}\)論理式である．
 		\item \(\varphi\)が\(\PiFormula_n\)論理式であるとき，正の整数\(k\)と変数記号\(x_1, x_2, \dots, x_k\)に対する論理式
 		      \[
 			      \exists x_1 \exists x_2 \dotsb \exists x_k \varphi
 		      \]
-		      と論理的に同値な\(\symcal{L}_{\PA}\)論理式は\(\PiFormula_{n+1}\)論理式である．
+		      と論理的に同値な\(\symcal{L}_{\Ar}\)論理式は\(\SigmaFormula_{n+1}\)論理式である．
 	\end{enumerate}
 	\(\SigmaFormula_n\)論理式全体の集合，\(\PiFormula_n\)論理式全体の集合をそれぞれ\(\SigmaFormula_n, \PiFormula_n\)と表す．
 
-	\(\symcal{L}_{\PA}\)論理式\(\varphi\)が\(\SigmaFormula_n\)論理式であり，かつ\(\PiFormula_n\)論理式でもある場合，
+	\(\symcal{L}_{\Ar}\)論理式\(\varphi\)が\(\SigmaFormula_n\)論理式であり，かつ\(\PiFormula_n\)論理式でもある場合，
 	\(\varphi\)は\(\DeltaFormula_n\)論理式であるという．
 	\(\DeltaFormula_n\)論理式全体の集合を\(\DeltaFormula_n\)と表す．
 
-	また，\(\symcal{L}_{\PA}\)開論理式全体の集合を\(\OpenFormulaSet\)と表す．
+	また，\(\symcal{L}_{\Ar}\)開論理式全体の集合を\(\OpenFormulaSet\)と表す．
 \end{Def}
 
 \begin{Ex} \label[Ex]{Ex:primenumberformula}
@@ -608,9 +614,26 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	\]
 \end{Ex}
 
+\begin{Lemma} \label{Lemma:formulahierarchy}
+	以下が成り立つ．
+	\begin{align}
+		\SigmaFormula_0 \subset \SigmaFormula_1 \subset \SigmaFormula_2 \subset \dotsb \subset \SigmaFormula_n \subset \SigmaFormula_{n + 1} \subset \dotsb,
+		\label{eq:Sigmaformulahierarchy} \\
+		\PiFormula_0 \subset \PiFormula_1 \subset \PiFormula_2 \subset \dotsb \subset \PiFormula_n \subset \PiFormula_{n+1} \subset \dotsb
+		\label{eq:Piformulahierarchy}
+	\end{align}
+\end{Lemma}
+
+\begin{proof}
+	\(\SigmaFormula_n\)論理式\(\varphi\)に対し，\(\varphi\)に出現しない変数記号\(x, y\)をとれば，論理式\(\exists x \forall y \varphi\)は\(\varphi\)と
+	論理的に同値な\(\SigmaFormula_{n + 1}\)論理式である．よって\(\varphi\)は\(\SigmaFormula_{n + 1}\)論理式でもあり，\cref{eq:Sigmaformulahierarchy}を得る．
+	\Cref{eq:Piformulahierarchy}も同様である．
+\end{proof}
+
+
 \index[sidx]{I\(\symup{\Gamma}\)：\(\PA\)の部分体系}
 \begin{Def} \label{Def:paa8restriction}
-	\(\PA\)の公理のうち，公理図式\cref{item:PAA8}における論理式\(\varphi\)を論理式の集合\(\symup{\Gamma}\)の元に制限して得られる\(\symcal{L}_{\PA}\)理論を
+	\(\PA\)の公理のうち，公理図式\cref{item:PAA8}における論理式\(\varphi\)を論理式の集合\(\symup{\Gamma}\)の元に制限して得られる\(\symcal{L}_{\Ar}\)理論を
 	\(\InductionLimitedTheory{\symup{\Gamma}}\)と表す．
 \end{Def}
 
@@ -762,4 +785,43 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	任意の\(x \in M\)に対し，\(x \neq 0\)とすると\cref{eq:iopen0minimum}から\(0 < x\)である．
 	ゆえに\cref{item:PAA7}から\(x = y + \paren{0 + 1}\)となる\(y \in M\)が存在する．
 	このとき，\cref{item:PAA3}や\cref{item:PAA4}から\(x = \paren{y + 0} + 1 = y + 1\)となる．
+\end{proof}
+
+
+\(\Robinson\)よりもさらに弱い体系として，以下の理論が知られている．
+
+\index[sidx]{\(\RArithmetic\)：Mostowski--Robinson--Tarskiの体系}
+\index[widx]{Mostowski--Robinson--Tarskiのたいけい@Mostowski--Robinson--Tarskiの体系}
+\begin{Def} \label{Def:RArithmetic}
+	\term{Mostowski--Robinson--Tarskiの体系}\(\RArithmetic\)は，
+	以下の無限個の公理からなる\(\symcal{L}_{\Ar}\)理論である．
+	ここで，\(m, n\)は任意の自然数である．
+
+	\begin{enumerate}[label=R\arabic*.,ref=R\arabic*]
+		\item \label{item:RR1} \(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{0}}\),
+		\item \label{item:RR2} \(\numeral{n} \obj{+} \numeral{m} \objeq \numeral{n + m}\),
+		\item \label{item:RR3} \(\numeral{n} \obj{\cdot} \numeral{m} \objeq \numeral{n \cdot m}\),
+		\item \label{item:RR4} \(\lnot \paren{\numeral{n} \objeq \numeral{m}} \quad (n \neq m)\),
+		\item \label{item:RR5} \(\forall \obj{x} \paren{\obj{x} < \numeral{n + 1} \formulaequiv \obj{x} \objeq \numeral{0} \lor \obj{x} \objeq \numeral{1} \lor \dotsb \lor \obj{x} \objeq \numeral{n}}\),
+		\item \label{item:RR6} \(\forall \obj{x} \paren{\obj{x} \obj{<} \numeral{n} \lor \numeral{n} < \obj{x} \lor \obj{x} \objeq \numeral{n}}.\)
+	\end{enumerate}
+\end{Def}
+
+
+\begin{Thm} \label{Thm:TheoryHierarchy}
+	以下で，理論\(T_1, T_2\)に対する\(T_1 \subset T_2\)は
+	「\(T_1\)の定理はすべて\(T_2\)の定理でもある」ことを意味するものとする．
+	このとき，以下が成り立つ．
+	\begin{equation}
+		\RArithmetic \subset \Robinson \subset \OpenFormulaInduction \subset \SigmaFormulaInduction_0 \subset \SigmaFormulaInduction_1 \subset \dotsb \subset \PA.
+		\label{eq:TheoryHierarchy}
+	\end{equation}
+\end{Thm}
+
+\begin{proof}
+	\Cref{Note:equivalentTheory}も踏まえれば，定理の包含関係としての\(T_1 \subset T_2\)が成り立つためには，
+	\(T_1\)の各公理が\(T_2\)の定理であることを示せば十分である．
+	\(\OpenFormulaInduction\)以降の体系の包含関係については，論理式の集合としての包含関係が成り立っていることから明らか．
+	定理の包含関係としての\(\RArithmetic \subset \Robinson\)は\cref{Lemma:Robinsonnumerallemma}と\cref{Thm:Robinsonnumeraltheorem}から，
+	\(\Robinson \subset \OpenFormulaInduction\)については\cref{Lemma:iopenPAA9redudant}からそれぞれ従う．
 \end{proof}

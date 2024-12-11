@@ -111,6 +111,7 @@
 \NewDocumentCommand{\pair}{m}{\langle #1 \rangle}
 
 \NewDocumentCommand{\provable}{}{\vdash}
+\NewDocumentCommand{\notprovable}{}{\mathbin{\not\vdash}}
 \NewDocumentCommand{\interderivable}{}{\dashVdash}
 
 \NewDocumentCommand{\KleeneClosure}{m}{{#1}^{\ast}}
@@ -190,6 +191,7 @@
 \NewDocumentCommand{\metaequivalent}{}{\iff}
 
 \NewDocumentCommand{\satisfy}{}{\vDash}
+\NewDocumentCommand{\notsatisfy}{}{\mathbin{\not\vDash}}
 
 \NewDocumentCommand{\logicallyequivalent}{}{\DashVDash}
 

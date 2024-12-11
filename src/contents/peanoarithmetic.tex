@@ -226,7 +226,7 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 しかし，メタ側の（つまり通常の意味での自然数上での）数学的帰納法はそもそも\(\Robinson\)内での主張でも\(\PA\)内の主張でもない．
 このことに注意して，以下のことを証明してみよう．
 
-\begin{Lemma} \label{Lemma:Robinsonnumerallemma}
+\begin{Lemma} \label[Lemma]{Lemma:Robinsonnumerallemma}
 	\(n\)を自然数とする．\(\Robinson\)において以下が成り立つ．
 	\begin{align}
 		\Robinson & \provable \forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{0}},
@@ -619,7 +619,7 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	\begin{align}
 		\SigmaFormula_0 \subset \SigmaFormula_1 \subset \SigmaFormula_2 \subset \dotsb \subset \SigmaFormula_n \subset \SigmaFormula_{n + 1} \subset \dotsb,
 		\label{eq:Sigmaformulahierarchy} \\
-		\PiFormula_0 \subset \PiFormula_1 \subset \PiFormula_2 \subset \dotsb \subset \PiFormula_n \subset \PiFormula_{n+1} \subset \dotsb
+		\PiFormula_0 \subset \PiFormula_1 \subset \PiFormula_2 \subset \dotsb \subset \PiFormula_n \subset \PiFormula_{n+1} \subset \dotsb.
 		\label{eq:Piformulahierarchy}
 	\end{align}
 \end{Lemma}
@@ -663,12 +663,12 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
 		\paren{\obj{x} \obj{<} \obj{y} \land \obj{y} \obj{<} \obj{z} \to \obj{x} \obj{<} \obj{z}},
 		\label{eq:iopentransitionraw}                                                                                                                                                                     \\
-		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y}
-		\paren{\obj{x} \obj{<} \obj{y} \lor \obj{x} \objeq \obj{y} \lor \obj{y} \obj{<} \obj{x}},
-		\label{eq:iopenlinerorder}                                                                                                                                                                        \\
 		\OpenFormulaInduction & \provable \forall \obj{x}
 		\paren{\obj{x} \objeq \obj{0} \lor \obj{0} \obj{<} \obj{x}},
 		\label{eq:iopen0minimum}                                                                                                                                                                          \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y}
+		\paren{\obj{x} \obj{<} \obj{y} \lor \obj{x} \objeq \obj{y} \lor \obj{y} \obj{<} \obj{x}},
+		\label{eq:iopenlinerorder}                                                                                                                                                                        \\
 		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
 		\paren{\obj{x} \obj{<} \obj{y} \formulaequiv \obj{x} \obj{+} \obj{z} \obj{<} \obj{y} \obj{+} \obj{z}},
 		\label{eq:iopencalcorderaddition}                                                                                                                                                                 \\
@@ -722,8 +722,10 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	\Cref{eq:iopentransitionraw}を示そう．任意の\(x, y, z \in M\)に対して，
 	\(x < y\)かつ\(y < z\)であると仮定する．
 	このとき，\cref{item:PAA7}から\(y = u + \paren{x + 1}\)となる\(u \in M\)と\(z = v + \paren{y + 1}\)となる\(v \in M\)が存在する．
-	よって，\cref{item:PAA4}や\cref{eq:iopenadditionassociativelaw}
-	\(z = \paren{v + \paren{u + 1}} \paren{x + 1}\)が得られる．よって\(x < z\)である．
+	よって，\cref{item:PAA4}や\cref{eq:iopenadditionassociativelaw}から
+	\(z = \paren{v + \paren{u + 1}} + \paren{x + 1}\)が得られる．よって\(x < z\)である．
+
+	\Cref{eq:iopen0minimum}は\(x\)に関する帰納法によって示すことができる．
 
 	\Cref{eq:iopenlinerorder}についても，\(\obj{y}\)に着目して\cref{item:PAA8}を適用することで得られる．
 	具体的な証明も\cref{eq:Robinsonnumeraltheoremlinerorder}と同様にできる．
@@ -733,8 +735,6 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	数項\(\numeral{n + 1}\)を使用している部分は\(\obj{y} \obj{+} \obj{1}\)にそれぞれ置き換えて得られる論理式を\(\OpenFormulaInduction\)上で証明すればよい．
 	数項がなくなるため通常の自然数に関する数学的帰納法は使えないが，
 	代わりに\cref{item:PAA8}を利用すればまったく同様にして証明できる．
-
-	\Cref{eq:iopen0minimum}は\(x\)に関する帰納法によって示すことができる．
 
 	\Cref{eq:iopencalcorderaddition}を示す．\(x, y, z \in M\)を任意にとる．
 	\(x < y\)と仮定すると，\(y = w + \paren{x + 1}\)となる\(w \in M\)が存在する．
@@ -770,7 +770,7 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	ゆえに\cref{eq:iopencalcordermult}を示したときと同様にして\(x \cdot z \neq y \cdot z\)が従う．
 \end{proof}
 
-\begin{Lemma} \label{Lemma:iopenPAA9redudant}
+\begin{Lemma} \label[Lemma]{Lemma:iopenPAA9redudant}
 	\(\OpenFormulaInduction\)において，以下が成り立つ．
 	\begin{equation}
 		\OpenFormulaInduction \provable \text{\cref{item:PAA9}}.
@@ -819,9 +819,51 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 \end{Thm}
 
 \begin{proof}
-	\Cref{Note:equivalentTheory}も踏まえれば，定理の包含関係としての\(T_1 \subset T_2\)が成り立つためには，
+	\Cref{Note:equivalentTheory}も踏まえれば，定理の包含関係としての\(T_1 \subset T_2\)が成り立つことを示すには，
 	\(T_1\)の各公理が\(T_2\)の定理であることを示せば十分である．
 	\(\OpenFormulaInduction\)以降の体系の包含関係については，論理式の集合としての包含関係が成り立っていることから明らか．
 	定理の包含関係としての\(\RArithmetic \subset \Robinson\)は\cref{Lemma:Robinsonnumerallemma}と\cref{Thm:Robinsonnumeraltheorem}から，
 	\(\Robinson \subset \OpenFormulaInduction\)については\cref{Lemma:iopenPAA9redudant}からそれぞれ従う．
 \end{proof}
+
+
+\begin{Que} \label{Que:Robinsoncommutativelaw}
+	\(\OpenFormulaInduction\)では，体系内での帰納法を使って\cref{eq:iopenadditioncommutativelaw}を示した．
+	\(\Robinson\)では，任意の自然数\(n, m\)対して，項として\(\numeral{n + m} = \numeral{m + n}\)が成り立つことから
+	\[
+		\Robinson \provable \numeral{n} \obj{+} \numeral{m} \objeq \numeral{m} \obj{+} \numeral{n}
+	\]
+	が得られる．
+	ところが，\(\OpenFormulaInduction\)では証明できた加法の交換法則は成り立たない．
+	つまり
+	\[
+		\Robinson \notprovable \forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{y} \objeq \obj{y} \obj{+} \obj{x}}
+	\]
+	である．
+
+	\(\omega_0, \omega_1 \notin \NaturalNumbers\)となる記号\(\omega_0, \omega_1\)について，
+	集合\(\NaturalNumbers \cup \Set{\omega_0, \omega_1}\)を対象領域とする\(\symcal{L}_{\Ar}\)構造\(\symcal{M}\)を，
+	\(\symcal{M}\)が上記論理式を充足しない\(\Robinson\)のモデルになるよう定義せよ．
+	このことは，メタ側の帰納法と体系内での帰納法の違いを端的に示すものである．
+\end{Que}
+
+\begin{Que} \label{Que:RArithmeticRobinson}
+	\(\RArithmetic\)は\(\Robinson\)よりもさらに弱い体系であることを確かめよう．
+	\[
+		\RArithmetic \notprovable \text{\Cref{item:PAA1}}
+	\]
+	を示せ．
+\end{Que}
+
+\(\RArithmetic\)は，上記のように証明能力が非常に弱い体系であり，
+標準モデルで成り立っていた性質の多くが証明できない．
+しかし，\(\SigmaFormula_1\)文については標準モデルで成り立つ性質をすべて証明することができる．
+このことを確かめよう．
+
+\begin{Lemma} \label[Lemma]{Lemma:Rtermvalue}
+	任意の\(\symcal{L}_{\Ar}\)閉項\(t\)に対して，\(\standardmodel \provable t \objeq \numeral{n}\)となる自然数\(n\)がただ1つ存在する．
+\end{Lemma}
+
+\begin{Que} \label[Que]{Que:Rtermvalue}
+	\Cref{Lemma:Rtermvalue}を示せ．
+\end{Que}

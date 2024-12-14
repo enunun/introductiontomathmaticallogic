@@ -27,6 +27,7 @@
 \usepackage{unicode-math}
 \setmainfont[Ligatures=TeX]{Libertinus Serif}
 \setsansfont[Ligatures=TeX]{Libertinus Sans}
+\setmonofont[Ligatures=TeX]{Libertinus Mono}
 \setmathfont{Libertinus Math}[math-style=ISO, bold-style=ISO]
 \setmathfont{TeX Gyre Pagella Math}[range=bb]
 \setmathfont{TeX Gyre Pagella Math}[range={\DashVDash}]
@@ -77,6 +78,10 @@
 
 \NewDocumentCommand{\sequent}{}{\Rightarrow}
 
+\NewDocumentCommand{\standardmodel}{}{\symcal{N}}
+
+\NewDocumentCommand{\numeral}{m}{\underline{#1}}
+
 \NewDocumentCommand{\term}{m}{\textbf{#1}}
 \RenewDocumentCommand{\emph}{m}{\textbf{#1}}
 
@@ -106,6 +111,7 @@
 \NewDocumentCommand{\pair}{m}{\langle #1 \rangle}
 
 \NewDocumentCommand{\provable}{}{\vdash}
+\NewDocumentCommand{\notprovable}{}{\mathbin{\not\vdash}}
 \NewDocumentCommand{\interderivable}{}{\dashVdash}
 
 \NewDocumentCommand{\KleeneClosure}{m}{{#1}^{\ast}}
@@ -185,6 +191,7 @@
 \NewDocumentCommand{\metaequivalent}{}{\iff}
 
 \NewDocumentCommand{\satisfy}{}{\vDash}
+\NewDocumentCommand{\notsatisfy}{}{\mathbin{\not\vDash}}
 
 \NewDocumentCommand{\logicallyequivalent}{}{\DashVDash}
 
@@ -192,35 +199,52 @@
 
 \NewDocumentCommand{\elementarilyequivalent}{}{\equiv}
 
-\NewDocumentCommand{\GP}{}{\symup{GP}}
+\NewDocumentCommand{\theoryset}{m}{\symsfup{#1}}
 
-\NewDocumentCommand{\Ring}{}{\symup{Ring}}
+\NewDocumentCommand{\GP}{}{\theoryset{GP}}
 
-\NewDocumentCommand{\CRing}{}{\symup{CRing}}
+\NewDocumentCommand{\Ring}{}{\theoryset{Ring}}
 
-\NewDocumentCommand{\OrderedRing}{}{\symup{OR}}
+\NewDocumentCommand{\CRing}{}{\theoryset{CRing}}
 
-\NewDocumentCommand{\ProjectiveGeometryPart}{}{\symup{B}}
+\NewDocumentCommand{\OrderedRing}{}{\theoryset{OR}}
 
-\NewDocumentCommand{\ZF}{}{\symup{ZF}}
+\NewDocumentCommand{\ProjectiveGeometryPart}{}{\theoryset{B}}
 
-\NewDocumentCommand{\ZFC}{}{\symup{ZFC}}
+\NewDocumentCommand{\ZF}{}{\theoryset{ZF}}
 
-\NewDocumentCommand{\RArithmetic}{}{\symup{R}}
+\NewDocumentCommand{\ZFC}{}{\theoryset{ZFC}}
 
-\NewDocumentCommand{\Robinson}{}{\symup{Q}}
+\NewDocumentCommand{\RArithmetic}{}{\theoryset{R}}
 
-\NewDocumentCommand{\PA}{}{\symup{PA}}
+\NewDocumentCommand{\Robinson}{}{\theoryset{Q}}
 
-\NewDocumentCommand{\POSET}{}{\symup{POSET}}
+\NewDocumentCommand{\PA}{}{\theoryset{PA}}
 
-\NewDocumentCommand{\TOSET}{}{\symup{TOSET}}
-%
-%%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
-%
-\setlist[description, 1]{%
-	style = nextline%
-}
+\NewDocumentCommand{\POSET}{}{\theoryset{POSET}}
+
+\NewDocumentCommand{\TOSET}{}{\theoryset{TOSET}}
+
+\NewDocumentCommand{\OpenFormulaSet}{}{\theoryset{Open}}
+
+\NewDocumentCommand{\SigmaFormula}{}{\symup{\Sigma}}
+
+\NewDocumentCommand{\PiFormula}{}{\symup{\Pi}}
+
+\NewDocumentCommand{\DeltaFormula}{}{\symup{\Delta}}
+
+\NewDocumentCommand{\InductionLimitedTheory}{m}{\symup{I}#1}
+
+\NewDocumentCommand{\OpenFormulaInduction}{}{\InductionLimitedTheory{\OpenFormulaSet}}
+
+\NewDocumentCommand{\SigmaFormulaInduction}{}{\InductionLimitedTheory{\SigmaFormula}}
+
+\NewDocumentCommand{\PiFormulaInduction}{}{\InductionLimitedTheory{\PiFormula}}
+
+\NewDocumentCommand{\DeltaFormulaInduction}{}{\InductionLimitedTheory{\DeltaFormula}}
+
+\NewDocumentCommand{\Ar}{}{\symup{Ar}}
+
 %
 %%%%%%%%%%%%%%=======================theorem==================%%%%%%%%%%%%%
 %
@@ -290,6 +314,8 @@
 \crefname{Corollary}{系}{系}
 \Crefname{Note}{注意}{注意}
 \crefname{Note}{注意}{注意}
+\Crefname{enumi}{}{}
+\crefname{enumi}{}{}
 \crefname{section}{\presectionname}{\presectionname}
 \Crefname{section}{\presectionname}{\presectionname}
 \crefname{subsection}{\presubsectionname}{\presubsectionname}
@@ -380,6 +406,7 @@
 \include{contents/semantics}
 \include{contents/proof}
 \include{contents/completeness}
+\include{contents/peanoarithmetic}
 
 \backmatter
 

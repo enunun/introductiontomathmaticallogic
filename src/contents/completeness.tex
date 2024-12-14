@@ -43,11 +43,11 @@
 	\Cref{eq:targetsequent}が最後に(ID)を適用することによって得られたとき，
 	\(\Gamma = \Set{\varphi}\)なので\(\Gamma\)のすべてのモデルが\(\varphi\)を充足することは明らかである．
 	次に，\cref{eq:targetsequent}が最後に(REFL)を適用することで得られたとする．
-	このとき，\(\varphi\)は項\(t\)に対する\(t \objeq t\)であり，
+	このとき，\(\varphi\)は閉項\(t\)に対する\(t \objeq t\)であり，
 	\(\Gamma = \emptyset\)である．
 	任意の\(\symcal{L}\)構造\(\symcal{M}\)に対して
 	\(\interpretation{\symcal{M}}{t} = \interpretation{\symcal{M}}{t}\)が成り立つので，
-	\(\symcal{M} \satisfy t \obj t\)が得られるので\(\Gamma \satisfy \varphi\)となる．
+	\(\symcal{M} \satisfy t \objeq t\)から\(\Gamma \satisfy \varphi\)が得られる．
 
 	\Cref{eq:targetsequent}が最後に構造規則を適用することによって得られたとし，上段のシークエントについては
 	定理の主張が成り立つものとする．このとき，下段のシークエントについても主張が成り立つことは，
@@ -143,7 +143,7 @@
 また，簡単のため，本節においては言語\(\symcal{L}\)は高々可算集合であるとする．
 \(\symcal{L}\)が非可算である場合は以下で（通常の自然数に関する）
 帰納法や帰納的定義を行っている部分を整列集合に関する超限帰納法や超限再帰に置き換えることによってほとんど同様に議論できる．
-このとき，言語\(\symcal{L}\)上に整列順序が入ることは選択公理（と同値な整列可能定理）による．
+このとき，その集合上に整列順序が入ることは選択公理（と同値な整列可能定理）による．
 
 \begin{Lemma} \label[Lemma]{Lemma:consistencyor}
 	\(\symcal{L}\)を言語とし，\(\varphi\)を\(\symcal{L}\)論理式，\(\Gamma\)を\(\symcal{L}\)論理式からなる集合とする．
@@ -610,7 +610,7 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 	\index[widx]{りろん@理論!とうしきりろん@等式---}%
 	\term{等式理論}であるとは，\(\symcal{L}\)が関係記号をもたず，
 	さらに\(T\)の各文がすべて等式（\(s \objeq t\)の形の論理式）の全称閉包になっていることをいう．
-	等式理論はその各文がすべてちょうど1つの正のリテラルであるため，全称Horn理論でもある．
+	等式理論はその各文がすべてちょうど1つの正のリテラルの全称閉包であるため，全称Horn理論でもある．
 \end{Def}
 
 \begin{Ex} \label[Ex]{Ex:equationaltheory}
@@ -694,9 +694,9 @@ Herbrand構造の価値の一端については，\cref{sec:equationaltheory}で
 	\(\symcal{L}\)理論\(\Gamma\)として，\(\GP\)に対して
 	以下の3つの閉論理式を加えたものを考える：
 	\begin{align*}
-		\paren{a \obj{*} a} \obj{*} a & \objeq \obj{e},                      \\
-		b \obj{*} b                   & \objeq \obj{e},                      \\
-		b \obj{*} a                   & \objeq \paren{a \obj{*} a} \obj{*} b
+		\paren{a \obj{*} a} \obj{*} a & \objeq \obj{e},                       \\
+		b \obj{*} b                   & \objeq \obj{e},                       \\
+		b \obj{*} a                   & \objeq \paren{a \obj{*} a} \obj{*} b.
 	\end{align*}
 	\(\symcal{L}\)における\(\Gamma\)のHerbrand構造\(\symcal{M}\)を考える．
 	\(\GP\)の公理はすべて等式の全称閉包になっていることと\(\GP \subset \Gamma\)であることにより，

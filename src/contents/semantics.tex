@@ -199,6 +199,14 @@
 		\label{eq:structuresatisfyclosure}
 	\end{equation}
 	と定める．
+	さらに，\(\symcal{L}\)構造\(\symcal{M}\)と\(\symcal{L}\)論理式\(\varphi\)について，
+	\(\symcal{M} \satisfy \varphi\)が成り立たないことを%
+	\index[sidx]{\(\symcal{M} \notsatisfy \varphi\)：充足しない}
+	\begin{equation}
+		\symcal{M} \notsatisfy \varphi
+		\label{eq:notsatisfy}
+	\end{equation}
+	と表す．
 
 	\(\symcal{L}\)構造\(\symcal{M}\)と\(\symcal{L}\)論理式\(\varphi\)について，
 	\(\symcal{M} \satisfy \varphi\)であるとき，
@@ -210,6 +218,7 @@
 	\index[widx]{じゅうそく@充足!じゅうそくかのう@---可能}%
 	\term{充足可能}であるという．
 
+	\(\symcal{M} \satisfy \varphi\)であるとき，\(\varphi\)は\(\symcal{M}\)において成り立つなどということもある．
 \end{Def}
 
 \begin{Note}
@@ -349,7 +358,7 @@
 		\label{eq:modelelementalydiagram}
 	\end{equation}
 	と表す．
-	また，\(\apply{\eDiag}{\symcal{M}}\)の元のうち開論理であるもの，すなわち\(\forall, \exists\)を含まないものの全体を
+	また，\(\apply{\eDiag}{\symcal{M}}\)の元のうち開論理式であるもの，すなわち\(\forall, \exists\)を含まないものの全体を
 	\(\symcal{M}\)の\term{ダイアグラム}といい，
 	\begin{equation}
 		\apply{\Diag}{\symcal{M}}

@@ -1501,3 +1501,112 @@
 \]
 が加わったものであるが，この公理は\(\GP\)上で（\(\provable\)という意味で）証明することができるので，
 削除しても理論としては等価である．こうして得られる理論は\(\symcal{L}_{\GP}\)理論\(\GP\)にほかならない．
+
+
+
+\section*{\Cref{chap:peanoarithmetic}}
+
+\subsection*{\Cref{Que:robinson1numeric}}
+
+\(\symcal{M}\)を\(\Robinson\)を任意のモデルとし，その対象領域を\(M\)とする．
+\(\symcal{M} \satisfy \numeral{1} \objeq \obj{1}\)を示せば十分である．
+
+まずは\(0 \neq 1\)を示す．
+\(0 = 1\)を仮定して矛盾を導く．
+\Cref{item:PAA1}から
+\(0 + 1 \neq 0\)である．しかし，\Cref{item:PAA3}から\(0 + 1 = 1\)だが\(0 = 1\)と仮定したので
+\(0 + 1 = 0\)であり矛盾である．よって\(0 \neq 1\)となる．
+従って，\cref{item:PAA9}により\(1 = y + 1\)となる\(y \in M\)がとれる．
+\(y = 0\)であることを示せば\(\symcal{M} \satisfy \numeral{1} \objeq \obj{1}\)が従う．
+\Cref{item:PAA4}から
+\(0 + 1 = 0 + \paren{y + 1} = \paren{0 + y} + 1\)だから\cref{item:PAA2}より\(0 + y = 0\)である．
+そこで，\(y \neq 0\)と仮定すると\cref{item:PAA9}から\(y = z + 1\)となる\(z \in M\)が存在するが，
+再び\cref{item:PAA4}によって
+\(0 = 0 + y = 0 + \paren{z + 1} = \paren{0 + z} + 1\)となり，\Cref{item:PAA1}に矛盾する．よって\(y = 0\)である．
+
+
+\subsection*{\Cref{Que:Robinsoncommutativelaw}}
+
+定数記号の解釈は標準モデルと同様に，関数記号と関係記号の解釈も\(\NaturalNumbers\)上のものについては通常のものをそのまま用いる．
+\(\omega_0, \omega_1\)か関係する加法については，\(n\)を任意の自然数として
+\begin{align*}
+	\omega_0 + n        & = \omega_0, \\
+	\omega_1 + n        & = \omega_1, \\
+	n + \omega_0        & = \omega_1, \\
+	n + \omega_1        & = \omega_0, \\
+	\omega_0 + \omega_0 & = \omega_0, \\
+	\omega_0 + \omega_1 & = \omega_0, \\
+	\omega_1 + \omega_0 & = \omega_1, \\
+	\omega_1 + \omega_1 & = \omega_1
+\end{align*}
+と定める．\(\omega_0, \omega_1\)が関係する乗法については，\(n\)を任意の自然数として
+\begin{align*}
+	\omega_0 \cdot 0        & = 0,                         \\
+	\omega_1 \cdot 0        & = 0,                         \\
+	\omega_0 \cdot n        & = \omega_0 \quad (n \neq 0), \\
+	\omega_1 \cdot n        & = \omega_1 \quad (n \neq 0), \\
+	n \cdot \omega_0        & = \omega_0,                  \\
+	n \cdot \omega_1        & = \omega_1,                  \\
+	\omega_0 \cdot \omega_0 & = \omega_0,                  \\
+	\omega_0 \cdot \omega_1 & = \omega_0,                  \\
+	\omega_1 \cdot \omega_0 & = \omega_1,                  \\
+	\omega_1 \cdot \omega_1 & = \omega_1
+\end{align*}
+と定める．\(\omega_0, \omega_1\)が関係する順序に関しては，任意の自然数\(n\)に対して
+\begin{align*}
+	n & < \omega_0, \\
+	n & < \omega_1
+\end{align*}
+のみが成り立つと定める．
+
+こうして定義される\(\symcal{L}_{\Ar}\)構造\(\symcal{M}\)は\(\Robinson\)のモデルであって，
+加法の交換法則についてだけではなく以下を満たしている：
+\begin{align*}
+	\symcal{M} & \notsatisfy \forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{y} \objeq \obj{y} \obj{+} \obj{x}},         \\
+	\symcal{M} & \notsatisfy \forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \obj{y} \objeq \obj{y} \obj{\cdot} \obj{x}}, \\
+	\symcal{M} & \notsatisfy \forall \obj{x} \paren{\obj{0} \obj{+} \obj{x} \objeq \obj{x}},                                         \\
+	\symcal{M} & \notsatisfy \forall \obj{x} \paren{\obj{0} \obj{\cdot} \obj{x} \objeq \obj{0}},                                     \\
+	\symcal{M} & \notsatisfy \forall \obj{x} \lnot \paren{\obj{x} \obj{+} \obj{1} \objeq \obj{x}}
+\end{align*}
+このことは，右辺の論理式はいずれも\(\Robinson\)では証明できないことを示す．
+
+\subsection*{\Cref{Que:RArithmeticRobinson}}
+
+\(\NaturalNumbers\)に記号\(\omega\)を加えた集合\(\NaturalNumbers \cup \Set{\omega}\)を対象領域とする\(\symcal{L}_{\Ar}\)構造\(\symcal{M}\)を以下のように定める：
+定数記号の解釈は標準モデルと同様に，関数記号と関係記号の解釈も\(\NaturalNumbers\)上のものについては通常のものをそのまま用いる．
+\(\omega\)が関係する加法と乗法については，各自然数\(n\)に対して
+\begin{align*}
+	\omega + n     & = n + \omega     = 0, \\
+	\omega \cdot n & = n \cdot \omega = 1
+\end{align*}
+と定める．
+\(\omega\)が関係する順序については，\(n\)を任意の自然数として
+\[
+	n < \omega
+\]
+のみが成り立つと定める．
+
+こうして定義される\(\symcal{L}_{\Ar}\)構造\(\symcal{L}\)は\(\RArithmetic\)のモデルであって，
+\[
+	\symcal{M} \notsatisfy \text{\cref{item:PAA1}}
+\]
+を満たしている．このことは，\(\RArithmetic\)は\cref{item:PAA1}を証明できないことを示す．
+また，上記\(\symcal{M}\)は\cref{item:PAA3}や\cref{item:PAA5}も充足しないので，
+\(\RArithmetic\)はこれらの論理式も証明できない．
+
+
+\subsection*{\Cref{Que:RArithmeticRobinson}}
+
+一意性は，\(n \neq m\)となる任意の自然数\(n, m\)に対して\cref{item:RR5}から\(\RArithmetic \lnot \paren{\numeral{n} \objeq \numeral{m}}\)が成り立つことから従う．
+
+存在性は閉項\(t\)の構成に関する帰納法によって示す．
+\(t\)が定数記号\(\obj{0}\)であれば，対応する自然数\(n\)として\(0\)をとればよい．
+数項\(\numeral{0}\)の定義から\(\RArithmetic \provable \obj{0} \objeq \numeral{0}\)が従う．
+\(t\)が定数記号\(\obj{1}\)であれば，対応する自然数\(n\)として\(1\)をとればよい．
+\Cref{item:RR1}から\(\RArithmetic \provable \obj{1} \objeq \numeral{1}\)が従う．
+
+\(t\)が\(t_1 \obj{+} t_2\)の形のとき，帰納法の仮定から\(\RArithmetic \provable t_1 \objeq \numeral{n_1}\)と
+\(\RArithmetic \provable t_2 \objeq \numeral{n_2}\)を満たす自然数\(n_1, n_2\)がとれる．
+標準モデルでは\(\RArithmetic \provable \numeral{n_1} \obj{+} \numeral{n_2} \objeq \numeral{n_1 + n_2}\)が成り立っているので，
+\(t\)に対応する自然数\(n\)として\(n_1 + n_2\)をとればよい．
+\(t\)が\(t_1 \obj{\cdot} t_2\)の形のときも同様である．

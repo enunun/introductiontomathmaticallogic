@@ -1586,7 +1586,7 @@
 \]
 のみが成り立つと定める．
 
-こうして定義される\(\symcal{L}_{\Ar}\)構造\(\symcal{L}\)は\(\RArithmetic\)であって，
+こうして定義される\(\symcal{L}_{\Ar}\)構造\(\symcal{L}\)は\(\RArithmetic\)のモデルであって，
 \[
 	\symcal{M} \notsatisfy \text{\cref{item:PAA1}}
 \]
@@ -1597,11 +1597,16 @@
 
 \subsection*{\Cref{Que:RArithmeticRobinson}}
 
-一意性は，\(n \neq m\)となる任意の自然数\(n, m\)に対して\(\standardmodel \satisfy \lnot \paren{\numeral{n} \objeq \numeral{m}}\)が成り立つことから従う．
+一意性は，\(n \neq m\)となる任意の自然数\(n, m\)に対して\cref{item:RR5}から\(\RArithmetic \lnot \paren{\numeral{n} \objeq \numeral{m}}\)が成り立つことから従う．
 
 存在性は閉項\(t\)の構成に関する帰納法によって示す．
-\(t\)が定数記号\(\obj{0}, \obj{1}\)のいずれかであれば，対応する自然数\(n\)として\(0, 1\)をそれぞれとればよい．
-\(t\)が\(t_1 \obj{+} t_2\)の形のとき，帰納法の仮定から\(\standardmodel \satisfy t_1 \objeq \numeral{n_1}\)と
-\(\standardmodel \satisfy t_2 \objeq \numeral{n_2}\)を満たす自然数\(n_1, n_2\)がとれるので，
+\(t\)が定数記号\(\obj{0}\)であれば，対応する自然数\(n\)として\(0\)をとればよい．
+数項\(\numeral{0}\)の定義から\(\RArithmetic \provable \obj{0} \objeq \numeral{0}\)が従う．
+\(t\)が定数記号\(\obj{1}\)であれば，対応する自然数\(n\)として\(1\)をとればよい．
+\Cref{item:RR1}から\(\RArithmetic \provable \obj{1} \objeq \numeral{1}\)が従う．
+
+\(t\)が\(t_1 \obj{+} t_2\)の形のとき，帰納法の仮定から\(\RArithmetic \provable t_1 \objeq \numeral{n_1}\)と
+\(\RArithmetic \provable t_2 \objeq \numeral{n_2}\)を満たす自然数\(n_1, n_2\)がとれる．
+標準モデルでは\(\RArithmetic \provable \numeral{n_1} \obj{+} \numeral{n_2} \objeq \numeral{n_1 + n_2}\)が成り立っているので，
 \(t\)に対応する自然数\(n\)として\(n_1 + n_2\)をとればよい．
 \(t\)が\(t_1 \obj{\cdot} t_2\)の形のときも同様である．

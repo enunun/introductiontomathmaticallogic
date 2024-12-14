@@ -579,17 +579,17 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 \begin{Def}
 	自然数\(n\)に対して，\(\SigmaFormula_n\)論理式，\(\PiFormula_n\)論理式を以下のように帰納的に定義する：
 	\begin{enumerate}
-		\item \(\symcal{L}_{\Ar}\)有界論理式はすべて\(\SigmaFormula_0\)論理式であり，かつ\(\PiFormula_0\)論理式でもある．
+		\item \(\symcal{L}_{\Ar}\)有界論理式はすべて\(\SigmaFormula_0\)論理式であり，かつ\(\PiFormula_0\)論理式でもあり，\(\SigmaFormula_0\)と\(\PiFormula_0\)は上記のみとする．
 		\item \(\varphi\)が\(\SigmaFormula_n\)論理式であるとき，正の整数\(k\)と変数記号\(x_1, x_2, \dots, x_k\)に対する論理式
 		      \[
 			      \forall x_1 \forall x_2 \dotsb \forall x_k \varphi
 		      \]
-		      と論理的に同値な\(\symcal{L}_{\Ar}\)論理式は\(\PiFormula_{n+1}\)論理式である．
+		      と論理的に同値な\(\symcal{L}_{\Ar}\)論理式は\(\PiFormula_{n+1}\)論理式であり，\(\PiFormula_{n+1}\)論理式は上記のみとする．
 		\item \(\varphi\)が\(\PiFormula_n\)論理式であるとき，正の整数\(k\)と変数記号\(x_1, x_2, \dots, x_k\)に対する論理式
 		      \[
 			      \exists x_1 \exists x_2 \dotsb \exists x_k \varphi
 		      \]
-		      と論理的に同値な\(\symcal{L}_{\Ar}\)論理式は\(\SigmaFormula_{n+1}\)論理式である．
+		      と論理的に同値な\(\symcal{L}_{\Ar}\)論理式は\(\SigmaFormula_{n+1}\)論理式であり，\(\PiFormula_{n+1}\)論理式は上記のみとする．
 	\end{enumerate}
 	\(\SigmaFormula_n\)論理式全体の集合，\(\PiFormula_n\)論理式全体の集合をそれぞれ\(\SigmaFormula_n, \PiFormula_n\)と表す．
 
@@ -798,22 +798,25 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	ここで，\(m, n\)は任意の自然数である．
 
 	\begin{enumerate}[label=R\arabic*.,ref=R\arabic*]
-		\item \label{item:RR1} \(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{0}}\),
-		\item \label{item:RR2} \(\numeral{n} \obj{+} \numeral{m} \objeq \numeral{n + m}\),
-		\item \label{item:RR3} \(\numeral{n} \obj{\cdot} \numeral{m} \objeq \numeral{n \cdot m}\),
-		\item \label{item:RR4} \(\lnot \paren{\numeral{n} \objeq \numeral{m}} \quad (n \neq m)\),
-		\item \label{item:RR5} \(\forall \obj{x} \paren{\obj{x} < \numeral{n + 1} \formulaequiv \obj{x} \objeq \numeral{0} \lor \obj{x} \objeq \numeral{1} \lor \dotsb \lor \obj{x} \objeq \numeral{n}}\),
-		\item \label{item:RR6} \(\forall \obj{x} \paren{\obj{x} \obj{<} \numeral{n} \lor \numeral{n} < \obj{x} \lor \obj{x} \objeq \numeral{n}}.\)
+		\item \label{item:RR1} \(\numeral{1} \objeq \obj{1}\),
+		\item \label{item:RR2} \(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{0}}\),
+		\item \label{item:RR3} \(\numeral{n} \obj{+} \numeral{m} \objeq \numeral{n + m}\),
+		\item \label{item:RR4} \(\numeral{n} \obj{\cdot} \numeral{m} \objeq \numeral{n \cdot m}\),
+		\item \label{item:RR5} \(\lnot \paren{\numeral{n} \objeq \numeral{m}} \quad (n \neq m)\),
+		\item \label{item:RR6} \(\forall \obj{x} \paren{\obj{x} < \numeral{n + 1} \formulaequiv \obj{x} \objeq \numeral{0} \lor \obj{x} \objeq \numeral{1} \lor \dotsb \lor \obj{x} \objeq \numeral{n}}\),
+		\item \label{item:RR7} \(\forall \obj{x} \paren{\obj{x} \obj{<} \numeral{n} \lor \numeral{n} < \obj{x} \lor \obj{x} \objeq \numeral{n}}.\)
 	\end{enumerate}
 \end{Def}
 
 
-\begin{Thm} \label{Thm:TheoryHierarchy}
+\begin{Thm} \label[Thm]{Thm:TheoryHierarchy}
 	以下で，理論\(T_1, T_2\)に対する\(T_1 \subset T_2\)は
 	「\(T_1\)の定理はすべて\(T_2\)の定理でもある」ことを意味するものとする．
 	このとき，以下が成り立つ．
 	\begin{equation}
-		\RArithmetic \subset \Robinson \subset \OpenFormulaInduction \subset \SigmaFormulaInduction_0 \subset \SigmaFormulaInduction_1 \subset \dotsb \subset \PA.
+		\RArithmetic \subset \Robinson \subset \OpenFormulaInduction
+		\subset \SigmaFormulaInduction_0 \subset \SigmaFormulaInduction_1
+		\subset \dotsb \subset \SigmaFormulaInduction_n \subset \dotsb \subset \PA.
 		\label{eq:TheoryHierarchy}
 	\end{equation}
 \end{Thm}
@@ -822,12 +825,13 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	\Cref{Note:equivalentTheory}も踏まえれば，定理の包含関係としての\(T_1 \subset T_2\)が成り立つことを示すには，
 	\(T_1\)の各公理が\(T_2\)の定理であることを示せば十分である．
 	\(\OpenFormulaInduction\)以降の体系の包含関係については，論理式の集合としての包含関係が成り立っていることから明らか．
-	定理の包含関係としての\(\RArithmetic \subset \Robinson\)は\cref{Lemma:Robinsonnumerallemma}と\cref{Thm:Robinsonnumeraltheorem}から，
+	定理の包含関係としての\(\RArithmetic \subset \Robinson\)は
+	\cref{eq:robinson1numeric}と\cref{Lemma:Robinsonnumerallemma}，および\cref{Thm:Robinsonnumeraltheorem}から，
 	\(\Robinson \subset \OpenFormulaInduction\)については\cref{Lemma:iopenPAA9redudant}からそれぞれ従う．
 \end{proof}
 
 
-\begin{Que} \label{Que:Robinsoncommutativelaw}
+\begin{Que} \label[Que]{Que:Robinsoncommutativelaw}
 	\(\OpenFormulaInduction\)では，体系内での帰納法を使って\cref{eq:iopenadditioncommutativelaw}を示した．
 	\(\Robinson\)では，任意の自然数\(n, m\)対して，項として\(\numeral{n + m} = \numeral{m + n}\)が成り立つことから
 	\[
@@ -847,7 +851,7 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 	このことは，メタ側の帰納法と体系内での帰納法の違いを端的に示すものである．
 \end{Que}
 
-\begin{Que} \label{Que:RArithmeticRobinson}
+\begin{Que} \label[Que]{Que:RArithmeticRobinson}
 	\(\RArithmetic\)は\(\Robinson\)よりもさらに弱い体系であることを確かめよう．
 	\[
 		\RArithmetic \notprovable \text{\Cref{item:PAA1}}
@@ -857,13 +861,105 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 
 \(\RArithmetic\)は，上記のように証明能力が非常に弱い体系であり，
 標準モデルで成り立っていた性質の多くが証明できない．
-しかし，\(\SigmaFormula_1\)文については標準モデルで成り立つ性質をすべて証明することができる．
+しかし，\(\SigmaFormula_1\)閉論理式については標準モデルで成り立つ性質をすべて証明することができる．
 このことを確かめよう．
 
+まずは算術の体系の証明能力を「標準モデルで成り立つ性質をどの程度証明できるか」という基準で評価する指標を定義する．
+
+\index[widx]{\(\Gamma\)かんぜん@\(\Gamma\)完全}
+\begin{Def} \label{Def:GammaCompleteness}
+	\(\Gamma\)を\(\symcal{L}_{\Ar}\)閉論理式の集合とし，\(T\)を\(\symcal{L}_{\Ar}\)理論とする．
+	このとき，\(T\)が\term{\(\Gamma\)完全}であるとは，
+	任意の\(\varphi \in \Gamma\)に対して
+	\begin{equation}
+		\standardmodel \satisfy \varphi \metaimplies T \provable \varphi
+		\label{eq:GammaCompleteness}
+	\end{equation}
+	が成り立つことをいう．
+\end{Def}
+
+先に述べたように，\(\RArithmetic\)は\(\SigmaFormula_1\)完全である．
+証明の準備として補題を用意しておく．
+
 \begin{Lemma} \label[Lemma]{Lemma:Rtermvalue}
-	任意の\(\symcal{L}_{\Ar}\)閉項\(t\)に対して，\(\standardmodel \provable t \objeq \numeral{n}\)となる自然数\(n\)がただ1つ存在する．
+	任意の\(\symcal{L}_{\Ar}\)閉項\(t\)に対して，\(\RArithmetic \provable t \objeq \numeral{n}\)となる自然数\(n\)がただ1つ存在する．
 \end{Lemma}
 
 \begin{Que} \label[Que]{Que:Rtermvalue}
 	\Cref{Lemma:Rtermvalue}を示せ．
 \end{Que}
+
+
+\index[widx]{\(\SigmaFormula_1\)かんぜんせい@\(\SigmaFormula_1\)完全性}
+\begin{Thm}[\(\RArithmetic\)の\(\SigmaFormula_1\)完全性] \label[Thm]{Thm:RSigma1completeness}
+	任意の\(\SigmaFormula_1\)閉論理式\(\varphi\)に対し，
+	\begin{equation}
+		\standardmodel \satisfy \varphi \metaimplies \RArithmetic \provable \varphi.
+		\label{eq:RSigma1completeness}
+	\end{equation}
+\end{Thm}
+
+\begin{proof}
+	\(\varphi\)の構成に関する帰納法によって示す．
+	\(\varphi\)は\(\SigmaFormula_1\)論理式なので，
+	\(\varphi\)は有界論理式であるか，有界論理式\(\apply{\psi}{x}\)に対する\(\exists x \apply{\psi}{x}\)の形であるかのいずれかである．
+
+	\(\varphi\)が閉項\(s, t\)を用いた\(s \objeq t\)の形のとき，
+	\cref{Lemma:Rtermvalue}から
+	\(\RArithmetic \provable s \objeq \numeral{n}\)かつ\(\RArithmetic \provable t \objeq \numeral{m}\)となる自然数\(n, m\)が存在する．
+	\(\standardmodel \satisfy s \objeq t\)なので\(\standardmodel \satisfy \numeral{n} \objeq \numeral{m}\)であり，よって\(n = m\)となる．
+	このとき，\(\RArithmetic \provable \numeral{n} \objeq \numeral{m}\)だから\(\RArithmetic \provable s \objeq t\)である．
+	\(\varphi\)が閉項\(s, t\)を用いた\(s \obj{<} t\)の形のとき，
+	\(\RArithmetic \provable s \objeq \numeral{n}\)かつ\(\RArithmetic \provable t \objeq \numeral{m}\)となる自然数\(n, m\)が存在する．
+	\(\standardmodel \satisfy \numeral{n} \obj{<} \numeral{m}\)だから\(n < m\)である．
+	ゆえに\(n\)は\(0, 1, \dots, m - 1\)のいずれかである．
+	従って\(\RArithmetic \provable \numeral{n} \objeq \numeral{0} \lor \numeral{n} \objeq \numeral{1} \lor \dotsb \lor \numeral{m - 1}\)
+	である．\cref{item:RR6}から\(\RArithmetic \provable \numeral{n} \obj{<} \numeral{m}\)が得られるので，
+	\(\RArithmetic \provable s \obj{<} t\)が従う．
+
+	\(\varphi\)が原子論理式の否定であるときは，\(\varphi\)は閉項\(s, t\)に対する\(\lnot \paren{s \objeq t}\)か
+	\(\lnot \paren{s \obj{<} t}\)のいずれかである．
+	この場合には\cref{item:RR5}と\cref{item:RR6}の裏（に相当するもの）を利用することで定理の主張が得られる．
+
+	\(\varphi\)が\(\psi_1 \lor \psi_2\)か\(\psi_1 \land \psi_2\)の形のときは明らか．
+
+	\(\varphi\)が\(\forall x < t \apply{\psi}{x}\)の形のとき，
+	\(\varphi\)は閉論理式であるから\(t\)は閉項である．
+	ゆえに\cref{Lemma:Rtermvalue}から\(\RArithmetic \provable t \objeq \numeral{n}\)となる自然数\(n\)が存在する．
+	\(n = 0\)であれば，\cref{item:RR2}から\(\RArithmetic \provable \forall x < t \apply{\psi}{x}\)である．
+	\(n > 0\)のとき，
+	\(\standardmodel \satisfy t \objeq \numeral{n}\)であって，
+	\(\standardmodel \satisfy \forall x < t \apply{\psi}{x}\)から
+	\[
+		\standardmodel \satisfy \apply{\psi}{\numeral{0}} \land \apply{\psi}{\numeral{1}} \land \dotsb \land \apply{\psi}{\numeral{n-1}}
+	\]
+	だから，帰納法の仮定により
+	\[
+		\RArithmetic \provable \apply{\psi}{\numeral{0}} \land \apply{\psi}{\numeral{1}} \land \dotsb \land \apply{\psi}{\numeral{n-1}}
+	\]
+	となる．
+	よって
+	\[
+		\RArithmetic \provable \forall x \paren{x \objeq \numeral{0} \land x \objeq \numeral{1} \land \dotsb \land x \objeq \numeral{n-1} \to \apply{\psi}{\numeral{x}}}
+	\]
+	となる．
+	\Cref{item:RR6}によって\(\RArithmetic \provable \forall x < t \apply{\psi}{x}\)を得る．
+	\(\varphi\)が\(\exists x < t \apply{\psi}{x}\)の形である場合も同様である．
+
+	\(\varphi\)が\(\lnot \psi\)の形のとき，さらに\(\psi\)の構成に関する帰納法によって\(\RArithmetic \provable \lnot \psi\)が示せる．
+	\(\psi\)が原子論理式の場合にはすでに示してあり，そうでない場合にはDe Morganの法則による．
+
+	最後に\(\varphi\)が\(\exists x \apply{\psi}{x}\)の形である場合を考える．
+	\(\standardmodel \satisfy \exists x \apply{\psi}{x}\)であるから，自然数\(n\)で\(\standardmodel \satisfy \apply{\psi}{c_n}\)となるものが存在する．
+	ここで，\(c_n\)は\(n\)の名前である．
+	\(\interpretation{\standardmodel}{c_n} = \interpretation{\standardmodel}{\numeral{n}} = n\)であるから，
+	\(\standardmodel \satisfy c_n \objeq \numeral{n}\)である．
+	ゆえに\(\standardmodel \satisfy \apply{\psi}{\numeral{n}}\)となって帰納法の仮定から\(\RArithmetic \provable \apply{\psi}{\numeral{n}}\)が得られる．
+	従って\(\RArithmetic \provable \exists x \apply{\psi}{x}\)となる．
+\end{proof}
+
+\Cref{Thm:TheoryHierarchy}から，ほかの体系の\(\SigmaFormula_1\)完全性もただちに従う．
+
+\begin{Corollary}
+	\(\Robinson, \SigmaFormulaInduction_n, \PA\)はすべて\(\SigmaFormula_1\)完全である．
+\end{Corollary}

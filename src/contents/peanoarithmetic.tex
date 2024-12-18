@@ -963,3 +963,235 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 \begin{Corollary}
 	\(\Robinson, \SigmaFormulaInduction_n, \PA\)はすべて\(\SigmaFormula_1\)完全である．
 \end{Corollary}
+
+
+\section{帰納的関数} \label[section]{sec:recursivefunction}
+
+\Cref{sec:peanoarithmetic}では，
+1階Peano算術やその部分体系について考察した．
+本節では，それ以降の議論の準備として帰納的関数について議論する．
+
+帰納的関数の定義や基本性質自体は，1階Peano算術どころか形式体系すら持ち出さずに議論できる対象である．
+ここで述べる帰納的関数は，素朴にはコンピュータによって計算できる関数だと解釈できる．
+本書で採用した定義からはコンピュータでの計算というイメージはつきにくいが，
+別の同値な定義も知られており，その定義からはコンピュータでの計算というイメージがつきやすい．
+このことから，帰納的関数は計算可能関数とも呼ばれており，計算理論において重要な対象である．
+
+例えば廣瀬\cite{hirose2024}では，抽象機械を介さない計算可能関数の定式化と本書で述べる意味での帰納的関数との同一性が証明されている．
+本書では計算可能関数については述べないので，より詳しく知りたい人は先に述べた文献を参照するとよい．
+
+\index[widx]{きのうてきかんすう@帰納的関数}
+\index[widx]{きのうてきかんすう@帰納的関数!げんしきのうてきかんすう@原始---}
+\index[widx]{ぜろかんすう@ゼロ関数}
+\index[widx]{こうしゃかんすう@後者関数}
+\index[widx]{しゃえいかんすう@射影関数}
+\index[sidx]{\(\mu\)：\(\mu\)演算子}
+\index[widx]{\(\mu\)えんざんし@\(\mu\)演算子}
+\index[sidx]{\(\zero\)：ゼロ関数}
+\index[sidx]{\(\proj_i^n\)：射影関数}
+\index[sidx]{\(\suc\)：後者関数}
+\begin{Def} \label{Def:recursivefunction}
+	\term{帰納的関数}は以下のように帰納的に定義される：
+	\begin{enumerate}
+		\item 正の整数\(n\)に対して\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への関数\(x \mapsto 0\)は帰納的関数である．
+		      この関数をゼロ関数と呼び，
+		      \begin{equation}
+			      \zero^n
+			      \label{eq:zerofunction}
+		      \end{equation}
+		      と表す．
+		\item \(\NaturalNumbers\)から\(\NaturalNumbers\)への関数\(x \mapsto x + 1\)は帰納的関数である．この関数を後者関数と呼び，
+		      \begin{equation}
+			      \suc
+			      \label{eq:sucfunction}
+		      \end{equation}
+		      と表す．
+		\item \(n\)を正の整数とする．\(i=1,2,\dots, n\)に対して，\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への関数\(\pair{x_1, \dots, x_n} \mapsto x_i\)は帰納的関数である．
+		      この関数を射影関数と呼び，
+		      \begin{equation}
+			      \proj_i^n
+		      \end{equation}
+		      と表す．
+		\item \(n,m\)を正の整数とする．\(h \colon \NaturalNumbers^m \to \NaturalNumbers\)が帰納的関数で，
+		      \(i = 1,2,\dots,m\)に対して\(g_i \colon \NaturalNumbers^n \to \NaturalNumbers\)が帰納的関数ならば，
+		      \begin{align*}
+			      \apply{f}{x_1, \dots, x_n} = \apply{h}{
+				      \apply{g_1}{x_1, \dots, x_n},
+				      \apply{g_2}{x_1, \dots, x_n},
+				      \dots,
+				      \apply{g_m}{x_1, \dots, x_n}
+			      } \\
+			      \text{(\(x_1, \dots, x_n \in \NaturalNumbers\))}
+		      \end{align*}
+		      で定義される関数\(f \colon \NaturalNumbers^n \to \NaturalNumbers\)は帰納的関数である．
+		      \(f\)は\(g, h\)から関数合成によって得られる関数である．
+		\item \(n\)を正の整数とする．\(g \colon \NaturalNumbers^n \to \NaturalNumbers\)と\(h \colon \NaturalNumbers^{n+2}\)がともに帰納的関数ならば，
+		      \begin{align*}
+			      \apply{f}{x_1, x_2, \dots, x_n}        & = \apply{g}{x_1, x_2, \dots, x_n} \quad \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}, \\
+			      \apply{f}{x_1, x_2, \dots, x_n, y + 1} & = \apply{h}{x_1, x_2, \dots, x_n, y, \apply{f}{x_1, x_2, \dots, x_n}}                          \\
+			                                             & \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}
+		      \end{align*}
+		      で定義される関数\(f \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)は帰納的関数である．
+		      \(f\)は\(g, h\)から原始帰納法によって定義される関数である．
+		\item \(g \colon \NaturalNumbers^{n + 1} \to \NaturalNumbers\)は帰納的関数で，すべての\(x_1, x_2, \dots, x_n\)に対して
+		      \(\apply{g}{x_1, x_2, \dots, x_n, y} = 0\)となる\(y\)が存在したとする．
+		      そのような\(y\)のうち最小のものを
+		      \begin{equation}
+			      \apply{\muoperator y}{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}
+			      \label{eq:muoperator}
+		      \end{equation}
+		      と表すこととする．記号\(\mu\)を
+		      \term{\(\mu\)演算子}と呼ぶことがある．
+		      このとき，
+		      \[
+			      \apply{f}{x_1, \dots, x_n} = \apply{\muoperator y}{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}
+			      \quad \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}
+		      \]
+		      で定義される関数\(f \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)は帰納的関数である．
+		\item 以上の規則を有限回適用して得られる関数のみが帰納的関数である．
+	\end{enumerate}
+
+	また，規則6を1度も適用せずに得られる帰納的関数を特に
+	\term{原始帰納的関数}と呼ぶ．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:constantprimitiverecursive}
+	\(c\)を自然数とする．このとき，正の整数\(n\)に対して\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への定数関数\(x \mapsto c\)は原始帰納的関数である．
+	これを示そう．原始帰納的関数全体の集合を\(\symcal{F}\)として，以下のように写像\(F \colon \NaturalNumbers \to \symcal{F}\)を帰納的に定義する：
+	\begin{align*}
+		\apply{F}{0}     & = \zero^1,                                                                  \\
+		\apply{F}{n + 1} & = \suc \circ \paren{\apply{F}{n}} \quad \text{(\(n \in \NaturalNumbers\))}.
+	\end{align*}
+	この\(F\)に対し，\(\apply{F}{c}\)は定数関数\(x \mapsto c\)である．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:identitypromitiverecursive}
+	\(\NaturalNumbers\)上の恒等写像\(\iota \colon x \mapsto x\)は原始帰納的関数である．
+	実際，関数\(\iota_0 \colon \NaturalNumbers^2 \to \NaturalNumbers\)を以下のように原始帰納法によって定義すると，恒等写像\(\iota\)は\(\iota_0\)と
+	射影関数\(\proj_2^2\)の合成によって定義できる．
+	\begin{align*}
+		\apply{\iota_0}{x, 0}     & = \apply{\zero}{x, 0} \quad \text{(\(x \in \NaturalNumbers\))},    \\
+		\apply{\iota_0}{x, y + 1} & = \apply{\suc}{{\apply{\proj_2^3}{{x, y, \apply{\iota_0}{x, y}}}}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+	ここで，規則5における関数\(g, h\)としてそれぞれ\(\zero^2\)と\(\suc \circ \proj_2^3\)をとった．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:addition}
+	加法を表す\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への関数\(\pair{x_1, x_2} \mapsto x_1 + x_2\)は原始帰納的関数である．
+	実際，以下のように原始帰納法によって定義される関数\(p \colon \NaturalNumbers^2 \to \NaturalNumbers\)が加法を表す関数に相当する：
+	\begin{align*}
+		\apply{p}{x, 0}     & = \apply{\proj_1^2}{x, 0}
+		\quad \text{(\(x \in \NaturalNumbers\))},                                      \\
+		\apply{p}{x, y + 1} & = \apply{\suc}{\apply{\proj_3^3}{x, y, \apply{p}{x, y}}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:predecessorprimitiverecursive}
+	自然数\(x\)の前者\(x - 1\)を表す関数\(m \colon \NaturalNumbers \to \NaturalNumbers\)は原始帰納的関数である．
+	実際，\(m\)は原始帰納法によって以下のように定義される関数\(m_0\)と\(\proj_2^2\)との合成によって定義できる：
+	\begin{align*}
+		\apply{m_0}{x, 0}     & = \apply{\zero^2}{x, 0}	\quad \text{(\(x \in \NaturalNumbers\))}, \\
+		\apply{m_0}{x, y + 1} & = \apply{\proj_2^3}{x, y, \apply{m_0}{x}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+
+	「\(\apply{m}{x}\)で\(x\)の前者を表す」という意図に沿って考えると，
+	本来\(\apply{m}{0}\)は\(0-1\)となるべきだが，これは自然数ではないので便宜的にその値を\(0\)としている．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:minusprimitiverecursivefunction}
+	減法を表す\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への以下の関数\(\entireminus\)は原始帰納的関数である．
+	実際，以下のように原始帰納法によって定義される関数\(d \colon  \NaturalNumbers^2 \to \NaturalNumbers\)が減法を表す関数に相当する：
+	\begin{align*}
+		\apply{d}{x, 0}     & = \apply{\proj_1^2}{x}
+		\quad \text{(\(x \in \NaturalNumbers\))},                                   \\
+		\apply{d}{x, y + 1} & = \apply{\proj_3^3}{x, y, \apply{m}{\apply{d}{x, y}}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+	ここで，\(m \colon \NaturalNumbers \to \NaturalNumbers\)は\cref{Ex:predecessorprimitiverecursive}における前者を表す関数である．
+
+	\(x, y \in \NaturalNumbers\)に対する\(\apply{d}{x, y}\)を
+	\begin{equation}
+		x \entireminus y
+		\label{eq:entireminus}
+	\end{equation}
+	と表す．
+	\(x \geq y\)ならば\(x \entireminus y = x - y\)であり（つまり通常の減法と同じ），\(x < y\)ならば\(x \entireminus y = 0\)である．
+\end{Ex}
+
+\begin{Que} \label[Que]{Que:primitiverevursivefunction}
+	\(n\)を正の整数とする．
+	以下の\(\NaturalNumbers, \NaturalNumbers^2, \NaturalNumbers^n\)から\(\NaturalNumbers\)への関数はいずれも原始帰納的関数であることを示せ．
+	\begin{align*}
+		\pair{x, y}                 & \mapsto xy,                              \\
+		\pair{x, y}                 & \mapsto x^y,                             \\
+		x                           & \mapsto x!,                              \\
+		\pair{x_1, x_2, \dots, x_n} & \mapsto \max \Set{x_1, x_2, \dots, x_n}, \\
+		\pair{x_1, x_2, \dots, x_n} & \mapsto \min \Set{x_1, x_2, \dots, x_n}.
+	\end{align*}
+	ただし，\(0! = 0^0 = 1\)と決めておくこととする．
+\end{Que}
+
+\index[sidx]{\(\truefunction\)：真であることを表す関数}
+\index[sidx]{\(\falsefunction\)：偽であることを表す関数}
+\begin{Que} \label[Que]{Que:truefalseprimitiverecursive}
+	以下で定義される関数\(\truefunction, \falsefunction \colon \NaturalNumbers \to \NaturalNumbers\)が原始帰納的関数であることを示せ：
+	\begin{align}
+		\apply{\truefunction}{x}  & =
+		\begin{cases}
+			0 & \text{(\(x = 0\)のとき)}, \\
+			1 & \text{(それ以外のとき)},
+		\end{cases}
+		\label{eq:trueprimitiverecursive} \\
+		\apply{\falsefunction}{x} & =
+		\begin{cases}
+			1 & \text{(\(x = 0\)のとき)}, \\
+			0 & \text{(それ以外のとき)}.
+		\end{cases}
+		\label{eq:falseprimitiverecursive}
+	\end{align}
+\end{Que}
+
+上記の例や\cref{Que:primitiverevursivefunction}により，以下の主張が従う．
+
+\begin{Lemma} \label[Lemma]{lemma:recursivefunctionoperation}
+	原始帰納的関数の和，（\(\entireminus\)の意味での）差，積，べき乗によって表される関数はすべて原始帰納的関数であり，
+	帰納的関数の和，（\(\entireminus\)の意味での）差，積，べき乗によって表される関数はすべて帰納的関数である．
+\end{Lemma}
+
+\begin{Def} \label{Def:pisumprimitiverecursive}
+	\(n\)を正の整数とする．
+	関数\(\varphi \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)が与えられたとき，
+	\(x_1, x_2, \dots, x_n, z \in \NaturalNumbers\)に対して
+	\begin{align*}
+		\apply{\varphi}{x_1, x_2, \dots, x_n, 0}
+		+ \apply{\varphi}{x_1, x_2, \dots, x_n, 1}
+		+ \dots
+		+ \apply{\varphi}{x_1, x_2, \dots, x_n, z \entireminus 1}, \\
+		\apply{\varphi}{x_1, x_2, \dots, x_n, 0}
+		\times \apply{\varphi}{x_1, x_2, \dots, x_n, 1}
+		\times \dots
+		\times \apply{\varphi}{x_1, x_2, \dots, x_n, z \entireminus 1}
+	\end{align*}
+	をそれぞれ
+	\begin{align}
+		\sum_{y < z} \apply{\varphi}{x_1, x_2, \dots, x_n, y},
+		\label{eq:sumprimitiverecursive} \\
+		\prod_{y < z} \apply{\varphi}{x_1, x_2, \dots, x_n, y}
+		\label{eq:piprimitiverecursive}
+	\end{align}
+	と表す．ただし，\(z = 0\)のときは\cref{eq:sumprimitiverecursive}と\cref{eq:piprimitiverecursive}の値はそれぞれ
+	\(0, 1\)であるものとする．
+\end{Def}
+
+\Cref{lemma:recursivefunctionoperation}により，以下の定理が得られる．
+\begin{Lemma} \label[Lemma]{lemma:sumprimitiverecursive}
+	\(\varphi \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)が原始帰納的関数であるならば
+	\(\pair{x_1, x_2, \dots, x_n, z} \in \NaturalNumbers^{n + 1}\)を\cref{eq:sumprimitiverecursive}, \cref{eq:piprimitiverecursive}に対応させる
+	\(\NaturalNumbers^{n+1}\)から\(\NaturalNumbers\)への関数はいずれも原始帰納的関数であり，
+	\(\varphi\)が帰納的関数であるならば
+	\(\pair{x_1, x_2, \dots, x_n, z} \in \NaturalNumbers^{n + 1}\)を\cref{eq:sumprimitiverecursive}, \cref{eq:piprimitiverecursive}に対応させる
+	\(\NaturalNumbers^{n+1}\)から\(\NaturalNumbers\)への関数はいずれも帰納的関数である．
+\end{Lemma}

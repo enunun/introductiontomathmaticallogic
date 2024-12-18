@@ -55,6 +55,15 @@
 
 \graphicspath{{./fig/}}
 
+\DeclareFontFamily{OML}{nxlmi}{\skewchar \font =127}
+\DeclareFontShape{OML}{nxlmi}{m}{it}{
+	<-6.3>  nxlmi035
+	<6.3-8.6> nxlmi037
+	<8.6->  nxlmi03
+}{}
+\DeclareSymbolFont{gletters}{OML}{nxlmi}{m}{it}
+\DeclareMathSymbol{g}{\mathalpha}{gletters}{`g}
+
 %
 %%%%%%%%%%%%%%%%%=============macro=======================%%%%%%%%%%%%%%
 %
@@ -87,6 +96,8 @@
 
 \NewDocumentCommand{\obj}{m}{\symtt{#1}}
 
+\NewDocumentCommand{\entireminus}{}{\mathbin{\dot{-}}}
+
 \DeclareMathOperator{\FV}{FV}
 \DeclareMathOperator{\BV}{BV}
 \DeclareMathOperator{\Var}{Var}
@@ -95,6 +106,11 @@
 \DeclareMathOperator{\Th}{Th}
 \DeclareMathOperator{\eDiag}{eDiag}
 \DeclareMathOperator{\Diag}{Diag}
+\DeclareMathOperator{\zero}{zero}
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\suc}{suc}
+\DeclareMathOperator{\truefunction}{true}
+\DeclareMathOperator{\falsefunction}{false}
 
 \NewDocumentCommand{\subst}{smm}{%
 \IfBooleanTF{#1}{#2[{#3}]%
@@ -244,6 +260,8 @@
 \NewDocumentCommand{\DeltaFormulaInduction}{}{\InductionLimitedTheory{\DeltaFormula}}
 
 \NewDocumentCommand{\Ar}{}{\symup{Ar}}
+
+\NewDocumentCommand{\muoperator}{}{\mu}
 
 %
 %%%%%%%%%%%%%%=======================theorem==================%%%%%%%%%%%%%

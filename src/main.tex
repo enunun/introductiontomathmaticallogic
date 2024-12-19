@@ -50,6 +50,9 @@
 \usepackage{multicol}
 \usepackage{framed}
 \usepackage{numbersets}
+\usepackage{mathtools}
+
+\numberwithin{equation}{section}
 
 %\delimitershortfall=-.3pt
 
@@ -268,10 +271,10 @@
 %
 %
 \theoremstyle{definition}
-\newtheorem{Def}{定義}[chapter]
+\newtheorem{Def}{定義}[section]
 \newtheorem{Thm}[Def]{定理}
 \newtheorem{Ex}[Def]{例}
-\newtheorem{Que}{演習}[chapter]
+\newtheorem{Que}{演習}[section]
 \newtheorem{Lemma}[Def]{補題}
 \newtheorem{Corollary}[Def]{系}
 \newtheorem{Note}[Def]{注意}

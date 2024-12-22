@@ -1674,3 +1674,365 @@ Gödel数を定義する文脈においては「項や論理式が自然数と�
 	と表せる．ここで，\(\muoperator y \apply{T_n}{e, x_1, x_2, \dots, x_n, y}\)は，
 	\(\pair{e, x_1, x_2, \dots, x_n, y} \in T_n\)が成り立つような\(y\)のうち最小のものである．
 \end{Thm}
+
+\section{表現可能性} \label{sec:representation}
+
+Gödel数の議論を通して，我々は項や論理式，および証明図に対する主張を自然数に関する主張として翻訳できることを見た．
+ここでは，そのような自然数に関する主張が形式体系内で扱えるかどうかを考える．
+
+\index[widx]{ひょうげんされる@表現される}
+\index[widx]{ひょうげんされる@表現される!かんすうてきにひょうげんされる@関数的に---}
+\begin{Def} \label{Def:representation}
+	\(T\)を\(\symcal{L}_{\Ar}\)理論とする．
+	\(k\)を正の整数とするとき，集合\(X \subset \NaturalNumbers^k\)が\(T\)において論理式\(\apply{\varphi}{x_1, x_2, \dots, x_k}\)で
+	\term{表現される}とは，任意の自然数\(n_1, n_2, \dotsm n_k\)に対して以下が成り立つことをいう：
+	\begin{align}
+		\pair{n_1, n_2, \dots, n_k} \in X \metaimplies T \provable \apply{\varphi}{\numeral{n_1}, \numeral{n_2}, \dots, \numeral{n_k}},
+		\label{eq:representationtrue} \\
+		\pair{n_1, n_2, \dots, n_k} \notin X \metaimplies T \provable \lnot \apply{\varphi}{\numeral{n_1}, \numeral{n_2}, \dots, \numeral{n_k}}.
+		\label{eq:representationfalse}
+	\end{align}
+
+	また，関数\(f \colon \NaturalNumbers^k \to \NaturalNumbers\)が\(T\)において論理式\(\apply{\varphi}{x_1, x_2, \dots, x_k}\)で
+	\term{関数的に表現可能される}とは，
+	\(k + 1\)項関係\(\apply{f}{x_1, x_2, \dots, x_n} = y\)が\(\apply{\varphi}{x_1, x_2, \dots, x_n, y}\)で表現され，
+	かつ任意の任意の自然数\(n_1, n_2, \dotsm n_k\)に対して以下が成り立つことをいう：
+	\begin{equation}
+		T \provable \forall \obj{u} \forall \obj{v} \paren{
+			\apply{\varphi}{\numeral{n_1}, \dots, \numeral{n_k}, \obj{u}}
+			\land \apply{\varphi}{\numeral{n_1}, \dots, \numeral{n_k}, \obj{v}}
+			\to \obj{u} \objeq \obj{v}
+		}.
+		\label{eq:representationfunction}
+	\end{equation}
+\end{Def}
+
+\index[widx]{\(\SigmaFormula_i\)しゅうごう@\(\SigmaFormula_i\)集合}
+\index[widx]{\(\PiFormula_i\)しゅうごう@\(\PiFormula_i\)集合}
+\index[widx]{\(\DeltaFormula_i\)しゅうごう@\(\DeltaFormula_i\)集合}
+\index[widx]{\(\SigmaFormula_i\)かんすう@\(\SigmaFormula_i\)関数}
+\index[widx]{\(\PiFormula_i\)かんすう@\(\PiFormula_i\)関数}
+\index[widx]{\(\DeltaFormula_i\)かんすう@\(\DeltaFormula_i\)関数}
+\begin{Def} \label{Def:sigmaset}
+	\(k\)を正の整数とする．
+	集合\(X \subset \NaturalNumbers^k\)が\(\SigmaFormula_i\)集合であるとは，
+	以下を満たす\(\SigmaFormula_i\)論理式\(\apply{\varphi}{x_1, x_2, \dots, x_k}\)が存在することをいう：
+	\begin{equation}
+		\pair{n_1, n_2, \dots, n_k} \in X \metaequivalent \standardmodel \satisfy \apply{\varphi}{\numeral{n_1}, \numeral{n_2}, \dots, \numeral{n_k}}.
+		\label{eq:sigmaset}
+	\end{equation}
+	\(\PiFormula_i\)集合や\(\DeltaFormula_i\)集合も同様に定義される．
+
+	また，関数\(f \colon \NaturalNumbers^k \to \NaturalNumbers\)が\(\SigmaFormula_i\)関数であるとは，
+	そのグラフ
+	\[
+		\Set{\pair{x_1, x_2, \dots, x_k \apply{f}{x_1, x_2, \dots, x_k}} | x_1, x_2, \dots, x_k \in \NaturalNumbers}
+	\]
+	が\(\SigmaFormula_i\)集合であることをいう．
+	\(\PiFormula_i\)関数や\(\DeltaFormula_i\)関数も同様に定義される．
+\end{Def}
+
+\begin{Thm} \label[Thm]{Thm:delta1setrepresention}
+	任意の\(\DeltaFormula_1\)集合は，\(\RArithmetic\)において\(\SigmaFormula_1\)論理式で表現される．
+\end{Thm}
+
+\begin{proof}
+	\(\DeltaFormula_1\)集合\(X \subset \NaturalNumbers^k\)をとる．簡単のため，\(k = 1\)とする．
+	\(\SigmaFormula_0\)論理式\(\apply{\theta_1}{x, y}\)と\(\apply{\theta_2}{y, z}\)が存在して
+	\begin{align*}
+		n \in X    & \metaequivalent \standardmodel \satisfy \exists x \apply{\theta_1}{x, \numeral{n}} \\
+		n \notin X & \metaequivalent \standardmodel \satisfy \exists y \apply{\theta_1}{y, \numeral{n}}
+	\end{align*}
+	が成り立つ．ここで，\(\exists x_1 \exists x_2 \dotsb \exists x_n\)は\(\exists u \exists x_1 < u \exists x_2 < u \dotsb \exists x_n <u\)
+	と置き換えられるので，上記式の先頭の存在記号は1つでよい．
+	論理式\(\apply{\varphi}{z}\)を
+	\[
+		\exists x \paren{\apply{\theta_1}{x, z} \land \forall y < x \lnot \apply{\theta_2}{y, z}}
+	\]
+	と定めると，\(X\)は\(\apply{\varphi}{z}\)によって表現される．
+\end{proof}
+
+\begin{Thm} \label[Thm]{Thm:representationfunction}
+	任意の\(\DeltaFormula_1\)関数は，\(\RArithmetic\)において\(\SigmaFormula_1\)論理式によって関数的に表現される．
+\end{Thm}
+
+\begin{proof}
+	\(\DeltaFormula_1\)関数\(f \colon \NaturalNumbers^k \to \NaturalNumbers\)をとる．簡単のため，\(k = 1\)とする．
+	\Cref{Thm:delta1setrepresention}により，\(f\)のグラフを表現する\(\SigmaFormula_1\)論理式が存在する．
+	その論理式\(\apply{\theta}{x, y}\)を\(\SigmaFormula_0\)論理式\(\apply{\theta_0}{x, y, z}\)を用いて
+	\(\exists z \apply{\theta}{x, y, z}\)と表す．
+	論理式\(\apply{\psi}{x, y, z}\)を以下のように定める：
+	\[
+		\apply{\theta}{x, y, z} \land \forall \obj{u} < y \obj{+} \paren{z \obj{+} \obj{1}} \forall \obj{v} < y \obj{+} \paren{z \obj{+} \obj{1}}
+		\paren{\obj{u} \obj{+} \obj{v} \obj{<} y \obj{+} z \to \lnot \apply{\theta}{x, \obj{u}, \obj{v}}}
+	\]
+	このとき，\(\SigmaFormula_1\)論理式\(\exists z \apply{\psi}{x, y, z}\)が\(f\)を関数的に表現する．
+\end{proof}
+
+\(\DeltaFormula_1\)関数は\(\RArithmetic\)において表現可能であるが，原始帰納的関数は表現できず，
+\(\SigmaFormulaInduction_1\)なければならないことが知られている．
+以下の定理は，原始帰納的関数の構成に関する帰納法によって証明できる．
+
+\begin{Thm} \label[Thm]{Thm:primiverecursivefunctionrepresentation}
+	\(\SigmaFormulaInduction_1\)において，
+	任意の原始帰納的関数\(f\)のグラフは
+	\(\SigmaFormula_1\)論理式\(\apply{\varphi}{x_1, x_2, \dots, x_n, y, z}\)でも
+	\(\PiFormula_1\)論理式\(\apply{\psi}{x_1, x_2, \dots, x_n, y, z}\)でも表現される．
+	さらに，以下が成り立つ．
+	\begin{align*}
+		\SigmaFormulaInduction_1 & \provable \forall x_1 \forall x_2 \dotsb \forall x_n \forall y \uexists z \apply{\varphi}{x_1, x_2, \dots, x_n, y, z} \\
+		\SigmaFormulaInduction_1 & \provable \forall x_1 \forall x_2 \dotsb \forall x_n \forall y \uexists z \apply{\psi}{x_1, x_2, \dots, x_n, y, z}
+	\end{align*}
+\end{Thm}
+
+\index[widx]{げんしきのうてき@（集合が）原始帰納的}
+\index[widx]{きのうてき@（集合が）帰納的}
+\begin{Def} \label{Def:setrecursive}
+	\(k\)を正の整数とするとき，集合\(X \subset \NaturalNumbers^k\)が\term{原始帰納的}であるとは，
+	その特性関数\(\characteristicfunction{X}\)が原始帰納的であることをいう．
+	また，\(X\)が\term{帰納的}であるとは，\(\characteristicfunction{X}\)が帰納的であることをいう．
+\end{Def}
+
+Kleeneの標準形定理を用いると，以下の定理を証明できる．
+
+\begin{Thm} \label[Thm]{Thm:recursivedelta1equivalent}
+	帰納的集合（関数）と\(\DeltaFormula_1\)集合（関数）は等価である．
+	すなわち，すべての帰納的集合（関数）は\(\DeltaFormula_1\)集合（関数）でもあり，
+	すべての\(\DeltaFormula_1\)集合（関数）は帰納的集合（関数）でもある．
+\end{Thm}
+
+\section{第1不完全性定理} \label{sec:imcompletetheorem1}
+
+本節では，第1不完全性定理を定式化して証明する．
+まずは弱い形の第1不完全性定理を示すため，いくつかの準備を行う．
+
+\index[widx]{むじゅん@矛盾!1むむじゅん@1無---}
+\begin{Def} \label{Def:oneconsistent}
+	\(T\)を\(\symcal{L}_{\Ar}\)理論とする．
+	\(T\)が\term{1無矛盾}であるとは，
+	任意の\(\SigmaFormula_1\)文\(\varphi\)に対して
+	\[
+		T \provable \varphi \metaimplies \standardmodel \satisfy \varphi
+	\]
+	が成り立つことをいう．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma}
+	\(T\)を
+	\(\RArithmetic\)を含む1無矛盾な\(\symcal{L}_{\Ar}\)理論とする．
+	任意の\(\SigmaFormula_1\)集合\(S\)に対し，
+	\(\SigmaFormula_1\)論理式\(\apply{\varphi}{x}\)で
+	\[
+		n \in S \metaequivalent \apply{\varphi}{\numeral{n}}
+	\]
+	となるものが存在する．
+\end{Lemma}
+
+\begin{proof}
+	\(\SigmaFormula_1\)集合\(S\)は\(\standardmodel\)において\(\SigmaFormula_1\)論理式\(\apply{\varphi}{x}\)で表現できる．
+	そして，\(T\)は\(\RArithmetic\)を含むことから，\(\RArithmetic\)の\(\SigmaFormula_1\)完全性によって
+	\[
+		\standardmodel \satisfy \apply{\varphi}{\numeral{n}} \metaimplies \RArithmetic \provable \apply{\varphi}{\numeral{n}} \metaimplies T \provable \apply{\varphi}{\numeral{n}}
+	\]
+	が成り立つ．
+	\(T\)の1無矛盾性によって逆もいえるので，もとの主張が得られる．
+\end{proof}
+
+\index[widx]{げんしきのうてき@（理論が）原始帰納的}
+\begin{Def} \label{Def:theoryrecursive}
+	\(\symcal{L}_{\Ar}\)理論\(T\)が原始帰納的であるとは，
+	Gödel数の集合
+	\[
+		\Set{\GodelNumber{\varphi} | \varphi \in T}
+	\]
+	が原始帰納的集合であることをいう．
+\end{Def}
+
+\index[widx]{Craigのほだい@Craigの補題}
+\begin{Lemma}[Craigの補題] \label[Lemma]{lemma:craiglemma}
+	\(\SigmaFormula_1\)理論\(T\)に対し，それと\cref{Note:equivalentTheory}の意味で等価な原始帰納的な理論\(T'\)が存在する．
+\end{Lemma}
+
+\begin{proof}
+	\(T\)を\(\SigmaFormula_1\)理論とし，\(T\)を表現する\(\SigmaFormula_1\)論理式
+	\(\apply{\varphi}{x}\)を\(\SigmaFormula_0\)論理式\(\apply{\theta}{x, y}\)を用いて
+	\(\exists y \apply{\theta}{x, y}\)と表す．
+	このとき，任意の文\(\sigma\)に対して
+	\[
+		\sigma \in T \metaequivalent \standardmodel \satisfy \apply{\varphi}{\numeral{\GodelNumber{\sigma}}}
+	\]
+	が成り立つ．
+	さて，理論\(T'\)を以下のように定義する：
+	\[
+		T' = \Set{\sigma \land \sigma \land \dotsb \land \sigma | \standardmodel \satisfy \apply{\theta}{\numeral{\GodelNumber{\sigma}}, \numeral{n}}}
+	\]
+	ここで，上記の\(\sigma \land \sigma \land \dotsb \land \sigma\)は\(\sigma\)を\(n + 1\)個連結したものである．
+	このとき，\(T'\)は原始帰納的で，\(T, T'\)は等価な理論である．
+\end{proof}
+
+\Cref{lemma:craiglemma}により，\(\SigmaFormula_1\)理論であるという仮定は原始帰納的な理論であるというように置き換えられることがわかった．
+
+\index[sidx]{\(\ProofPredicate_T\)：証明可能性を表す述語}
+
+\begin{Def}
+	\(T\)を\(\SigmaFormula_1\)理論とする．原始帰納的な述語\(\ProofPredicate\)を以下のように定義する：
+	\begin{align}
+		\begin{aligned}
+			                & \apply{\ProofPredicate_T}{\GodelNumber{\symcal{K}}, \GodelNumber{\sigma}} \\
+			\metaequivalent & \text{\(\symcal{K}\)は最下段の右辺が\(\sigma\)となる証明図で，左辺の論理式はすべて\(T\)の公理である}
+			\label{eq:ProofPredicate}
+		\end{aligned}
+	\end{align}
+	\Cref{Thm:primiverecursivefunctionrepresentation}により，\(\ProofPredicate_T\)は\(\SigmaFormulaInduction_1\)において
+	\(\SigmaFormula_1\)論理式か\(\PiFormula_1\)論理式で表現可能である．
+	その論理式も同じ記号\(\ProofPredicate_T\)で表すことにする．
+	その上で，\(\Sigma_1\)論理式\(\exists y \apply{\ProofPredicate_T}{y, x}\)を
+	\begin{equation}
+		\apply{\Bew_T}{x}
+		\label{eq:Bewx}
+	\end{equation}
+	と表す．
+\end{Def}
+
+\(\apply{\Bew_T}{x}\)は，素朴には「\(x\)は\(T\)で証明可能な論理式のGödel数である」という主張を表現したものと考えられる．
+
+\index[widx]{ふどうてん@不動点!ふどうてんていり@---定理}
+\index[widx]{ふどうてん@不動点}
+\index[widx]{たいかくかていり@対角化定理|see{不動点定理}}
+\begin{Thm}[不動点定理，対角化定理] \label[Thm]{Thm:fixpointtheorem}
+	\(T\)を\(\RArithmetic\)を含む\(\SigmaFormula_1\)理論とする．
+	\(x\)のみが自由出現する任意の論理式\(\apply{\psi}{x}\)に対し，
+	\begin{equation}
+		T \provable \sigma \formulaequiv \apply{\psi}{\numeral{\GodelNumber{\sigma}}}
+		\label{eq:fixpointtheorem}
+	\end{equation}
+	となる文\(\sigma\)が存在する．この\(\sigma\)を\(\psi\)の\term{不動点}と呼ぶ．
+\end{Thm}
+
+\begin{proof}
+	\(x\)のみが自由出現する論理式は可算無限個存在する．
+	よってそれらを\(\apply{\varphi_0}{x}, \apply{\varphi_1}{x}, \dots\)と並べ，
+	関数\(f \colon \NaturalNumbers \to \NaturalNumbers\)を\(\apply{f}{x} = \GodelNumber{\apply{\varphi_x}{\numeral{x}}}\)と定める．
+	このとき，\(f\)は帰納的関数である．
+	よって\(f\)は\cref{Thm:recursivedelta1equivalent}によって\(\DeltaFormula_1\)関数でもあるので，
+	\cref{Thm:delta1setrepresention}から
+	\[
+		\apply{f}{n} = m \metaimplies T \provable \apply{\chi}{\numeral{n}, \numeral{m}} \land \forall y \paren{\lnot \paren{y \objeq \numeral{m}} \to \lnot \apply{\chi}{\numeral{n}, y}}
+	\]
+	となる\(\SigmaFormula_1\)論理式\(\chi\)が存在する．
+	論理式\(\exists y \paren{\apply{\chi}{x, y} \land \apply{\psi}{y}}\)を考えると，
+	これは\(x\)のみが自由出現する論理式なので，
+	\(\apply{f}{k} = \GodelNumber{\apply{\varphi_k}{\numeral{k}}}\)となる自然数\(k\)が存在する．
+	\(\apply{\varphi_k}{\numeral{k}}\)を\(\sigma\)と表すと，
+	\[
+		T \provable \apply{\psi}{\numeral{\GodelNumber{\sigma}}} \to \exists y \paren{\apply{\chi}{\numeral{k}, y} \land \apply{\psi}{y}}
+	\]
+	となる．よって\(T \provable \apply{\psi}{\numeral{\GodelNumber{\sigma}}} \to \sigma\)である．
+	一方，
+	\[
+		T \provable \forall y \paren{\lnot \paren{y \objeq \numeral{\GodelNumber{\sigma}}} \to \lnot \apply{\chi}{\numeral{k}, y}}
+	\]
+	だから
+	\[
+		T \provable \lnot \apply{\psi}{\numeral{\GodelNumber{\sigma}}} \to \lnot \sigma
+	\]
+	もいえる．よって\cref{eq:fixpointtheorem}が得られる．
+\end{proof}
+
+\begin{Thm}[第1不完全性定理] \label[Thm]{Thm:weakfirstimcompletetheorem}
+	\(T\)が\(\RArithmetic\)を含む1無矛盾な\(\SigmaFormula_1\)理論であるならば，
+	\(T \notprovable \sigma\)かつ\(T \notprovable \sigma\)となるような文\(\sigma\)が存在する．
+\end{Thm}
+
+\index[widx]{Gödelぶん@Gödel文}
+\begin{proof}
+	\Cref{Thm:fixpointtheorem}により，\(\lnot \apply{\Bew_T}{x}\)の不動点\(\sigma\)が存在する．
+	この\(\sigma\)を
+	\term{Gödel文}と呼ぶ．
+	\(T \provable \sigma \formulaequiv \lnot \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)である．
+
+	\(T \provable \sigma\)と仮定すると，\(\standardmodel \satisfy \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)である．
+	よって\(T\)の\(\SigmaFormula_1\)完全性によって\(T \provable \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)が成り立つ．
+	このとき，\(\sigma\)は\(\lnot \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)の不動点であることから
+	\(T \provable \lnot \sigma\)となって矛盾する．
+
+	\(T \provable \lnot \sigma\)と仮定すると，\(\sigma\)が\(\lnot \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)の不動点であることから
+	\(T \provable \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)となる．
+	\(T\)の1無矛盾性によって\(\standardmodel \satisfy \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)となり，
+	\(T \provable \sigma\)だから矛盾する．
+\end{proof}
+
+\Cref{Thm:weakfirstimcompletetheorem}では，1無矛盾性という恣意的な仮定が入っている．
+この仮定を単なる無矛盾性に弱めるため，\(\Bew_T\)を改良することを考える．
+
+\begin{Def} \label{Def:Bewstar}
+	\(\SigmaFormula_1\)論理式\(\apply{\Bewstar_T}{x}\)を
+	\begin{equation}
+		\exists y \paren{\apply{\ProofPredicate_T}{y, x} \land \forall z < y \lnot \apply{\ProofPredicate_T}{z, \lnot x}}
+		\label{eq:Bewstar}
+	\end{equation}
+	ここで，\(\lnot\)は\(x\)が論理式\(\varphi\)のGödel数である場合の\(\lnot \varphi\)のGödel数を表す．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma:Bewstar}
+	\(T\)を\(\RArithmetic\)を含む原始帰納的な理論とする．
+	このとき，任意の文\(\sigma\)に対して
+	\begin{align}
+		T \provable \sigma \metaimplies T \provable \apply{\Bewstar_T}{\numeral{\GodelNumber{\sigma}}},
+		\label{eq:Bewstarprovable} \\
+		T \provable \lnot \sigma \metaimplies T \provable \lnot \apply{\Bewstar_T}{\numeral{\GodelNumber{\sigma}}},
+		\label{eq:lnotBewstarprovable}
+	\end{align}
+\end{Lemma}
+
+\begin{Thm}[第1不完全性定理] \label{Thm:firstimcompletetheorem}
+	\(T\)を\(\RArithmetic\)を含む無矛盾な\(\SigmaFormula_1\)理論とする．
+	このとき，\(T \notprovable \sigma\)かつ\(T \notprovable \lnot \sigma\)となる文\(\sigma\)が存在する．
+\end{Thm}
+
+\index[widx]{Rosserぶん@Rosser文}
+\begin{proof}
+	Craigの補題（\cref{lemma:craiglemma}）により，
+	\(T\)は原始帰納的であると仮定してよい．
+	\(\lnot \apply{\Bewstar_T}{x}\)の不動点を\(\sigma\)とする，すなわち
+	\(T \provable \sigma \formulaequiv \lnot \apply{\Bewstar_T}{\numeral{\GodelNumber{\sigma}}}\)となる文\(\sigma\)をとる．
+	この\(\sigma\)を\term{Rosser文}という．
+	このとき，\(T \notprovable \sigma\)かつ\(T \notprovable \lnot \sigma\)となる．
+\end{proof}
+
+
+\section{第2不完全性定理} \label{sec:secondimcompletetheorem}
+
+第1不完全性定理の証明で構成したGödel文やRosser文は，いくぶんか人工的な面が否めなかった．
+ここでは，自身の無矛盾性を表現した論理式が第1不完全性定理における文の具体例になっていることを確かめよう．
+
+\begin{Def} \label{Def:objbew}
+	\(T\)を\(\SigmaFormulaInduction_1\)を含む無矛盾な\(\SigmaFormula_1\)理論とする．
+	このとき，\cref{Thm:primiverecursivefunctionrepresentation}によって
+	すべての原始帰納的関数を\(T\)において表現可能であることが従う．
+	ゆえに，原始帰納的関数と原始帰納的述語の定義ごとに1つずつ関数記号と関係記号を付け加え，
+	さらにそれらの定義を公理として\(T\)に加えたものは，\(T\)の定義による拡大となっている．
+	この理論も同じく\(T\)と表すことにする．
+
+	\(\ProofPredicate_T\)は関係記号\(\obj{\ProofPredicate}_T\)と表されているので，
+	\(\exists y \apply{\obj{\ProofPredicate}_T}{y, x}\)を
+	\begin{equation}
+		\apply{\Bew_T}{x}
+		\label{eq:objbewt}
+	\end{equation}
+	で表す．
+\end{Def}
+
+\begin{Def} \label{Def:consistencyformula}
+	論理式\(\apply{\Con}{T}\)を
+	\begin{equation}
+		\lnot \apply{\Bew_T}{\numeral{\GodelNumber{\obj{0} \objeq \obj{1}}}}
+		\label{eq:consistencyformula}
+	\end{equation}
+	と定める．
+\end{Def}
+
+\begin{Thm}[第2不完全性定理] \label{thm:secondimcompletetheorem}
+	\(T\)は\(\SigmaFormulaInduction_1\)を含む無矛盾な\(\SigmaFormula_1\)理論であるとする．
+	このとき，\(T \notprovable \apply{\Con}{T}\)である．
+\end{Thm}

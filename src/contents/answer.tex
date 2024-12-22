@@ -1237,11 +1237,11 @@
 	                & \symcal{M} \satisfy \varphi                                                \\
 	\metaequivalent & \text{すべての\(a \in M\)に対して\(\symcal{M} \satisfy \subst{\varphi}{c_a/x_1}\)} \\
 	\metaequivalent & \text{すべての\(a \in M\)に対して\(\pair{
-			\interpretation{\symcal{M}}{\subst{s_1}{c_a/x_1}}, \interpretation{\symcal{M}}{\subst{s_2}{c_a/x_1}}, \dots, \interpretation{\symcal{M}}{\subst{s_n}{c_a/x_1}}
+			\interpretation{\symcal{M}}{\subst{s_1}{c_a/x_1}}, \dots, \interpretation{\symcal{M}}{\subst{s_n}{c_a/x_1}}
 		} \in \interpretation{\symcal{M}}{r}
 	\)}                                                                                          \\
 	\metaequivalent & \text{すべての閉項\(t_1\)に対して\(\pair{
-			\interpretation{\symcal{M}}{\subst{s_1}{t_1/x_1}}, \interpretation{\symcal{M}}{\subst{s_2}{t_1/x_1}}, \dots, \interpretation{\symcal{M}}{\subst{s_n}{t_1/x_1}}
+			\interpretation{\symcal{M}}{\subst{s_1}{t_1/x_1}}, \dots, \interpretation{\symcal{M}}{\subst{s_n}{t_1/x_1}}
 		}
 		\in \interpretation{\symcal{M}}{r}\)}
 \end{align*}
@@ -1657,8 +1657,33 @@
 
 \(\truefunction\)は以下のように原始帰納法によって定義できる（厳密には，先に\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への関数として原始再帰法によって定義して，後で射影関数と合成する）：
 \begin{align*}
-	\apply{\truefunction}{0} = 0, \\
-	\apply{\truefunction}{x + 1} = 1 \quad \text{(\(x \in \NaturalNumbers\))}.
+	\apply{\truefunction}{0}     & = 0,                                          \\
+	\apply{\truefunction}{x + 1} & = 1 \quad \text{(\(x \in \NaturalNumbers\))}.
 \end{align*}
 これが原始帰納法による定義になっていることは，定数関数が原始帰納的関数であることから従う．
 \(\falsefunction\)についても同様である．
+
+
+\subsection*{\Cref{Que:absolutedifferenceprimitiverecursive}}
+
+\(x, y \in \NaturalNumbers\)に対して，
+\[
+	\absolute{x - y} = \paren{x \entireminus y} + \paren{y \entireminus x}
+\]
+と表すことができるので，関数\(\pair{x, y} \mapsto \absolute{x - y}\)は原始帰納的関数である．
+
+\subsection*{\Cref{Que:remquoprimitiverecursive}}
+
+\(\rem \colon \NaturalNumbers^2 \to \NaturalNumbers\)は，以下のように原始帰納法によって定義できる：
+\begin{align*}
+	\apply{\rem}{0, y}     & = 0 \quad \text{(\(y \in \NaturalNumbers\))},                                                                 \\
+	\apply{\rem}{x + 1, y} & = \paren{\apply{\rem}{x, y} + 1} \paren{\apply{\truefunction}{\absolute{b - \paren{\apply{\rem}{a, b} + 1}}}}
+	\quad \text{(\(x, y \in \NaturalNumbers\))}.
+\end{align*}
+
+\(\quo \colon \NaturalNumbers^2 \to \NaturalNumbers\)も同様に，以下のように原始帰納法によって定義できる：
+\begin{align*}
+	\apply{\quo}{0, y}     & = 0 \quad \text{(\(y \in \NaturalNumbers\))},                                                \\
+	\apply{\quo}{x + 1, y} & = \apply{\quo}{x, y} + \apply{\falsefunction}{\absolute{b - \paren{\apply{\rem}{a, b} + 1}}}
+	\quad \text{(\(x, y \in \NaturalNumbers\))}.
+\end{align*}

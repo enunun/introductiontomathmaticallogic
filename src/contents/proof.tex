@@ -225,6 +225,7 @@
 			\UnaryInfC{\(\Gamma \sequent \subst{\varphi}{t/x}\)}
 		\end{prooftree}
 	\end{multicols}
+
 	\begin{multicols}{2}
 		\begin{prooftree}
 			\AxiomC{\(\Gamma \sequent \subst{\varphi}{t/x}\)}
@@ -290,16 +291,33 @@
 
 以上で公理と推論規則の準備が整った．あとは「証明」っぽく見えるようにいくつか定義を行うだけである．
 
-\begin{Def} \label[Def]{Def:provable}
-	シークエントが%
-	\index[widx]{どうしゅつかのう@（シークエントが）導出可能}%
-	導出可能であることを，以下のように定義する：
+\index[widx]{しょうめいず@証明図}
+\begin{Def} \label{Def:proofDiagram}
+	シークエント\(S\)を下段とする自然演繹式シークエント計算における\term{証明図}を，以下のように帰納的に定義する：
 	\begin{enumerate}
-		\item 任意の論理式\(\varphi\)に対し，始式\(\varphi \sequent \varphi\)は導出可能である．
-		\item 任意の項\(t\)に対し，シークエント\(\sequent t \objeq t\)は導出可能である．
-		\item これまでに挙げた各推論規則における上段のシークエントがすべて導出可能であるならば，下段のシークエントも導出可能である．
-		\item 以上の規則を有限回適用して得られるシークエントのみが導出可能である．
+		\item \Cref{Def:axiom}で挙げた2つの図式は，それぞれ\(\varphi \sequent \varphi\)と\(\sequent t \objeq t\)を下段とする自然演繹式シークエント計算における証明図である．
+		\item \(n = 1, 2, 3\)とする．
+		      \(\symcal{K}_1, \symcal{K}_2, \dots, \symcal{K}_n\)が自然演繹式シークエント計算における証明図，\(S\)がシークエントであるとき，
+		      各\(\symcal{K}_i\)の下段となるシークエントからこれまでに挙げた各推論規則によって\(S\)が得られるならば，
+		      図式
+		      \begin{prooftree}
+			      \AxiomC{\(\symcal{K_1}\)}
+			      \AxiomC{\(\symcal{K_2}\)}
+			      \AxiomC{\(\dotsb\)}
+			      \AxiomC{\(\symcal{K}_n\)}
+			      \LeftLabel{(name)}
+			      \QuaternaryInfC{\(S\)}
+		      \end{prooftree}
+		      は\(S\)を下段とする自然演繹式シークエント計算における証明図である．ここで，(name)は適用した推論規則名である．
+		\item 以上の規則を有限回適用して得られるもののみが自然演繹式シークエント計算における証明図である．
 	\end{enumerate}
+\end{Def}
+
+\index[widx]{どうしゅつかのう@（シークエントが）導出可能}%
+\begin{Def} \label[Def]{Def:provable}
+	\(S\)をシークエントとする．
+	\(S\)を下段とする自然演繹式シークエント計算における証明図が存在する場合，\(S\)は
+	\term{導出可能}であるという．
 \end{Def}
 
 あるシークエントが導出可能であることを

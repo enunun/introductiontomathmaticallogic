@@ -7,7 +7,7 @@
 数理論理学の成果として掲げるには物足りないものばかりであった．
 
 この章では，これまでの議論をもとにしてそれほど証明が難しくない数理論理学におけるいくつかの結果を示す．
-本書の最終章ではあるが，数理論理学という学問分野としては本章の内容がスタート地点といえる．
+数理論理学という学問分野としては，本章の内容が最低限のスタート地点といえる．
 
 \newpage
 
@@ -442,6 +442,18 @@
 	\end{align*}
 	よってもとの主張も成り立つ．
 \end{proof}
+
+健全性定理（\cref{Thm:soundness}）と完全性定理（\cref{Thm:completeness}）により，
+意味論と証明論に対して我々が期待していた以下の性質が成り立つことがわかった．
+
+\begin{Corollary} \label[Corollary]{coro:soundnesscompleteness}
+	理論\(\Gamma\)と閉論理式\(\varphi\)について，
+	\begin{equation}
+		\Gamma \satisfy \varphi \metaequivalent \Gamma \provable \varphi
+		\label{eq:soundnesscompleteness}
+	\end{equation}
+	が成り立つ．
+\end{Corollary}
 
 \begin{Que} \label{Que:existsfinitestructure}
 	与えられた正の整数\(n\)に対し，以下の論理式\(\apply{e_n}{x_1,x_2,\dots,x_n}\)を考える：

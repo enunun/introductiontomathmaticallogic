@@ -24,15 +24,17 @@
 %
 \usepackage[no-math]{luatexja-fontspec}
 \usepackage{fontspec}
+\usepackage{mathtools}
 \usepackage{unicode-math}
-\setmainfont[Ligatures=TeX]{Libertinus Serif}
-\setsansfont[Ligatures=TeX]{Libertinus Sans}
-\setmonofont[Ligatures=TeX]{Libertinus Mono}
-\setmathfont{Libertinus Math}[math-style=ISO, bold-style=ISO]
+\setmainfont[Ligatures=TeX]{XITS}
+\setsansfont[Ligatures=TeX]{Fira sans}
+\setmonofont[Ligatures=TeX]{Fira mono}
+\setmathfont{XITS Math}[math-style=ISO, bold-style=ISO]
+\setmathfont{XITS Math}[range=cal, StylisticSet=1]
 \setmathfont{TeX Gyre Pagella Math}[range=bb]
-\setmathfont{TeX Gyre Pagella Math}[range={\DashVDash}]
-\setmathfont{TeX Gyre Pagella Math}[range={\dashVdash}]
-\setmathfont{Garamond Math}[range={\Coloneq}]
+%\setmathfont{TeX Gyre Pagella Math}[range={\DashVDash}]
+%\setmathfont{TeX Gyre Pagella Math}[range={\dashVdash}]
+%\setmathfont{Garamond Math}[range={\Coloneq}]
 \usepackage[HaranoAji]{luatexja-preset}
 \ltjsetparameter{jacharrange={-2,-3}}
 \usepackage{amsthm}
@@ -50,7 +52,6 @@
 \usepackage{multicol}
 \usepackage{framed}
 \usepackage{numbersets}
-\usepackage{mathtools}
 
 \numberwithin{equation}{section}
 
@@ -67,7 +68,7 @@
 \DeclareSymbolFont{gletters}{OML}{nxlmi}{m}{it}
 \DeclareMathSymbol{g}{\mathalpha}{gletters}{`g}
 
-%
+%%
 %%%%%%%%%%%%%%%%%=============macro=======================%%%%%%%%%%%%%%
 %
 
@@ -114,6 +115,13 @@
 \DeclareMathOperator{\suc}{suc}
 \DeclareMathOperator{\truefunction}{true}
 \DeclareMathOperator{\falsefunction}{false}
+\NewDocumentCommand{\pairfunc}{}{J}
+\NewDocumentCommand{\connectionfunc}{}{\mathit{jp}}
+\DeclareMathOperator{\lh}{lh}
+\NewDocumentCommand{\codefunctioninv}{mm}{\paren{#1}_{#2}}
+\DeclareMathOperator{\rem}{rem}
+\DeclareMathOperator{\quo}{quo}
+\NewDocumentCommand{\characteristicfunction}{m}{\chi_{#1}}
 
 \NewDocumentCommand{\subst}{smm}{%
 \IfBooleanTF{#1}{#2[{#3}]%
@@ -145,6 +153,15 @@
 }
 
 \NewDocumentCommand{\length}{sm}{%
+	\IfBooleanTF{#1}{%
+		\vertbracket*{#2}
+	}%
+	{%
+		\vertbracket{#2}%
+	}%
+}
+
+\NewDocumentCommand{\absolute}{sm}{%
 	\IfBooleanTF{#1}{%
 		\vertbracket*{#2}
 	}%
@@ -266,6 +283,17 @@
 
 \NewDocumentCommand{\muoperator}{}{\mu}
 
+\NewDocumentCommand{\GodelNumber}{m}{\mathopen{}\left\ulcorner #1 \right\urcorner\mathclose{}}
+
+\NewDocumentCommand{\symbolcode}{m}{\GodelNumber{#1}}
+
+\NewDocumentCommand{\finitesequencecode}{m}{\langle #1 \rangle}
+
+\NewDocumentCommand{\codeconnection}{}{\mathbin{\ast}}
+
+\NewDocumentCommand{\complementset}{m}{{#1}^{c}}
+
+\NewDocumentCommand{\partialequal}{}{\sim}
 %
 %%%%%%%%%%%%%%=======================theorem==================%%%%%%%%%%%%%
 %

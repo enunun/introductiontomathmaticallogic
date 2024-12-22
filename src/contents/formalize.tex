@@ -566,11 +566,19 @@
 
 \begin{Note}
 	プログラミングに近しい文脈では，\cref{Ex:recursivedefinition}における帰納的定義を
-	\begin{equation*}
-		\anglebrackets{\text{数式}} \Coloneq \anglebrackets{\text{数字}} \mathbin{|}
+	\begin{align*}
+		\anglebrackets{\text{数字}} & \Coloneq 0 \mathbin{|} 1 \mathbin{|} 2 \mathbin{|} \dotsb, \\
+		\anglebrackets{\text{数式}} & \Coloneq \anglebrackets{\text{数字}} \mathbin{|}
 		\paren{\anglebrackets{\text{数式}} \obj{+} \anglebrackets{\text{数式}}}
-	\end{equation*}
-	のように表記することがある．この表記はBNF記法と呼ばれている．
+	\end{align*}
+	のように表記することがある．この表記はBNF記法と呼ばれている%
+	\footnote{%
+		すなわち，BNF記法においてはベースとなる記号集合は有限集合に限定するのが一般的である．
+		この場合では，まず記号集合\(\Set{0,1,2,3,4,5,6,7,8,9}\)をベースケースとするのが一般的である．
+		本書とまったく同じ「数式」を定義したければ，まず記号集合\(\Set{0,1,2,3,4,5,6,7,8,9}\)の記号を使って
+		任意桁数の「数字」をBNF記法で帰納的に定義し，それを使って上記のように「数式」を定義すればよい．
+	}%
+	．
 \end{Note}
 
 \begin{Que} \label{Que:recursivedefinition}
@@ -679,3 +687,197 @@
 	\end{equation}
 	を，数式の構造に関する帰納法（\(L\)上の整礎な半順序\(\prec'\)における整礎帰納法）によって証明せよ．
 \end{Que}
+
+
+\section{有限列のコード化} \label[section]{sec:codizeforfinitesequence}
+
+
+本節では，のちの章への準備としての自然数からなる有限列のコード化について議論する．
+有限列のコード化とは，有限列に対して一意な自然数を割り当てることである．
+コード化の手法は異なったものが複数知られているが，本書ではCantorの対関数を使ったものを紹介する．
+他の手法として有名なものに素因数分解の一意性を用いたものが挙げられる．
+
+なお，本節の内容が必要になるのは\cref{chap:peanoarithmetic}以降である．
+そのため「まずは完全性定理まで最速で入門したい」という場合には本節の内容を読み飛ばしても問題ない．
+
+\index[widx]{Cantorのついかんすう@Cantorの対関数}
+\index[sidx]{\(\pairfunc\)：Cantorの対関数}
+\begin{Def} \label{Def:cantorpairfunction}
+	関数\(\pairfunc \colon \NaturalNumbers^2 \to \NaturalNumbers\)を
+	\begin{equation}
+		\apply{\pairfunc}{x, y} = \sum_{i < x + y + 1} i + x = \frac{1}{2} \paren{x + y} \paren{x + y + 1} + x
+		\quad \text{(\(x, y \in \NaturalNumbers\))}
+		\label{eq:cantorpairfunction}
+	\end{equation}
+	と定める．この関数\(\pairfunc\)を\term{Cantorの対関数}と呼ぶ．
+\end{Def}
+
+よく知られているように，Cantorの対関数は\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への全単射になっている．
+
+\begin{Lemma} \label[Lemma]{lemma:cantorpairfunctionbijection}
+	Cantorの対関数\(\pairfunc \colon \NaturalNumbers^2 \to \NaturalNumbers\)は全単射であり，
+	その逆関数\(x \mapsto \pair{\apply{\pairfunc_1}{x}, \apply{\pairfunc_2}{x}}\)は以下で与えられる：
+	\begin{align}
+		\apply{t}{x}           & = \max \Set{n \in \NaturalNumbers | \sum_{i < n + 1} i < x}
+		\quad \text{(\(x \in \NaturalNumbers\))},
+		\label{eq:cantorpairfunctioninversebase}                                             \\
+		\apply{\pairfunc_2}{x} & = x - \sum_{i < \apply{t}{x} + 1} i
+		\quad \text{(\(x \in \NaturalNumbers\))},
+		\label{eq:cantorpairfunctioninverse2}                                                \\
+		\apply{\pairfunc_1}{x} & = \apply{t}{x} - \apply{\pairfunc_2}{x}
+		\quad \text{(\(x \in \NaturalNumbers\))}.
+		\label{eq:cantorpairfunctioninverse1}
+	\end{align}
+\end{Lemma}
+
+\begin{Def} \label{Def:cantorpairfunctionn}
+	正の整数\(n\)に対し，写像\(\pairfunc^n \colon \NaturalNumbers^n \to \NaturalNumbers\)を以下のように帰納的に定義する：
+	\begin{align}
+		\begin{aligned}
+			\apply{\pairfunc^1}{x}                                      & = x
+			\quad \text{(\(x \in \NaturalNumbers\))},                                                                                             \\
+			\apply{\pairfunc^{n + 1}}{x_0, x_2, \dots, x_{n  - 1}, x_n} & = \apply{\pairfunc}{x_0, \apply{\pairfunc^n}{x_1, \dots, x_{n-1}, x_n}} \\
+			                                                            & \quad \text{(\(x_0, x_2, \dots, x_{n-1}, x_n \in \NaturalNumbers\))}.
+		\end{aligned}
+		\label{eq:cantorpairfunctionn}
+	\end{align}
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma:cantorpairfunctionbijectionn}
+	正の整数\(n\)に対し，\(\pairfunc^n\)は全単射であり，その逆写像
+	\[
+		x \mapsto \pair{\apply{\pairfunc_1^n}{x}, \apply{\pairfunc_2^n}{x}, \dots, \apply{\pairfunc_n^n}{x}}
+	\]
+	は，\(\pairfunc_2\)を\(i\)回合成して得られる関数\(\pairfunc_2^{\paren{i}}\)を用いて以下のように与えられる：
+	\begin{equation}
+		\apply{\pairfunc_i^n}{x} =
+		\begin{cases*}
+			\apply{\pairfunc_1}{\apply{\pairfunc_2^{\paren{i}}}{x}} & (\(i < n\)のとき，\(x \in \NaturalNumbers\)), \\
+			\apply{\pairfunc_2^{\paren{n}}}{x}                      & (\(i = n\)のとき，\(x \in \NaturalNumbers\))
+		\end{cases*}
+		\label{eq:cantorpairfunctionninv}
+	\end{equation}
+\end{Lemma}
+
+以上の準備により，有限列のコード化を定義することができる．
+
+\index[sidx]{\(\finitesequencecode{x_0, x_1, \dots, x_{n-1}}\)：有限列のコード}
+\index[widx]{こーど@（自然数からなる有限列の）コード}
+\begin{Def} \label{Def:codizeforfinitesequence}
+	与えられた自然数からなる有限列
+	\[
+		x_0, x_2, \dots, x_{n-1} \in \bigcup_{n \in \NaturalNumbers} \NaturalNumbers^{\Set{0, 1, \dots, n-1}}
+	\]
+	に対し，そのコード
+	\begin{equation}
+		\finitesequencecode{x_0, x_2, \dots, x_{n-1}}
+		\label{eq:finitesequencecode}
+	\end{equation}
+	を%
+	\footnote{%
+		順序対と記号が被っているが，文脈上混同する可能性は低いと考えられる．
+	}%
+	\begin{equation}
+		\finitesequencecode{x_0, x_2, \dots, x_{n-1}} =
+		\begin{cases*}
+			\apply{\pairfunc}{0,0}                                                  & (\(n = 0\)のとき), \\
+			\apply{\pairfunc}{0, 1 + x_0}                                           & (\(n = 1\)のとき), \\
+			\apply{\pairfunc}{n - 1, \apply{\pairfunc^n}{x_0, x_1, \dots, x_{n-1}}} & (それ以外のとき)
+		\end{cases*}
+		\label{eq:finitesequencecodedefinition}
+	\end{equation}
+	と定める．
+	与えられた有限列が空列である場合もそのコードが0として定まっていることに注意しよう．
+\end{Def}
+
+\Cref{lemma:cantorpairfunctionbijectionn}から，以下の主張が従う．
+
+\begin{Lemma} \label[Lemma]{lemma:codizeforfinitesequencebijection}
+	与えられた自然数からなる有限列
+	\[
+		x_0, x_1, \dots, x_{n-1} \in \bigcup_{n \in \NaturalNumbers} \NaturalNumbers^{\Set{0, 1, \dots, n-1}}
+	\]
+	に対し，そのコード
+	\begin{equation*}
+		\finitesequencecode{x_0, x_1, \dots, x_{n-1}}
+	\end{equation*}
+	を対応させる\(\cup_{n \in \NaturalNumbers} \NaturalNumbers^{\Set{0,1,\dots,n-1}}\)から\(\NaturalNumbers\)への関数は全単射である．
+\end{Lemma}
+
+\index[sidx]{\(\apply{\lh}{x}\)：コード化された有限列の長さ}
+\begin{Def} \label{Def:finitesequencecodelength}
+	与えられた自然数\(x\)に対し，\(x\)に対応している自然数からなる有限列
+	\(x_0, x_1, \dots, x_{n-1}\)の長さ\(n\)を
+	\begin{equation}
+		\apply{\lh}{x}
+		\label{eq:finitesequencecodelength}
+	\end{equation}
+	と表す．
+	\(\apply{\lh}{x}\)は具体的に
+	\begin{equation}
+		\apply{\lh}{x} =
+		\begin{cases*}
+			0                          & (\(x = 0\)のとき), \\
+			\apply{\pairfunc_1}{x} + 1 & (それ以外のとき)
+		\end{cases*}
+		\label{eq:finitesequencecodelengthdefinition}
+	\end{equation}
+	と表示できる．
+\end{Def}
+
+\index[sidx]{\(\codefunctioninv{x}{i}\)：コードから有限列を得る関数}
+\begin{Def} \label{Def:codefunctioninv}
+	与えられた1以上の自然数\(x\)に対し，\(x\)に対応している自然数からなる有限列
+	\(x_0, x_1, \dots, x_{n-1}\)における\(x_i\)を
+	\begin{equation}
+		\codefunctioninv{x}{i}
+		\label{eq:codefunctioninv}
+	\end{equation}
+	と表す．
+	\(\codefunctioninv{x}{i}\)は具体的に
+	\begin{equation}
+		\codefunctioninv{x}{i} =
+		\begin{cases*}
+			\apply{\pairfunc_2}{x} - 1                                   & (\(\apply{\lh}{x} = 1\)のとき) \\
+			\apply{\pairfunc_i^{\apply{\lh}{x}}}{\apply{\pairfunc_2}{x}} & (それ以外のとき)
+		\end{cases*}
+		\label{eq:codefunctioninvdefinition}
+	\end{equation}
+	と表示できる．
+
+	\(x = 0\)である，もしくは\(\apply{\lh}{x} \leq i\)である場合には\cref{eq:codefunctioninv}の値は0と約束する．
+\end{Def}
+
+\index[sidx]{\(x \codeconnection y\)：有限列の連結に対応するコード}
+\begin{Def} \label{Def:codeconnection}
+	自然数\(x, y\)に対し，\(x = \finitesequencecode{x_0, x_1, \dots, x_{n-1}}, y = \finitesequencecode{y_0, y_1, \dots, y_{m-1}}\)
+	としたとき，
+	\begin{equation}
+		x \codeconnection y = \finitesequencecode{x_0, x_1, \dots, x_{n-1}, y_0, y_1, \dots, y_{m-1}}
+		\label{eq:codeconnection}
+	\end{equation}
+	と定める．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma:codeconnection}
+	関数\(\connectionfunc \colon \NaturalNumbers^3 \to \NaturalNumbers\)を以下のように帰納的に定義する：
+	\begin{align}
+		\begin{aligned}
+			\apply{\connectionfunc}{0, x, y}   & = y \quad \text{(\(x, y \in \NaturalNumbers\))},                                           \\
+			\apply{\connectionfunc}{n+1, x, y} & = \apply{\pairfunc}{\apply{\lh}{x}, \apply{\connectionfunc}{n, \apply{\pairfunc_1}{x}, y}}
+			\quad \text{(\(n, x, y \in \NaturalNumbers\))}.
+		\end{aligned}
+		\label{eq:codeconnectionfunc}
+	\end{align}
+
+	\(x, y \in \NaturalNumbers\)に対する\(x \codeconnection y\)は，上記\(\connectionfunc\)を用いて
+	\begin{equation}
+		x \codeconnection y = \apply{\connectionfunc}{\apply{\lh}{x}, x, y}
+		\label{eq:codeconnectionconnectionfunc}
+	\end{equation}
+	と表せる．
+\end{Lemma}
+
+
+\Cref{chap:peanoarithmetic}での議論においては，
+ここで定義した種々の関数がCantorの対関数を使って具体的に表示できているという点も重要となる．

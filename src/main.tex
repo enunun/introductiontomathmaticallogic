@@ -24,15 +24,17 @@
 %
 \usepackage[no-math]{luatexja-fontspec}
 \usepackage{fontspec}
+\usepackage{mathtools}
 \usepackage{unicode-math}
-\setmainfont[Ligatures=TeX]{Libertinus Serif}
-\setsansfont[Ligatures=TeX]{Libertinus Sans}
-\setmonofont[Ligatures=TeX]{Libertinus Mono}
-\setmathfont{Libertinus Math}[math-style=ISO, bold-style=ISO]
+\setmainfont[Ligatures=TeX]{XITS}
+\setsansfont[Ligatures=TeX]{Fira sans}
+\setmonofont[Ligatures=TeX]{Fira mono}
+\setmathfont{XITS Math}[math-style=ISO, bold-style=ISO]
+\setmathfont{XITS Math}[range=cal, StylisticSet=1]
 \setmathfont{TeX Gyre Pagella Math}[range=bb]
-\setmathfont{TeX Gyre Pagella Math}[range={\DashVDash}]
-\setmathfont{TeX Gyre Pagella Math}[range={\dashVdash}]
-\setmathfont{Garamond Math}[range={\Coloneq}]
+%\setmathfont{TeX Gyre Pagella Math}[range={\DashVDash}]
+%\setmathfont{TeX Gyre Pagella Math}[range={\dashVdash}]
+%\setmathfont{Garamond Math}[range={\Coloneq}]
 \usepackage[HaranoAji]{luatexja-preset}
 \ltjsetparameter{jacharrange={-2,-3}}
 \usepackage{amsthm}
@@ -51,11 +53,22 @@
 \usepackage{framed}
 \usepackage{numbersets}
 
+\numberwithin{equation}{section}
+
 %\delimitershortfall=-.3pt
 
 \graphicspath{{./fig/}}
 
-%
+\DeclareFontFamily{OML}{nxlmi}{\skewchar \font =127}
+\DeclareFontShape{OML}{nxlmi}{m}{it}{
+	<-6.3>  nxlmi035
+	<6.3-8.6> nxlmi037
+	<8.6->  nxlmi03
+}{}
+\DeclareSymbolFont{gletters}{OML}{nxlmi}{m}{it}
+\DeclareMathSymbol{g}{\mathalpha}{gletters}{`g}
+
+%%
 %%%%%%%%%%%%%%%%%=============macro=======================%%%%%%%%%%%%%%
 %
 
@@ -87,6 +100,8 @@
 
 \NewDocumentCommand{\obj}{m}{\symtt{#1}}
 
+\NewDocumentCommand{\entireminus}{}{\mathbin{\dot{-}}}
+
 \DeclareMathOperator{\FV}{FV}
 \DeclareMathOperator{\BV}{BV}
 \DeclareMathOperator{\Var}{Var}
@@ -95,6 +110,22 @@
 \DeclareMathOperator{\Th}{Th}
 \DeclareMathOperator{\eDiag}{eDiag}
 \DeclareMathOperator{\Diag}{Diag}
+\DeclareMathOperator{\zero}{zero}
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\suc}{suc}
+\DeclareMathOperator{\truefunction}{true}
+\DeclareMathOperator{\falsefunction}{false}
+\NewDocumentCommand{\pairfunc}{}{J}
+\NewDocumentCommand{\connectionfunc}{}{\mathit{jp}}
+\DeclareMathOperator{\lh}{lh}
+\NewDocumentCommand{\codefunctioninv}{mm}{\paren{#1}_{#2}}
+\DeclareMathOperator{\rem}{rem}
+\DeclareMathOperator{\quo}{quo}
+\NewDocumentCommand{\characteristicfunction}{m}{\chi_{#1}}
+\DeclareMathOperator{\ProofPredicate}{Proof}
+\DeclareMathOperator{\Bew}{Bew}
+\DeclareMathOperator{\Bewstar}{Bew^{\ast}}
+\DeclareMathOperator{\Con}{Con}
 
 \NewDocumentCommand{\subst}{smm}{%
 \IfBooleanTF{#1}{#2[{#3}]%
@@ -126,6 +157,15 @@
 }
 
 \NewDocumentCommand{\length}{sm}{%
+	\IfBooleanTF{#1}{%
+		\vertbracket*{#2}
+	}%
+	{%
+		\vertbracket{#2}%
+	}%
+}
+
+\NewDocumentCommand{\absolute}{sm}{%
 	\IfBooleanTF{#1}{%
 		\vertbracket*{#2}
 	}%
@@ -245,15 +285,28 @@
 
 \NewDocumentCommand{\Ar}{}{\symup{Ar}}
 
+\NewDocumentCommand{\muoperator}{}{\mu}
+
+\NewDocumentCommand{\GodelNumber}{m}{\mathopen{}\left\ulcorner #1 \right\urcorner\mathclose{}}
+
+\NewDocumentCommand{\symbolcode}{m}{\GodelNumber{#1}}
+
+\NewDocumentCommand{\finitesequencecode}{m}{\langle #1 \rangle}
+
+\NewDocumentCommand{\codeconnection}{}{\mathbin{\ast}}
+
+\NewDocumentCommand{\complementset}{m}{{#1}^{c}}
+
+\NewDocumentCommand{\partialequal}{}{\sim}
 %
 %%%%%%%%%%%%%%=======================theorem==================%%%%%%%%%%%%%
 %
 %
 \theoremstyle{definition}
-\newtheorem{Def}{定義}[chapter]
+\newtheorem{Def}{定義}[section]
 \newtheorem{Thm}[Def]{定理}
 \newtheorem{Ex}[Def]{例}
-\newtheorem{Que}{演習}[chapter]
+\newtheorem{Que}{演習}[section]
 \newtheorem{Lemma}[Def]{補題}
 \newtheorem{Corollary}[Def]{系}
 \newtheorem{Note}[Def]{注意}
@@ -387,9 +440,9 @@
 \begin{document}
 
 \begin{titlepage}
-	\title{0から始める数理論理学入門 第2.6版}
+	\title{0から始める数理論理学入門 第3版}
 	\author{野口匠}
-	\date{2024年11月15日}
+	\date{2024年12月30日}
 	\maketitle
 \end{titlepage}
 

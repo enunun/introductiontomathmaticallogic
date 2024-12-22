@@ -963,3 +963,1076 @@ Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない�
 \begin{Corollary}
 	\(\Robinson, \SigmaFormulaInduction_n, \PA\)はすべて\(\SigmaFormula_1\)完全である．
 \end{Corollary}
+
+
+
+\section{Gödel数による算術化} \label[section]{sec:godelnumbering}
+
+\Cref{sec:peanoarithmetic}では，1階Peano算術が自然数に関する性質をある程度表現できることを見た．
+不完全性定理に関する議論の中核となるのは，自然数とは無関係なはずの「証明」を1階Peano算術という体系内で扱うことにある．
+そのための基本的な道具となるのがGödel数という概念である．
+
+Gödel数は，項や論理式に対して一意な自然数を割り当てることによって得られる．
+この割り当てにより項や論理式が自然数と同一視されるため，項や論理式に対する操作やそれらの間の関係が自然数同士の関係として表現することができる．
+このようにして，形式体系そのものに対するメタ側の主張を自然数への翻訳を通して論理式によって表現することができる．
+この「翻訳」を算術化といい，算術化によって「証明可能性」という主張そのものが論理式によって表現され，それが形式体系の定理であるかどうかを議論することが可能となる．
+
+
+Gödel数を定義する文脈においては「項や論理式が自然数として表現できること」が重要であって「その値が具体的にいくつであるか」は重要ではない．
+そのため，Gödel数の定義は異なったものがいくつも知られており，採用する記号によっても千差万別である．
+準備は\cref{sec:codizeforfinitesequence}ですでに済んでいるので，以降ではGödel数を実際に定義していく．
+
+なお，変数記号全体の集合は可算集合であるため，それらを列として並べて\(v_0, v_1, v_2, \dots\)のように表現することができる．
+以下，変数記号はそのような列として表現されているものとする．
+
+まずはベースとなる記号に自然数をコードとして割り振ることを考える．
+
+\begin{Def}[共通記号のコード] \label{Def:symbolGodelNumber}
+	\Cref{sec:language}の\cref{tab:commonsymbol}で挙げた
+	記号\(\alpha\)に割り当てるコード\(\symbolcode{\alpha}\)を\cref{tab:symbolcode}で定める：
+
+	\begin{table}[htbp]
+		\centering
+		\caption{共通記号のコード}
+		\label{tab:symbolcode}
+		\begin{tabular}{c|ccccccccc}
+			\hline
+			\(\alpha\)              & \(\bot\) & \(\objeq\) & \(\lnot\) & \(\land\) & \(\lor\) & \(\to\) & \(\forall\) & \(\exists\) & \(v_n\)                        \\
+			\(\symbolcode{\alpha}\) & 1        & 2          & 3         & 4         & 5        & 6       & 7           & 8           & \(\finitesequencecode{13, n}\) \\
+			\hline
+		\end{tabular}
+	\end{table}
+
+	ここで，\(v_n\)のコードは\cref{Def:Arithmeticsymbolcode}におけるコードと被らないように決めている．
+\end{Def}
+
+\begin{Def}[\(\symcal{L}_{\Ar}\)の各記号のコード] \label{Def:Arithmeticsymbolcode}
+	\(\symcal{L}_{\Ar}\)の各記号\(\alpha\)に対し，そのコード\(\symbolcode{\alpha}\)を\cref{tab:Arithmeticsymbolcode}で定める：
+
+	\begin{table}[htbp]
+		\centering
+		\caption{\(\symcal{L}_{\Ar}\)の記号のコード}
+		\label{tab:Arithmeticsymbolcode}
+		\begin{tabular}{c|ccccc}
+			\hline
+			\(\alpha\)              & \(\obj{0}\) & \(\obj{1}\) & \(\obj{+}\)                    & \(\obj{\cdot}\)                & \(\obj{<}\)                    \\
+			\(\symbolcode{\alpha}\) & 9           & 10          & \(\finitesequencecode{11, 1}\) & \(\finitesequencecode{11, 2}\) & \(\finitesequencecode{12, 1}\) \\
+			\hline
+		\end{tabular}
+	\end{table}
+\end{Def}
+
+各記号のコードを用いて，実際にGödel数を定義しよう．
+
+\index[sidx]{\(\GodelNumber{\alpha}\)：Gödel数}%
+\index[widx]{Gödelすう@Gödel数}%
+\begin{Def}[Gödel数の表記] \label{Def:GodelNumbernotation}
+	Gödel数が定義される数学的対象\(\alpha\)に対し，そのGödel数を記号のコードのときと同じ記法で%
+	\begin{equation}
+		\GodelNumber{\alpha}
+		\label{eq:GodelNumber}
+	\end{equation}
+	と表す．
+\end{Def}
+
+
+\begin{Def}[項のGödel数] \label{Def:termGodelNumber}
+	\(\symcal{L}_{\Ar}\)項\(t\)のGödel数\(\GodelNumber{t}\)を，以下のように帰納的に定義する：
+	\begin{enumerate}
+		\item \(t\)が定数記号か変数記号であるならば，その記号のコードをそのまま\(t\)のGödel数とする．
+		\item \(t\)がアリティ\(n\)の関数記号\(f\)と項\(t_1, t_2, \dots, t_n\)を用いて\(\apply{f}{t_1, t_2, \dots, t_n}\)と表されている場合，
+		      \(t\)のGödel数は\(f\)のコードと\(t_1, t_2, \dots, t_n\)のGödel数を用いて
+		      \begin{equation}
+			      \GodelNumber{t} = \finitesequencecode{\symbolcode{f}, \GodelNumber{t_1}, \GodelNumber{t_2}, \dots, \GodelNumber{t_n}}
+			      \label{eq:termGodelNumber}
+		      \end{equation}
+		      と定める．
+	\end{enumerate}
+\end{Def}
+
+\begin{Def}[論理式のGödel数] \label{Def:formulaGodelNumber}
+	\(\symcal{L}_{\Ar}\)論理式のGödel数を以下のように帰納的に定義する：
+	\begin{align}
+		\GodelNumber{\bot}                            & = 1,
+		\label{eq:botGodelNumber}                                                                                                                              \\
+		\GodelNumber{t_1 \objeq t_2}                  & = \finitesequencecode{\symbolcode{\objeq}, \GodelNumber{t_1}, \GodelNumber{t_2}},
+		\label{eq:equationGodelNumber}                                                                                                                         \\
+		\GodelNumber{\apply{r}{t_1, t_2, \dots, t_n}} & = \finitesequencecode{\symbolcode{r}, \GodelNumber{t_1}, \GodelNumber{t_2}, \dots, \GodelNumber{t_n}},
+		\label{eq:relationalsymbolGodelNumber}                                                                                                                 \\
+		\GodelNumber{\lnot\varphi}                    & = \finitesequencecode{\symbolcode{\lnot}, \GodelNumber{\varphi}},
+		\label{eq:lnotGodelNumber}                                                                                                                             \\
+		\GodelNumber{\varphi \land \psi}              & = \finitesequencecode{\symbolcode{\land}, \GodelNumber{\varphi}, \GodelNumber{\psi}},
+		\label{eq:landGodelNumber}                                                                                                                             \\
+		\GodelNumber{\varphi \lor \psi}               & = \finitesequencecode{\symbolcode{\lor}, \GodelNumber{\varphi}, \GodelNumber{\psi}},
+		\label{eq:lorGodelNumber}                                                                                                                              \\
+		\GodelNumber{\varphi \to \psi}                & = \finitesequencecode{\symbolcode{\to}, \GodelNumber{\varphi}, \GodelNumber{\psi}},
+		\label{eq:toGodelNumber}                                                                                                                               \\
+		\GodelNumber{\forall x \varphi}               & = \finitesequencecode{\symbolcode{\forall}, \symbolcode{x}, \GodelNumber{\varphi}},
+		\label{eq:forallGodelNumber}                                                                                                                           \\
+		\GodelNumber{\exists x \varphi}               & = \finitesequencecode{\symbolcode{\exists}, \symbolcode{x}, \GodelNumber{\varphi}}.
+		\label{eq:existsGodelNumber}
+	\end{align}
+	ここで，\(t_1, t_2, \dots, t_n\)は\(\symcal{L}_{\Ar}\)項で，\(x\)は変数記号，\(\varphi, \psi\)は\(\symcal{L}_{\Ar}\)論理式である．
+\end{Def}
+
+\begin{Def}[シークエントのGödel数] \label{Def:sequentGodelNumber}
+	\(\varphi_1, \varphi_2, \dots, \varphi_n, \varphi\)を\(\symcal{L}_{\Ar}\)論理式とする．
+	このとき，シークエント
+	\[
+		\varphi_1, \varphi_2, \dots, \varphi_n \sequent \varphi
+	\]
+	のGödel数を以下のように定義する：
+	\begin{equation}
+		\GodelNumber{\varphi_1, \varphi_2, \dots, \varphi_n \sequent \varphi} =
+		\finitesequencecode{
+			\GodelNumber{\varphi_1},
+			\GodelNumber{\varphi_2},
+			\dots,
+			\GodelNumber{\varphi_n},
+			\GodelNumber{\varphi}
+		}.
+		\label{eq:sequentGodelNumber}
+	\end{equation}
+	ただし，右辺も左辺も空なシークエントに対しては，そのGödel数は\cref{Def:codizeforfinitesequence}で空列に与えたコード\(\finitesequencecode{} = 0\)とする．
+\end{Def}
+
+\begin{Def}[証明図のGödel数] \label{Def:proofdiagramGodelNumber}
+	シークエント\(S\)を下段とする自然演繹式シークエント計算における証明図\(\symcal{K}\)のGödel数\(\GodelNumber{\symcal{K}}\)を，
+	以下のように帰納的に定義する：
+	\begin{enumerate}
+		\item \(\symcal{K}\)が\cref{Def:axiom}で述べた2つの証明図（つまり公理から得られるもの）であるならば，\(\symcal{L}\)のGödel数は\(S\)のGödel数をそのまま用いる．
+		      すなわち，\(\GodelNumber{\symcal{K}} = \GodelNumber{S}\)と定義する．
+		\item \(\symcal{K}\)が以下のいずれかの形である場合を考える．
+		      \begin{multicols}{3}
+			      \begin{prooftree}
+				      \AxiomC{\(\symcal{A}\)}
+				      \UnaryInfC{\(S\)}
+			      \end{prooftree}
+			      \columnbreak
+			      \begin{prooftree}
+				      \AxiomC{\(\symcal{A}\)}
+				      \AxiomC{\(\symcal{B}\)}
+				      \BinaryInfC{\(S\)}
+			      \end{prooftree}
+			      \columnbreak
+			      \begin{prooftree}
+				      \AxiomC{\(\symcal{A}\)}
+				      \AxiomC{\(\symcal{B}\)}
+				      \AxiomC{\(\symcal{C}\)}
+				      \TrinaryInfC{\(S\)}
+			      \end{prooftree}
+		      \end{multicols}
+		      このとき，\(\symcal{K}\)のGödel数\(\GodelNumber{\symcal{K}}\)はそれぞれ以下で定義する：
+		      \begin{align}
+			       & \finitesequencecode{15, \GodelNumber{S}, \GodelNumber{\symcal{A}}},
+			      \label{eq:unaryinfgodelnumber}                                                                                             \\
+			       & \finitesequencecode{16, \GodelNumber{S}, \GodelNumber{\symcal{A}}, \GodelNumber{\symcal{B}}},
+			      \label{eq:binaryinfgodelnumber}                                                                                            \\
+			       & \finitesequencecode{17, \GodelNumber{S}, \GodelNumber{\symcal{A}}, \GodelNumber{\symcal{B}}, \GodelNumber{\symcal{C}}}.
+			      \label{eq:trinaryinfgodelnumber}
+		      \end{align}
+	\end{enumerate}
+\end{Def}
+
+以上の議論により，項，論理式，証明図に対して一意の自然数がGödel数として割り振られた．
+このことにより，項や論理式，および証明図に対する主張が自然数に関する主張として翻訳できることになる．
+
+\begin{Ex} \label[Ex]{Ex:variableGodelNumber}
+	記号\(x\)に対し「\(x\)は変数記号である」という主張に対応する自然数に関する主張として，自然数\(\hat{x}\)に関する
+	\[
+		\text{\(\hat{x} = \symbolcode{13, n}\)となる自然数\(n\)が存在する}
+	\]
+	が挙げられる．すなわち，
+	\[
+		\text{\(x\)のGödel数が\(\hat{x}\)である} \metaequivalent
+		\text{\(\hat{x} = \symbolcode{13, n}\)となる自然数\(n\)が存在する}
+	\]
+	が成り立っている．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:provableGodelNumber}
+	\(T\)を理論，\(\varphi\)を論理式とする．
+	「\(T \provable \varphi\)」という主張に対応する自然数に関する主張として，
+	以下をすべて満たす自然数\(n_1, n_2, n_3, n\)が存在することを挙げることができる：
+	\begin{enumerate}
+		\item \(n_1\)はある証明図\(\symcal{K}\)のGödel数である．
+		\item \(n_2\)はあるシークエント\(S\)のGödel数である．
+		\item \(n_3\)は\(\varphi\)のGödel数である．
+		\item \(\symcal{K}\)の最下段は\(S\)である，すなわち\(\codefunctioninv{n_1}{2} = n_2\)である．
+		\item \(S\)の左辺が空である，すなわち\(\apply{\lh}{n_2} = 1\)であるか，空でない場合には\(\apply{\lh}{n_2} = n + 1\)であって
+		      \(S\)の左辺に現れる各論理式のGödel数
+		      \(
+		      \codefunctioninv{n_2}{1},
+		      \codefunctioninv{n_2}{2},
+		      \dots,
+		      \codefunctioninv{n_2}{n}
+		      \)
+		      がいずれも\(T\)のある論理式のGödel数と一致する．
+		\item \(\varphi\)が\(S\)の右辺である，すなわち\(\codefunctioninv{n_2}{\apply{\lh}{n_2}} = n_3\)が成り立つ．
+	\end{enumerate}
+
+	\(T \provable \varphi\)と上記条件をすべて満たす自然数\(n_1, n_2, n_3\)が存在することは同値である．
+\end{Ex}
+
+上記の議論だけではまだ項や論理式，および証明図に対する主張が1階Peano算術で扱えるとまではいえない．
+もう少し深い議論をするために，次節で別の準備を行う．
+
+\section{帰納的関数} \label[section]{sec:recursivefunction}
+
+\Cref{sec:godelnumbering}では，項や論理式，および証明図に対する主張が自然数に関する主張として扱えることを見た．
+本節では，自然数に関する関数や関係に対して考察する．
+
+ここで述べる帰納的関数は，素朴にはコンピュータによって計算できる関数だと解釈できる．
+本書で採用した定義からはコンピュータでの計算というイメージはつきにくいが，
+別の同値な定義も知られており，その定義からはコンピュータでの計算というイメージがつきやすい．
+このことから，帰納的関数は計算可能関数とも呼ばれており，計算理論において重要な対象である．
+
+例えば廣瀬\cite{hirose2024}では，抽象機械を介さない計算可能関数の定式化と本書で述べる意味での帰納的関数との同一性が証明されている．
+本書では計算可能関数については述べないので，より詳しく知りたい人は先に述べた文献を参照するとよい．
+
+\index[widx]{きのうてきかんすう@帰納的関数}
+\index[widx]{きのうてきかんすう@帰納的関数!げんしきのうてきかんすう@原始---}
+\index[widx]{ぜろかんすう@ゼロ関数}
+\index[widx]{こうしゃかんすう@後者関数}
+\index[widx]{しゃえいかんすう@射影関数}
+\index[sidx]{\(\muoperator\)：\(\muoperator\)作用素}
+\index[widx]{\(\muoperator\)さようそ@\(\muoperator\)さようそ}
+\index[sidx]{\(\zero^n\)：ゼロ関数}
+\index[sidx]{\(\proj_i^n\)：射影関数}
+\index[sidx]{\(\suc\)：後者関数}
+\begin{Def} \label{Def:recursivefunction}
+	\term{帰納的関数}は以下のように帰納的に定義される：
+	\begin{enumerate}
+		\item 正の整数\(n\)に対して\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への関数\(x \mapsto 0\)は帰納的関数である．
+		      この関数を
+		      \begin{equation}
+			      \zero^n
+			      \label{eq:zerofunction}
+		      \end{equation}
+		      と表す．
+		      各\(n\)に対する\(\zero^n\)を総称してゼロ関数呼ぶ．
+		\item \(\NaturalNumbers\)から\(\NaturalNumbers\)への関数\(x \mapsto x + 1\)は帰納的関数である．この関数を後者関数と呼び，
+		      \begin{equation}
+			      \suc
+			      \label{eq:sucfunction}
+		      \end{equation}
+		      と表す．
+		\item \(n\)を正の整数とする．\(i=1,2,\dots, n\)に対して，\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への関数\(\pair{x_1, \dots, x_n} \mapsto x_i\)は帰納的関数である．
+		      この関数を
+		      \begin{equation}
+			      \proj_i^n
+		      \end{equation}
+		      と表す．
+		      各\(i, n\)に対する\(\proj_i^n\)を総称して射影関数と呼ぶ．
+		\item \(n,m\)を正の整数とする．\(h \colon \NaturalNumbers^m \to \NaturalNumbers\)が帰納的関数で，
+		      \(i = 1,2,\dots,m\)に対して\(g_i \colon \NaturalNumbers^n \to \NaturalNumbers\)が帰納的関数ならば，
+		      \begin{align*}
+			      \apply{f}{x_1, \dots, x_n} = \apply{h}{
+				      \apply{g_1}{x_1, \dots, x_n},
+				      \apply{g_2}{x_1, \dots, x_n},
+				      \dots,
+				      \apply{g_m}{x_1, \dots, x_n}
+			      } \\
+			      \text{(\(x_1, \dots, x_n \in \NaturalNumbers\))}
+		      \end{align*}
+		      で定義される関数\(f \colon \NaturalNumbers^n \to \NaturalNumbers\)は帰納的関数である．
+		      \(f\)は\(g, h\)から関数合成によって得られる関数である．
+		\item \(n\)を正の整数とする．\(g \colon \NaturalNumbers^n \to \NaturalNumbers\)と\(h \colon \NaturalNumbers^{n+2}\)がともに帰納的関数ならば，
+		      \begin{align*}
+			      \apply{f}{x_1, x_2, \dots, x_n}        & = \apply{g}{x_1, x_2, \dots, x_n} \quad \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}, \\
+			      \apply{f}{x_1, x_2, \dots, x_n, y + 1} & = \apply{h}{x_1, x_2, \dots, x_n, y, \apply{f}{x_1, x_2, \dots, x_n}}                          \\
+			                                             & \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}
+		      \end{align*}
+		      で定義される関数\(f \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)は帰納的関数である．
+		      \(f\)は\(g, h\)から原始帰納法によって定義される関数である．
+		\item \(g \colon \NaturalNumbers^{n + 1} \to \NaturalNumbers\)は帰納的関数で，すべての\(x_1, x_2, \dots, x_n\)に対して
+		      \(\apply{g}{x_1, x_2, \dots, x_n, y} = 0\)となる\(y\)が存在したとする．
+		      そのような\(y\)のうち最小のものを
+		      \begin{equation}
+			      \apply{\muoperator y}{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}
+			      \label{eq:muoperator}
+		      \end{equation}
+		      と表すこととする．記号\(\muoperator\)を
+		      \term{\(\muoperator\)作用素}と呼ぶことがある．
+		      このとき，
+		      \[
+			      \apply{f}{x_1, \dots, x_n} = \apply{\muoperator y}{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}
+			      \quad \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}
+		      \]
+		      で定義される関数\(f \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)は帰納的関数である．
+		\item 以上の規則を有限回適用して得られる関数のみが帰納的関数である．
+	\end{enumerate}
+
+	また，規則6を1度も適用せずに得られる帰納的関数を特に
+	\term{原始帰納的関数}と呼ぶ．
+\end{Def}
+
+\begin{Note}
+	与えられた帰納的関数について，その構成過程は一意に定まらない．
+	例えば，ゼロ関数は何回合成してもゼロ関数である．
+	よって，帰納的関数同士の関係としてその定義に付随する順序が整礎であるとはいえない．
+	しかし，それぞれの定義同士の関係としての順序は整礎である．
+	そのため，帰納的関数の構成に関する帰納法を利用する場合，代わりにその定義の構成に関する帰納法を用いる．
+	帰納的関数に関する定理の主張の証明としてはこれで問題ないので，
+	帰納的関数の定義の構成に関する帰納法も帰納的関数の構成に関する帰納法と呼ぶことが多い．
+\end{Note}
+
+\begin{Ex} \label[Ex]{Ex:constantprimitiverecursive}
+	\(c\)を自然数とする．このとき，正の整数\(n\)に対して\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への定数関数\(x \mapsto c\)は原始帰納的関数である．
+	これを示そう．原始帰納的関数全体の集合を\(\symcal{F}\)として，以下のように写像\(F \colon \NaturalNumbers \to \symcal{F}\)を帰納的に定義する：
+	\begin{align*}
+		\apply{F}{0}     & = \zero^1,                                                                  \\
+		\apply{F}{n + 1} & = \suc \circ \paren{\apply{F}{n}} \quad \text{(\(n \in \NaturalNumbers\))}.
+	\end{align*}
+	この\(F\)に対し，\(\apply{F}{c}\)は定数関数\(x \mapsto c\)である．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:identitypromitiverecursive}
+	\(\NaturalNumbers\)上の恒等写像\(\iota \colon x \mapsto x\)は原始帰納的関数である．
+	実際，関数\(\iota_0 \colon \NaturalNumbers^2 \to \NaturalNumbers\)を以下のように原始帰納法によって定義すると，恒等写像\(\iota\)は\(\iota_0\)と
+	射影関数\(\proj_2^2\)の合成によって定義できる．
+	\begin{align*}
+		\apply{\iota_0}{x, 0}     & = \apply{\zero}{x, 0} \quad \text{(\(x \in \NaturalNumbers\))},    \\
+		\apply{\iota_0}{x, y + 1} & = \apply{\suc}{{\apply{\proj_2^3}{{x, y, \apply{\iota_0}{x, y}}}}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+	ここで，規則5における関数\(g, h\)としてそれぞれ\(\zero^2\)と\(\suc \circ \proj_2^3\)をとった．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:addition}
+	加法を表す\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への関数\(\pair{x_1, x_2} \mapsto x_1 + x_2\)は原始帰納的関数である．
+	実際，以下のように原始帰納法によって定義される関数\(p \colon \NaturalNumbers^2 \to \NaturalNumbers\)が加法を表す関数に相当する：
+	\begin{align*}
+		\apply{p}{x, 0}     & = \apply{\proj_1^2}{x, 0}
+		\quad \text{(\(x \in \NaturalNumbers\))},                                      \\
+		\apply{p}{x, y + 1} & = \apply{\suc}{\apply{\proj_3^3}{x, y, \apply{p}{x, y}}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:predecessorprimitiverecursive}
+	自然数\(x\)の前者\(x - 1\)を表す関数\(m \colon \NaturalNumbers \to \NaturalNumbers\)は原始帰納的関数である．
+	実際，\(m\)は原始帰納法によって以下のように定義される関数\(m_0\)と\(\proj_2^2\)との合成によって定義できる：
+	\begin{align*}
+		\apply{m_0}{x, 0}     & = \apply{\zero^2}{x, 0}	\quad \text{(\(x \in \NaturalNumbers\))}, \\
+		\apply{m_0}{x, y + 1} & = \apply{\proj_2^3}{x, y, \apply{m_0}{x}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+
+	「\(\apply{m}{x}\)で\(x\)の前者を表す」という意図に沿って考えると，
+	本来\(\apply{m}{0}\)は\(0-1\)となるべきだが，これは自然数ではないので便宜的にその値を\(0\)としている．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:minusprimitiverecursivefunction}
+	減法を表す\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への以下の関数\(\entireminus\)は原始帰納的関数である．
+	実際，以下のように原始帰納法によって定義される関数\(d \colon  \NaturalNumbers^2 \to \NaturalNumbers\)が減法を表す関数に相当する：
+	\begin{align*}
+		\apply{d}{x, 0}     & = \apply{\proj_1^2}{x}
+		\quad \text{(\(x \in \NaturalNumbers\))},                                   \\
+		\apply{d}{x, y + 1} & = \apply{\proj_3^3}{x, y, \apply{m}{\apply{d}{x, y}}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+	ここで，\(m \colon \NaturalNumbers \to \NaturalNumbers\)は\cref{Ex:predecessorprimitiverecursive}における前者を表す関数である．
+
+	\(x, y \in \NaturalNumbers\)に対する\(\apply{d}{x, y}\)を
+	\begin{equation}
+		x \entireminus y
+		\label{eq:entireminus}
+	\end{equation}
+	と表す．
+	\(x \geq y\)ならば\(x \entireminus y = x - y\)であり（つまり通常の減法と同じ），\(x < y\)ならば\(x \entireminus y = 0\)である．
+\end{Ex}
+
+\begin{Que} \label[Que]{Que:primitiverevursivefunction}
+	\(n\)を正の整数とする．
+	以下の\(\NaturalNumbers, \NaturalNumbers^2, \NaturalNumbers^n\)から\(\NaturalNumbers\)への関数はいずれも原始帰納的関数であることを示せ．
+	\begin{align*}
+		\pair{x, y}                 & \mapsto xy,                              \\
+		\pair{x, y}                 & \mapsto x^y,                             \\
+		x                           & \mapsto x!,                              \\
+		\pair{x_1, x_2, \dots, x_n} & \mapsto \max \Set{x_1, x_2, \dots, x_n}, \\
+		\pair{x_1, x_2, \dots, x_n} & \mapsto \min \Set{x_1, x_2, \dots, x_n}.
+	\end{align*}
+	ただし，\(0! = 0^0 = 1\)と決めておくこととする．
+\end{Que}
+
+\index[sidx]{\(\truefunction\)：真であることを表す関数}
+\index[sidx]{\(\falsefunction\)：偽であることを表す関数}
+\begin{Que} \label[Que]{Que:truefalseprimitiverecursive}
+	以下で定義される関数\(\truefunction, \falsefunction \colon \NaturalNumbers \to \NaturalNumbers\)が原始帰納的関数であることを示せ：
+	\begin{align}
+		\apply{\truefunction}{x}  & =
+		\begin{cases*}
+			0 & (\(x = 0\)のとき), \\
+			1 & (それ以外のとき),
+		\end{cases*}
+		\label{eq:trueprimitiverecursive} \\
+		\apply{\falsefunction}{x} & =
+		\begin{cases*}
+			1 & (\(x = 0\)のとき), \\
+			0 & (それ以外のとき).
+		\end{cases*}
+		\label{eq:falseprimitiverecursive}
+	\end{align}
+\end{Que}
+
+上記の例や\cref{Que:primitiverevursivefunction}により，以下の主張が従う．
+
+\begin{Lemma} \label[Lemma]{lemma:recursivefunctionoperation}
+	原始帰納的関数の和，（\(\entireminus\)の意味での）差，積，べき乗によって表される関数はすべて原始帰納的関数であり，
+	帰納的関数の和，（\(\entireminus\)の意味での）差，積，べき乗によって表される関数はすべて帰納的関数である．
+\end{Lemma}
+
+\begin{Que} \label[Que]{Que:absolutedifferenceprimitiverecursive}
+	以下の関数は原始帰納的関数であることを示せ．
+	\[
+		\pair{x, y} \mapsto \absolute{x - y}
+	\]
+\end{Que}
+
+\begin{Que} \label[Que]{Que:remquoprimitiverecursive}
+	以下の関数は原始帰納的関数であることを示せ．
+	\begin{enumerate}
+		\item \(x, y \in \NaturalNumbers\)に対し，\(y = 0\)ならば\(x\)を，\(y \neq 0\)ならば\(x\)を\(y\)で割った余りをそれぞれ対応させる関数\(\rem \colon \NaturalNumbers^2 \to \NaturalNumbers\)，
+		\item \(x, y \in \NaturalNumbers\)に対し，\(y = 0\)ならば0を\(y \neq 0\)ならば\(x\)を\(y\)で割った商をそれぞれ対応させる\(\quo \colon \NaturalNumbers^2 \to \NaturalNumbers\)．
+	\end{enumerate}
+\end{Que}
+
+以上の事実から，\cref{sec:codizeforfinitesequence}で定義したCantorの対関数や有限列のコード化に関する種々の関数が原始帰納的関数であることがわかる．
+
+\begin{Lemma} \label[Lemma]{lemma:codizeforfinitesequenceprimitiverecursive}
+	\Cref{sec:codizeforfinitesequence}で定義した関数\(\pairfunc, \pairfunc^n, \pairfunc_i^n, \connectionfunc\)はすべて原始帰納的関数である．
+	また，固定された自然数\(n\)に対して，
+	長さ\(n\)の自然数からなる有限列\(x_1, x_2, \dots, x_n\)をそのコード
+	\(\finitesequencecode{x_1, x_2, \dots, x_n}\)に対応させる\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への関数も原始帰納的関数である．
+	さらに，自然数\(i, x\)を\(\codefunctioninv{x}{i}\)に対応させる\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への関数と
+	自然数\(x, y\)を\(x \codeconnection y\)に対応させる\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への関数も原始帰納的関数である．
+\end{Lemma}
+
+\begin{Def} \label{Def:pisumprimitiverecursive}
+	\(n\)を正の整数とする．
+	関数\(\varphi \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)が与えられたとき，
+	\(x_1, x_2, \dots, x_n, z \in \NaturalNumbers\)に対して
+	\begin{align*}
+		\apply{\varphi}{x_1, x_2, \dots, x_n, 0}
+		+ \apply{\varphi}{x_1, x_2, \dots, x_n, 1}
+		+ \dots
+		+ \apply{\varphi}{x_1, x_2, \dots, x_n, z \entireminus 1}, \\
+		\apply{\varphi}{x_1, x_2, \dots, x_n, 0}
+		\times \apply{\varphi}{x_1, x_2, \dots, x_n, 1}
+		\times \dots
+		\times \apply{\varphi}{x_1, x_2, \dots, x_n, z \entireminus 1}
+	\end{align*}
+	をそれぞれ
+	\begin{align}
+		\sum_{y < z} \apply{\varphi}{x_1, x_2, \dots, x_n, y},
+		\label{eq:sumprimitiverecursive} \\
+		\prod_{y < z} \apply{\varphi}{x_1, x_2, \dots, x_n, y}
+		\label{eq:piprimitiverecursive}
+	\end{align}
+	と表す．ただし，\(z = 0\)のときは\cref{eq:sumprimitiverecursive}と\cref{eq:piprimitiverecursive}の値はそれぞれ
+	\(0, 1\)であるものとする．
+\end{Def}
+
+\Cref{lemma:recursivefunctionoperation}により，以下の定理が得られる．
+\begin{Lemma} \label[Lemma]{lemma:sumprimitiverecursive}
+	\(\varphi \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)が原始帰納的関数であるならば
+	\(\pair{x_1, x_2, \dots, x_n, z} \in \NaturalNumbers^{n + 1}\)を\cref{eq:sumprimitiverecursive}, \cref{eq:piprimitiverecursive}に対応させる
+	\(\NaturalNumbers^{n+1}\)から\(\NaturalNumbers\)への関数はいずれも原始帰納的関数であり，
+	\(\varphi\)が帰納的関数であるならば
+	\(\pair{x_1, x_2, \dots, x_n, z} \in \NaturalNumbers^{n + 1}\)を\cref{eq:sumprimitiverecursive}, \cref{eq:piprimitiverecursive}に対応させる
+	\(\NaturalNumbers^{n+1}\)から\(\NaturalNumbers\)への関数はいずれも帰納的関数である．
+\end{Lemma}
+
+\index[widx]{げんしきのうてきじゅつご@原始帰納的述語}
+\index[widx]{きのうてきじゅつご@帰納的述語}
+\begin{Def} \label{Def:recursivepredicate}
+	\(n\)を正の整数とする．\(\NaturalNumbers\)上の\(n\)項関係\(R \subset \NaturalNumbers^n\)が
+	\term{原始帰納的述語}であるとは，
+	以下で定義される\(R\)の特性関数\(\characteristicfunction{R} \colon \NaturalNumbers^n \to \NaturalNumbers\)が原始帰納的関数であることをいう：
+	\begin{align}
+		\apply{\characteristicfunction{R}}{x_1, x_2, \dots, x_n} =
+		\begin{cases*}
+			1 & (\(\pair{x_1, x_2, \dots, x_n} \in R\)のとき), \\
+			0 & (それ以外のとき).
+		\end{cases*}
+		\label{eq:characteristicfunction}
+	\end{align}
+	また，\(\characteristicfunction{R}\)が帰納的関数であるならば，\(R\)は\term{帰納的述語}であるという．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:recursivepredicate}
+	二項関係\(x = y, x < y\)は原始帰納的述語である．実際，それぞれの特性関数が
+	\begin{align*}
+		\characteristicfunction{x = y} & = \apply{\falsefunction}{\absolute{x-y}}  \\
+		\characteristicfunction{x < y} & = \apply{\truefunction}{y \entireminus x}
+	\end{align*}
+	と表せる．
+\end{Ex}
+
+\begin{Lemma} \label[Lemma]{lemma:relationoperationrecursive}
+	\(n\)を正の整数とする．\(R \subset \NaturalNumbers^n\)が原始帰納的述語であるならば，
+	\[
+		\complementset{R}
+	\]
+	も原始帰納的述語である．ここで，\(\complementset{R} = \NaturalNumbers^n \setminus R\)は\(R\)の補集合である．
+	また，\(R_1, R_2 \subset \NaturalNumbers^n\)が原始帰納的述語であるならば，
+	\begin{align*}
+		 & R_1 \cup R_2, \\
+		 & R_1 \cap R_2
+	\end{align*}
+	も原始帰納的述語である．
+	上記「原始帰納的」を「帰納的」に置き換えた主張も同様に成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	それぞれの特性関数が以下のように書けることから従う：
+	\begin{align*}
+		\apply{\characteristicfunction{\complementset{R}}}{x} & = \apply{\falsefunction}{\apply{\characteristicfunction{R}}{x}}
+		\quad \text{(\(x \in \NaturalNumbers^n\))},                                                                                                                        \\
+		\apply{\characteristicfunction{R_1 \cup R_2}}{x}      & = \apply{\truefunction}{\apply{\characteristicfunction{R_1}}{x} + \apply{\characteristicfunction{R_2}}{x}}
+		\quad \text{(\(x \in \NaturalNumbers^n\))},                                                                                                                        \\
+		\apply{\characteristicfunction{R_1 \cap R_2}}{x}      & = \apply{\characteristicfunction{R_1}}{x} \cdot \apply{\characteristicfunction{R_2}}{x}
+		\quad \text{(\(x \in \NaturalNumbers^n\))}.
+	\end{align*}
+\end{proof}
+
+\begin{Lemma} \label[Lemma]{lemma:casesrecursive}
+	\(n, m\)を正の整数とする．
+	\(R_1, R_2, \dots, R_m \subset \NaturalNumbers^n\)
+	を，どの2つも同時に成り立たない，つまり\(i \neq j\)ならば\(R_i \cap R_j = \emptyset\)であるような\(\NaturalNumbers\)上の\(n\)項関係とする．
+	関数\(\varphi_1, \varphi_2, \dots, \varphi_m, \varphi_{m+1} \colon \NaturalNumbers^n \to \NaturalNumbers\)に対して，
+	関数\(\varphi \colon \NaturalNumbers^n \to \NaturalNumbers\)を
+	\begin{align*}
+		\apply{\varphi}{x_1, x_2, \dots, x_n} =
+		\begin{cases*}
+			\apply{\varphi_1}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, x_2, \dots, x_n} \in R_1\)のとき), \\
+			\apply{\varphi_2}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, x_2, \dots, x_n} \in R_2\)のとき), \\
+			\dotsb                                      &                                               \\
+			\apply{\varphi_m}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, x_2, \dots, x_n} \in R_m\)のとき), \\
+			\apply{\varphi_{m+1}}{x_1, x_2, \dots, x_n} & (上記以外のとき)
+		\end{cases*}
+	\end{align*}
+	と定義する．このとき，以下が成り立つ．
+	\begin{enumerate}
+		\item 各\(R_i\)がすべて原始帰納的述語で，各\(\varphi_i\)がすべて原始帰納的関数であるならば，\(\varphi\)も原始帰納的関数である．
+		\item 各\(R_i\)がすべて帰納的述語で，各\(\varphi_i\)がすべて帰納的関数であるならば，\(\varphi\)も帰納的関数である．
+	\end{enumerate}
+\end{Lemma}
+
+\begin{proof}
+	\(\varphi\)が
+	\begin{align*}
+		\apply{\varphi}{x_1, x_2, \dots, x_n} = \sum_{i < m+1} \apply{\characteristicfunction{R_i}}{x_1, x_2, \dots, x_n} \cdot \apply{\varphi_i}{x_1, x_2, \dots, x_n} \\
+		\quad + \apply{\characteristicfunction{\complementset{\paren{R_1 \cup R_2 \cup \dotsb \cup R_m}}}}{x_1, x_2, \dots, x_n} \cdot \apply{\varphi_{m+1}}{x_1, x_2, \dots, x_n}
+	\end{align*}
+	と書けることから従う．
+\end{proof}
+
+\begin{Lemma} \label[Lemma]{lemma:forallexistsrecursive}
+	\(n\)を自然数とする．\(R\)を\(\NaturalNumbers\)上の\(n+1\)項関係とするとき，
+	以下で定義される\(n\)項関係\(R_1, R_2\)を考える．
+	\begin{align*}
+		                & \pair{x_1, x_2, \dots, x_n, z} \in R_1                                       \\
+		\metaequivalent & \text{\(\pair{x_1, x_2, \dots, x_n, y} \in R\)かつ\(y < z\)となる\(y\)が存在する},     \\
+		                & \pair{x_1, x_2, \dots, x_n, z} \in R_1                                       \\
+		\metaequivalent & \text{\(y < z\)となるすべての\(y\)に対して\(\pair{x_1, x_2, \dots, x_n, y} \in R\)となる}.
+	\end{align*}
+	このとき，\(R\)が原始帰納的述語であるならば\(R_1, R_2\)も原始帰納的述語であり，
+	\(R\)が帰納的述語ならば\(R_1, R_2\)も帰納的述語である．
+\end{Lemma}
+
+\begin{proof}
+	特性関数がそれぞれ
+	\begin{align*}
+		 & \apply{\truefunction}{\sum_{y < z} \apply{\characteristicfunction{R}}{x_1, x_2, \dots, x_n, y}}, \\
+		 & \apply{\truefunction}{\prod_{y < z} \apply{\characteristicfunction{R}}{x_1, x_2, \dots, x_n, y}} \\
+	\end{align*}
+	と表されることから従う．
+\end{proof}
+
+\index[sidx]{\(\muoperator_{y<z}\)：有界\(\muoperator\)演算子}
+\index[widx]{\(\muoperator\)さようそ@\(\muoperator\)さようそ!ゆうかい\(\muoperator\)作用素@有界---}
+\begin{Def} \label{Def:boundedmuoperator}
+	\(n\)を正の整数とし，\(R\)を\(\NaturalNumbers\)上の\(n\)項関係とする．
+	各\(x_1, x_2, \dots, x_n, z \in \NaturalNumbers\)に対して，
+	\(y < z\)かつ\(\pair{x_1, x_2, \dots, x_n, y} \in R\)となる\(y \in \NaturalNumbers\)が存在するならば
+	そのような\(y\)の最小値を，存在しないならば\(z\)を
+	\begin{equation}
+		\muoperator_{y < z} \apply{R}{x_1, x_2, \dots, x_n, y}
+		\label{eq:boundedmuoperator}
+	\end{equation}
+	と表す．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma:boundedmuoperatorrecursive}
+	\(R\)が原始帰納的述語であれば
+	\(\pair{x_1, x_2, \dots, x_n, z}\)に対して\cref{eq:boundedmuoperator}で定義される自然数を対応させる関数は原始帰納的関数である．
+	\(R\)が帰納的述語であれば
+	\(\pair{x_1, x_2, \dots, x_n, z}\)に対して\cref{eq:boundedmuoperator}で定義される自然数を対応させる関数は帰納的関数である．
+\end{Lemma}
+
+\begin{proof}
+	\[
+		\muoperator_{y<z} \apply{R}{x_1, x_2, \dots, x_n, y} = \sum_{w < z} \prod_{y < w} \apply{\characteristicfunction{\complementset{R}}}{x_1, x_2, \dots, x_n, y}
+	\]
+	と書けることから従う．
+\end{proof}
+
+
+以上の議論では，帰納的関数や原始帰納的関数は\(\NaturalNumbers^n\)上全域で定義された関数を対象にした．
+ここでは，必ずしも\(\NaturalNumbers^n\)上全域で定義されているとは限らない関数について考えよう．
+まずは以下のように記号を定義しておく．
+
+\index[sidx]{\(\partialequal\)：部分関数に対する等号の拡張}
+\index[widx]{ぶぶんかんすう@部分関数}
+\begin{Def} \label{Def:partialequal}
+	\(n\)を正の整数とする．\(X, Y \subset \NaturalNumbers^n\)に対して，
+	関数\(f \colon X \to \NaturalNumbers\)と関数\(g \colon Y \to \NaturalNumbers\)を考える．
+	このような\(f, g\)を\(\NaturalNumbers\)の\term{部分関数}という．
+	このとき，各\(x_1, x_2, \dots, x_n \in \NaturalNumbers\)に対して
+	\begin{equation}
+		\apply{f}{x_1, x_2, \dots, x_n} \partialequal \apply{g}{x_1, x_2, \dots, x_n}
+		\label{eq:partialequal}
+	\end{equation}
+	を，以下の表に従って定める．
+
+	\begin{table}[htbp]
+		\centering
+		\caption{\(\apply{f}{x_1, x_2, \dots, x_n} \partialequal \apply{g}{x_1, x_2, \dots, x_n}\)の真偽}
+		\label{tab:partialequal}
+		\begin{tabular}{cccc}
+			\toprule
+			\(\pair{x_1, x_2, \dots, x_n} \in X\) &
+			\(\pair{x_1, x_2, \dots, x_n} \in Y\) &
+			真偽                                                        \\
+			\midrule
+			成り立つ                                  & 成り立つ   & 通常の等号と同じ \\
+			成り立たない                                & 成り立つ   & 偽        \\
+			成り立つ                                  & 成り立たない & 偽        \\
+			成り立たない                                & 成り立たない & 真        \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+
+	ここで，\cref{tab:partialequal}における「通常の等号と同じ」とは，その真偽が
+	\[
+		\apply{f}{x_1, x_2, \dots, x_n} = \apply{g}{x_1, x_2, \dots, x_n}
+	\]
+	が成り立つことと同じであるという意味である．
+
+	また，\(X \subset \NaturalNumbers^n\)とするとき，\(X\)の部分集合\(R \subset X\)を\(n\)個の自然数の間の関係を表したものとみなすとき，
+	\(R\)を\(\NaturalNumbers^n\)上の\term{部分述語}という．
+	このとき，\(R\)の特性関数\(\characteristicfunction{R} \colon X \to \NaturalNumbers\)は，
+	\cref{eq:characteristicfunction}における\(\NaturalNumbers^n\)を\(X\)に置き換えることによって得られる．
+\end{Def}
+
+さて，上記の概念をもとにして定義域が\(\NaturalNumbers^n\)全域とは限らない場合の帰納的関数と原始帰納的関数を定義しよう．
+
+\index[widx]{きのうてきぶぶんかんすう@帰納的部分関数}
+\index[widx]{げんしきのうてきぶぶんかんすう@原始帰納的部分関数}
+\begin{Def} \label{Def:partialrecursivefunction}
+	\term{帰納的部分関数}は，以下のように帰納的に定義される：
+	\begin{enumerate}
+		\item ゼロ関数，後者関数，射影関数はいずれも帰納的部分関数である．
+		\item 合成と原始帰納法については，\cref{Def:recursivefunction}における等号を\(\partialequal\)に置き換えたもので同様に定義する．
+		\item \(g\)が\(\NaturalNumbers^{n+1}\)上の帰納的部分関数であるとき，
+		      \begin{equation}
+			      \apply{f}{x_1, x_2, \dots, x_n} \partialequal \muoperator y \paren{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}
+			      \label{eq:partialequalminimization}
+		      \end{equation}
+		      で定義される\(\NaturalNumbers^n\)上の部分関数\(f\)は帰納的部分関数である．
+		      ここで，\(\muoperator y \paren{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}\)の値が定義されており，
+		      その値が\(a\)であるとは，すべての\(b < a\)に対して\(\apply{g}{x_1, x_2, \dots, x_n, b}\)の値が定義されており，
+		      その値が0より大きく，しかも\(\apply{g}{x_1, x_2, \dots, x_n, a} = 0\)であることをいう．
+	\end{enumerate}
+
+	また，上記規則3を一度も適用せずに得られる帰納的部分関数をとくに
+	\term{原始帰納的部分関数}という．
+
+	さらに，\(\NaturalNumbers^n\)上の部分述語\(R\)が\term{帰納的部分述語}であるとは，
+	その特性関数が帰納的部分関数であることをいい，\(R\)が\term{原始帰納的部分述語}であるとは，
+	その特性関数が帰納的部分関数であることをいう．
+\end{Def}
+
+\Cref{Def:partialrecursivefunction}では，最小化において最小値の存在を仮定しなかった．
+これは，\(\apply{f}{x_1, x_2, \dots, x_n}\)の値が定義されている必要がなくなったことによる．
+
+帰納的関数において重要な結果となるのが以下に述べるKleeneの標準形定理である．
+証明には長い準備が必要なため，廣瀬\cite{hirose2024}を参照のこと．
+
+\index[widx]{Kleeneのひょうじゅんけいていり@Kleeneの標準形定理}
+\begin{Thm}[Kleeneの標準形定理]
+	\(n\)を正の整数とする．原始帰納的関数\(U \colon \NaturalNumbers \to \NaturalNumbers\)と
+	\(\NaturalNumbers^{n+1}\)が存在して，
+	任意の\(\NaturalNumbers^n\)上の帰納的部分関数は，自然数\(e\)を用いて
+	\begin{equation}
+		\apply{f}{x_1, x_2, \dots, x_n} \partialequal \apply{U}{\muoperator y \apply{T_n}{e, x_1, x_2, \dots, x_n, y}}
+		\quad \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}
+		\label{eq:kleenenormaltheorem}
+	\end{equation}
+	と表せる．ここで，\(\muoperator y \apply{T_n}{e, x_1, x_2, \dots, x_n, y}\)は，
+	\(\pair{e, x_1, x_2, \dots, x_n, y} \in T_n\)が成り立つような\(y\)のうち最小のものである．
+\end{Thm}
+
+\section{表現可能性} \label{sec:representation}
+
+Gödel数の議論を通して，我々は項や論理式，および証明図に対する主張を自然数に関する主張として翻訳できることを見た．
+ここでは，そのような自然数に関する主張が形式体系内で扱えるかどうかを考える．
+
+\index[widx]{ひょうげんされる@表現される}
+\index[widx]{ひょうげんされる@表現される!かんすうてきにひょうげんされる@関数的に---}
+\begin{Def} \label{Def:representation}
+	\(T\)を\(\symcal{L}_{\Ar}\)理論とする．
+	\(k\)を正の整数とするとき，集合\(X \subset \NaturalNumbers^k\)が\(T\)において論理式\(\apply{\varphi}{x_1, x_2, \dots, x_k}\)で
+	\term{表現される}とは，任意の自然数\(n_1, n_2, \dotsm n_k\)に対して以下が成り立つことをいう：
+	\begin{align}
+		\pair{n_1, n_2, \dots, n_k} \in X \metaimplies T \provable \apply{\varphi}{\numeral{n_1}, \numeral{n_2}, \dots, \numeral{n_k}},
+		\label{eq:representationtrue} \\
+		\pair{n_1, n_2, \dots, n_k} \notin X \metaimplies T \provable \lnot \apply{\varphi}{\numeral{n_1}, \numeral{n_2}, \dots, \numeral{n_k}}.
+		\label{eq:representationfalse}
+	\end{align}
+
+	また，関数\(f \colon \NaturalNumbers^k \to \NaturalNumbers\)が\(T\)において論理式\(\apply{\varphi}{x_1, x_2, \dots, x_k}\)で
+	\term{関数的に表現可能される}とは，
+	\(k + 1\)項関係\(\apply{f}{x_1, x_2, \dots, x_n} = y\)が\(\apply{\varphi}{x_1, x_2, \dots, x_n, y}\)で表現され，
+	かつ任意の任意の自然数\(n_1, n_2, \dotsm n_k\)に対して以下が成り立つことをいう：
+	\begin{equation}
+		T \provable \forall \obj{u} \forall \obj{v} \paren{
+			\apply{\varphi}{\numeral{n_1}, \dots, \numeral{n_k}, \obj{u}}
+			\land \apply{\varphi}{\numeral{n_1}, \dots, \numeral{n_k}, \obj{v}}
+			\to \obj{u} \objeq \obj{v}
+		}.
+		\label{eq:representationfunction}
+	\end{equation}
+\end{Def}
+
+\index[widx]{\(\SigmaFormula_i\)しゅうごう@\(\SigmaFormula_i\)集合}
+\index[widx]{\(\PiFormula_i\)しゅうごう@\(\PiFormula_i\)集合}
+\index[widx]{\(\DeltaFormula_i\)しゅうごう@\(\DeltaFormula_i\)集合}
+\index[widx]{\(\SigmaFormula_i\)かんすう@\(\SigmaFormula_i\)関数}
+\index[widx]{\(\PiFormula_i\)かんすう@\(\PiFormula_i\)関数}
+\index[widx]{\(\DeltaFormula_i\)かんすう@\(\DeltaFormula_i\)関数}
+\begin{Def} \label{Def:sigmaset}
+	\(k\)を正の整数とする．
+	集合\(X \subset \NaturalNumbers^k\)が\(\SigmaFormula_i\)集合であるとは，
+	以下を満たす\(\SigmaFormula_i\)論理式\(\apply{\varphi}{x_1, x_2, \dots, x_k}\)が存在することをいう：
+	\begin{equation}
+		\pair{n_1, n_2, \dots, n_k} \in X \metaequivalent \standardmodel \satisfy \apply{\varphi}{\numeral{n_1}, \numeral{n_2}, \dots, \numeral{n_k}}.
+		\label{eq:sigmaset}
+	\end{equation}
+	\(\PiFormula_i\)集合や\(\DeltaFormula_i\)集合も同様に定義される．
+
+	また，関数\(f \colon \NaturalNumbers^k \to \NaturalNumbers\)が\(\SigmaFormula_i\)関数であるとは，
+	そのグラフ
+	\[
+		\Set{\pair{x_1, x_2, \dots, x_k \apply{f}{x_1, x_2, \dots, x_k}} | x_1, x_2, \dots, x_k \in \NaturalNumbers}
+	\]
+	が\(\SigmaFormula_i\)集合であることをいう．
+	\(\PiFormula_i\)関数や\(\DeltaFormula_i\)関数も同様に定義される．
+\end{Def}
+
+\begin{Thm} \label[Thm]{Thm:delta1setrepresention}
+	任意の\(\DeltaFormula_1\)集合は，\(\RArithmetic\)において\(\SigmaFormula_1\)論理式で表現される．
+\end{Thm}
+
+\begin{proof}
+	\(\DeltaFormula_1\)集合\(X \subset \NaturalNumbers^k\)をとる．簡単のため，\(k = 1\)とする．
+	\(\SigmaFormula_0\)論理式\(\apply{\theta_1}{x, y}\)と\(\apply{\theta_2}{y, z}\)が存在して
+	\begin{align*}
+		n \in X    & \metaequivalent \standardmodel \satisfy \exists x \apply{\theta_1}{x, \numeral{n}} \\
+		n \notin X & \metaequivalent \standardmodel \satisfy \exists y \apply{\theta_1}{y, \numeral{n}}
+	\end{align*}
+	が成り立つ．ここで，\(\exists x_1 \exists x_2 \dotsb \exists x_n\)は\(\exists u \exists x_1 < u \exists x_2 < u \dotsb \exists x_n <u\)
+	と置き換えられるので，上記式の先頭の存在記号は1つでよい．
+	論理式\(\apply{\varphi}{z}\)を
+	\[
+		\exists x \paren{\apply{\theta_1}{x, z} \land \forall y < x \lnot \apply{\theta_2}{y, z}}
+	\]
+	と定めると，\(X\)は\(\apply{\varphi}{z}\)によって表現される．
+\end{proof}
+
+\begin{Thm} \label[Thm]{Thm:representationfunction}
+	任意の\(\DeltaFormula_1\)関数は，\(\RArithmetic\)において\(\SigmaFormula_1\)論理式によって関数的に表現される．
+\end{Thm}
+
+\begin{proof}
+	\(\DeltaFormula_1\)関数\(f \colon \NaturalNumbers^k \to \NaturalNumbers\)をとる．簡単のため，\(k = 1\)とする．
+	\Cref{Thm:delta1setrepresention}により，\(f\)のグラフを表現する\(\SigmaFormula_1\)論理式が存在する．
+	その論理式\(\apply{\theta}{x, y}\)を\(\SigmaFormula_0\)論理式\(\apply{\theta_0}{x, y, z}\)を用いて
+	\(\exists z \apply{\theta}{x, y, z}\)と表す．
+	論理式\(\apply{\psi}{x, y, z}\)を以下のように定める：
+	\[
+		\apply{\theta}{x, y, z} \land \forall \obj{u} < y \obj{+} \paren{z \obj{+} \obj{1}} \forall \obj{v} < y \obj{+} \paren{z \obj{+} \obj{1}}
+		\paren{\obj{u} \obj{+} \obj{v} \obj{<} y \obj{+} z \to \lnot \apply{\theta}{x, \obj{u}, \obj{v}}}
+	\]
+	このとき，\(\SigmaFormula_1\)論理式\(\exists z \apply{\psi}{x, y, z}\)が\(f\)を関数的に表現する．
+\end{proof}
+
+\(\DeltaFormula_1\)関数は\(\RArithmetic\)において表現可能であるが，原始帰納的関数は表現できず，
+\(\SigmaFormulaInduction_1\)なければならないことが知られている．
+以下の定理は，原始帰納的関数の構成に関する帰納法によって証明できる．
+
+\begin{Thm} \label[Thm]{Thm:primiverecursivefunctionrepresentation}
+	\(\SigmaFormulaInduction_1\)において，
+	任意の原始帰納的関数\(f\)のグラフは
+	\(\SigmaFormula_1\)論理式\(\apply{\varphi}{x_1, x_2, \dots, x_n, y, z}\)でも
+	\(\PiFormula_1\)論理式\(\apply{\psi}{x_1, x_2, \dots, x_n, y, z}\)でも表現される．
+	さらに，以下が成り立つ．
+	\begin{align*}
+		\SigmaFormulaInduction_1 & \provable \forall x_1 \forall x_2 \dotsb \forall x_n \forall y \uexists z \apply{\varphi}{x_1, x_2, \dots, x_n, y, z} \\
+		\SigmaFormulaInduction_1 & \provable \forall x_1 \forall x_2 \dotsb \forall x_n \forall y \uexists z \apply{\psi}{x_1, x_2, \dots, x_n, y, z}
+	\end{align*}
+\end{Thm}
+
+\index[widx]{げんしきのうてき@（集合が）原始帰納的}
+\index[widx]{きのうてき@（集合が）帰納的}
+\begin{Def} \label{Def:setrecursive}
+	\(k\)を正の整数とするとき，集合\(X \subset \NaturalNumbers^k\)が\term{原始帰納的}であるとは，
+	その特性関数\(\characteristicfunction{X}\)が原始帰納的であることをいう．
+	また，\(X\)が\term{帰納的}であるとは，\(\characteristicfunction{X}\)が帰納的であることをいう．
+\end{Def}
+
+Kleeneの標準形定理を用いると，以下の定理を証明できる．
+
+\begin{Thm} \label[Thm]{Thm:recursivedelta1equivalent}
+	帰納的集合（関数）と\(\DeltaFormula_1\)集合（関数）は等価である．
+	すなわち，すべての帰納的集合（関数）は\(\DeltaFormula_1\)集合（関数）でもあり，
+	すべての\(\DeltaFormula_1\)集合（関数）は帰納的集合（関数）でもある．
+\end{Thm}
+
+\section{第1不完全性定理} \label{sec:imcompletetheorem1}
+
+本節では，第1不完全性定理を定式化して証明する．
+まずは弱い形の第1不完全性定理を示すため，いくつかの準備を行う．
+
+\index[widx]{むじゅん@矛盾!1むむじゅん@1無---}
+\begin{Def} \label{Def:oneconsistent}
+	\(T\)を\(\symcal{L}_{\Ar}\)理論とする．
+	\(T\)が\term{1無矛盾}であるとは，
+	任意の\(\SigmaFormula_1\)文\(\varphi\)に対して
+	\[
+		T \provable \varphi \metaimplies \standardmodel \satisfy \varphi
+	\]
+	が成り立つことをいう．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma}
+	\(T\)を
+	\(\RArithmetic\)を含む1無矛盾な\(\symcal{L}_{\Ar}\)理論とする．
+	任意の\(\SigmaFormula_1\)集合\(S\)に対し，
+	\(\SigmaFormula_1\)論理式\(\apply{\varphi}{x}\)で
+	\[
+		n \in S \metaequivalent \apply{\varphi}{\numeral{n}}
+	\]
+	となるものが存在する．
+\end{Lemma}
+
+\begin{proof}
+	\(\SigmaFormula_1\)集合\(S\)は\(\standardmodel\)において\(\SigmaFormula_1\)論理式\(\apply{\varphi}{x}\)で表現できる．
+	そして，\(T\)は\(\RArithmetic\)を含むことから，\(\RArithmetic\)の\(\SigmaFormula_1\)完全性によって
+	\[
+		\standardmodel \satisfy \apply{\varphi}{\numeral{n}} \metaimplies \RArithmetic \provable \apply{\varphi}{\numeral{n}} \metaimplies T \provable \apply{\varphi}{\numeral{n}}
+	\]
+	が成り立つ．
+	\(T\)の1無矛盾性によって逆もいえるので，もとの主張が得られる．
+\end{proof}
+
+\index[widx]{げんしきのうてき@（理論が）原始帰納的}
+\begin{Def} \label{Def:theoryrecursive}
+	\(\symcal{L}_{\Ar}\)理論\(T\)が原始帰納的であるとは，
+	Gödel数の集合
+	\[
+		\Set{\GodelNumber{\varphi} | \varphi \in T}
+	\]
+	が原始帰納的集合であることをいう．
+\end{Def}
+
+\index[widx]{Craigのほだい@Craigの補題}
+\begin{Lemma}[Craigの補題] \label[Lemma]{lemma:craiglemma}
+	\(\SigmaFormula_1\)理論\(T\)に対し，それと\cref{Note:equivalentTheory}の意味で等価な原始帰納的な理論\(T'\)が存在する．
+\end{Lemma}
+
+\begin{proof}
+	\(T\)を\(\SigmaFormula_1\)理論とし，\(T\)を表現する\(\SigmaFormula_1\)論理式
+	\(\apply{\varphi}{x}\)を\(\SigmaFormula_0\)論理式\(\apply{\theta}{x, y}\)を用いて
+	\(\exists y \apply{\theta}{x, y}\)と表す．
+	このとき，任意の文\(\sigma\)に対して
+	\[
+		\sigma \in T \metaequivalent \standardmodel \satisfy \apply{\varphi}{\numeral{\GodelNumber{\sigma}}}
+	\]
+	が成り立つ．
+	さて，理論\(T'\)を以下のように定義する：
+	\[
+		T' = \Set{\sigma \land \sigma \land \dotsb \land \sigma | \standardmodel \satisfy \apply{\theta}{\numeral{\GodelNumber{\sigma}}, \numeral{n}}}
+	\]
+	ここで，上記の\(\sigma \land \sigma \land \dotsb \land \sigma\)は\(\sigma\)を\(n + 1\)個連結したものである．
+	このとき，\(T'\)は原始帰納的で，\(T, T'\)は等価な理論である．
+\end{proof}
+
+\Cref{lemma:craiglemma}により，\(\SigmaFormula_1\)理論であるという仮定は原始帰納的な理論であるというように置き換えられることがわかった．
+
+\index[sidx]{\(\ProofPredicate_T\)：証明可能性を表す述語}
+
+\begin{Def}
+	\(T\)を\(\SigmaFormula_1\)理論とする．原始帰納的な述語\(\ProofPredicate\)を以下のように定義する：
+	\begin{align}
+		\begin{aligned}
+			                & \apply{\ProofPredicate_T}{\GodelNumber{\symcal{K}}, \GodelNumber{\sigma}} \\
+			\metaequivalent & \text{\(\symcal{K}\)は最下段の右辺が\(\sigma\)となる証明図で，左辺の論理式はすべて\(T\)の公理である}
+			\label{eq:ProofPredicate}
+		\end{aligned}
+	\end{align}
+	\Cref{Thm:primiverecursivefunctionrepresentation}により，\(\ProofPredicate_T\)は\(\SigmaFormulaInduction_1\)において
+	\(\SigmaFormula_1\)論理式か\(\PiFormula_1\)論理式で表現可能である．
+	その論理式も同じ記号\(\ProofPredicate_T\)で表すことにする．
+	その上で，\(\Sigma_1\)論理式\(\exists y \apply{\ProofPredicate_T}{y, x}\)を
+	\begin{equation}
+		\apply{\Bew_T}{x}
+		\label{eq:Bewx}
+	\end{equation}
+	と表す．
+\end{Def}
+
+\(\apply{\Bew_T}{x}\)は，素朴には「\(x\)は\(T\)で証明可能な論理式のGödel数である」という主張を表現したものと考えられる．
+
+\index[widx]{ふどうてん@不動点!ふどうてんていり@---定理}
+\index[widx]{ふどうてん@不動点}
+\index[widx]{たいかくかていり@対角化定理|see{不動点定理}}
+\begin{Thm}[不動点定理，対角化定理] \label[Thm]{Thm:fixpointtheorem}
+	\(T\)を\(\RArithmetic\)を含む\(\SigmaFormula_1\)理論とする．
+	\(x\)のみが自由出現する任意の論理式\(\apply{\psi}{x}\)に対し，
+	\begin{equation}
+		T \provable \sigma \formulaequiv \apply{\psi}{\numeral{\GodelNumber{\sigma}}}
+		\label{eq:fixpointtheorem}
+	\end{equation}
+	となる文\(\sigma\)が存在する．この\(\sigma\)を\(\psi\)の\term{不動点}と呼ぶ．
+\end{Thm}
+
+\begin{proof}
+	\(x\)のみが自由出現する論理式は可算無限個存在する．
+	よってそれらを\(\apply{\varphi_0}{x}, \apply{\varphi_1}{x}, \dots\)と並べ，
+	関数\(f \colon \NaturalNumbers \to \NaturalNumbers\)を\(\apply{f}{x} = \GodelNumber{\apply{\varphi_x}{\numeral{x}}}\)と定める．
+	このとき，\(f\)は帰納的関数である．
+	よって\(f\)は\cref{Thm:recursivedelta1equivalent}によって\(\DeltaFormula_1\)関数でもあるので，
+	\cref{Thm:delta1setrepresention}から
+	\[
+		\apply{f}{n} = m \metaimplies T \provable \apply{\chi}{\numeral{n}, \numeral{m}} \land \forall y \paren{\lnot \paren{y \objeq \numeral{m}} \to \lnot \apply{\chi}{\numeral{n}, y}}
+	\]
+	となる\(\SigmaFormula_1\)論理式\(\chi\)が存在する．
+	論理式\(\exists y \paren{\apply{\chi}{x, y} \land \apply{\psi}{y}}\)を考えると，
+	これは\(x\)のみが自由出現する論理式なので，
+	\(\apply{f}{k} = \GodelNumber{\apply{\varphi_k}{\numeral{k}}}\)となる自然数\(k\)が存在する．
+	\(\apply{\varphi_k}{\numeral{k}}\)を\(\sigma\)と表すと，
+	\[
+		T \provable \apply{\psi}{\numeral{\GodelNumber{\sigma}}} \to \exists y \paren{\apply{\chi}{\numeral{k}, y} \land \apply{\psi}{y}}
+	\]
+	となる．よって\(T \provable \apply{\psi}{\numeral{\GodelNumber{\sigma}}} \to \sigma\)である．
+	一方，
+	\[
+		T \provable \forall y \paren{\lnot \paren{y \objeq \numeral{\GodelNumber{\sigma}}} \to \lnot \apply{\chi}{\numeral{k}, y}}
+	\]
+	だから
+	\[
+		T \provable \lnot \apply{\psi}{\numeral{\GodelNumber{\sigma}}} \to \lnot \sigma
+	\]
+	もいえる．よって\cref{eq:fixpointtheorem}が得られる．
+\end{proof}
+
+\begin{Thm}[第1不完全性定理] \label[Thm]{Thm:weakfirstimcompletetheorem}
+	\(T\)が\(\RArithmetic\)を含む1無矛盾な\(\SigmaFormula_1\)理論であるならば，
+	\(T \notprovable \sigma\)かつ\(T \notprovable \sigma\)となるような文\(\sigma\)が存在する．
+\end{Thm}
+
+\index[widx]{Gödelぶん@Gödel文}
+\begin{proof}
+	\Cref{Thm:fixpointtheorem}により，\(\lnot \apply{\Bew_T}{x}\)の不動点\(\sigma\)が存在する．
+	この\(\sigma\)を
+	\term{Gödel文}と呼ぶ．
+	\(T \provable \sigma \formulaequiv \lnot \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)である．
+
+	\(T \provable \sigma\)と仮定すると，\(\standardmodel \satisfy \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)である．
+	よって\(T\)の\(\SigmaFormula_1\)完全性によって\(T \provable \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)が成り立つ．
+	このとき，\(\sigma\)は\(\lnot \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)の不動点であることから
+	\(T \provable \lnot \sigma\)となって矛盾する．
+
+	\(T \provable \lnot \sigma\)と仮定すると，\(\sigma\)が\(\lnot \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)の不動点であることから
+	\(T \provable \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)となる．
+	\(T\)の1無矛盾性によって\(\standardmodel \satisfy \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)となり，
+	\(T \provable \sigma\)だから矛盾する．
+\end{proof}
+
+\Cref{Thm:weakfirstimcompletetheorem}では，1無矛盾性という恣意的な仮定が入っている．
+この仮定を単なる無矛盾性に弱めるため，\(\Bew_T\)を改良することを考える．
+
+\begin{Def} \label{Def:Bewstar}
+	\(\SigmaFormula_1\)論理式\(\apply{\Bewstar_T}{x}\)を
+	\begin{equation}
+		\exists y \paren{\apply{\ProofPredicate_T}{y, x} \land \forall z < y \lnot \apply{\ProofPredicate_T}{z, \lnot x}}
+		\label{eq:Bewstar}
+	\end{equation}
+	ここで，\(\lnot\)は\(x\)が論理式\(\varphi\)のGödel数である場合の\(\lnot \varphi\)のGödel数を表す．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma:Bewstar}
+	\(T\)を\(\RArithmetic\)を含む原始帰納的な理論とする．
+	このとき，任意の文\(\sigma\)に対して
+	\begin{align}
+		T \provable \sigma \metaimplies T \provable \apply{\Bewstar_T}{\numeral{\GodelNumber{\sigma}}},
+		\label{eq:Bewstarprovable} \\
+		T \provable \lnot \sigma \metaimplies T \provable \lnot \apply{\Bewstar_T}{\numeral{\GodelNumber{\sigma}}},
+		\label{eq:lnotBewstarprovable}
+	\end{align}
+\end{Lemma}
+
+\begin{Thm}[第1不完全性定理] \label{Thm:firstimcompletetheorem}
+	\(T\)を\(\RArithmetic\)を含む無矛盾な\(\SigmaFormula_1\)理論とする．
+	このとき，\(T \notprovable \sigma\)かつ\(T \notprovable \lnot \sigma\)となる文\(\sigma\)が存在する．
+\end{Thm}
+
+\index[widx]{Rosserぶん@Rosser文}
+\begin{proof}
+	Craigの補題（\cref{lemma:craiglemma}）により，
+	\(T\)は原始帰納的であると仮定してよい．
+	\(\lnot \apply{\Bewstar_T}{x}\)の不動点を\(\sigma\)とする，すなわち
+	\(T \provable \sigma \formulaequiv \lnot \apply{\Bewstar_T}{\numeral{\GodelNumber{\sigma}}}\)となる文\(\sigma\)をとる．
+	この\(\sigma\)を\term{Rosser文}という．
+	このとき，\(T \notprovable \sigma\)かつ\(T \notprovable \lnot \sigma\)となる．
+\end{proof}
+
+
+\section{第2不完全性定理} \label{sec:secondimcompletetheorem}
+
+第1不完全性定理の証明で構成したGödel文やRosser文は，いくぶんか人工的な面が否めなかった．
+ここでは，自身の無矛盾性を表現した論理式が第1不完全性定理における文の具体例になっていることを確かめよう．
+
+\begin{Def} \label{Def:objbew}
+	\(T\)を\(\SigmaFormulaInduction_1\)を含む無矛盾な\(\SigmaFormula_1\)理論とする．
+	このとき，\cref{Thm:primiverecursivefunctionrepresentation}によって
+	すべての原始帰納的関数を\(T\)において表現可能であることが従う．
+	ゆえに，原始帰納的関数と原始帰納的述語の定義ごとに1つずつ関数記号と関係記号を付け加え，
+	さらにそれらの定義を公理として\(T\)に加えたものは，\(T\)の定義による拡大となっている．
+	この理論も同じく\(T\)と表すことにする．
+
+	\(\ProofPredicate_T\)は関係記号\(\obj{\ProofPredicate}_T\)と表されているので，
+	\(\exists y \apply{\obj{\ProofPredicate}_T}{y, x}\)を
+	\begin{equation}
+		\apply{\Bew_T}{x}
+		\label{eq:objbewt}
+	\end{equation}
+	で表す．
+\end{Def}
+
+\begin{Def} \label{Def:consistencyformula}
+	論理式\(\apply{\Con}{T}\)を
+	\begin{equation}
+		\lnot \apply{\Bew_T}{\numeral{\GodelNumber{\obj{0} \objeq \obj{1}}}}
+		\label{eq:consistencyformula}
+	\end{equation}
+	と定める．
+\end{Def}
+
+\begin{Thm}[第2不完全性定理] \label{thm:secondimcompletetheorem}
+	\(T\)は\(\SigmaFormulaInduction_1\)を含む無矛盾な\(\SigmaFormula_1\)理論であるとする．
+	このとき，\(T \notprovable \apply{\Con}{T}\)である．
+\end{Thm}

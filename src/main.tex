@@ -24,14 +24,17 @@
 %
 \usepackage[no-math]{luatexja-fontspec}
 \usepackage{fontspec}
+\usepackage{mathtools}
 \usepackage{unicode-math}
-\setmainfont[Ligatures=TeX]{Libertinus Serif}
-\setsansfont[Ligatures=TeX]{Libertinus Sans}
-\setmathfont{Libertinus Math}[math-style=ISO, bold-style=ISO]
+\setmainfont[Ligatures=TeX]{XITS}
+\setsansfont[Ligatures=TeX]{Fira sans}
+\setmonofont[Ligatures=TeX]{Fira mono}
+\setmathfont{XITS Math}[math-style=ISO, bold-style=ISO]
+\setmathfont{XITS Math}[range=cal, StylisticSet=1]
 \setmathfont{TeX Gyre Pagella Math}[range=bb]
-\setmathfont{TeX Gyre Pagella Math}[range={\DashVDash}]
-\setmathfont{TeX Gyre Pagella Math}[range={\dashVdash}]
-\setmathfont{Garamond Math}[range={\Coloneq}]
+%\setmathfont{TeX Gyre Pagella Math}[range={\DashVDash}]
+%\setmathfont{TeX Gyre Pagella Math}[range={\dashVdash}]
+%\setmathfont{Garamond Math}[range={\Coloneq}]
 \usepackage[HaranoAji]{luatexja-preset}
 \ltjsetparameter{jacharrange={-2,-3}}
 \usepackage{amsthm}
@@ -50,11 +53,22 @@
 \usepackage{framed}
 \usepackage{numbersets}
 
+\numberwithin{equation}{section}
+
 %\delimitershortfall=-.3pt
 
 \graphicspath{{./fig/}}
 
-%
+\DeclareFontFamily{OML}{nxlmi}{\skewchar \font =127}
+\DeclareFontShape{OML}{nxlmi}{m}{it}{
+	<-6.3>  nxlmi035
+	<6.3-8.6> nxlmi037
+	<8.6->  nxlmi03
+}{}
+\DeclareSymbolFont{gletters}{OML}{nxlmi}{m}{it}
+\DeclareMathSymbol{g}{\mathalpha}{gletters}{`g}
+
+%%
 %%%%%%%%%%%%%%%%%=============macro=======================%%%%%%%%%%%%%%
 %
 
@@ -77,10 +91,16 @@
 
 \NewDocumentCommand{\sequent}{}{\Rightarrow}
 
+\NewDocumentCommand{\standardmodel}{}{\symcal{N}}
+
+\NewDocumentCommand{\numeral}{m}{\underline{#1}}
+
 \NewDocumentCommand{\term}{m}{\textbf{#1}}
 \RenewDocumentCommand{\emph}{m}{\textbf{#1}}
 
 \NewDocumentCommand{\obj}{m}{\symtt{#1}}
+
+\NewDocumentCommand{\entireminus}{}{\mathbin{\dot{-}}}
 
 \DeclareMathOperator{\FV}{FV}
 \DeclareMathOperator{\BV}{BV}
@@ -90,6 +110,22 @@
 \DeclareMathOperator{\Th}{Th}
 \DeclareMathOperator{\eDiag}{eDiag}
 \DeclareMathOperator{\Diag}{Diag}
+\DeclareMathOperator{\zero}{zero}
+\DeclareMathOperator{\proj}{proj}
+\DeclareMathOperator{\suc}{suc}
+\DeclareMathOperator{\truefunction}{true}
+\DeclareMathOperator{\falsefunction}{false}
+\NewDocumentCommand{\pairfunc}{}{J}
+\NewDocumentCommand{\connectionfunc}{}{\mathit{jp}}
+\DeclareMathOperator{\lh}{lh}
+\NewDocumentCommand{\codefunctioninv}{mm}{\paren{#1}_{#2}}
+\DeclareMathOperator{\rem}{rem}
+\DeclareMathOperator{\quo}{quo}
+\NewDocumentCommand{\characteristicfunction}{m}{\chi_{#1}}
+\DeclareMathOperator{\ProofPredicate}{Proof}
+\DeclareMathOperator{\Bew}{Bew}
+\DeclareMathOperator{\Bewstar}{Bew^{\ast}}
+\DeclareMathOperator{\Con}{Con}
 
 \NewDocumentCommand{\subst}{smm}{%
 \IfBooleanTF{#1}{#2[{#3}]%
@@ -106,6 +142,7 @@
 \NewDocumentCommand{\pair}{m}{\langle #1 \rangle}
 
 \NewDocumentCommand{\provable}{}{\vdash}
+\NewDocumentCommand{\notprovable}{}{\mathbin{\not\vdash}}
 \NewDocumentCommand{\interderivable}{}{\dashVdash}
 
 \NewDocumentCommand{\KleeneClosure}{m}{{#1}^{\ast}}
@@ -120,6 +157,15 @@
 }
 
 \NewDocumentCommand{\length}{sm}{%
+	\IfBooleanTF{#1}{%
+		\vertbracket*{#2}
+	}%
+	{%
+		\vertbracket{#2}%
+	}%
+}
+
+\NewDocumentCommand{\absolute}{sm}{%
 	\IfBooleanTF{#1}{%
 		\vertbracket*{#2}
 	}%
@@ -185,6 +231,7 @@
 \NewDocumentCommand{\metaequivalent}{}{\iff}
 
 \NewDocumentCommand{\satisfy}{}{\vDash}
+\NewDocumentCommand{\notsatisfy}{}{\mathbin{\not\vDash}}
 
 \NewDocumentCommand{\logicallyequivalent}{}{\DashVDash}
 
@@ -192,44 +239,74 @@
 
 \NewDocumentCommand{\elementarilyequivalent}{}{\equiv}
 
-\NewDocumentCommand{\GP}{}{\symup{GP}}
+\NewDocumentCommand{\theoryset}{m}{\symsfup{#1}}
 
-\NewDocumentCommand{\Ring}{}{\symup{Ring}}
+\NewDocumentCommand{\GP}{}{\theoryset{GP}}
 
-\NewDocumentCommand{\CRing}{}{\symup{CRing}}
+\NewDocumentCommand{\Ring}{}{\theoryset{Ring}}
 
-\NewDocumentCommand{\OrderedRing}{}{\symup{OR}}
+\NewDocumentCommand{\CRing}{}{\theoryset{CRing}}
 
-\NewDocumentCommand{\ProjectiveGeometryPart}{}{\symup{B}}
+\NewDocumentCommand{\OrderedRing}{}{\theoryset{OR}}
 
-\NewDocumentCommand{\ZF}{}{\symup{ZF}}
+\NewDocumentCommand{\ProjectiveGeometryPart}{}{\theoryset{B}}
 
-\NewDocumentCommand{\ZFC}{}{\symup{ZFC}}
+\NewDocumentCommand{\ZF}{}{\theoryset{ZF}}
 
-\NewDocumentCommand{\RArithmetic}{}{\symup{R}}
+\NewDocumentCommand{\ZFC}{}{\theoryset{ZFC}}
 
-\NewDocumentCommand{\Robinson}{}{\symup{Q}}
+\NewDocumentCommand{\RArithmetic}{}{\theoryset{R}}
 
-\NewDocumentCommand{\PA}{}{\symup{PA}}
+\NewDocumentCommand{\Robinson}{}{\theoryset{Q}}
 
-\NewDocumentCommand{\POSET}{}{\symup{POSET}}
+\NewDocumentCommand{\PA}{}{\theoryset{PA}}
 
-\NewDocumentCommand{\TOSET}{}{\symup{TOSET}}
-%
-%%%%%%%%%%%===================enumerate==================%%%%%%%%%%%
-%
-\setlist[description, 1]{%
-	style = nextline%
-}
+\NewDocumentCommand{\POSET}{}{\theoryset{POSET}}
+
+\NewDocumentCommand{\TOSET}{}{\theoryset{TOSET}}
+
+\NewDocumentCommand{\OpenFormulaSet}{}{\theoryset{Open}}
+
+\NewDocumentCommand{\SigmaFormula}{}{\symup{\Sigma}}
+
+\NewDocumentCommand{\PiFormula}{}{\symup{\Pi}}
+
+\NewDocumentCommand{\DeltaFormula}{}{\symup{\Delta}}
+
+\NewDocumentCommand{\InductionLimitedTheory}{m}{\symup{I}#1}
+
+\NewDocumentCommand{\OpenFormulaInduction}{}{\InductionLimitedTheory{\OpenFormulaSet}}
+
+\NewDocumentCommand{\SigmaFormulaInduction}{}{\InductionLimitedTheory{\SigmaFormula}}
+
+\NewDocumentCommand{\PiFormulaInduction}{}{\InductionLimitedTheory{\PiFormula}}
+
+\NewDocumentCommand{\DeltaFormulaInduction}{}{\InductionLimitedTheory{\DeltaFormula}}
+
+\NewDocumentCommand{\Ar}{}{\symup{Ar}}
+
+\NewDocumentCommand{\muoperator}{}{\mu}
+
+\NewDocumentCommand{\GodelNumber}{m}{\mathopen{}\left\ulcorner #1 \right\urcorner\mathclose{}}
+
+\NewDocumentCommand{\symbolcode}{m}{\GodelNumber{#1}}
+
+\NewDocumentCommand{\finitesequencecode}{m}{\langle #1 \rangle}
+
+\NewDocumentCommand{\codeconnection}{}{\mathbin{\ast}}
+
+\NewDocumentCommand{\complementset}{m}{{#1}^{c}}
+
+\NewDocumentCommand{\partialequal}{}{\sim}
 %
 %%%%%%%%%%%%%%=======================theorem==================%%%%%%%%%%%%%
 %
 %
 \theoremstyle{definition}
-\newtheorem{Def}{定義}[chapter]
+\newtheorem{Def}{定義}[section]
 \newtheorem{Thm}[Def]{定理}
 \newtheorem{Ex}[Def]{例}
-\newtheorem{Que}{演習}[chapter]
+\newtheorem{Que}{演習}[section]
 \newtheorem{Lemma}[Def]{補題}
 \newtheorem{Corollary}[Def]{系}
 \newtheorem{Note}[Def]{注意}
@@ -290,6 +367,8 @@
 \crefname{Corollary}{系}{系}
 \Crefname{Note}{注意}{注意}
 \crefname{Note}{注意}{注意}
+\Crefname{enumi}{}{}
+\crefname{enumi}{}{}
 \crefname{section}{\presectionname}{\presectionname}
 \Crefname{section}{\presectionname}{\presectionname}
 \crefname{subsection}{\presubsectionname}{\presubsectionname}
@@ -361,9 +440,9 @@
 \begin{document}
 
 \begin{titlepage}
-	\title{0から始める数理論理学入門 第2.6版}
+	\title{0から始める数理論理学入門 第3版}
 	\author{野口匠}
-	\date{2024年11月15日}
+	\date{2024年12月30日}
 	\maketitle
 \end{titlepage}
 
@@ -380,6 +459,7 @@
 \include{contents/semantics}
 \include{contents/proof}
 \include{contents/completeness}
+\include{contents/peanoarithmetic}
 
 \backmatter
 

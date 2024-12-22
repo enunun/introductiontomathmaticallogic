@@ -1,0 +1,2038 @@
+\chapter{1階Peano算術}
+\label{chap:peanoarithmetic}
+
+本章より前の章では1階述語論理という演繹体系そのものの性質を学ぶことを目的に，
+対象となる理論を限定せずに議論を進めてきた．
+本章からはGödelの不完全性定理について学ぶことを目的に，
+1階Peano算術という理論に焦点を当てて議論を進める．
+
+まずは議論の対象となる1階Peano算術やその部分体系を定義し，
+その証明能力を調べる．
+形式体系に関する議論ではあるが，議論の中で我々が素朴に思い浮かべる
+自然数全体の集合\(\NaturalNumbers\)が多岐にわたって登場する．
+その際，形式体系についての議論なのか\(\NaturalNumbers\)についての議論なのかを混同しないように注意されたい．
+
+特に，数学的帰納法については形式体系上の数学的帰納法と\(\NaturalNumbers\)上の通常の数学的帰納法の両方が同時に登場する．
+数学的帰納法は算術の体系の証明能力を決定づけるといっても過言ではなく，
+制限を加えたり公理から取り除いたりする．そのため，数学的帰納法を適用する際は，
+形式体系上の数学的帰納法なのか\(\NaturalNumbers\)上の通常の数学的帰納法なのかを注意深く区別しながら読み進めるとよい．
+
+\section{1階Peano算術とその部分体系}
+\label{sec:peanoarithmetic}
+
+まずは，Peano算術を1階理論として定義しよう．
+
+\index[sidx]{\(\PA\)：1階Peano算術}
+\index[sidx]{\(\symcal{L}_{\Ar}\)：1階Peano算術の言語}
+\index[widx]{1かいPeanoさんじゅつ@1階Peano算術}
+\begin{Def} \label{Def:peanoarithmetic}
+	1階Peano算術の言語を\(\symcal{L}_{\Ar} = \Set{\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}}\)とする．
+	ここで，\(\obj{+}, \obj{\cdot}\)はアリティ2の関数記号，\(\obj{0}, \obj{1}\)は定数記号，\(\obj{<}\)はアリティ2の関数記号である．
+	\term{1階Peano算術}\(\PA\)は，以下の公理からなる\(\symcal{L}_{\Ar}\)理論である：
+	\begin{enumerate}[label=A\arabic*.,ref=A\arabic*]
+		\item \label{item:PAA1} \(\forall \obj{x} \lnot \paren{\obj{x} \obj{+} \obj{1} \objeq \obj{0}},\)
+		\item \label{item:PAA2} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{1} \objeq \obj{y} \obj{+} \obj{1} \to \obj{x} \objeq \obj{y}},\)
+		\item \label{item:PAA3} \(\forall \obj{x} \paren{\obj{x} \obj{+} \obj{0} \objeq \obj{x}},\)
+		\item \label{item:PAA4} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \paren{\obj{y} + \obj{1}} \objeq \paren{\obj{x} \obj{+} \obj{y}} \obj{+} \obj{1}},\)
+		\item \label{item:PAA5} \(\forall \obj{x} \paren{\obj{x} \obj{\cdot} \obj{0} \objeq \obj{0}},\)
+		\item \label{item:PAA6} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{+} \obj{1}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{+} \obj{x}},\)
+		\item \label{item:PAA7} \(\forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{<} \obj{y} \formulaequiv \exists \obj{z} \paren{\obj{z} \obj{+} \paren{\obj{x} \obj{+} \obj{1}}\objeq \obj{y}}}.\)
+		\item \label{item:PAA8} 変数記号\(x\)が束縛出現しない\(\symcal{L}_{\Ar}\)論理式\(\apply{\varphi}{x}\)に対する論理式
+		      \begin{equation}
+			      \apply{\varphi}{\obj{0}} \land \forall x \paren{\apply{\varphi}{x} \to \apply{\varphi}{x \obj{+} \obj{1}}} \to \forall x \apply{\varphi}{x}
+			      \label{eq:inductionscheme}
+		      \end{equation}
+		      の全称閉包すべて．
+	\end{enumerate}
+\end{Def}
+
+\(\PA\)の各公理の役割を述べておこう．まず，\cref{item:PAA1}, \cref{item:PAA2}は通常の自然数における「次の数」に相当する「\(\obj{x} + \obj{1}\)」に関する公理である．
+\cref{item:PAA3}, \cref{item:PAA4}と\cref{item:PAA5}, \cref{item:PAA6}は，
+それぞれ通常の自然数における自然数の加法と乗法の帰納的定義に相当する公理である．
+また，\cref{item:PAA7}は通常の自然数における大小関係の定義に相当する公理である．
+\cref{item:PAA1}から\cref{item:PAA7}までは\(\symcal{L}_{\Ar}\)の各記号の定義ともいえる公理であるが，\cref{item:PAA8}だけは特異的である．
+意味的には数学的帰納法に相当するものであるが，\cref{item:PAA8}は単一の公理ではなく可算無限個ある論理式すべてに対する公理をまとめて書いた%
+\index[widx]{こうり@公理!こうりずしき@---図式}%
+\term{公理図式}である．
+この公理図式のために，\(\PA\)は有限個の論理式からなる理論ではなく可算無限個の公理からなる理論になっている．
+
+\begin{Note}
+	ここで定義した理論\(\PA\)は1階Peano算術と呼ばれるものであるが，
+	\(\PA\)は集合\(N\)と\(N\)の元\(o\)，そして写像\(S \colon N \to N\)の対\(\pair{N, o, S}\)がPeano構造であるための条件を記述した
+	いわゆる「Peanoの公理」とは異なるものである．
+	いわゆる「Peanoの公理」はその記述に写像や部分集合といった集合のことばが使われており，
+	そのままでは1階理論として表現することはできない．
+	しかも，書き方の違いだけかといえばそうではない．質的に大きく異なる点として，例えば以下の2つを挙げることができる：
+	\begin{enumerate}
+		\item いわゆる「Peanoの公理」はPeano構造を特徴づける公理系であるが，
+		      \(\PA\)は通常の意味での自然数全体の集合\(\NaturalNumbers\)（に通常の意味での演算や大小関係の構造を入れたもの）を特徴づける公理系ではない．
+		\item Peano構造上の加法は0と後者関数（「次の数」をとる関数）だけから定義できるが，1階の理論ではそれは不可能である．
+	\end{enumerate}
+
+	このうち，2.について補足しておく．アリティ2の関係記号\(\obj{<}\)とアリティ1の関数記号\(\obj{S}\)からなる言語\(\symcal{L} = \Set{\obj{<}, \obj{S}}\)を考える．
+	有限順序数全体の集合%
+	\footnote{%
+		素朴には自然数全体の集合だととらえて差し支えない．%
+	}%
+	\(\omega\)に対し，\(\omega\)上の2項関係\(<\)と写像\(S \colon \omega \to \omega\)を以下のように定める：
+	\begin{align*}
+		\alpha < \beta \metaequivalent \alpha \in \beta \quad & (\alpha, \beta \in \omega), \\
+		\apply{S}{\alpha} = \alpha \cup \Set{\alpha} \quad    & (\alpha \in \omega).
+	\end{align*}
+	\(\obj{<}, \obj{S}\)の解釈をそれぞれ上で定義した\(\mathord{<}, S\)と定めることで，
+	\(\omega\)を対象領域とする\(\symcal{L}\)構造\(\symcal{N}\)を定義することができる．
+	このとき，任意の\(\alpha, \beta, \gamma \in \omega\)に対して以下を満たす\(\symcal{L}\)論理式\(\apply{\varphi}{x, y, z}\)は存在しないことが知られている：
+	\[
+		\symcal{N} \satisfy \apply{\varphi}{\alpha, \beta, \gamma} \metaequivalent \alpha + \beta = \gamma.
+	\]
+	なお，有限順序数の加法については\(\PA\)における\cref{item:PAA3}, \cref{item:PAA4}と同じようにして帰納的に定義できる．
+\end{Note}
+
+\(\PA\)の公理図式\cref{item:PAA8}は，（変数記号\(x\)が束縛出現しない）すべての\(\symcal{L}_{\Ar}\)論理式に対して要請されるものである．
+ここに制限を加えることによって\(\PA\)の部分体系を得ることを考えよう．
+
+\index[sidx]{\(\Robinson\)：Robinson算術}
+\index[widx]{Robinsonさんじゅつ@Robinson算術}
+\begin{Def} \label{Def:robinsonarithmetic}
+	\term{Robinson算術}\(\Robinson\)は，\(\PA\)における公理\cref{item:PAA1}から\cref{item:PAA7}に
+	以下の公理を加えた8個の閉論理式からなる\(\symcal{L}_{\Ar}\)理論である：
+	\begin{enumerate}[label=A\arabic*.,ref=A\arabic*,start=9]
+		\item \label{item:PAA9} \(\forall \obj{x} \paren{\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}},\)
+	\end{enumerate}
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma:paa9redudant}
+	\(\PA\)において\cref{item:PAA9}は証明できる．すなわち，
+	\[
+		\PA \provable \text{\cref{item:PAA9}}
+	\]
+	が成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)を\(M\)を対象領域とする\(\PA\)の任意のモデルとする．
+	完全性定理により，\(\symcal{M} \satisfy \text{\cref{item:PAA9}}\)を示せば十分である．
+	\(\obj{x}\)を変数記号とし，論理式\(\apply{\varphi}{\obj{x}}\)を\(\obj{x} \objeq \obj{0} \lor \exists \obj{y} \paren{\obj{x} \objeq \obj{y} \obj{+} \obj{1}}\)と定める．
+	\(\interpretation{\symcal{M}}{\obj{0}} = \interpretation{\symcal{M}}{\obj{0}}\)だから
+	\(\symcal{M} \satisfy \obj{0} \objeq \obj{0}\)であり，
+	\(\symcal{M} \satisfy \apply{\varphi}{\obj{0}}\)が成り立つ．
+	\(x \in M\)を任意にとり，その名前を\(c_x\)とする．
+	\(x \mathbin{\interpretation{\symcal{M}}{\obj{+}}} \interpretation{\symcal{M}}{\obj{1}} = x \mathbin{\interpretation{\symcal{M}}{\obj{+}}} \interpretation{\symcal{M}}{\obj{1}}\)だから
+	\(\symcal{M} \satisfy c_x \obj{+} \obj{1} \objeq c_x \obj{+} \obj{1}\)となり，
+	\(\symcal{M} \satisfy \exists \obj{y} \paren{c_x \obj{+} \obj{1} \objeq \obj{y} \obj{+} \obj{1}}\)である．
+	よって\(\symcal{M} \satisfy \apply{\varphi}{c_x \obj{+} \obj{1}}\)となる．従って
+	\[
+		\symcal{M} \satisfy \apply{\varphi}{\obj{0}} \land \forall \obj{x} \paren{\apply{\varphi}{\obj{x}} \to \apply{\varphi}{\obj{x} \obj{+} \obj{1}}}
+	\]
+	となり，\cref{item:PAA8}から\(\symcal{M} \satisfy \forall \obj{x} \apply{\varphi}{\obj{x}}\)を得る．
+\end{proof}
+
+\index[widx]{もでる@モデル!ひょうじゅんもでる@標準---}
+\index[widx]{もでる@モデル!ちょうじゅんもでる@超準---}
+\index[sidx]{\(\standardmodel\)：\(\PA\)の標準モデル}
+\begin{Def} \label{Def:standardstructure}
+	自然数全体の集合\(\NaturalNumbers\)を対象領域とし，\(\symcal{L}_{\Ar}\)の各記号\(\obj{+}, \obj{\cdot}, \obj{0}, \obj{1}, \obj{<}\)の解釈をそれぞれ
+	自然数における通常の意味での\(\mathord{+}, \mathord{\cdot}, 0, 1, \mathord{<}\)定めることにより得られる\(\symcal{L}_{\Ar}\)構造は\(\PA\)のモデルである．
+	このモデル（およびこのモデルと同型なモデル）を\(\PA\)の\term{標準モデル}といい，本書では
+	\begin{equation}
+		\standardmodel
+		\label{eq:standardmodel}
+	\end{equation}
+	と表す．
+	また，\(\standardmodel\)と同型ではない\(\PA\)のモデルを
+	\(\PA\)の\term{超準モデル}という．
+
+	\(\PA\)の標準モデルは，通常の意味での自然数全体の集合（に通常の意味での演算や大小関係の構造を入れたもの）のことである．
+\end{Def}
+
+\begin{Note}
+	とくに誤解のおそれがないときは，標準モデル\(\standardmodel\)と自然数全体の集合\(\NaturalNumbers\)を区別しないことも多い．
+	これは，\(\NaturalNumbers\)に通常の意味での演算や大小関係の構造が入っていないという文脈は考えにくいからである．
+\end{Note}
+
+\begin{Note}
+	\Cref{lemma:paa9redudant}の証明のように，形式体系において具体的な定理を証明する際は完全性定理を使ったモデル経由の証明の方が書きやすい．
+	表記を簡素化するため，以下のように記述を省略して書くことにする：
+	\begin{itemize}
+		\item \(\symcal{L}_{\Ar}\)の各記号の構造\(\symcal{M}\)による解釈はその記号をタイプライタ体でない通常の書体で書くことによって表現する．
+		      例えば，\(\symcal{L}_{\Ar}\)の記号\(\obj{0}, \obj{+}\)の\(\symcal{M}\)による
+		      解釈\(\interpretation{\symcal{M}}{\obj{0}}, \interpretation{\symcal{M}}{\obj{+}}\)をそれぞれ単に\(0, +\)と表記する．
+	\end{itemize}
+
+	この簡素化やのちに述べる数項や算術化により，メタとオブジェクトの区別がますますつけづらくなる．
+	どちらの立場で議論しているのかはこまめに確認することを推奨する．
+	また，メタ側の場合には標準モデルでの議論なのかそうでないのかの区別も重要である．
+\end{Note}
+
+
+
+\index[sidx]{\(\numeral{n}\)：数項}
+\index[widx]{こう@項!すうこう@数---}
+\begin{Def} \label{Def:numeral}
+	\(n\)を自然数とする．\(n\)に対する\(\symcal{L}_{\Ar}\)項\(\numeral{n}\)を以下のように帰納的に定義する：
+	\begin{align}
+		\numeral{0}     & = \obj{0},
+		\label{eq:numeral0}                                                                    \\
+		\numeral{n + 1} & = \paren{\numeral{n} \obj{+} \obj{1}} \quad (n \in \NaturalNumbers).
+		\label{eq:numeralnext}
+	\end{align}
+	ここで，\cref{eq:numeral0}において，左辺の\(0\)はメタ側の（つまり通常の意味での）自然数\(0\)であり，右辺の\(\obj{0}\)は\(\symcal{L}_{\Ar}\)の定数記号\(\obj{0}\)である．
+	\(\numeral{0}\)は\(\obj{0}\)と同一の\(\symcal{L}_{\Ar}\)項であることにも注意しよう．
+	\cref{eq:numeralnext}において，左辺の\(n, \mathord{+}, 1\)はそれぞれメタ側の（つまり通常の意味での）自然数\(n\)，加法\(+\)，および自然数\(1\)であり，
+	左辺の\(\numeral{n}, \obj{+}, \obj{1}\)はそれぞれ\(\symcal{L}_{\Ar}\)項\(\numeral{n}\)，関数記号\(\obj{+}\)，および定数記号\(\obj{1}\)であることに注意しよう．
+
+	自然数\(n\)に対する\(\numeral{n}\)を，\(n\)に対する\term{数項}と呼ぶ．
+\end{Def}
+
+\begin{Note}
+	\NewDocumentCommand{\Num}{}{\operatorname{Num}}
+	\Cref{Def:numeral}における「帰納的定義」を正当化するのは，メタ側の（つまり通常の意味での自然数上での）帰納的定義である．
+	フォーマルに書けば，\(\standardmodel\)における帰納的定義を使って
+	\begin{align*}
+		\apply{\Num}{0}      & = \obj{0},                                                              \\
+		\apply{\Num}{n  + 1} & = \paren{\apply{\Num}{n} \obj{+} \obj{1}} \quad (n \in \NaturalNumbers)
+	\end{align*}
+	を満たす写像\(\Num \colon \NaturalNumbers \to \symcal{T}\)を定義したことに相当する（\cref{Def:numeral}における\(\numeral{n}\)は上記\(\apply{\Num}{n}\)に相当する）．
+	ここで，\(\symcal{T}\)は\(\symcal{L}_{\Ar}\)項全体の集合である．
+\end{Note}
+
+\begin{Ex} \label[Ex]{Ex:numeral}
+	数項\(\numeral{1}, \numeral{2}, \numeral{3}\)の定義はそれぞれ
+	\begin{align*}
+		\numeral{1} & = \paren{\obj{0} \obj{+} \obj{1}},                                                \\
+		\numeral{2} & = \paren{\paren{\obj{0} \obj{+} \obj{1}} \obj{+} \obj{1}},                        \\
+		\numeral{3} & = \paren{\paren{\paren{\obj{0} \obj{+} \obj{1}} \obj{+} \obj{1}} \obj{+} \obj{1}}
+	\end{align*}
+	である．
+\end{Ex}
+
+\begin{Note}
+	数項は，\(\symcal{L}_{\Ar}\)項の略記表現である．従って「意味的には」同じであろうと思われる項であっても項として（つまり記号列として）等しいとは限らない．
+	例えば，自然数1に対する数項\(\numeral{1}\)と\(\symcal{L}_{\Ar}\)の定数記号\(\obj{1}\)は項としては等しくない．
+	つまり\(\numeral{1} \neq \obj{1}\)である．
+	一方で，
+	\begin{equation}
+		\Robinson \provable \numeral{1} \objeq \obj{1}
+		\label{eq:robinson1numeric}
+	\end{equation}
+	は成り立っている．「Robinson算術\(\Robinson\)という体系内では」自然数1に対する数項\(\numeral{1}\)と\(\symcal{L}_{\Ar}\)の定数記号\(\obj{1}\)は等しくなる．
+\end{Note}
+
+\begin{Que} \label[Que]{Que:robinson1numeric}
+	\Cref{eq:robinson1numeric}を示せ．
+\end{Que}
+
+Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない．
+しかし，メタ側の（つまり通常の意味での自然数上での）数学的帰納法はそもそも\(\Robinson\)内での主張でも\(\PA\)内の主張でもない．
+このことに注意して，以下のことを証明してみよう．
+
+\begin{Lemma} \label[Lemma]{Lemma:Robinsonnumerallemma}
+	\(n\)を自然数とする．\(\Robinson\)において以下が成り立つ．
+	\begin{align}
+		\Robinson & \provable \forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{0}},
+		\label{eq:Robinsonnumerallemmaminimum}                                                                                                                           \\
+		\Robinson & \provable \forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{y} \objeq \obj{0} \to \obj{x} \objeq \obj{0} \land \obj{y} \objeq \obj{0}},
+		\label{eq:Robinsonnumerallemmaadd0}                                                                                                                              \\
+		\Robinson & \provable \forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{\cdot} \obj{y} \objeq \obj{0} \to \obj{x} \objeq \obj{0} \lor \obj{y} \objeq \obj{0}},
+		\label{eq:Robinsonnumerallemmacdot0}                                                                                                                             \\
+		\Robinson & \provable \forall \obj{x} \paren{\obj{x} \objeq \obj{0} \lor \obj{0} \obj{<} \obj{x}},
+		\label{eq:Robinsonnumerallemmaorder}                                                                                                                             \\
+		\Robinson & \provable \forall \obj{x} \paren{\obj{x} \obj{+} \obj{1} \obj{<} \numeral{n + 1} \to \obj{x} \obj{<} \numeral{n}},
+		\label{eq:Robinsonnumerallemmaordern}                                                                                                                            \\
+		\Robinson & \provable \forall \obj{x} \paren{\paren{\obj{x} \obj{+} \obj{1}} \obj{+} \numeral{n} \objeq \obj{x} \obj{+} \numeral{n + 1}},
+		\label{eq:Robinsonnumerallemmalinerorderbase}                                                                                                                    \\
+		\Robinson & \provable \obj{0} \obj{+} \numeral{n} \objeq \numeral{n},
+		\label{eq:Robinsonnumerallemmaadd0commutativelaw}                                                                                                                \\
+		\Robinson & \provable \forall \obj{x} \paren{\numeral{n} \obj{<} \obj{x} \to \obj{x} \objeq \numeral{n + 1} \lor \numeral{n + 1} \obj{<} \obj{x}}.
+		\label{eq:Robinsonnumerallemmalinerorderbase2}
+	\end{align}
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\Robinson\)の任意のモデルとする．\(\symcal{M}\)が右辺の論理式を充足することを示せば十分である．
+	\(\symcal{M}\)の対象領域を\(M\)とおく．
+
+	\Cref{eq:Robinsonnumerallemmaminimum}を示そう．\(x \in M\)が\(x < 0\)を満たすと仮定する．
+	このとき，\cref{item:PAA7}から\(y + \paren{x + 1} = 0\)となる\(y \in M\)が存在する．
+	よって\cref{item:PAA4}から\(\paren{y + x} + 1 = 0\)となるが，これは\cref{item:PAA1}と矛盾する．
+
+	\Cref{eq:Robinsonnumerallemmaadd0}を示そう．\(x, y \in M\)が\(x + y = 0\)を満たすとする．
+	\(y \neq 0\)であるとすると，\cref{item:PAA9}から\(y = z + 1\)となる\(z \in M\)が存在する．
+	このとき，\cref{item:PAA4}から
+	\(x + y = x + \paren{z + 1} = \paren{x + z} + 1 = 0\)
+	となり\cref{item:PAA1}に矛盾する．
+	よって\(y = 0\)でなければならない．さらに，\(x \neq 0\)であると仮定すると\cref{item:PAA9}から\(x = w + 1\)となる\(w \in M\)が存在する．
+	\Cref{item:PAA3}, \cref{item:PAA4}から
+	\(x + y = x + 0 = x = w + 1 = 0\)
+	だから\cref{item:PAA1}に矛盾する．
+	従って\(x = 0\)である．
+
+	\Cref{eq:Robinsonnumerallemmacdot0}を示す．\(x, y \in M\)が\(x \cdot y = 0\)を満たすとする．
+	\(x \neq 0\)かつ\(y \neq 0\)であるとすると，\(x = w + 1\)かつ\(y = z + 1\)となる\(w, z \in M\)が存在する．
+	\Cref{item:PAA4}, \cref{item:PAA6}から
+	\begin{align*}
+		x \cdot y & = \paren{w + 1} \cdot \paren{z + 1}             \\
+		          & = \paren{\paren{w + 1} \cdot z} + \paren{w + 1} \\
+		          & = \paren{\paren{\paren{w + 1} \cdot z} + w} + 1 \\
+		          & = 0
+	\end{align*}
+	となり\cref{item:PAA1}に矛盾する．
+
+	\Cref{eq:Robinsonnumerallemmaorder}は\cref{item:PAA9}と\cref{item:PAA7}から明らかである．
+
+	\Cref{eq:Robinsonnumerallemmaordern}を示す．
+	任意の\(x \in M\)に対し，\(x + 1 < \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)であるとする．
+	このとき，\(y + \paren{\paren{x + 1} + 1} = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)となる\(y \in M\)が存在する．
+	\Cref{item:PAA4}と\cref{eq:numeralnext}から
+	\(\paren{y + \paren{x + 1}} + 1 = \interpretation{\symcal{M}}{\numeral{n}} + 1\)である．
+	従って\cref{item:PAA2}から\(y + \paren{x + 1} = \interpretation{\symcal{M}}{\numeral{n}}\)なので\(x < \interpretation{\symcal{M}}{\numeral{n}}\)である．
+
+	\Cref{eq:Robinsonnumerallemmalinerorderbase}を示そう．
+	任意の自然数\(n\)に対して
+	\(\paren{x + 1} + \interpretation{\symcal{M}}{\numeral{n}} = x + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)が
+	成り立つことを\(n\)に関する数学的帰納法によって示す．
+	\(n = 0\)のとき，\cref{item:PAA3}, \cref{item:PAA4}と\cref{eq:numeral0}から
+	\begin{align*}
+		\paren{x + 1} + \interpretation{\symcal{M}}{\numeral{0}}
+		 & = \paren{x + 1} + 0                            \\
+		 & = x + 1,                                       \\
+		x + \interpretation{\symcal{M}}{\paren{\numeral{0 + 1}}}
+		 & = x + \interpretation{\symcal{M}}{\numeral{1}} \\
+		 & = x + \paren{0 + 1}                            \\
+		 & = \paren{x + 0} + 1                            \\
+		 & = x + 1
+	\end{align*}
+	だから\(\paren{x + 1} + \interpretation{\symcal{M}}{{\numeral{0}}} = x + \interpretation{\symcal{M}}{\paren{\numeral{0 + 1}}}\)である．
+	各\(n\)について，
+	\(\paren{x + 1} + \interpretation{\symcal{M}}{\numeral{n}} = x + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)が成り立つと仮定する．
+	このとき
+	\begin{align*}
+		\paren{x + 1} + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}
+		 & = \paren{x + 1} + \paren{\interpretation{\symcal{M}}{\numeral{n}} + 1}  \\
+		 & = \paren{\paren{x + 1} + \interpretation{\symcal{M}}{\numeral{n}}} + 1  \\
+		 & = \paren{x + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}} + 1  \\
+		 & = x + \paren{\interpretation{\symcal{M}}{\paren{\numeral{n + 1}}} + 1}  \\
+		 & = x + \interpretation{\symcal{M}}{\paren{\numeral{\paren{n + 1} + 1}}}.
+	\end{align*}
+	従って，数学的帰納法によって任意の自然数\(n\)に対して
+	\(\paren{x + 1} + \interpretation{\symcal{M}}{\numeral{n}} = x + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)が成り立つ．
+	\begin{align*}
+		\interpretation{\symcal{M}}{\paren{\paren{x + \obj{1}} + \numeral{n}}} & = \paren{x + 1} + \interpretation{\symcal{M}}{\numeral{n}}, \\
+		\interpretation{\symcal{M}}{\paren{x + \numeral{n + 1}}}               & = x + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}
+	\end{align*}
+	だから\cref{eq:Robinsonnumerallemmalinerorderbase}を得る．
+
+	\Cref{eq:Robinsonnumerallemmaadd0commutativelaw}について，
+	任意の自然数\(n\)に対して\(0 + \interpretation{\symcal{M}}{\numeral{n}} = \interpretation{\symcal{M}}{\numeral{n}}\)が成り立つことを
+	\(n\)に関する数学的帰納法によって示す．
+	\(\numeral{0}\)は定数記号\(\obj{0}\)のことなので，\(n = 0\)の場合は\cref{item:PAA3}から従う．
+	各\(n\)について，\(0 + \interpretation{\symcal{M}}{\numeral{n}} = \interpretation{\symcal{M}}{\numeral{n}}\)が成り立つと仮定すると
+	\cref{item:PAA4}から
+	\begin{align*}
+		0 + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}
+		 & = 0 + \interpretation{\symcal{M}}{\paren{\numeral{n} + 1}} \\
+		 & = \paren{0 + \interpretation{\symcal{M}}{\numeral{n}}} + 1 \\
+		 & = \interpretation{\symcal{M}}{\numeral{n}} + 1             \\
+		 & = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}
+	\end{align*}
+	だから\(0 + \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}} = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)が成り立つ．
+	よって数学的帰納法により\cref{eq:Robinsonnumerallemmaadd0commutativelaw}を得る．
+
+	最後に\cref{eq:Robinsonnumerallemmalinerorderbase2}を示そう．
+	任意の\(x \in M\)に対し，\(\interpretation{\symcal{M}}{\numeral{n}} < x\)かつ\(x \neq \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)ならば
+	\(\interpretation{\symcal{M}}{\paren{\numeral{n + 1}}} < x\)であることを示せばよい．
+	\(\interpretation{\symcal{M}}{\numeral{n}} < x\)だから\cref{item:PAA9}により
+	\(y + \paren{\interpretation{\symcal{M}}{\numeral{n}} + 1} = x\)となる\(y \in M\)が存在する．
+	\(y = 0\)であると仮定すると，\cref{eq:Robinsonnumerallemmaadd0commutativelaw}から
+	\(x = \interpretation{\symcal{M}}{\numeral{n}} + 1 = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)となって矛盾する．
+	従って\(y \neq 0\)でなければならない．
+	よって\cref{item:PAA9}から\(y = z + 1\)となる\(z \in M\)がとれて，
+	\cref{eq:Robinsonnumerallemmaadd0commutativelaw}から\(z + \paren{\interpretation{\symcal{M}}{\paren{\numeral{n + 1}}} + 1} = x\)となる．
+	ゆえに\cref{eq:Robinsonnumerallemmalinerorderbase2}は成り立つ．
+\end{proof}
+
+\begin{Note}
+	\Cref{Lemma:Robinsonnumerallemma}の証明における\(M\)の元としての\(0, 1\)や\(M\)上の二項演算および二項関係\(+, <\)は，
+	通常の自然数のものと同じとは限らない．
+	あくまで表記を簡素化するために通常の自然数と同じ表記にしているだけであることに注意しよう．
+	表記が同じだけなので，通常の自然数において成り立っていた種々の性質がそのまま成り立つとは限らない．
+	\(M\)の元としての\(0,1\)が通常の自然数としての\(0,1\)であるとは限らないし，
+	\(M\)上の二項演算および二項関係\(+, <\)が通常の自然数における加法，大小関係であるとも限らない．
+	また，自然数\(n\)に対する数項\(\numeral{n}\)の\(\symcal{M}\)による解釈\(\interpretation{\symcal{M}}{\numeral{n}}\)が\(n\)であるとも限らない．
+	使えるのは，\(\symcal{M}\)は\(\Robinson\)のモデルであるという仮定のみである．
+\end{Note}
+
+\begin{Thm} \label[Thm]{Thm:Robinsonnumeraltheorem}
+	\(n, m\)を自然数とする．このとき，\(\Robinson\)において以下が成り立つ．
+	\begin{align}
+		\Robinson & \provable \numeral{n} \obj{+} \numeral{m} \objeq \numeral{n + m},
+		\label{eq:Robinsonnumeraltheoremaddition}                                                                                                                                                     \\
+		\Robinson & \provable \numeral{n} \obj{\cdot} \numeral{m} \objeq \numeral{n \cdot m},
+		\label{eq:Robinsonnumeraltheoremmultiplication}                                                                                                                                               \\
+		\Robinson & \provable \lnot \paren{\numeral{n} \objeq \numeral{m}} \quad (n \neq m),
+		\label{eq:Robinsonnumeraltheoremnumeralterm}                                                                                                                                                  \\
+		\Robinson & \provable \forall \obj{x} \paren{\obj{x} < \numeral{n + 1} \formulaequiv \obj{x} \objeq \numeral{0} \lor \obj{x} \objeq \numeral{1} \lor \dotsb \lor \obj{x} \objeq \numeral{n}},
+		\label{eq:Robinsonnumeraltheoremorder}                                                                                                                                                        \\
+		\Robinson & \provable \forall \obj{x} \paren{\obj{x} \obj{<} \numeral{n} \lor \numeral{n} < \obj{x} \lor \obj{x} \objeq \numeral{n}}.
+		\label{eq:Robinsonnumeraltheoremlinerorder}
+	\end{align}
+\end{Thm}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\Robinson\)の任意のモデルとする．\(\symcal{M}\)が右辺の論理式を充足することを示せば十分である．
+	\(\symcal{M}\)の対象領域を\(M\)とする．
+
+	\cref{eq:Robinsonnumeraltheoremaddition}を示す．
+	自然数\(n\)を任意に1つとったとき，
+	任意の自然数\(m\)に対して
+	\(
+	\interpretation{\symcal{M}}{\paren{\numeral{n} + \numeral{m}}} = \interpretation{\symcal{M}}{\paren{\numeral{n + m}}}
+	\)
+	が成り立つことを\(m\)に関する数学的帰納法によって示す．
+	\(m = 0\)のとき，\(\numeral{0}\)は\(\obj{0}\)のことなので，\cref{item:PAA3}から
+	\(
+	\interpretation{\symcal{M}}{\paren{\numeral{n} + \numeral{0}}} = \interpretation{\symcal{M}}{\numeral{n}}
+	\)
+	が得られる．
+	各\(m\)に対して，
+	\(
+	\interpretation{\symcal{M}}{\paren{\numeral{n} + \numeral{m}}} = \interpretation{\symcal{M}}{\paren{\numeral{n + m}}}
+	\)
+	が成り立つと仮定する．
+	\cref{item:PAA4}から
+	\begin{align*}
+		\interpretation{\symcal{M}}{\paren{\numeral{n} \obj{+} \numeral{m + 1}}}
+		 & = \interpretation{\symcal{M}}{\numeral{n}} + \interpretation{\symcal{M}}{\paren{\numeral{m + 1}}}       \\
+		 & = \interpretation{\symcal{M}}{\numeral{n}} + \interpretation{\symcal{M}}{\paren{\numeral{m} + \obj{1}}} \\
+		 & = \interpretation{\symcal{M}}{\numeral{n}} + \paren{\interpretation{\symcal{M}}{\numeral{m}} + 1}       \\
+		 & = \paren{\interpretation{\symcal{M}}{\numeral{n}} + \interpretation{\symcal{M}}{\numeral{m}}} + 1       \\
+		 & = \interpretation{\symcal{M}}{\paren{\numeral{n + m}}}  + 1                                             \\
+		 & = \interpretation{\symcal{M}}{\paren{\numeral{n + \paren{m + 1}}}}
+	\end{align*}
+	となる．
+	以上より，数学的帰納法によって任意の自然数\(n, m\)に対して
+	\(
+	\interpretation{\symcal{M}}{\paren{\numeral{n} + \numeral{m}}} = \interpretation{\symcal{M}}{\paren{\numeral{n + m}}}
+	\)
+	となることがわかるので，\cref{eq:Robinsonnumeraltheoremaddition}が得られる．
+	\Cref{eq:Robinsonnumeraltheoremmultiplication}も同様である．
+
+	\Cref{eq:Robinsonnumeraltheoremnumeralterm}を示そう．
+	自然数\(n\)を任意に1つとったとき，
+	\(n \neq m\)を満たす任意の自然数\(m\)に対して
+	\(
+	\interpretation{\symcal{M}}{\numeral{n}} \neq \interpretation{\symcal{M}}{\numeral{m}}
+	\)
+	が成り立つことを\(m\)に関する数学的帰納法によって示す．
+	\(m = 0\)のとき，\(n \neq 0\)なので\(n = n_0 + 1\)となる自然数\(n_0\)がとれる．
+	すると\cref{item:PAA1}から
+	\(
+	\interpretation{\symcal{M}}{\numeral{n}} = \interpretation{\symcal{M}}{\paren{\numeral{n_0} \obj{+} \obj{1}}} \neq \interpretation{\symcal{M}}{\numeral{0}}
+	\)
+	が成り立つので
+	\(
+	\interpretation{\symcal{M}}{\numeral{n}} \neq \interpretation{\symcal{M}}{\numeral{0}}
+	\)
+	は成り立つ．
+	各\(m\)について，\(n \neq m\)ならば
+	\(
+	\interpretation{\symcal{M}}{\numeral{n}} \neq \interpretation{\symcal{M}}{\numeral{m}}
+	\)
+	が成り立つと仮定する．
+	\(n \neq m + 1\)とすると，\(n = 0\)のときには\cref{item:PAA1}から
+	\(
+	\interpretation{\symcal{M}}{\paren{\numeral{m} \obj{+} \obj{1}}} \neq \interpretation{\symcal{M}}{\numeral{0}}
+	\)
+	が得られる．よって
+	\(
+	\interpretation{\symcal{M}}{\paren{\numeral{0}}} \neq \interpretation{\symcal{M}}{\paren{\numeral{m + 1}}}\)となる．
+	\(n \neq 0\)のとき，\(n = n_0 + 1\)となる自然数\(n_0\)がとれる．\(n \neq m + 1\)より\(n_0 \neq m\)だから，
+	帰納法の仮定により
+	\(
+	\interpretation{\symcal{M}}{\numeral{n_0}} = \interpretation{\symcal{M}}{\numeral{m}}
+	\)
+	となる．
+	従って\cref{item:PAA2}（の対偶に相当するもの）によって
+	\(
+	\interpretation{\symcal{M}}{\numeral{n}} \neq \interpretation{\symcal{M}}{\paren{\numeral{m + 1}}}
+	\)
+	が成り立つ．
+	以上より，数学的帰納法によって\(n \neq m\)を満たす任意の自然数\(n, m\)に対して
+	\(
+	\interpretation{\symcal{M}}{\numeral{n}} \neq \interpretation{\symcal{M}}{\numeral{m}}
+	\)
+	となることがわかるので，\cref{eq:Robinsonnumeraltheoremnumeralterm}が得られる．
+
+	\Cref{eq:Robinsonnumeraltheoremorder}を示そう．
+	以下の主張が任意の自然数\(n\)に対して成り立つことを
+	\(n\)に関する数学的帰納法によって示す：
+	すべての\(x \in M\)に対し，\(x < \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)が成り立つことと
+	\begin{align*}
+		x & = \interpretation{\symcal{M}}{\numeral{0}}, \\
+		x & = \interpretation{\symcal{M}}{\numeral{1}}, \\
+		  & \dots                                       \\
+		x & = \interpretation{\symcal{M}}{\numeral{n}}
+	\end{align*}
+	のいずれかが成り立つことが同値である．
+	\(n = 0\)のとき，\cref{eq:Robinsonnumerallemmaadd0}などによって
+	\begin{align*}
+		                & x < \interpretation{\symcal{M}}{\numeral{1}}                  \\
+		\metaequivalent & \text{\(y + \paren{x + 1} = \numeral{1}\)となる\(y \in M\)が存在する} \\
+		\metaequivalent & \text{\(\paren{y + x} + 1 = 0 + 1\)となる\(y \in M\)が存在する}       \\
+		\metaequivalent & \text{\(y + x = 0\)となる\(y \in M\)が存在する}                       \\
+		\metaequivalent & \text{\(y = 0\)かつ\(x = 0\)となる\(y \in M\)が存在する}                \\
+		\metaequivalent & x = 0
+	\end{align*}
+	だからこの主張は成り立つ．
+	この主張が\(n\)について成り立つと仮定する．
+	まず，
+	\begin{align*}
+		x & = \interpretation{\symcal{M}}{\numeral{0}},            \\
+		x & = \interpretation{\symcal{M}}{\numeral{1}},            \\
+		  & \dots                                                  \\
+		x & = \interpretation{\symcal{M}}{\numeral{n}},            \\
+		x & = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}
+	\end{align*}
+	のいずれかが成り立つと仮定すると，\(x = \interpretation{\symcal{M}}{m}\)かつ\(m < n + 2\)となる自然数\(m\)が存在する．
+	このとき，\cref{eq:Robinsonnumeraltheoremaddition}から
+	\(\interpretation{\symcal{M}}{\paren{\numeral{n - m + 2}}} + x = \interpretation{\symcal{M}}{\paren{\numeral{n + 2}}}\)
+	だから\cref{item:PAA7}によって
+	\(x < \interpretation{\symcal{M}}{\paren{\numeral{\paren{n + 1} + 1}}}\)が成り立つ．
+	逆に，\(x < \interpretation{\symcal{M}}{\paren{\numeral{\paren{n + 1} + 1}}}\)が成り立つと仮定する．
+	もし\(x = 0\)ならば\(x = \interpretation{\symcal{M}}{\numeral{0}}\)が成り立っている．
+	\(x \neq 0\)ならば，\cref{item:PAA9}から\(x = y + 1\)となる\(y \in M\)が存在する．
+	このとき，\cref{eq:Robinsonnumerallemmaordern}から\(y < \interpretation{\symcal{M}}{\numeral{n + 1}}\)となる．
+	帰納法の仮定から，
+	\begin{align*}
+		y & = \interpretation{\symcal{M}}{\numeral{0}}, \\
+		y & = \interpretation{\symcal{M}}{\numeral{1}}, \\
+		  & \dots                                       \\
+		y & = \interpretation{\symcal{M}}{\numeral{n}}
+	\end{align*}
+	のいずれかが成り立つ．\(x = y + 1\)だから，
+	\begin{align*}
+		x & = \interpretation{\symcal{M}}{\numeral{1}},            \\
+		x & = \interpretation{\symcal{M}}{\numeral{2}},            \\
+		  & \dots                                                  \\
+		x & = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}
+	\end{align*}
+	のいずれかが成り立つ．
+	ゆえに数学的帰納法により，すべての自然数\(n\)に対して上記主張が成り立つことがわかり，\cref{eq:Robinsonnumeraltheoremorder}が得られる．
+
+	最後に\cref{eq:Robinsonnumeraltheoremlinerorder}を示そう．
+	すべての\(x \in M\)に対し，
+	\(x < \interpretation{\symcal{M}}{\numeral{n}}\), \(\interpretation{\symcal{M}}{\numeral{n}} < x\), \(x = \interpretation{\symcal{M}}{\numeral{n}}\)
+	のいずれかが成り立つことを\(n\)に関する数学的帰納法によって示す．
+	\(n = 0\)のとき，\cref{eq:Robinsonnumerallemmaorder}からこの主張は従う．
+	この主張が\(n\)のとき成り立つと仮定する．
+	すべての\(x \in M\)について，帰納法の仮定により
+	\(x < \interpretation{\symcal{M}}{\numeral{n}}\), \(\interpretation{\symcal{M}}{\numeral{n}} < x\), \(x = \interpretation{\symcal{M}}{\numeral{n}}\)
+	のいずれかが成り立つ．
+	\(x < \interpretation{\symcal{M}}{\numeral{n}}\)のとき，
+	\cref{eq:Robinsonnumeraltheoremaddition}と\cref{eq:Robinsonnumeraltheoremorder}から
+	\(x < \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)である．
+	\(\interpretation{\symcal{M}}{\numeral{n}} < x\)のとき，
+	\cref{eq:Robinsonnumerallemmalinerorderbase2}から\(x = \interpretation{\symcal{M}}{\numeral{n + 1}}\)か
+	\(\interpretation{\symcal{M}}{\paren{\numeral{n + 1}}} < x\)が成り立つ．
+	\(x = \interpretation{\symcal{M}}{\numeral{n}}\)のとき，\cref{eq:Robinsonnumerallemmaadd0commutativelaw}から
+	\(0 + \paren{x + 1} = \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)なので\(x < \interpretation{\symcal{M}}{\paren{\numeral{n + 1}}}\)である．
+	ゆえに数学的帰納法から，任意の自然数\(n\)に対して上記主張が成り立つことがわかり，\cref{eq:Robinsonnumeraltheoremlinerorder}が得られる．
+\end{proof}
+
+
+Robinson算術\(\Robinson\)は数学的帰納法を公理として含まない理論である．
+以降，公理図式\cref{item:PAA8}を一部だけ含む\(\PA\)の部分体系を考えよう．
+その前に，論理式の分類を考える．
+
+\begin{Def} \label{Def:boundedformula}
+	\(\symcal{L}\)をアリティ2の関係記号\(<\)をもつ言語とする．
+	変数記号\(x\)と\(x\)を含まない\(\symcal{L}\)項\(t\)，および\(\symcal{L}\)論理式\(\varphi\)に対し，
+	\(\forall x \paren{x < t \to \varphi}\)と\(\exists x \paren{x < t \land \varphi}\)をそれぞれ
+	\begin{align}
+		\forall x < t \varphi,
+		\label{eq:boundedformulaforall} \\
+		\exists x < t \varphi
+		\label{eq:boundedformulaexists}
+	\end{align}
+	と略記する．
+	\(\symcal{L}\)論理式\(\varphi\)が%
+	\index[widx]{ろんりしき@論理式!ゆうかいろんりしき@有界---}%
+	\(\symcal{L}\)\term{有界論理式}であるとは，
+	\(\varphi\)に含まれる量化子\(\forall, \exists\)がすべて\(\forall x < t\)か\(\exists x < t\)
+	の形で現れていることをいう%
+	\footnote{%
+		この定義も帰納的定義によって比較的容易に精密化できる．
+	}%
+	．
+	言語\(\symcal{L}\)が明らかな場合，もしくは誤解のおそれがない場合には，\(\symcal{L}\)有界論理式のことを
+	単に有界論理式と呼ぶことがある．
+
+	量化子\(\forall, \exists\)を含まない論理式，すなわち開論理式はすべて有界論理式でもある．
+\end{Def}
+
+\index[sidx]{\(\SigmaFormula_n\)：\(\SigmaFormula_n\)論理式全体の集合}
+\index[sidx]{\(\PiFormula_n\)：\(\PiFormula_n\)論理式全体の集合}
+\index[sidx]{\(\DeltaFormula_n\)：\(\PiFormula_n\)論理式全体の集合}
+\index[widx]{ろんりしき@論理式!\(\SigmaFormula_n\)ろんりしき@\(\SigmaFormula_n\)---}
+\index[widx]{ろんりしき@論理式!\(\PiFormula_n\)ろんりしき@\(\PiFormula_n\)---}
+\index[widx]{ろんりしき@論理式!\(\DeltaFormula_n\)ろんりしき@\(\DeltaFormula_n\)---}
+\begin{Def}
+	自然数\(n\)に対して，\(\SigmaFormula_n\)論理式，\(\PiFormula_n\)論理式を以下のように帰納的に定義する：
+	\begin{enumerate}
+		\item \(\symcal{L}_{\Ar}\)有界論理式はすべて\(\SigmaFormula_0\)論理式であり，かつ\(\PiFormula_0\)論理式でもあり，\(\SigmaFormula_0\)と\(\PiFormula_0\)は上記のみとする．
+		\item \(\varphi\)が\(\SigmaFormula_n\)論理式であるとき，正の整数\(k\)と変数記号\(x_1, x_2, \dots, x_k\)に対する論理式
+		      \[
+			      \forall x_1 \forall x_2 \dotsb \forall x_k \varphi
+		      \]
+		      と論理的に同値な\(\symcal{L}_{\Ar}\)論理式は\(\PiFormula_{n+1}\)論理式であり，\(\PiFormula_{n+1}\)論理式は上記のみとする．
+		\item \(\varphi\)が\(\PiFormula_n\)論理式であるとき，正の整数\(k\)と変数記号\(x_1, x_2, \dots, x_k\)に対する論理式
+		      \[
+			      \exists x_1 \exists x_2 \dotsb \exists x_k \varphi
+		      \]
+		      と論理的に同値な\(\symcal{L}_{\Ar}\)論理式は\(\SigmaFormula_{n+1}\)論理式であり，\(\PiFormula_{n+1}\)論理式は上記のみとする．
+	\end{enumerate}
+	\(\SigmaFormula_n\)論理式全体の集合，\(\PiFormula_n\)論理式全体の集合をそれぞれ\(\SigmaFormula_n, \PiFormula_n\)と表す．
+
+	\(\symcal{L}_{\Ar}\)論理式\(\varphi\)が\(\SigmaFormula_n\)論理式であり，かつ\(\PiFormula_n\)論理式でもある場合，
+	\(\varphi\)は\(\DeltaFormula_n\)論理式であるという．
+	\(\DeltaFormula_n\)論理式全体の集合を\(\DeltaFormula_n\)と表す．
+
+	また，\(\symcal{L}_{\Ar}\)開論理式全体の集合を\(\OpenFormulaSet\)と表す．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:primenumberformula}
+	「\(x\)は素数である」という主張は，以下の\(\SigmaFormula_0\)論理式によって表現できる：
+	\[
+		\lnot \exists \obj{d} < \obj{x} \exists \obj{e} < \obj{x} \paren{\obj{d} \obj{\cdot} \obj{e} \objeq \obj{x}} \land \lnot \paren{\obj{x} \objeq 0} \land \lnot \paren{\obj{x} \objeq 1}.
+	\]
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:dividedformula}
+	「\(x\)は\(y\)を割り切る」という主張は，以下の\(\SigmaFormula_0\)論理式によって表現できる：
+	\[
+		\exists \obj{z} < \obj{x} \paren{\obj{x} \obj{\cdot} \obj{z} \objeq \obj{y}}
+	\]
+\end{Ex}
+
+\begin{Lemma} \label{Lemma:formulahierarchy}
+	以下が成り立つ．
+	\begin{align}
+		\SigmaFormula_0 \subset \SigmaFormula_1 \subset \SigmaFormula_2 \subset \dotsb \subset \SigmaFormula_n \subset \SigmaFormula_{n + 1} \subset \dotsb,
+		\label{eq:Sigmaformulahierarchy} \\
+		\PiFormula_0 \subset \PiFormula_1 \subset \PiFormula_2 \subset \dotsb \subset \PiFormula_n \subset \PiFormula_{n+1} \subset \dotsb.
+		\label{eq:Piformulahierarchy}
+	\end{align}
+\end{Lemma}
+
+\begin{proof}
+	\(\SigmaFormula_n\)論理式\(\varphi\)に対し，\(\varphi\)に出現しない変数記号\(x, y\)をとれば，論理式\(\exists x \forall y \varphi\)は\(\varphi\)と
+	論理的に同値な\(\SigmaFormula_{n + 1}\)論理式である．よって\(\varphi\)は\(\SigmaFormula_{n + 1}\)論理式でもあり，\cref{eq:Sigmaformulahierarchy}を得る．
+	\Cref{eq:Piformulahierarchy}も同様である．
+\end{proof}
+
+
+\index[sidx]{I\(\symup{\Gamma}\)：\(\PA\)の部分体系}
+\begin{Def} \label{Def:paa8restriction}
+	\(\PA\)の公理のうち，公理図式\cref{item:PAA8}における論理式\(\varphi\)を論理式の集合\(\symup{\Gamma}\)の元に制限して得られる\(\symcal{L}_{\Ar}\)理論を
+	\(\InductionLimitedTheory{\symup{\Gamma}}\)と表す．
+\end{Def}
+
+\begin{Thm} \label[Thm]{Thm:IOpenInduction}
+	\(\OpenFormulaInduction\)において，以下が成り立つ：
+	\begin{align}
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y}
+		\paren{\obj{x} \obj{+} \obj{y} \objeq \obj{y} \obj{+} \obj{x}},
+		\label{eq:iopenadditioncommutativelaw}                                                                                                                                                            \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z} \paren{\obj{x} \obj{+} \paren{\obj{y} \obj{+} \obj{z}} \objeq \paren{\obj{x} \obj{+} \obj{y}} \obj{+} \obj{z}},
+		\label{eq:iopenadditionassociativelaw}                                                                                                                                                            \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y}
+		\paren{\obj{x} \obj{\cdot} \obj{y} \objeq \obj{y} \obj{\cdot} \obj{x}},
+		\label{eq:iopenmultcommutativelaw}                                                                                                                                                                \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{\cdot} \obj{z}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{\cdot} \obj{z}},
+		\label{eq:iopenmultassociativelaw}                                                                                                                                                                \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\obj{x} \obj{\cdot} \paren{\obj{y} \obj{+} \obj{z}} \objeq \paren{\obj{x} \obj{\cdot} \obj{y}} \obj{+} \paren{\obj{x} \obj{\cdot} \obj{z}}},
+		\label{eq:iopendistributivelaw}                                                                                                                                                                   \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\obj{x} \obj{+} \obj{y} \objeq \obj{x} \obj{+} \obj{z} \to \obj{y} \objeq \obj{z}},
+		\label{eq:iopendifference}                                                                                                                                                                        \\
+		\OpenFormulaInduction & \provable \forall \obj{x}
+		\lnot \paren{\obj{x} \obj{<} \obj{x}},
+		\label{eq:iopennonreflexivityraw}                                                                                                                                                                 \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\obj{x} \obj{<} \obj{y} \land \obj{y} \obj{<} \obj{z} \to \obj{x} \obj{<} \obj{z}},
+		\label{eq:iopentransitionraw}                                                                                                                                                                     \\
+		\OpenFormulaInduction & \provable \forall \obj{x}
+		\paren{\obj{x} \objeq \obj{0} \lor \obj{0} \obj{<} \obj{x}},
+		\label{eq:iopen0minimum}                                                                                                                                                                          \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y}
+		\paren{\obj{x} \obj{<} \obj{y} \lor \obj{x} \objeq \obj{y} \lor \obj{y} \obj{<} \obj{x}},
+		\label{eq:iopenlinerorder}                                                                                                                                                                        \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\obj{x} \obj{<} \obj{y} \formulaequiv \obj{x} \obj{+} \obj{z} \obj{<} \obj{y} \obj{+} \obj{z}},
+		\label{eq:iopencalcorderaddition}                                                                                                                                                                 \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\lnot \paren{\obj{z} \objeq \obj{0}} \to \paren{\obj{x} \obj{<} \obj{y} \formulaequiv \obj{x} \obj{\cdot} \obj{z} \obj{<} \obj{y} \obj{\cdot} \obj{z}}},
+		\label{eq:iopencalcordermult}                                                                                                                                                                     \\
+		\OpenFormulaInduction & \provable \forall \obj{x} \forall \obj{y} \forall \obj{z}
+		\paren{\lnot \paren{\obj{z} \objeq \obj{0}} \land \obj{x} \obj{\cdot} \obj{z} \objeq \obj{y} \obj{\cdot} \obj{z} \to \obj{x} \objeq \obj{y}}.
+		\label{eq:iopendivision}
+	\end{align}
+\end{Thm}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\OpenFormulaInduction\)の任意のモデルとする．\(\symcal{M}\)が右辺の論理式を充足することを示せば十分である．
+	\(\symcal{M}\)の対象領域を\(M\)とする．
+
+	\Cref{eq:iopenadditioncommutativelaw}を示そう．
+	まず，論理式\(\apply{\varphi}{\obj{x}}\)を\(\obj{0} \obj{+} \obj{x} \objeq \obj{x}\)と定めると，\(\apply{\varphi}{\obj{x}}\)は開論理式である．
+	そこで，\(\obj{x}\)に着目して\cref{item:PAA8}を適用する，すなわち\(x\)に関する帰納法によって任意の\(x \in M\)に対して\(0 + x = x\)となることを示そう．
+	\(\apply{\varphi}{\obj{0}}\)は\(\obj{0} \obj{+} \obj{0} \objeq \obj{0}\)のことであり，\cref{item:PAA3}から\(0 + 0 = 0\)は成り立つ．
+	各\(x \in M\)について，\(0 + x = x\)であると仮定すると，帰納法の仮定と\cref{item:PAA4}などにより
+	\(0 + \paren{x + 1} = \paren{0 + x} + 1 = x + 1\)となる．
+	よって\cref{item:PAA8}から任意の\(x \in M\)に対して\(0 + x = 0\)となることがわかる．
+	次に，論理式\(\apply{\psi}{\obj{y}}\)を\(\paren{\obj{x} \obj{+} \obj{1}} \obj{+} \obj{y} \objeq \paren{\obj{x} \obj{+} \obj{y}} \obj{+} \obj{1}\)と定めると，
+	\(\apply{\psi}{\obj{y}}\)は開論理式である．
+	そこで，\(y\)に関する帰納法によって任意の\(x, y \in M\)に対して\(\paren{x + 1} + y = \paren{x + y} + 1\)が成り立つことを示す．
+	\(x \in M\)を任意に1つとって固定しておく．
+	まず，\cref{item:PAA3}から\(\paren{x + 1} + 0 = \paren{x + 0} + 1\)が従う．
+	各\(y \in M\)に対し，\(\paren{x + 1} + y = \paren{x + y} + 1\)であると仮定する．
+	このとき，帰納法の仮定と\cref{item:PAA4}から
+	\(\paren{x + 1} + \paren{y + 1} = \paren{\paren{x + 1} + y} + 1 = \paren{\paren{x + y} + 1} + 1 = \paren{x + \paren{y + 1}} + 1\)となる．
+	よって\cref{item:PAA8}から任意の\(x, y \in M\)に対して\(\paren{x + 1} + y = \paren{x + y} + 1\)が成り立つことがわかる．
+	最後に，論理式\(\apply{\chi}{\obj{y}}\)を\(\obj{x} \obj{+} \obj{y} \objeq \obj{y} \obj{+} \obj{x}\)と定めると，
+	\(\apply{\chi}{\obj{y}}\)は開論理式である．
+	そこで，\(y\)に関する帰納法によって任意の\(x, y \in M\)に対して\(x + y = y + x\)となることを示そう．
+	\(x \in M\)を1つとって固定しておく．
+	\(x + 0 = 0 + x\)であることは，\cref{item:PAA3}と上で示した\(0 + x = 0\)から従う．
+	各\(y \in M\)に対し，\(x + y = y + x\)であると仮定する．
+	このとき，\cref{item:PAA4}や上で示した\(\paren{x + 1} + y = \paren{x + y} + 1\)と帰納法の仮定により
+	\(x + \paren{y + 1} = \paren{x + y} + 1 = \paren{y + x} + 1 = \paren{y + 1} + 1\)となる．
+	ゆえに\cref{item:PAA8}から任意の\(x, y \in M\)に対して\(x + y = y + x\)となることがわかる．
+	以上より\cref{eq:iopenadditioncommutativelaw}が得られる．
+
+	\Cref{eq:iopenadditionassociativelaw}については，
+	任意の\(x, y, z\)に対して\(x + \paren{y + z} = \paren{x + y} + z\)が成り立つことを\(z\)に関する帰納法によって示せばよい．
+	\Cref{eq:iopenmultcommutativelaw},  \cref{eq:iopenmultassociativelaw}, \cref{eq:iopendistributivelaw}, \cref{eq:iopendifference}
+	もすべて同様に，\(\obj{z}\)に着目して\cref{item:PAA8}を適用することによって得られる．
+
+	\Cref{eq:iopennonreflexivityraw}は\(x\)についての帰納法で示せる．
+
+	\Cref{eq:iopentransitionraw}を示そう．任意の\(x, y, z \in M\)に対して，
+	\(x < y\)かつ\(y < z\)であると仮定する．
+	このとき，\cref{item:PAA7}から\(y = u + \paren{x + 1}\)となる\(u \in M\)と\(z = v + \paren{y + 1}\)となる\(v \in M\)が存在する．
+	よって，\cref{item:PAA4}や\cref{eq:iopenadditionassociativelaw}から
+	\(z = \paren{v + \paren{u + 1}} + \paren{x + 1}\)が得られる．よって\(x < z\)である．
+
+	\Cref{eq:iopen0minimum}は\(x\)に関する帰納法によって示すことができる．
+
+	\Cref{eq:iopenlinerorder}についても，\(\obj{y}\)に着目して\cref{item:PAA8}を適用することで得られる．
+	具体的な証明も\cref{eq:Robinsonnumeraltheoremlinerorder}と同様にできる．
+	\Cref{eq:Robinsonnumeraltheoremlinerorder}を導く過程で\cref{Lemma:Robinsonnumerallemma}や\cref{Thm:Robinsonnumeraltheorem}の
+	\cref{eq:Robinsonnumeraltheoremlinerorder}以外の式を利用しているが，
+	そこで利用した各論理式の自然数\(n\)に対する数項\(\numeral{n}\)を使用している部分を変数記号\(\obj{y}\)に，
+	数項\(\numeral{n + 1}\)を使用している部分は\(\obj{y} \obj{+} \obj{1}\)にそれぞれ置き換えて得られる論理式を\(\OpenFormulaInduction\)上で証明すればよい．
+	数項がなくなるため通常の自然数に関する数学的帰納法は使えないが，
+	代わりに\cref{item:PAA8}を利用すればまったく同様にして証明できる．
+
+	\Cref{eq:iopencalcorderaddition}を示す．\(x, y, z \in M\)を任意にとる．
+	\(x < y\)と仮定すると，\(y = w + \paren{x + 1}\)となる\(w \in M\)が存在する．
+	このとき，\cref{eq:iopenadditioncommutativelaw}や\cref{eq:iopenadditionassociativelaw}などから
+	\(y + z = w + \paren{\paren{x + z} + 1}\)となるから\(x + z < y + z\)である．
+	\(x + z < y + z\)ならば\(x < y\)であることについては，\(z\)に関する帰納法によって示せる．
+
+	\Cref{eq:iopencalcordermult}を示す．
+	\(z\)に関する帰納法により，\(z \neq 0\)となる任意の\(x, y, z\)に対し，\(x < y\)ならば\(x \cdot z < y \cdot z\)となること示そう．
+	\(z = 0\)の場合は仮定と矛盾するのでこの主張は成り立つ．
+	\(z \neq 0\)となる各\(z\)について，\(x < y\)ならば\(x \cdot z < y \cdot z\)であると仮定する．
+	\(x < y\)と仮定すると，\cref{item:PAA7}により\(y = u + \paren{x + 1}\)となる\(u \in M\)が存在する．また，
+	\(x \cdot z < y \cdot z\)だから\cref{item:PAA7}により\(y \cdot z = v + \paren{\paren{x \cdot z} + 1}\)となる\(v \in M\)がとれる．
+	このとき，
+	\begin{align*}
+		y \cdot \paren{z + 1}
+		 & = \paren{y \cdot z} + y                                                 \\
+		 & = \paren{v + \paren{\paren{x \cdot z} + 1}} + \paren{u + \paren{x + 1}} \\
+		 & = x \cdot \paren{z + 1} + \paren{\paren{u + v} + 1}
+	\end{align*}
+	となるから\(x \cdot z < y \cdot z\)である．
+	この逆となる\(z \neq 0\)となる任意の\(x, y, z\)に対し，\(x \cdot z < y \cdot z\)ならば\(x < y\)となることについては，
+	\cref{eq:iopenlinerorder}から\(x \cdot z < y \cdot z\)のとき\(x = y\)でも\(y < x\)でもないことを示せばよい．
+	\(x = y\)ならば\(x \cdot z = y \cdot z\)となり\cref{eq:iopennonreflexivityraw}に矛盾し，
+	\(y < x\)ならば\(y \cdot z < x \cdot z\)となり\cref{eq:iopentransitionraw}から\(x \cdot z < x \cdot z\)
+	が得られるのでやはり\cref{eq:iopennonreflexivityraw}に矛盾する．
+
+	\Cref{eq:iopendivision}を示そう．
+	対偶をとって任意の\(x, y, z\)に対して\(x \neq y\)ならば\(z = 0\)または\(x \cdot z \neq y \cdot z\)であることを示す．
+	\(x \neq y\)かつ\(z \neq 0\)ならば\(x \cdot z \neq y \cdot z\)であることを示せばよい．
+	\cref{eq:iopenlinerorder}から\(x < y\)または\(y < x\)である．
+	よって\cref{eq:iopencalcordermult}から\(x \cdot z < y \cdot z\)または\(y \cdot z < x \cdot z\)である．
+	ゆえに\cref{eq:iopencalcordermult}を示したときと同様にして\(x \cdot z \neq y \cdot z\)が従う．
+\end{proof}
+
+\begin{Lemma} \label[Lemma]{Lemma:iopenPAA9redudant}
+	\(\OpenFormulaInduction\)において，以下が成り立つ．
+	\begin{equation}
+		\OpenFormulaInduction \provable \text{\cref{item:PAA9}}.
+		\label{eq:iopenPAA9redudant}
+	\end{equation}
+\end{Lemma}
+
+\begin{proof}
+	\(\symcal{M}\)を\(\OpenFormulaInduction\)の任意のモデルとする．\(\symcal{M}\)が右辺の論理式を充足することを示せば十分である．
+	\(\symcal{M}\)の対象領域を\(M\)とする．
+
+	任意の\(x \in M\)に対し，\(x \neq 0\)とすると\cref{eq:iopen0minimum}から\(0 < x\)である．
+	ゆえに\cref{item:PAA7}から\(x = y + \paren{0 + 1}\)となる\(y \in M\)が存在する．
+	このとき，\cref{item:PAA3}や\cref{item:PAA4}から\(x = \paren{y + 0} + 1 = y + 1\)となる．
+\end{proof}
+
+
+\(\Robinson\)よりもさらに弱い体系として，以下の理論が知られている．
+
+\index[sidx]{\(\RArithmetic\)：Mostowski--Robinson--Tarskiの体系}
+\index[widx]{Mostowski--Robinson--Tarskiのたいけい@Mostowski--Robinson--Tarskiの体系}
+\begin{Def} \label{Def:RArithmetic}
+	\term{Mostowski--Robinson--Tarskiの体系}\(\RArithmetic\)は，
+	以下の無限個の公理からなる\(\symcal{L}_{\Ar}\)理論である．
+	ここで，\(m, n\)は任意の自然数である．
+
+	\begin{enumerate}[label=R\arabic*.,ref=R\arabic*]
+		\item \label{item:RR1} \(\numeral{1} \objeq \obj{1}\),
+		\item \label{item:RR2} \(\forall \obj{x} \lnot \paren{\obj{x} \obj{<} \obj{0}}\),
+		\item \label{item:RR3} \(\numeral{n} \obj{+} \numeral{m} \objeq \numeral{n + m}\),
+		\item \label{item:RR4} \(\numeral{n} \obj{\cdot} \numeral{m} \objeq \numeral{n \cdot m}\),
+		\item \label{item:RR5} \(\lnot \paren{\numeral{n} \objeq \numeral{m}} \quad (n \neq m)\),
+		\item \label{item:RR6} \(\forall \obj{x} \paren{\obj{x} < \numeral{n + 1} \formulaequiv \obj{x} \objeq \numeral{0} \lor \obj{x} \objeq \numeral{1} \lor \dotsb \lor \obj{x} \objeq \numeral{n}}\),
+		\item \label{item:RR7} \(\forall \obj{x} \paren{\obj{x} \obj{<} \numeral{n} \lor \numeral{n} < \obj{x} \lor \obj{x} \objeq \numeral{n}}.\)
+	\end{enumerate}
+\end{Def}
+
+
+\begin{Thm} \label[Thm]{Thm:TheoryHierarchy}
+	以下で，理論\(T_1, T_2\)に対する\(T_1 \subset T_2\)は
+	「\(T_1\)の定理はすべて\(T_2\)の定理でもある」ことを意味するものとする．
+	このとき，以下が成り立つ．
+	\begin{equation}
+		\RArithmetic \subset \Robinson \subset \OpenFormulaInduction
+		\subset \SigmaFormulaInduction_0 \subset \SigmaFormulaInduction_1
+		\subset \dotsb \subset \SigmaFormulaInduction_n \subset \dotsb \subset \PA.
+		\label{eq:TheoryHierarchy}
+	\end{equation}
+\end{Thm}
+
+\begin{proof}
+	\Cref{Note:equivalentTheory}も踏まえれば，定理の包含関係としての\(T_1 \subset T_2\)が成り立つことを示すには，
+	\(T_1\)の各公理が\(T_2\)の定理であることを示せば十分である．
+	\(\OpenFormulaInduction\)以降の体系の包含関係については，論理式の集合としての包含関係が成り立っていることから明らか．
+	定理の包含関係としての\(\RArithmetic \subset \Robinson\)は
+	\cref{eq:robinson1numeric}と\cref{Lemma:Robinsonnumerallemma}，および\cref{Thm:Robinsonnumeraltheorem}から，
+	\(\Robinson \subset \OpenFormulaInduction\)については\cref{Lemma:iopenPAA9redudant}からそれぞれ従う．
+\end{proof}
+
+
+\begin{Que} \label[Que]{Que:Robinsoncommutativelaw}
+	\(\OpenFormulaInduction\)では，体系内での帰納法を使って\cref{eq:iopenadditioncommutativelaw}を示した．
+	\(\Robinson\)では，任意の自然数\(n, m\)対して，項として\(\numeral{n + m} = \numeral{m + n}\)が成り立つことから
+	\[
+		\Robinson \provable \numeral{n} \obj{+} \numeral{m} \objeq \numeral{m} \obj{+} \numeral{n}
+	\]
+	が得られる．
+	ところが，\(\OpenFormulaInduction\)では証明できた加法の交換法則は成り立たない．
+	つまり
+	\[
+		\Robinson \notprovable \forall \obj{x} \forall \obj{y} \paren{\obj{x} \obj{+} \obj{y} \objeq \obj{y} \obj{+} \obj{x}}
+	\]
+	である．
+
+	\(\omega_0, \omega_1 \notin \NaturalNumbers\)となる記号\(\omega_0, \omega_1\)について，
+	集合\(\NaturalNumbers \cup \Set{\omega_0, \omega_1}\)を対象領域とする\(\symcal{L}_{\Ar}\)構造\(\symcal{M}\)を，
+	\(\symcal{M}\)が上記論理式を充足しない\(\Robinson\)のモデルになるよう定義せよ．
+	このことは，メタ側の帰納法と体系内での帰納法の違いを端的に示すものである．
+\end{Que}
+
+\begin{Que} \label[Que]{Que:RArithmeticRobinson}
+	\(\RArithmetic\)は\(\Robinson\)よりもさらに弱い体系であることを確かめよう．
+	\[
+		\RArithmetic \notprovable \text{\Cref{item:PAA1}}
+	\]
+	を示せ．
+\end{Que}
+
+\(\RArithmetic\)は，上記のように証明能力が非常に弱い体系であり，
+標準モデルで成り立っていた性質の多くが証明できない．
+しかし，\(\SigmaFormula_1\)閉論理式については標準モデルで成り立つ性質をすべて証明することができる．
+このことを確かめよう．
+
+まずは算術の体系の証明能力を「標準モデルで成り立つ性質をどの程度証明できるか」という基準で評価する指標を定義する．
+
+\index[widx]{\(\Gamma\)かんぜん@\(\Gamma\)完全}
+\begin{Def} \label{Def:GammaCompleteness}
+	\(\Gamma\)を\(\symcal{L}_{\Ar}\)閉論理式の集合とし，\(T\)を\(\symcal{L}_{\Ar}\)理論とする．
+	このとき，\(T\)が\term{\(\Gamma\)完全}であるとは，
+	任意の\(\varphi \in \Gamma\)に対して
+	\begin{equation}
+		\standardmodel \satisfy \varphi \metaimplies T \provable \varphi
+		\label{eq:GammaCompleteness}
+	\end{equation}
+	が成り立つことをいう．
+\end{Def}
+
+先に述べたように，\(\RArithmetic\)は\(\SigmaFormula_1\)完全である．
+証明の準備として補題を用意しておく．
+
+\begin{Lemma} \label[Lemma]{Lemma:Rtermvalue}
+	任意の\(\symcal{L}_{\Ar}\)閉項\(t\)に対して，\(\RArithmetic \provable t \objeq \numeral{n}\)となる自然数\(n\)がただ1つ存在する．
+\end{Lemma}
+
+\begin{Que} \label[Que]{Que:Rtermvalue}
+	\Cref{Lemma:Rtermvalue}を示せ．
+\end{Que}
+
+
+\index[widx]{\(\SigmaFormula_1\)かんぜんせい@\(\SigmaFormula_1\)完全性}
+\begin{Thm}[\(\RArithmetic\)の\(\SigmaFormula_1\)完全性] \label[Thm]{Thm:RSigma1completeness}
+	任意の\(\SigmaFormula_1\)閉論理式\(\varphi\)に対し，
+	\begin{equation}
+		\standardmodel \satisfy \varphi \metaimplies \RArithmetic \provable \varphi.
+		\label{eq:RSigma1completeness}
+	\end{equation}
+\end{Thm}
+
+\begin{proof}
+	\(\varphi\)の構成に関する帰納法によって示す．
+	\(\varphi\)は\(\SigmaFormula_1\)論理式なので，
+	\(\varphi\)は有界論理式であるか，有界論理式\(\apply{\psi}{x}\)に対する\(\exists x \apply{\psi}{x}\)の形であるかのいずれかである．
+
+	\(\varphi\)が閉項\(s, t\)を用いた\(s \objeq t\)の形のとき，
+	\cref{Lemma:Rtermvalue}から
+	\(\RArithmetic \provable s \objeq \numeral{n}\)かつ\(\RArithmetic \provable t \objeq \numeral{m}\)となる自然数\(n, m\)が存在する．
+	\(\standardmodel \satisfy s \objeq t\)なので\(\standardmodel \satisfy \numeral{n} \objeq \numeral{m}\)であり，よって\(n = m\)となる．
+	このとき，\(\RArithmetic \provable \numeral{n} \objeq \numeral{m}\)だから\(\RArithmetic \provable s \objeq t\)である．
+	\(\varphi\)が閉項\(s, t\)を用いた\(s \obj{<} t\)の形のとき，
+	\(\RArithmetic \provable s \objeq \numeral{n}\)かつ\(\RArithmetic \provable t \objeq \numeral{m}\)となる自然数\(n, m\)が存在する．
+	\(\standardmodel \satisfy \numeral{n} \obj{<} \numeral{m}\)だから\(n < m\)である．
+	ゆえに\(n\)は\(0, 1, \dots, m - 1\)のいずれかである．
+	従って\(\RArithmetic \provable \numeral{n} \objeq \numeral{0} \lor \numeral{n} \objeq \numeral{1} \lor \dotsb \lor \numeral{m - 1}\)
+	である．\cref{item:RR6}から\(\RArithmetic \provable \numeral{n} \obj{<} \numeral{m}\)が得られるので，
+	\(\RArithmetic \provable s \obj{<} t\)が従う．
+
+	\(\varphi\)が原子論理式の否定であるときは，\(\varphi\)は閉項\(s, t\)に対する\(\lnot \paren{s \objeq t}\)か
+	\(\lnot \paren{s \obj{<} t}\)のいずれかである．
+	この場合には\cref{item:RR5}と\cref{item:RR6}の裏（に相当するもの）を利用することで定理の主張が得られる．
+
+	\(\varphi\)が\(\psi_1 \lor \psi_2\)か\(\psi_1 \land \psi_2\)の形のときは明らか．
+
+	\(\varphi\)が\(\forall x < t \apply{\psi}{x}\)の形のとき，
+	\(\varphi\)は閉論理式であるから\(t\)は閉項である．
+	ゆえに\cref{Lemma:Rtermvalue}から\(\RArithmetic \provable t \objeq \numeral{n}\)となる自然数\(n\)が存在する．
+	\(n = 0\)であれば，\cref{item:RR2}から\(\RArithmetic \provable \forall x < t \apply{\psi}{x}\)である．
+	\(n > 0\)のとき，
+	\(\standardmodel \satisfy t \objeq \numeral{n}\)であって，
+	\(\standardmodel \satisfy \forall x < t \apply{\psi}{x}\)から
+	\[
+		\standardmodel \satisfy \apply{\psi}{\numeral{0}} \land \apply{\psi}{\numeral{1}} \land \dotsb \land \apply{\psi}{\numeral{n-1}}
+	\]
+	だから，帰納法の仮定により
+	\[
+		\RArithmetic \provable \apply{\psi}{\numeral{0}} \land \apply{\psi}{\numeral{1}} \land \dotsb \land \apply{\psi}{\numeral{n-1}}
+	\]
+	となる．
+	よって
+	\[
+		\RArithmetic \provable \forall x \paren{x \objeq \numeral{0} \land x \objeq \numeral{1} \land \dotsb \land x \objeq \numeral{n-1} \to \apply{\psi}{\numeral{x}}}
+	\]
+	となる．
+	\Cref{item:RR6}によって\(\RArithmetic \provable \forall x < t \apply{\psi}{x}\)を得る．
+	\(\varphi\)が\(\exists x < t \apply{\psi}{x}\)の形である場合も同様である．
+
+	\(\varphi\)が\(\lnot \psi\)の形のとき，さらに\(\psi\)の構成に関する帰納法によって\(\RArithmetic \provable \lnot \psi\)が示せる．
+	\(\psi\)が原子論理式の場合にはすでに示してあり，そうでない場合にはDe Morganの法則による．
+
+	最後に\(\varphi\)が\(\exists x \apply{\psi}{x}\)の形である場合を考える．
+	\(\standardmodel \satisfy \exists x \apply{\psi}{x}\)であるから，自然数\(n\)で\(\standardmodel \satisfy \apply{\psi}{c_n}\)となるものが存在する．
+	ここで，\(c_n\)は\(n\)の名前である．
+	\(\interpretation{\standardmodel}{c_n} = \interpretation{\standardmodel}{\numeral{n}} = n\)であるから，
+	\(\standardmodel \satisfy c_n \objeq \numeral{n}\)である．
+	ゆえに\(\standardmodel \satisfy \apply{\psi}{\numeral{n}}\)となって帰納法の仮定から\(\RArithmetic \provable \apply{\psi}{\numeral{n}}\)が得られる．
+	従って\(\RArithmetic \provable \exists x \apply{\psi}{x}\)となる．
+\end{proof}
+
+\Cref{Thm:TheoryHierarchy}から，ほかの体系の\(\SigmaFormula_1\)完全性もただちに従う．
+
+\begin{Corollary}
+	\(\Robinson, \SigmaFormulaInduction_n, \PA\)はすべて\(\SigmaFormula_1\)完全である．
+\end{Corollary}
+
+
+
+\section{Gödel数による算術化} \label[section]{sec:godelnumbering}
+
+\Cref{sec:peanoarithmetic}では，1階Peano算術が自然数に関する性質をある程度表現できることを見た．
+不完全性定理に関する議論の中核となるのは，自然数とは無関係なはずの「証明」を1階Peano算術という体系内で扱うことにある．
+そのための基本的な道具となるのがGödel数という概念である．
+
+Gödel数は，項や論理式に対して一意な自然数を割り当てることによって得られる．
+この割り当てにより項や論理式が自然数と同一視されるため，項や論理式に対する操作やそれらの間の関係が自然数同士の関係として表現することができる．
+このようにして，形式体系そのものに対するメタ側の主張を自然数への翻訳を通して論理式によって表現することができる．
+この「翻訳」を算術化といい，算術化によって「証明可能性」という主張そのものが論理式によって表現され，それが形式体系の定理であるかどうかを議論することが可能となる．
+
+
+Gödel数を定義する文脈においては「項や論理式が自然数として表現できること」が重要であって「その値が具体的にいくつであるか」は重要ではない．
+そのため，Gödel数の定義は異なったものがいくつも知られており，採用する記号によっても千差万別である．
+準備は\cref{sec:codizeforfinitesequence}ですでに済んでいるので，以降ではGödel数を実際に定義していく．
+
+なお，変数記号全体の集合は可算集合であるため，それらを列として並べて\(v_0, v_1, v_2, \dots\)のように表現することができる．
+以下，変数記号はそのような列として表現されているものとする．
+
+まずはベースとなる記号に自然数をコードとして割り振ることを考える．
+
+\begin{Def}[共通記号のコード] \label{Def:symbolGodelNumber}
+	\Cref{sec:language}の\cref{tab:commonsymbol}で挙げた
+	記号\(\alpha\)に割り当てるコード\(\symbolcode{\alpha}\)を\cref{tab:symbolcode}で定める：
+
+	\begin{table}[htbp]
+		\centering
+		\caption{共通記号のコード}
+		\label{tab:symbolcode}
+		\begin{tabular}{c|ccccccccc}
+			\hline
+			\(\alpha\)              & \(\bot\) & \(\objeq\) & \(\lnot\) & \(\land\) & \(\lor\) & \(\to\) & \(\forall\) & \(\exists\) & \(v_n\)                        \\
+			\(\symbolcode{\alpha}\) & 1        & 2          & 3         & 4         & 5        & 6       & 7           & 8           & \(\finitesequencecode{13, n}\) \\
+			\hline
+		\end{tabular}
+	\end{table}
+
+	ここで，\(v_n\)のコードは\cref{Def:Arithmeticsymbolcode}におけるコードと被らないように決めている．
+\end{Def}
+
+\begin{Def}[\(\symcal{L}_{\Ar}\)の各記号のコード] \label{Def:Arithmeticsymbolcode}
+	\(\symcal{L}_{\Ar}\)の各記号\(\alpha\)に対し，そのコード\(\symbolcode{\alpha}\)を\cref{tab:Arithmeticsymbolcode}で定める：
+
+	\begin{table}[htbp]
+		\centering
+		\caption{\(\symcal{L}_{\Ar}\)の記号のコード}
+		\label{tab:Arithmeticsymbolcode}
+		\begin{tabular}{c|ccccc}
+			\hline
+			\(\alpha\)              & \(\obj{0}\) & \(\obj{1}\) & \(\obj{+}\)                    & \(\obj{\cdot}\)                & \(\obj{<}\)                    \\
+			\(\symbolcode{\alpha}\) & 9           & 10          & \(\finitesequencecode{11, 1}\) & \(\finitesequencecode{11, 2}\) & \(\finitesequencecode{12, 1}\) \\
+			\hline
+		\end{tabular}
+	\end{table}
+\end{Def}
+
+各記号のコードを用いて，実際にGödel数を定義しよう．
+
+\index[sidx]{\(\GodelNumber{\alpha}\)：Gödel数}%
+\index[widx]{Gödelすう@Gödel数}%
+\begin{Def}[Gödel数の表記] \label{Def:GodelNumbernotation}
+	Gödel数が定義される数学的対象\(\alpha\)に対し，そのGödel数を記号のコードのときと同じ記法で%
+	\begin{equation}
+		\GodelNumber{\alpha}
+		\label{eq:GodelNumber}
+	\end{equation}
+	と表す．
+\end{Def}
+
+
+\begin{Def}[項のGödel数] \label{Def:termGodelNumber}
+	\(\symcal{L}_{\Ar}\)項\(t\)のGödel数\(\GodelNumber{t}\)を，以下のように帰納的に定義する：
+	\begin{enumerate}
+		\item \(t\)が定数記号か変数記号であるならば，その記号のコードをそのまま\(t\)のGödel数とする．
+		\item \(t\)がアリティ\(n\)の関数記号\(f\)と項\(t_1, t_2, \dots, t_n\)を用いて\(\apply{f}{t_1, t_2, \dots, t_n}\)と表されている場合，
+		      \(t\)のGödel数は\(f\)のコードと\(t_1, t_2, \dots, t_n\)のGödel数を用いて
+		      \begin{equation}
+			      \GodelNumber{t} = \finitesequencecode{\symbolcode{f}, \GodelNumber{t_1}, \GodelNumber{t_2}, \dots, \GodelNumber{t_n}}
+			      \label{eq:termGodelNumber}
+		      \end{equation}
+		      と定める．
+	\end{enumerate}
+\end{Def}
+
+\begin{Def}[論理式のGödel数] \label{Def:formulaGodelNumber}
+	\(\symcal{L}_{\Ar}\)論理式のGödel数を以下のように帰納的に定義する：
+	\begin{align}
+		\GodelNumber{\bot}                            & = 1,
+		\label{eq:botGodelNumber}                                                                                                                              \\
+		\GodelNumber{t_1 \objeq t_2}                  & = \finitesequencecode{\symbolcode{\objeq}, \GodelNumber{t_1}, \GodelNumber{t_2}},
+		\label{eq:equationGodelNumber}                                                                                                                         \\
+		\GodelNumber{\apply{r}{t_1, t_2, \dots, t_n}} & = \finitesequencecode{\symbolcode{r}, \GodelNumber{t_1}, \GodelNumber{t_2}, \dots, \GodelNumber{t_n}},
+		\label{eq:relationalsymbolGodelNumber}                                                                                                                 \\
+		\GodelNumber{\lnot\varphi}                    & = \finitesequencecode{\symbolcode{\lnot}, \GodelNumber{\varphi}},
+		\label{eq:lnotGodelNumber}                                                                                                                             \\
+		\GodelNumber{\varphi \land \psi}              & = \finitesequencecode{\symbolcode{\land}, \GodelNumber{\varphi}, \GodelNumber{\psi}},
+		\label{eq:landGodelNumber}                                                                                                                             \\
+		\GodelNumber{\varphi \lor \psi}               & = \finitesequencecode{\symbolcode{\lor}, \GodelNumber{\varphi}, \GodelNumber{\psi}},
+		\label{eq:lorGodelNumber}                                                                                                                              \\
+		\GodelNumber{\varphi \to \psi}                & = \finitesequencecode{\symbolcode{\to}, \GodelNumber{\varphi}, \GodelNumber{\psi}},
+		\label{eq:toGodelNumber}                                                                                                                               \\
+		\GodelNumber{\forall x \varphi}               & = \finitesequencecode{\symbolcode{\forall}, \symbolcode{x}, \GodelNumber{\varphi}},
+		\label{eq:forallGodelNumber}                                                                                                                           \\
+		\GodelNumber{\exists x \varphi}               & = \finitesequencecode{\symbolcode{\exists}, \symbolcode{x}, \GodelNumber{\varphi}}.
+		\label{eq:existsGodelNumber}
+	\end{align}
+	ここで，\(t_1, t_2, \dots, t_n\)は\(\symcal{L}_{\Ar}\)項で，\(x\)は変数記号，\(\varphi, \psi\)は\(\symcal{L}_{\Ar}\)論理式である．
+\end{Def}
+
+\begin{Def}[シークエントのGödel数] \label{Def:sequentGodelNumber}
+	\(\varphi_1, \varphi_2, \dots, \varphi_n, \varphi\)を\(\symcal{L}_{\Ar}\)論理式とする．
+	このとき，シークエント
+	\[
+		\varphi_1, \varphi_2, \dots, \varphi_n \sequent \varphi
+	\]
+	のGödel数を以下のように定義する：
+	\begin{equation}
+		\GodelNumber{\varphi_1, \varphi_2, \dots, \varphi_n \sequent \varphi} =
+		\finitesequencecode{
+			\GodelNumber{\varphi_1},
+			\GodelNumber{\varphi_2},
+			\dots,
+			\GodelNumber{\varphi_n},
+			\GodelNumber{\varphi}
+		}.
+		\label{eq:sequentGodelNumber}
+	\end{equation}
+	ただし，右辺も左辺も空なシークエントに対しては，そのGödel数は\cref{Def:codizeforfinitesequence}で空列に与えたコード\(\finitesequencecode{} = 0\)とする．
+\end{Def}
+
+\begin{Def}[証明図のGödel数] \label{Def:proofdiagramGodelNumber}
+	シークエント\(S\)を下段とする自然演繹式シークエント計算における証明図\(\symcal{K}\)のGödel数\(\GodelNumber{\symcal{K}}\)を，
+	以下のように帰納的に定義する：
+	\begin{enumerate}
+		\item \(\symcal{K}\)が\cref{Def:axiom}で述べた2つの証明図（つまり公理から得られるもの）であるならば，\(\symcal{L}\)のGödel数は\(S\)のGödel数をそのまま用いる．
+		      すなわち，\(\GodelNumber{\symcal{K}} = \GodelNumber{S}\)と定義する．
+		\item \(\symcal{K}\)が以下のいずれかの形である場合を考える．
+		      \begin{multicols}{3}
+			      \begin{prooftree}
+				      \AxiomC{\(\symcal{A}\)}
+				      \UnaryInfC{\(S\)}
+			      \end{prooftree}
+			      \columnbreak
+			      \begin{prooftree}
+				      \AxiomC{\(\symcal{A}\)}
+				      \AxiomC{\(\symcal{B}\)}
+				      \BinaryInfC{\(S\)}
+			      \end{prooftree}
+			      \columnbreak
+			      \begin{prooftree}
+				      \AxiomC{\(\symcal{A}\)}
+				      \AxiomC{\(\symcal{B}\)}
+				      \AxiomC{\(\symcal{C}\)}
+				      \TrinaryInfC{\(S\)}
+			      \end{prooftree}
+		      \end{multicols}
+		      このとき，\(\symcal{K}\)のGödel数\(\GodelNumber{\symcal{K}}\)はそれぞれ以下で定義する：
+		      \begin{align}
+			       & \finitesequencecode{15, \GodelNumber{S}, \GodelNumber{\symcal{A}}},
+			      \label{eq:unaryinfgodelnumber}                                                                                             \\
+			       & \finitesequencecode{16, \GodelNumber{S}, \GodelNumber{\symcal{A}}, \GodelNumber{\symcal{B}}},
+			      \label{eq:binaryinfgodelnumber}                                                                                            \\
+			       & \finitesequencecode{17, \GodelNumber{S}, \GodelNumber{\symcal{A}}, \GodelNumber{\symcal{B}}, \GodelNumber{\symcal{C}}}.
+			      \label{eq:trinaryinfgodelnumber}
+		      \end{align}
+	\end{enumerate}
+\end{Def}
+
+以上の議論により，項，論理式，証明図に対して一意の自然数がGödel数として割り振られた．
+このことにより，項や論理式，および証明図に対する主張が自然数に関する主張として翻訳できることになる．
+
+\begin{Ex} \label[Ex]{Ex:variableGodelNumber}
+	記号\(x\)に対し「\(x\)は変数記号である」という主張に対応する自然数に関する主張として，自然数\(\hat{x}\)に関する
+	\[
+		\text{\(\hat{x} = \symbolcode{13, n}\)となる自然数\(n\)が存在する}
+	\]
+	が挙げられる．すなわち，
+	\[
+		\text{\(x\)のGödel数が\(\hat{x}\)である} \metaequivalent
+		\text{\(\hat{x} = \symbolcode{13, n}\)となる自然数\(n\)が存在する}
+	\]
+	が成り立っている．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:provableGodelNumber}
+	\(T\)を理論，\(\varphi\)を論理式とする．
+	「\(T \provable \varphi\)」という主張に対応する自然数に関する主張として，
+	以下をすべて満たす自然数\(n_1, n_2, n_3, n\)が存在することを挙げることができる：
+	\begin{enumerate}
+		\item \(n_1\)はある証明図\(\symcal{K}\)のGödel数である．
+		\item \(n_2\)はあるシークエント\(S\)のGödel数である．
+		\item \(n_3\)は\(\varphi\)のGödel数である．
+		\item \(\symcal{K}\)の最下段は\(S\)である，すなわち\(\codefunctioninv{n_1}{2} = n_2\)である．
+		\item \(S\)の左辺が空である，すなわち\(\apply{\lh}{n_2} = 1\)であるか，空でない場合には\(\apply{\lh}{n_2} = n + 1\)であって
+		      \(S\)の左辺に現れる各論理式のGödel数
+		      \(
+		      \codefunctioninv{n_2}{1},
+		      \codefunctioninv{n_2}{2},
+		      \dots,
+		      \codefunctioninv{n_2}{n}
+		      \)
+		      がいずれも\(T\)のある論理式のGödel数と一致する．
+		\item \(\varphi\)が\(S\)の右辺である，すなわち\(\codefunctioninv{n_2}{\apply{\lh}{n_2}} = n_3\)が成り立つ．
+	\end{enumerate}
+
+	\(T \provable \varphi\)と上記条件をすべて満たす自然数\(n_1, n_2, n_3\)が存在することは同値である．
+\end{Ex}
+
+上記の議論だけではまだ項や論理式，および証明図に対する主張が1階Peano算術で扱えるとまではいえない．
+もう少し深い議論をするために，次節で別の準備を行う．
+
+\section{帰納的関数} \label[section]{sec:recursivefunction}
+
+\Cref{sec:godelnumbering}では，項や論理式，および証明図に対する主張が自然数に関する主張として扱えることを見た．
+本節では，自然数に関する関数や関係に対して考察する．
+
+ここで述べる帰納的関数は，素朴にはコンピュータによって計算できる関数だと解釈できる．
+本書で採用した定義からはコンピュータでの計算というイメージはつきにくいが，
+別の同値な定義も知られており，その定義からはコンピュータでの計算というイメージがつきやすい．
+このことから，帰納的関数は計算可能関数とも呼ばれており，計算理論において重要な対象である．
+
+例えば廣瀬\cite{hirose2024}では，抽象機械を介さない計算可能関数の定式化と本書で述べる意味での帰納的関数との同一性が証明されている．
+本書では計算可能関数については述べないので，より詳しく知りたい人は先に述べた文献を参照するとよい．
+
+\index[widx]{きのうてきかんすう@帰納的関数}
+\index[widx]{きのうてきかんすう@帰納的関数!げんしきのうてきかんすう@原始---}
+\index[widx]{ぜろかんすう@ゼロ関数}
+\index[widx]{こうしゃかんすう@後者関数}
+\index[widx]{しゃえいかんすう@射影関数}
+\index[sidx]{\(\muoperator\)：\(\muoperator\)作用素}
+\index[widx]{\(\muoperator\)さようそ@\(\muoperator\)さようそ}
+\index[sidx]{\(\zero^n\)：ゼロ関数}
+\index[sidx]{\(\proj_i^n\)：射影関数}
+\index[sidx]{\(\suc\)：後者関数}
+\begin{Def} \label{Def:recursivefunction}
+	\term{帰納的関数}は以下のように帰納的に定義される：
+	\begin{enumerate}
+		\item 正の整数\(n\)に対して\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への関数\(x \mapsto 0\)は帰納的関数である．
+		      この関数を
+		      \begin{equation}
+			      \zero^n
+			      \label{eq:zerofunction}
+		      \end{equation}
+		      と表す．
+		      各\(n\)に対する\(\zero^n\)を総称してゼロ関数呼ぶ．
+		\item \(\NaturalNumbers\)から\(\NaturalNumbers\)への関数\(x \mapsto x + 1\)は帰納的関数である．この関数を後者関数と呼び，
+		      \begin{equation}
+			      \suc
+			      \label{eq:sucfunction}
+		      \end{equation}
+		      と表す．
+		\item \(n\)を正の整数とする．\(i=1,2,\dots, n\)に対して，\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への関数\(\pair{x_1, \dots, x_n} \mapsto x_i\)は帰納的関数である．
+		      この関数を
+		      \begin{equation}
+			      \proj_i^n
+		      \end{equation}
+		      と表す．
+		      各\(i, n\)に対する\(\proj_i^n\)を総称して射影関数と呼ぶ．
+		\item \(n,m\)を正の整数とする．\(h \colon \NaturalNumbers^m \to \NaturalNumbers\)が帰納的関数で，
+		      \(i = 1,2,\dots,m\)に対して\(g_i \colon \NaturalNumbers^n \to \NaturalNumbers\)が帰納的関数ならば，
+		      \begin{align*}
+			      \apply{f}{x_1, \dots, x_n} = \apply{h}{
+				      \apply{g_1}{x_1, \dots, x_n},
+				      \apply{g_2}{x_1, \dots, x_n},
+				      \dots,
+				      \apply{g_m}{x_1, \dots, x_n}
+			      } \\
+			      \text{(\(x_1, \dots, x_n \in \NaturalNumbers\))}
+		      \end{align*}
+		      で定義される関数\(f \colon \NaturalNumbers^n \to \NaturalNumbers\)は帰納的関数である．
+		      \(f\)は\(g, h\)から関数合成によって得られる関数である．
+		\item \(n\)を正の整数とする．\(g \colon \NaturalNumbers^n \to \NaturalNumbers\)と\(h \colon \NaturalNumbers^{n+2}\)がともに帰納的関数ならば，
+		      \begin{align*}
+			      \apply{f}{x_1, x_2, \dots, x_n}        & = \apply{g}{x_1, x_2, \dots, x_n} \quad \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}, \\
+			      \apply{f}{x_1, x_2, \dots, x_n, y + 1} & = \apply{h}{x_1, x_2, \dots, x_n, y, \apply{f}{x_1, x_2, \dots, x_n}}                          \\
+			                                             & \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}
+		      \end{align*}
+		      で定義される関数\(f \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)は帰納的関数である．
+		      \(f\)は\(g, h\)から原始帰納法によって定義される関数である．
+		\item \(g \colon \NaturalNumbers^{n + 1} \to \NaturalNumbers\)は帰納的関数で，すべての\(x_1, x_2, \dots, x_n\)に対して
+		      \(\apply{g}{x_1, x_2, \dots, x_n, y} = 0\)となる\(y\)が存在したとする．
+		      そのような\(y\)のうち最小のものを
+		      \begin{equation}
+			      \apply{\muoperator y}{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}
+			      \label{eq:muoperator}
+		      \end{equation}
+		      と表すこととする．記号\(\muoperator\)を
+		      \term{\(\muoperator\)作用素}と呼ぶことがある．
+		      このとき，
+		      \[
+			      \apply{f}{x_1, \dots, x_n} = \apply{\muoperator y}{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}
+			      \quad \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}
+		      \]
+		      で定義される関数\(f \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)は帰納的関数である．
+		\item 以上の規則を有限回適用して得られる関数のみが帰納的関数である．
+	\end{enumerate}
+
+	また，規則6を1度も適用せずに得られる帰納的関数を特に
+	\term{原始帰納的関数}と呼ぶ．
+\end{Def}
+
+\begin{Note}
+	与えられた帰納的関数について，その構成過程は一意に定まらない．
+	例えば，ゼロ関数は何回合成してもゼロ関数である．
+	よって，帰納的関数同士の関係としてその定義に付随する順序が整礎であるとはいえない．
+	しかし，それぞれの定義同士の関係としての順序は整礎である．
+	そのため，帰納的関数の構成に関する帰納法を利用する場合，代わりにその定義の構成に関する帰納法を用いる．
+	帰納的関数に関する定理の主張の証明としてはこれで問題ないので，
+	帰納的関数の定義の構成に関する帰納法も帰納的関数の構成に関する帰納法と呼ぶことが多い．
+\end{Note}
+
+\begin{Ex} \label[Ex]{Ex:constantprimitiverecursive}
+	\(c\)を自然数とする．このとき，正の整数\(n\)に対して\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への定数関数\(x \mapsto c\)は原始帰納的関数である．
+	これを示そう．原始帰納的関数全体の集合を\(\symcal{F}\)として，以下のように写像\(F \colon \NaturalNumbers \to \symcal{F}\)を帰納的に定義する：
+	\begin{align*}
+		\apply{F}{0}     & = \zero^1,                                                                  \\
+		\apply{F}{n + 1} & = \suc \circ \paren{\apply{F}{n}} \quad \text{(\(n \in \NaturalNumbers\))}.
+	\end{align*}
+	この\(F\)に対し，\(\apply{F}{c}\)は定数関数\(x \mapsto c\)である．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:identitypromitiverecursive}
+	\(\NaturalNumbers\)上の恒等写像\(\iota \colon x \mapsto x\)は原始帰納的関数である．
+	実際，関数\(\iota_0 \colon \NaturalNumbers^2 \to \NaturalNumbers\)を以下のように原始帰納法によって定義すると，恒等写像\(\iota\)は\(\iota_0\)と
+	射影関数\(\proj_2^2\)の合成によって定義できる．
+	\begin{align*}
+		\apply{\iota_0}{x, 0}     & = \apply{\zero}{x, 0} \quad \text{(\(x \in \NaturalNumbers\))},    \\
+		\apply{\iota_0}{x, y + 1} & = \apply{\suc}{{\apply{\proj_2^3}{{x, y, \apply{\iota_0}{x, y}}}}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+	ここで，規則5における関数\(g, h\)としてそれぞれ\(\zero^2\)と\(\suc \circ \proj_2^3\)をとった．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:addition}
+	加法を表す\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への関数\(\pair{x_1, x_2} \mapsto x_1 + x_2\)は原始帰納的関数である．
+	実際，以下のように原始帰納法によって定義される関数\(p \colon \NaturalNumbers^2 \to \NaturalNumbers\)が加法を表す関数に相当する：
+	\begin{align*}
+		\apply{p}{x, 0}     & = \apply{\proj_1^2}{x, 0}
+		\quad \text{(\(x \in \NaturalNumbers\))},                                      \\
+		\apply{p}{x, y + 1} & = \apply{\suc}{\apply{\proj_3^3}{x, y, \apply{p}{x, y}}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:predecessorprimitiverecursive}
+	自然数\(x\)の前者\(x - 1\)を表す関数\(m \colon \NaturalNumbers \to \NaturalNumbers\)は原始帰納的関数である．
+	実際，\(m\)は原始帰納法によって以下のように定義される関数\(m_0\)と\(\proj_2^2\)との合成によって定義できる：
+	\begin{align*}
+		\apply{m_0}{x, 0}     & = \apply{\zero^2}{x, 0}	\quad \text{(\(x \in \NaturalNumbers\))}, \\
+		\apply{m_0}{x, y + 1} & = \apply{\proj_2^3}{x, y, \apply{m_0}{x}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+
+	「\(\apply{m}{x}\)で\(x\)の前者を表す」という意図に沿って考えると，
+	本来\(\apply{m}{0}\)は\(0-1\)となるべきだが，これは自然数ではないので便宜的にその値を\(0\)としている．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:minusprimitiverecursivefunction}
+	減法を表す\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への以下の関数\(\entireminus\)は原始帰納的関数である．
+	実際，以下のように原始帰納法によって定義される関数\(d \colon  \NaturalNumbers^2 \to \NaturalNumbers\)が減法を表す関数に相当する：
+	\begin{align*}
+		\apply{d}{x, 0}     & = \apply{\proj_1^2}{x}
+		\quad \text{(\(x \in \NaturalNumbers\))},                                   \\
+		\apply{d}{x, y + 1} & = \apply{\proj_3^3}{x, y, \apply{m}{\apply{d}{x, y}}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+	ここで，\(m \colon \NaturalNumbers \to \NaturalNumbers\)は\cref{Ex:predecessorprimitiverecursive}における前者を表す関数である．
+
+	\(x, y \in \NaturalNumbers\)に対する\(\apply{d}{x, y}\)を
+	\begin{equation}
+		x \entireminus y
+		\label{eq:entireminus}
+	\end{equation}
+	と表す．
+	\(x \geq y\)ならば\(x \entireminus y = x - y\)であり（つまり通常の減法と同じ），\(x < y\)ならば\(x \entireminus y = 0\)である．
+\end{Ex}
+
+\begin{Que} \label[Que]{Que:primitiverevursivefunction}
+	\(n\)を正の整数とする．
+	以下の\(\NaturalNumbers, \NaturalNumbers^2, \NaturalNumbers^n\)から\(\NaturalNumbers\)への関数はいずれも原始帰納的関数であることを示せ．
+	\begin{align*}
+		\pair{x, y}                 & \mapsto xy,                              \\
+		\pair{x, y}                 & \mapsto x^y,                             \\
+		x                           & \mapsto x!,                              \\
+		\pair{x_1, x_2, \dots, x_n} & \mapsto \max \Set{x_1, x_2, \dots, x_n}, \\
+		\pair{x_1, x_2, \dots, x_n} & \mapsto \min \Set{x_1, x_2, \dots, x_n}.
+	\end{align*}
+	ただし，\(0! = 0^0 = 1\)と決めておくこととする．
+\end{Que}
+
+\index[sidx]{\(\truefunction\)：真であることを表す関数}
+\index[sidx]{\(\falsefunction\)：偽であることを表す関数}
+\begin{Que} \label[Que]{Que:truefalseprimitiverecursive}
+	以下で定義される関数\(\truefunction, \falsefunction \colon \NaturalNumbers \to \NaturalNumbers\)が原始帰納的関数であることを示せ：
+	\begin{align}
+		\apply{\truefunction}{x}  & =
+		\begin{cases*}
+			0 & (\(x = 0\)のとき), \\
+			1 & (それ以外のとき),
+		\end{cases*}
+		\label{eq:trueprimitiverecursive} \\
+		\apply{\falsefunction}{x} & =
+		\begin{cases*}
+			1 & (\(x = 0\)のとき), \\
+			0 & (それ以外のとき).
+		\end{cases*}
+		\label{eq:falseprimitiverecursive}
+	\end{align}
+\end{Que}
+
+上記の例や\cref{Que:primitiverevursivefunction}により，以下の主張が従う．
+
+\begin{Lemma} \label[Lemma]{lemma:recursivefunctionoperation}
+	原始帰納的関数の和，（\(\entireminus\)の意味での）差，積，べき乗によって表される関数はすべて原始帰納的関数であり，
+	帰納的関数の和，（\(\entireminus\)の意味での）差，積，べき乗によって表される関数はすべて帰納的関数である．
+\end{Lemma}
+
+\begin{Que} \label[Que]{Que:absolutedifferenceprimitiverecursive}
+	以下の関数は原始帰納的関数であることを示せ．
+	\[
+		\pair{x, y} \mapsto \absolute{x - y}
+	\]
+\end{Que}
+
+\begin{Que} \label[Que]{Que:remquoprimitiverecursive}
+	以下の関数は原始帰納的関数であることを示せ．
+	\begin{enumerate}
+		\item \(x, y \in \NaturalNumbers\)に対し，\(y = 0\)ならば\(x\)を，\(y \neq 0\)ならば\(x\)を\(y\)で割った余りをそれぞれ対応させる関数\(\rem \colon \NaturalNumbers^2 \to \NaturalNumbers\)，
+		\item \(x, y \in \NaturalNumbers\)に対し，\(y = 0\)ならば0を\(y \neq 0\)ならば\(x\)を\(y\)で割った商をそれぞれ対応させる\(\quo \colon \NaturalNumbers^2 \to \NaturalNumbers\)．
+	\end{enumerate}
+\end{Que}
+
+以上の事実から，\cref{sec:codizeforfinitesequence}で定義したCantorの対関数や有限列のコード化に関する種々の関数が原始帰納的関数であることがわかる．
+
+\begin{Lemma} \label[Lemma]{lemma:codizeforfinitesequenceprimitiverecursive}
+	\Cref{sec:codizeforfinitesequence}で定義した関数\(\pairfunc, \pairfunc^n, \pairfunc_i^n, \connectionfunc\)はすべて原始帰納的関数である．
+	また，固定された自然数\(n\)に対して，
+	長さ\(n\)の自然数からなる有限列\(x_1, x_2, \dots, x_n\)をそのコード
+	\(\finitesequencecode{x_1, x_2, \dots, x_n}\)に対応させる\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への関数も原始帰納的関数である．
+	さらに，自然数\(i, x\)を\(\codefunctioninv{x}{i}\)に対応させる\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への関数と
+	自然数\(x, y\)を\(x \codeconnection y\)に対応させる\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への関数も原始帰納的関数である．
+\end{Lemma}
+
+\begin{Def} \label{Def:pisumprimitiverecursive}
+	\(n\)を正の整数とする．
+	関数\(\varphi \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)が与えられたとき，
+	\(x_1, x_2, \dots, x_n, z \in \NaturalNumbers\)に対して
+	\begin{align*}
+		\apply{\varphi}{x_1, x_2, \dots, x_n, 0}
+		+ \apply{\varphi}{x_1, x_2, \dots, x_n, 1}
+		+ \dots
+		+ \apply{\varphi}{x_1, x_2, \dots, x_n, z \entireminus 1}, \\
+		\apply{\varphi}{x_1, x_2, \dots, x_n, 0}
+		\times \apply{\varphi}{x_1, x_2, \dots, x_n, 1}
+		\times \dots
+		\times \apply{\varphi}{x_1, x_2, \dots, x_n, z \entireminus 1}
+	\end{align*}
+	をそれぞれ
+	\begin{align}
+		\sum_{y < z} \apply{\varphi}{x_1, x_2, \dots, x_n, y},
+		\label{eq:sumprimitiverecursive} \\
+		\prod_{y < z} \apply{\varphi}{x_1, x_2, \dots, x_n, y}
+		\label{eq:piprimitiverecursive}
+	\end{align}
+	と表す．ただし，\(z = 0\)のときは\cref{eq:sumprimitiverecursive}と\cref{eq:piprimitiverecursive}の値はそれぞれ
+	\(0, 1\)であるものとする．
+\end{Def}
+
+\Cref{lemma:recursivefunctionoperation}により，以下の定理が得られる．
+\begin{Lemma} \label[Lemma]{lemma:sumprimitiverecursive}
+	\(\varphi \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)が原始帰納的関数であるならば
+	\(\pair{x_1, x_2, \dots, x_n, z} \in \NaturalNumbers^{n + 1}\)を\cref{eq:sumprimitiverecursive}, \cref{eq:piprimitiverecursive}に対応させる
+	\(\NaturalNumbers^{n+1}\)から\(\NaturalNumbers\)への関数はいずれも原始帰納的関数であり，
+	\(\varphi\)が帰納的関数であるならば
+	\(\pair{x_1, x_2, \dots, x_n, z} \in \NaturalNumbers^{n + 1}\)を\cref{eq:sumprimitiverecursive}, \cref{eq:piprimitiverecursive}に対応させる
+	\(\NaturalNumbers^{n+1}\)から\(\NaturalNumbers\)への関数はいずれも帰納的関数である．
+\end{Lemma}
+
+\index[widx]{げんしきのうてきじゅつご@原始帰納的述語}
+\index[widx]{きのうてきじゅつご@帰納的述語}
+\begin{Def} \label{Def:recursivepredicate}
+	\(n\)を正の整数とする．\(\NaturalNumbers\)上の\(n\)項関係\(R \subset \NaturalNumbers^n\)が
+	\term{原始帰納的述語}であるとは，
+	以下で定義される\(R\)の特性関数\(\characteristicfunction{R} \colon \NaturalNumbers^n \to \NaturalNumbers\)が原始帰納的関数であることをいう：
+	\begin{align}
+		\apply{\characteristicfunction{R}}{x_1, x_2, \dots, x_n} =
+		\begin{cases*}
+			1 & (\(\pair{x_1, x_2, \dots, x_n} \in R\)のとき), \\
+			0 & (それ以外のとき).
+		\end{cases*}
+		\label{eq:characteristicfunction}
+	\end{align}
+	また，\(\characteristicfunction{R}\)が帰納的関数であるならば，\(R\)は\term{帰納的述語}であるという．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:recursivepredicate}
+	二項関係\(x = y, x < y\)は原始帰納的述語である．実際，それぞれの特性関数が
+	\begin{align*}
+		\characteristicfunction{x = y} & = \apply{\falsefunction}{\absolute{x-y}}  \\
+		\characteristicfunction{x < y} & = \apply{\truefunction}{y \entireminus x}
+	\end{align*}
+	と表せる．
+\end{Ex}
+
+\begin{Lemma} \label[Lemma]{lemma:relationoperationrecursive}
+	\(n\)を正の整数とする．\(R \subset \NaturalNumbers^n\)が原始帰納的述語であるならば，
+	\[
+		\complementset{R}
+	\]
+	も原始帰納的述語である．ここで，\(\complementset{R} = \NaturalNumbers^n \setminus R\)は\(R\)の補集合である．
+	また，\(R_1, R_2 \subset \NaturalNumbers^n\)が原始帰納的述語であるならば，
+	\begin{align*}
+		 & R_1 \cup R_2, \\
+		 & R_1 \cap R_2
+	\end{align*}
+	も原始帰納的述語である．
+	上記「原始帰納的」を「帰納的」に置き換えた主張も同様に成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	それぞれの特性関数が以下のように書けることから従う：
+	\begin{align*}
+		\apply{\characteristicfunction{\complementset{R}}}{x} & = \apply{\falsefunction}{\apply{\characteristicfunction{R}}{x}}
+		\quad \text{(\(x \in \NaturalNumbers^n\))},                                                                                                                        \\
+		\apply{\characteristicfunction{R_1 \cup R_2}}{x}      & = \apply{\truefunction}{\apply{\characteristicfunction{R_1}}{x} + \apply{\characteristicfunction{R_2}}{x}}
+		\quad \text{(\(x \in \NaturalNumbers^n\))},                                                                                                                        \\
+		\apply{\characteristicfunction{R_1 \cap R_2}}{x}      & = \apply{\characteristicfunction{R_1}}{x} \cdot \apply{\characteristicfunction{R_2}}{x}
+		\quad \text{(\(x \in \NaturalNumbers^n\))}.
+	\end{align*}
+\end{proof}
+
+\begin{Lemma} \label[Lemma]{lemma:casesrecursive}
+	\(n, m\)を正の整数とする．
+	\(R_1, R_2, \dots, R_m \subset \NaturalNumbers^n\)
+	を，どの2つも同時に成り立たない，つまり\(i \neq j\)ならば\(R_i \cap R_j = \emptyset\)であるような\(\NaturalNumbers\)上の\(n\)項関係とする．
+	関数\(\varphi_1, \varphi_2, \dots, \varphi_m, \varphi_{m+1} \colon \NaturalNumbers^n \to \NaturalNumbers\)に対して，
+	関数\(\varphi \colon \NaturalNumbers^n \to \NaturalNumbers\)を
+	\begin{align*}
+		\apply{\varphi}{x_1, x_2, \dots, x_n} =
+		\begin{cases*}
+			\apply{\varphi_1}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, x_2, \dots, x_n} \in R_1\)のとき), \\
+			\apply{\varphi_2}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, x_2, \dots, x_n} \in R_2\)のとき), \\
+			\dotsb                                      &                                               \\
+			\apply{\varphi_m}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, x_2, \dots, x_n} \in R_m\)のとき), \\
+			\apply{\varphi_{m+1}}{x_1, x_2, \dots, x_n} & (上記以外のとき)
+		\end{cases*}
+	\end{align*}
+	と定義する．このとき，以下が成り立つ．
+	\begin{enumerate}
+		\item 各\(R_i\)がすべて原始帰納的述語で，各\(\varphi_i\)がすべて原始帰納的関数であるならば，\(\varphi\)も原始帰納的関数である．
+		\item 各\(R_i\)がすべて帰納的述語で，各\(\varphi_i\)がすべて帰納的関数であるならば，\(\varphi\)も帰納的関数である．
+	\end{enumerate}
+\end{Lemma}
+
+\begin{proof}
+	\(\varphi\)が
+	\begin{align*}
+		\apply{\varphi}{x_1, x_2, \dots, x_n} = \sum_{i < m+1} \apply{\characteristicfunction{R_i}}{x_1, x_2, \dots, x_n} \cdot \apply{\varphi_i}{x_1, x_2, \dots, x_n} \\
+		\quad + \apply{\characteristicfunction{\complementset{\paren{R_1 \cup R_2 \cup \dotsb \cup R_m}}}}{x_1, x_2, \dots, x_n} \cdot \apply{\varphi_{m+1}}{x_1, x_2, \dots, x_n}
+	\end{align*}
+	と書けることから従う．
+\end{proof}
+
+\begin{Lemma} \label[Lemma]{lemma:forallexistsrecursive}
+	\(n\)を自然数とする．\(R\)を\(\NaturalNumbers\)上の\(n+1\)項関係とするとき，
+	以下で定義される\(n\)項関係\(R_1, R_2\)を考える．
+	\begin{align*}
+		                & \pair{x_1, x_2, \dots, x_n, z} \in R_1                                       \\
+		\metaequivalent & \text{\(\pair{x_1, x_2, \dots, x_n, y} \in R\)かつ\(y < z\)となる\(y\)が存在する},     \\
+		                & \pair{x_1, x_2, \dots, x_n, z} \in R_1                                       \\
+		\metaequivalent & \text{\(y < z\)となるすべての\(y\)に対して\(\pair{x_1, x_2, \dots, x_n, y} \in R\)となる}.
+	\end{align*}
+	このとき，\(R\)が原始帰納的述語であるならば\(R_1, R_2\)も原始帰納的述語であり，
+	\(R\)が帰納的述語ならば\(R_1, R_2\)も帰納的述語である．
+\end{Lemma}
+
+\begin{proof}
+	特性関数がそれぞれ
+	\begin{align*}
+		 & \apply{\truefunction}{\sum_{y < z} \apply{\characteristicfunction{R}}{x_1, x_2, \dots, x_n, y}}, \\
+		 & \apply{\truefunction}{\prod_{y < z} \apply{\characteristicfunction{R}}{x_1, x_2, \dots, x_n, y}} \\
+	\end{align*}
+	と表されることから従う．
+\end{proof}
+
+\index[sidx]{\(\muoperator_{y<z}\)：有界\(\muoperator\)演算子}
+\index[widx]{\(\muoperator\)さようそ@\(\muoperator\)さようそ!ゆうかい\(\muoperator\)作用素@有界---}
+\begin{Def} \label{Def:boundedmuoperator}
+	\(n\)を正の整数とし，\(R\)を\(\NaturalNumbers\)上の\(n\)項関係とする．
+	各\(x_1, x_2, \dots, x_n, z \in \NaturalNumbers\)に対して，
+	\(y < z\)かつ\(\pair{x_1, x_2, \dots, x_n, y} \in R\)となる\(y \in \NaturalNumbers\)が存在するならば
+	そのような\(y\)の最小値を，存在しないならば\(z\)を
+	\begin{equation}
+		\muoperator_{y < z} \apply{R}{x_1, x_2, \dots, x_n, y}
+		\label{eq:boundedmuoperator}
+	\end{equation}
+	と表す．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma:boundedmuoperatorrecursive}
+	\(R\)が原始帰納的述語であれば
+	\(\pair{x_1, x_2, \dots, x_n, z}\)に対して\cref{eq:boundedmuoperator}で定義される自然数を対応させる関数は原始帰納的関数である．
+	\(R\)が帰納的述語であれば
+	\(\pair{x_1, x_2, \dots, x_n, z}\)に対して\cref{eq:boundedmuoperator}で定義される自然数を対応させる関数は帰納的関数である．
+\end{Lemma}
+
+\begin{proof}
+	\[
+		\muoperator_{y<z} \apply{R}{x_1, x_2, \dots, x_n, y} = \sum_{w < z} \prod_{y < w} \apply{\characteristicfunction{\complementset{R}}}{x_1, x_2, \dots, x_n, y}
+	\]
+	と書けることから従う．
+\end{proof}
+
+
+以上の議論では，帰納的関数や原始帰納的関数は\(\NaturalNumbers^n\)上全域で定義された関数を対象にした．
+ここでは，必ずしも\(\NaturalNumbers^n\)上全域で定義されているとは限らない関数について考えよう．
+まずは以下のように記号を定義しておく．
+
+\index[sidx]{\(\partialequal\)：部分関数に対する等号の拡張}
+\index[widx]{ぶぶんかんすう@部分関数}
+\begin{Def} \label{Def:partialequal}
+	\(n\)を正の整数とする．\(X, Y \subset \NaturalNumbers^n\)に対して，
+	関数\(f \colon X \to \NaturalNumbers\)と関数\(g \colon Y \to \NaturalNumbers\)を考える．
+	このような\(f, g\)を\(\NaturalNumbers\)の\term{部分関数}という．
+	このとき，各\(x_1, x_2, \dots, x_n \in \NaturalNumbers\)に対して
+	\begin{equation}
+		\apply{f}{x_1, x_2, \dots, x_n} \partialequal \apply{g}{x_1, x_2, \dots, x_n}
+		\label{eq:partialequal}
+	\end{equation}
+	を，以下の表に従って定める．
+
+	\begin{table}[htbp]
+		\centering
+		\caption{\(\apply{f}{x_1, x_2, \dots, x_n} \partialequal \apply{g}{x_1, x_2, \dots, x_n}\)の真偽}
+		\label{tab:partialequal}
+		\begin{tabular}{cccc}
+			\toprule
+			\(\pair{x_1, x_2, \dots, x_n} \in X\) &
+			\(\pair{x_1, x_2, \dots, x_n} \in Y\) &
+			真偽                                                        \\
+			\midrule
+			成り立つ                                  & 成り立つ   & 通常の等号と同じ \\
+			成り立たない                                & 成り立つ   & 偽        \\
+			成り立つ                                  & 成り立たない & 偽        \\
+			成り立たない                                & 成り立たない & 真        \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+
+	ここで，\cref{tab:partialequal}における「通常の等号と同じ」とは，その真偽が
+	\[
+		\apply{f}{x_1, x_2, \dots, x_n} = \apply{g}{x_1, x_2, \dots, x_n}
+	\]
+	が成り立つことと同じであるという意味である．
+
+	また，\(X \subset \NaturalNumbers^n\)とするとき，\(X\)の部分集合\(R \subset X\)を\(n\)個の自然数の間の関係を表したものとみなすとき，
+	\(R\)を\(\NaturalNumbers^n\)上の\term{部分述語}という．
+	このとき，\(R\)の特性関数\(\characteristicfunction{R} \colon X \to \NaturalNumbers\)は，
+	\cref{eq:characteristicfunction}における\(\NaturalNumbers^n\)を\(X\)に置き換えることによって得られる．
+\end{Def}
+
+さて，上記の概念をもとにして定義域が\(\NaturalNumbers^n\)全域とは限らない場合の帰納的関数と原始帰納的関数を定義しよう．
+
+\index[widx]{きのうてきぶぶんかんすう@帰納的部分関数}
+\index[widx]{げんしきのうてきぶぶんかんすう@原始帰納的部分関数}
+\begin{Def} \label{Def:partialrecursivefunction}
+	\term{帰納的部分関数}は，以下のように帰納的に定義される：
+	\begin{enumerate}
+		\item ゼロ関数，後者関数，射影関数はいずれも帰納的部分関数である．
+		\item 合成と原始帰納法については，\cref{Def:recursivefunction}における等号を\(\partialequal\)に置き換えたもので同様に定義する．
+		\item \(g\)が\(\NaturalNumbers^{n+1}\)上の帰納的部分関数であるとき，
+		      \begin{equation}
+			      \apply{f}{x_1, x_2, \dots, x_n} \partialequal \muoperator y \paren{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}
+			      \label{eq:partialequalminimization}
+		      \end{equation}
+		      で定義される\(\NaturalNumbers^n\)上の部分関数\(f\)は帰納的部分関数である．
+		      ここで，\(\muoperator y \paren{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}\)の値が定義されており，
+		      その値が\(a\)であるとは，すべての\(b < a\)に対して\(\apply{g}{x_1, x_2, \dots, x_n, b}\)の値が定義されており，
+		      その値が0より大きく，しかも\(\apply{g}{x_1, x_2, \dots, x_n, a} = 0\)であることをいう．
+	\end{enumerate}
+
+	また，上記規則3を一度も適用せずに得られる帰納的部分関数をとくに
+	\term{原始帰納的部分関数}という．
+
+	さらに，\(\NaturalNumbers^n\)上の部分述語\(R\)が\term{帰納的部分述語}であるとは，
+	その特性関数が帰納的部分関数であることをいい，\(R\)が\term{原始帰納的部分述語}であるとは，
+	その特性関数が帰納的部分関数であることをいう．
+\end{Def}
+
+\Cref{Def:partialrecursivefunction}では，最小化において最小値の存在を仮定しなかった．
+これは，\(\apply{f}{x_1, x_2, \dots, x_n}\)の値が定義されている必要がなくなったことによる．
+
+帰納的関数において重要な結果となるのが以下に述べるKleeneの標準形定理である．
+証明には長い準備が必要なため，廣瀬\cite{hirose2024}を参照のこと．
+
+\index[widx]{Kleeneのひょうじゅんけいていり@Kleeneの標準形定理}
+\begin{Thm}[Kleeneの標準形定理]
+	\(n\)を正の整数とする．原始帰納的関数\(U \colon \NaturalNumbers \to \NaturalNumbers\)と
+	\(\NaturalNumbers^{n+1}\)が存在して，
+	任意の\(\NaturalNumbers^n\)上の帰納的部分関数は，自然数\(e\)を用いて
+	\begin{equation}
+		\apply{f}{x_1, x_2, \dots, x_n} \partialequal \apply{U}{\muoperator y \apply{T_n}{e, x_1, x_2, \dots, x_n, y}}
+		\quad \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}
+		\label{eq:kleenenormaltheorem}
+	\end{equation}
+	と表せる．ここで，\(\muoperator y \apply{T_n}{e, x_1, x_2, \dots, x_n, y}\)は，
+	\(\pair{e, x_1, x_2, \dots, x_n, y} \in T_n\)が成り立つような\(y\)のうち最小のものである．
+\end{Thm}
+
+\section{表現可能性} \label{sec:representation}
+
+Gödel数の議論を通して，我々は項や論理式，および証明図に対する主張を自然数に関する主張として翻訳できることを見た．
+ここでは，そのような自然数に関する主張が形式体系内で扱えるかどうかを考える．
+
+\index[widx]{ひょうげんされる@表現される}
+\index[widx]{ひょうげんされる@表現される!かんすうてきにひょうげんされる@関数的に---}
+\begin{Def} \label{Def:representation}
+	\(T\)を\(\symcal{L}_{\Ar}\)理論とする．
+	\(k\)を正の整数とするとき，集合\(X \subset \NaturalNumbers^k\)が\(T\)において論理式\(\apply{\varphi}{x_1, x_2, \dots, x_k}\)で
+	\term{表現される}とは，任意の自然数\(n_1, n_2, \dotsm n_k\)に対して以下が成り立つことをいう：
+	\begin{align}
+		\pair{n_1, n_2, \dots, n_k} \in X \metaimplies T \provable \apply{\varphi}{\numeral{n_1}, \numeral{n_2}, \dots, \numeral{n_k}},
+		\label{eq:representationtrue} \\
+		\pair{n_1, n_2, \dots, n_k} \notin X \metaimplies T \provable \lnot \apply{\varphi}{\numeral{n_1}, \numeral{n_2}, \dots, \numeral{n_k}}.
+		\label{eq:representationfalse}
+	\end{align}
+
+	また，関数\(f \colon \NaturalNumbers^k \to \NaturalNumbers\)が\(T\)において論理式\(\apply{\varphi}{x_1, x_2, \dots, x_k}\)で
+	\term{関数的に表現可能される}とは，
+	\(k + 1\)項関係\(\apply{f}{x_1, x_2, \dots, x_n} = y\)が\(\apply{\varphi}{x_1, x_2, \dots, x_n, y}\)で表現され，
+	かつ任意の任意の自然数\(n_1, n_2, \dotsm n_k\)に対して以下が成り立つことをいう：
+	\begin{equation}
+		T \provable \forall \obj{u} \forall \obj{v} \paren{
+			\apply{\varphi}{\numeral{n_1}, \dots, \numeral{n_k}, \obj{u}}
+			\land \apply{\varphi}{\numeral{n_1}, \dots, \numeral{n_k}, \obj{v}}
+			\to \obj{u} \objeq \obj{v}
+		}.
+		\label{eq:representationfunction}
+	\end{equation}
+\end{Def}
+
+\index[widx]{\(\SigmaFormula_i\)しゅうごう@\(\SigmaFormula_i\)集合}
+\index[widx]{\(\PiFormula_i\)しゅうごう@\(\PiFormula_i\)集合}
+\index[widx]{\(\DeltaFormula_i\)しゅうごう@\(\DeltaFormula_i\)集合}
+\index[widx]{\(\SigmaFormula_i\)かんすう@\(\SigmaFormula_i\)関数}
+\index[widx]{\(\PiFormula_i\)かんすう@\(\PiFormula_i\)関数}
+\index[widx]{\(\DeltaFormula_i\)かんすう@\(\DeltaFormula_i\)関数}
+\begin{Def} \label{Def:sigmaset}
+	\(k\)を正の整数とする．
+	集合\(X \subset \NaturalNumbers^k\)が\(\SigmaFormula_i\)集合であるとは，
+	以下を満たす\(\SigmaFormula_i\)論理式\(\apply{\varphi}{x_1, x_2, \dots, x_k}\)が存在することをいう：
+	\begin{equation}
+		\pair{n_1, n_2, \dots, n_k} \in X \metaequivalent \standardmodel \satisfy \apply{\varphi}{\numeral{n_1}, \numeral{n_2}, \dots, \numeral{n_k}}.
+		\label{eq:sigmaset}
+	\end{equation}
+	\(\PiFormula_i\)集合や\(\DeltaFormula_i\)集合も同様に定義される．
+
+	また，関数\(f \colon \NaturalNumbers^k \to \NaturalNumbers\)が\(\SigmaFormula_i\)関数であるとは，
+	そのグラフ
+	\[
+		\Set{\pair{x_1, x_2, \dots, x_k \apply{f}{x_1, x_2, \dots, x_k}} | x_1, x_2, \dots, x_k \in \NaturalNumbers}
+	\]
+	が\(\SigmaFormula_i\)集合であることをいう．
+	\(\PiFormula_i\)関数や\(\DeltaFormula_i\)関数も同様に定義される．
+\end{Def}
+
+\begin{Thm} \label[Thm]{Thm:delta1setrepresention}
+	任意の\(\DeltaFormula_1\)集合は，\(\RArithmetic\)において\(\SigmaFormula_1\)論理式で表現される．
+\end{Thm}
+
+\begin{proof}
+	\(\DeltaFormula_1\)集合\(X \subset \NaturalNumbers^k\)をとる．簡単のため，\(k = 1\)とする．
+	\(\SigmaFormula_0\)論理式\(\apply{\theta_1}{x, y}\)と\(\apply{\theta_2}{y, z}\)が存在して
+	\begin{align*}
+		n \in X    & \metaequivalent \standardmodel \satisfy \exists x \apply{\theta_1}{x, \numeral{n}} \\
+		n \notin X & \metaequivalent \standardmodel \satisfy \exists y \apply{\theta_1}{y, \numeral{n}}
+	\end{align*}
+	が成り立つ．ここで，\(\exists x_1 \exists x_2 \dotsb \exists x_n\)は\(\exists u \exists x_1 < u \exists x_2 < u \dotsb \exists x_n <u\)
+	と置き換えられるので，上記式の先頭の存在記号は1つでよい．
+	論理式\(\apply{\varphi}{z}\)を
+	\[
+		\exists x \paren{\apply{\theta_1}{x, z} \land \forall y < x \lnot \apply{\theta_2}{y, z}}
+	\]
+	と定めると，\(X\)は\(\apply{\varphi}{z}\)によって表現される．
+\end{proof}
+
+\begin{Thm} \label[Thm]{Thm:representationfunction}
+	任意の\(\DeltaFormula_1\)関数は，\(\RArithmetic\)において\(\SigmaFormula_1\)論理式によって関数的に表現される．
+\end{Thm}
+
+\begin{proof}
+	\(\DeltaFormula_1\)関数\(f \colon \NaturalNumbers^k \to \NaturalNumbers\)をとる．簡単のため，\(k = 1\)とする．
+	\Cref{Thm:delta1setrepresention}により，\(f\)のグラフを表現する\(\SigmaFormula_1\)論理式が存在する．
+	その論理式\(\apply{\theta}{x, y}\)を\(\SigmaFormula_0\)論理式\(\apply{\theta_0}{x, y, z}\)を用いて
+	\(\exists z \apply{\theta}{x, y, z}\)と表す．
+	論理式\(\apply{\psi}{x, y, z}\)を以下のように定める：
+	\[
+		\apply{\theta}{x, y, z} \land \forall \obj{u} < y \obj{+} \paren{z \obj{+} \obj{1}} \forall \obj{v} < y \obj{+} \paren{z \obj{+} \obj{1}}
+		\paren{\obj{u} \obj{+} \obj{v} \obj{<} y \obj{+} z \to \lnot \apply{\theta}{x, \obj{u}, \obj{v}}}
+	\]
+	このとき，\(\SigmaFormula_1\)論理式\(\exists z \apply{\psi}{x, y, z}\)が\(f\)を関数的に表現する．
+\end{proof}
+
+\(\DeltaFormula_1\)関数は\(\RArithmetic\)において表現可能であるが，原始帰納的関数は表現できず，
+\(\SigmaFormulaInduction_1\)なければならないことが知られている．
+以下の定理は，原始帰納的関数の構成に関する帰納法によって証明できる．
+
+\begin{Thm} \label[Thm]{Thm:primiverecursivefunctionrepresentation}
+	\(\SigmaFormulaInduction_1\)において，
+	任意の原始帰納的関数\(f\)のグラフは
+	\(\SigmaFormula_1\)論理式\(\apply{\varphi}{x_1, x_2, \dots, x_n, y, z}\)でも
+	\(\PiFormula_1\)論理式\(\apply{\psi}{x_1, x_2, \dots, x_n, y, z}\)でも表現される．
+	さらに，以下が成り立つ．
+	\begin{align*}
+		\SigmaFormulaInduction_1 & \provable \forall x_1 \forall x_2 \dotsb \forall x_n \forall y \uexists z \apply{\varphi}{x_1, x_2, \dots, x_n, y, z} \\
+		\SigmaFormulaInduction_1 & \provable \forall x_1 \forall x_2 \dotsb \forall x_n \forall y \uexists z \apply{\psi}{x_1, x_2, \dots, x_n, y, z}
+	\end{align*}
+\end{Thm}
+
+\index[widx]{げんしきのうてき@（集合が）原始帰納的}
+\index[widx]{きのうてき@（集合が）帰納的}
+\begin{Def} \label{Def:setrecursive}
+	\(k\)を正の整数とするとき，集合\(X \subset \NaturalNumbers^k\)が\term{原始帰納的}であるとは，
+	その特性関数\(\characteristicfunction{X}\)が原始帰納的であることをいう．
+	また，\(X\)が\term{帰納的}であるとは，\(\characteristicfunction{X}\)が帰納的であることをいう．
+\end{Def}
+
+Kleeneの標準形定理を用いると，以下の定理を証明できる．
+
+\begin{Thm} \label[Thm]{Thm:recursivedelta1equivalent}
+	帰納的集合（関数）と\(\DeltaFormula_1\)集合（関数）は等価である．
+	すなわち，すべての帰納的集合（関数）は\(\DeltaFormula_1\)集合（関数）でもあり，
+	すべての\(\DeltaFormula_1\)集合（関数）は帰納的集合（関数）でもある．
+\end{Thm}
+
+\section{第1不完全性定理} \label{sec:imcompletetheorem1}
+
+本節では，第1不完全性定理を定式化して証明する．
+まずは弱い形の第1不完全性定理を示すため，いくつかの準備を行う．
+
+\index[widx]{むじゅん@矛盾!1むむじゅん@1無---}
+\begin{Def} \label{Def:oneconsistent}
+	\(T\)を\(\symcal{L}_{\Ar}\)理論とする．
+	\(T\)が\term{1無矛盾}であるとは，
+	任意の\(\SigmaFormula_1\)文\(\varphi\)に対して
+	\[
+		T \provable \varphi \metaimplies \standardmodel \satisfy \varphi
+	\]
+	が成り立つことをいう．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma}
+	\(T\)を
+	\(\RArithmetic\)を含む1無矛盾な\(\symcal{L}_{\Ar}\)理論とする．
+	任意の\(\SigmaFormula_1\)集合\(S\)に対し，
+	\(\SigmaFormula_1\)論理式\(\apply{\varphi}{x}\)で
+	\[
+		n \in S \metaequivalent \apply{\varphi}{\numeral{n}}
+	\]
+	となるものが存在する．
+\end{Lemma}
+
+\begin{proof}
+	\(\SigmaFormula_1\)集合\(S\)は\(\standardmodel\)において\(\SigmaFormula_1\)論理式\(\apply{\varphi}{x}\)で表現できる．
+	そして，\(T\)は\(\RArithmetic\)を含むことから，\(\RArithmetic\)の\(\SigmaFormula_1\)完全性によって
+	\[
+		\standardmodel \satisfy \apply{\varphi}{\numeral{n}} \metaimplies \RArithmetic \provable \apply{\varphi}{\numeral{n}} \metaimplies T \provable \apply{\varphi}{\numeral{n}}
+	\]
+	が成り立つ．
+	\(T\)の1無矛盾性によって逆もいえるので，もとの主張が得られる．
+\end{proof}
+
+\index[widx]{げんしきのうてき@（理論が）原始帰納的}
+\begin{Def} \label{Def:theoryrecursive}
+	\(\symcal{L}_{\Ar}\)理論\(T\)が原始帰納的であるとは，
+	Gödel数の集合
+	\[
+		\Set{\GodelNumber{\varphi} | \varphi \in T}
+	\]
+	が原始帰納的集合であることをいう．
+\end{Def}
+
+\index[widx]{Craigのほだい@Craigの補題}
+\begin{Lemma}[Craigの補題] \label[Lemma]{lemma:craiglemma}
+	\(\SigmaFormula_1\)理論\(T\)に対し，それと\cref{Note:equivalentTheory}の意味で等価な原始帰納的な理論\(T'\)が存在する．
+\end{Lemma}
+
+\begin{proof}
+	\(T\)を\(\SigmaFormula_1\)理論とし，\(T\)を表現する\(\SigmaFormula_1\)論理式
+	\(\apply{\varphi}{x}\)を\(\SigmaFormula_0\)論理式\(\apply{\theta}{x, y}\)を用いて
+	\(\exists y \apply{\theta}{x, y}\)と表す．
+	このとき，任意の文\(\sigma\)に対して
+	\[
+		\sigma \in T \metaequivalent \standardmodel \satisfy \apply{\varphi}{\numeral{\GodelNumber{\sigma}}}
+	\]
+	が成り立つ．
+	さて，理論\(T'\)を以下のように定義する：
+	\[
+		T' = \Set{\sigma \land \sigma \land \dotsb \land \sigma | \standardmodel \satisfy \apply{\theta}{\numeral{\GodelNumber{\sigma}}, \numeral{n}}}
+	\]
+	ここで，上記の\(\sigma \land \sigma \land \dotsb \land \sigma\)は\(\sigma\)を\(n + 1\)個連結したものである．
+	このとき，\(T'\)は原始帰納的で，\(T, T'\)は等価な理論である．
+\end{proof}
+
+\Cref{lemma:craiglemma}により，\(\SigmaFormula_1\)理論であるという仮定は原始帰納的な理論であるというように置き換えられることがわかった．
+
+\index[sidx]{\(\ProofPredicate_T\)：証明可能性を表す述語}
+
+\begin{Def}
+	\(T\)を\(\SigmaFormula_1\)理論とする．原始帰納的な述語\(\ProofPredicate\)を以下のように定義する：
+	\begin{align}
+		\begin{aligned}
+			                & \apply{\ProofPredicate_T}{\GodelNumber{\symcal{K}}, \GodelNumber{\sigma}} \\
+			\metaequivalent & \text{\(\symcal{K}\)は最下段の右辺が\(\sigma\)となる証明図で，左辺の論理式はすべて\(T\)の公理である}
+			\label{eq:ProofPredicate}
+		\end{aligned}
+	\end{align}
+	\Cref{Thm:primiverecursivefunctionrepresentation}により，\(\ProofPredicate_T\)は\(\SigmaFormulaInduction_1\)において
+	\(\SigmaFormula_1\)論理式か\(\PiFormula_1\)論理式で表現可能である．
+	その論理式も同じ記号\(\ProofPredicate_T\)で表すことにする．
+	その上で，\(\Sigma_1\)論理式\(\exists y \apply{\ProofPredicate_T}{y, x}\)を
+	\begin{equation}
+		\apply{\Bew_T}{x}
+		\label{eq:Bewx}
+	\end{equation}
+	と表す．
+\end{Def}
+
+\(\apply{\Bew_T}{x}\)は，素朴には「\(x\)は\(T\)で証明可能な論理式のGödel数である」という主張を表現したものと考えられる．
+
+\index[widx]{ふどうてん@不動点!ふどうてんていり@---定理}
+\index[widx]{ふどうてん@不動点}
+\index[widx]{たいかくかていり@対角化定理|see{不動点定理}}
+\begin{Thm}[不動点定理，対角化定理] \label[Thm]{Thm:fixpointtheorem}
+	\(T\)を\(\RArithmetic\)を含む\(\SigmaFormula_1\)理論とする．
+	\(x\)のみが自由出現する任意の論理式\(\apply{\psi}{x}\)に対し，
+	\begin{equation}
+		T \provable \sigma \formulaequiv \apply{\psi}{\numeral{\GodelNumber{\sigma}}}
+		\label{eq:fixpointtheorem}
+	\end{equation}
+	となる文\(\sigma\)が存在する．この\(\sigma\)を\(\psi\)の\term{不動点}と呼ぶ．
+\end{Thm}
+
+\begin{proof}
+	\(x\)のみが自由出現する論理式は可算無限個存在する．
+	よってそれらを\(\apply{\varphi_0}{x}, \apply{\varphi_1}{x}, \dots\)と並べ，
+	関数\(f \colon \NaturalNumbers \to \NaturalNumbers\)を\(\apply{f}{x} = \GodelNumber{\apply{\varphi_x}{\numeral{x}}}\)と定める．
+	このとき，\(f\)は帰納的関数である．
+	よって\(f\)は\cref{Thm:recursivedelta1equivalent}によって\(\DeltaFormula_1\)関数でもあるので，
+	\cref{Thm:delta1setrepresention}から
+	\[
+		\apply{f}{n} = m \metaimplies T \provable \apply{\chi}{\numeral{n}, \numeral{m}} \land \forall y \paren{\lnot \paren{y \objeq \numeral{m}} \to \lnot \apply{\chi}{\numeral{n}, y}}
+	\]
+	となる\(\SigmaFormula_1\)論理式\(\chi\)が存在する．
+	論理式\(\exists y \paren{\apply{\chi}{x, y} \land \apply{\psi}{y}}\)を考えると，
+	これは\(x\)のみが自由出現する論理式なので，
+	\(\apply{f}{k} = \GodelNumber{\apply{\varphi_k}{\numeral{k}}}\)となる自然数\(k\)が存在する．
+	\(\apply{\varphi_k}{\numeral{k}}\)を\(\sigma\)と表すと，
+	\[
+		T \provable \apply{\psi}{\numeral{\GodelNumber{\sigma}}} \to \exists y \paren{\apply{\chi}{\numeral{k}, y} \land \apply{\psi}{y}}
+	\]
+	となる．よって\(T \provable \apply{\psi}{\numeral{\GodelNumber{\sigma}}} \to \sigma\)である．
+	一方，
+	\[
+		T \provable \forall y \paren{\lnot \paren{y \objeq \numeral{\GodelNumber{\sigma}}} \to \lnot \apply{\chi}{\numeral{k}, y}}
+	\]
+	だから
+	\[
+		T \provable \lnot \apply{\psi}{\numeral{\GodelNumber{\sigma}}} \to \lnot \sigma
+	\]
+	もいえる．よって\cref{eq:fixpointtheorem}が得られる．
+\end{proof}
+
+\begin{Thm}[第1不完全性定理] \label[Thm]{Thm:weakfirstimcompletetheorem}
+	\(T\)が\(\RArithmetic\)を含む1無矛盾な\(\SigmaFormula_1\)理論であるならば，
+	\(T \notprovable \sigma\)かつ\(T \notprovable \sigma\)となるような文\(\sigma\)が存在する．
+\end{Thm}
+
+\index[widx]{Gödelぶん@Gödel文}
+\begin{proof}
+	\Cref{Thm:fixpointtheorem}により，\(\lnot \apply{\Bew_T}{x}\)の不動点\(\sigma\)が存在する．
+	この\(\sigma\)を
+	\term{Gödel文}と呼ぶ．
+	\(T \provable \sigma \formulaequiv \lnot \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)である．
+
+	\(T \provable \sigma\)と仮定すると，\(\standardmodel \satisfy \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)である．
+	よって\(T\)の\(\SigmaFormula_1\)完全性によって\(T \provable \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)が成り立つ．
+	このとき，\(\sigma\)は\(\lnot \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)の不動点であることから
+	\(T \provable \lnot \sigma\)となって矛盾する．
+
+	\(T \provable \lnot \sigma\)と仮定すると，\(\sigma\)が\(\lnot \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)の不動点であることから
+	\(T \provable \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)となる．
+	\(T\)の1無矛盾性によって\(\standardmodel \satisfy \apply{\Bew_T}{\numeral{\GodelNumber{\sigma}}}\)となり，
+	\(T \provable \sigma\)だから矛盾する．
+\end{proof}
+
+\Cref{Thm:weakfirstimcompletetheorem}では，1無矛盾性という恣意的な仮定が入っている．
+この仮定を単なる無矛盾性に弱めるため，\(\Bew_T\)を改良することを考える．
+
+\begin{Def} \label{Def:Bewstar}
+	\(\SigmaFormula_1\)論理式\(\apply{\Bewstar_T}{x}\)を
+	\begin{equation}
+		\exists y \paren{\apply{\ProofPredicate_T}{y, x} \land \forall z < y \lnot \apply{\ProofPredicate_T}{z, \lnot x}}
+		\label{eq:Bewstar}
+	\end{equation}
+	ここで，\(\lnot\)は\(x\)が論理式\(\varphi\)のGödel数である場合の\(\lnot \varphi\)のGödel数を表す．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma:Bewstar}
+	\(T\)を\(\RArithmetic\)を含む原始帰納的な理論とする．
+	このとき，任意の文\(\sigma\)に対して
+	\begin{align}
+		T \provable \sigma \metaimplies T \provable \apply{\Bewstar_T}{\numeral{\GodelNumber{\sigma}}},
+		\label{eq:Bewstarprovable} \\
+		T \provable \lnot \sigma \metaimplies T \provable \lnot \apply{\Bewstar_T}{\numeral{\GodelNumber{\sigma}}},
+		\label{eq:lnotBewstarprovable}
+	\end{align}
+\end{Lemma}
+
+\begin{Thm}[第1不完全性定理] \label{Thm:firstimcompletetheorem}
+	\(T\)を\(\RArithmetic\)を含む無矛盾な\(\SigmaFormula_1\)理論とする．
+	このとき，\(T \notprovable \sigma\)かつ\(T \notprovable \lnot \sigma\)となる文\(\sigma\)が存在する．
+\end{Thm}
+
+\index[widx]{Rosserぶん@Rosser文}
+\begin{proof}
+	Craigの補題（\cref{lemma:craiglemma}）により，
+	\(T\)は原始帰納的であると仮定してよい．
+	\(\lnot \apply{\Bewstar_T}{x}\)の不動点を\(\sigma\)とする，すなわち
+	\(T \provable \sigma \formulaequiv \lnot \apply{\Bewstar_T}{\numeral{\GodelNumber{\sigma}}}\)となる文\(\sigma\)をとる．
+	この\(\sigma\)を\term{Rosser文}という．
+	このとき，\(T \notprovable \sigma\)かつ\(T \notprovable \lnot \sigma\)となる．
+\end{proof}
+
+
+\section{第2不完全性定理} \label{sec:secondimcompletetheorem}
+
+第1不完全性定理の証明で構成したGödel文やRosser文は，いくぶんか人工的な面が否めなかった．
+ここでは，自身の無矛盾性を表現した論理式が第1不完全性定理における文の具体例になっていることを確かめよう．
+
+\begin{Def} \label{Def:objbew}
+	\(T\)を\(\SigmaFormulaInduction_1\)を含む無矛盾な\(\SigmaFormula_1\)理論とする．
+	このとき，\cref{Thm:primiverecursivefunctionrepresentation}によって
+	すべての原始帰納的関数を\(T\)において表現可能であることが従う．
+	ゆえに，原始帰納的関数と原始帰納的述語の定義ごとに1つずつ関数記号と関係記号を付け加え，
+	さらにそれらの定義を公理として\(T\)に加えたものは，\(T\)の定義による拡大となっている．
+	この理論も同じく\(T\)と表すことにする．
+
+	\(\ProofPredicate_T\)は関係記号\(\obj{\ProofPredicate}_T\)と表されているので，
+	\(\exists y \apply{\obj{\ProofPredicate}_T}{y, x}\)を
+	\begin{equation}
+		\apply{\Bew_T}{x}
+		\label{eq:objbewt}
+	\end{equation}
+	で表す．
+\end{Def}
+
+\begin{Def} \label{Def:consistencyformula}
+	論理式\(\apply{\Con}{T}\)を
+	\begin{equation}
+		\lnot \apply{\Bew_T}{\numeral{\GodelNumber{\obj{0} \objeq \obj{1}}}}
+		\label{eq:consistencyformula}
+	\end{equation}
+	と定める．
+\end{Def}
+
+\begin{Thm}[第2不完全性定理] \label{thm:secondimcompletetheorem}
+	\(T\)は\(\SigmaFormulaInduction_1\)を含む無矛盾な\(\SigmaFormula_1\)理論であるとする．
+	このとき，\(T \notprovable \apply{\Con}{T}\)である．
+\end{Thm}

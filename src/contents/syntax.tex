@@ -17,7 +17,7 @@
 
 \newpage
 
-\section{言語} \label[seciton]{sec:language}
+\section{言語} \label[section]{sec:language}
 
 議論を始めるにあたり，どのような記号を使用するのかを明瞭にする必要がある．
 まず，通常の数学においてはどうなっているかを振り返ろう．
@@ -442,7 +442,7 @@
 	そのようにしても議論に影響がないことは\cref{chap:semantics}の\cref{Thm:alphaequivalent}による．
 \end{Note}
 
-記述を簡素化するために，追加で略記表現をを導入する．
+記述を簡素化するために，追加で略記表現を導入する．
 
 \index[sidx]{\(\formulaequiv\)：（論理式の）同値}
 \index[sidx]{\(\uexists\)：一意存在}
@@ -606,18 +606,25 @@
 			      \lnot \exists \obj{w} \paren{x \LiesOn \obj{w} \land y \LiesOn \obj{w} \land z \LiesOn \obj{w}}
 		      \]
 		      の略記，
-		      \(\apply{n}{a, b, c, d}\)を\[
+		      \(\apply{\varphi}{x, y, z, w}\)を
+		      \[
+			      \apply{C}{x, y, z}
+			      \land \apply{C}{x, y, w}
+			      \land \apply{C}{x, z, w}
+			      \land \apply{C}{y, z, w}
+		      \]
+		      の略記，
+		      \(\apply{n}{a, b, c, d}\)を
+		      \[
 			      \lnot \paren{a \objeq b} \land \lnot \paren{a \objeq c} \land \lnot \paren{a \objeq d} \land \lnot \paren{b \objeq c}
-			      \land \lnot \paren{c \objeq d}\]
+			      \land \lnot \paren{c \objeq d}
+		      \]
 		      の略記としたときの
 		      \[
 			      \exists \obj{a} \exists \obj{b} \exists \obj{c} \exists \obj{d}
 			      \paren{
 				      \apply{n}{\obj{a}, \obj{b}, \obj{c}, \obj{d}}
-				      \land \apply{C}{\obj{a}, \obj{b}, \obj{c}}
-				      \land \apply{C}{\obj{a}, \obj{b}, \obj{d}}
-				      \land \apply{C}{\obj{a}, \obj{c}, \obj{d}}
-				      \land \apply{C}{\obj{b}, \obj{c}, \obj{d}}
+				      \land \apply{\varphi}{\obj{a}, \obj{b}, \obj{c}, \obj{d}}
 			      }.
 		      \]
 	\end{enumerate}
@@ -630,18 +637,21 @@
 		\item \(x\)が\(y\)上にあるならば，\(x\)は点であり，\(y\)は直線である．
 		\item 任意の相異なる2点を通る直線がただ1つ存在する．
 		\item 相異なる2直線はつねに1点で交わる．
-		\item どの3つも共線でないような4点が存在する．
+		\item どの3つも共線でないような相異なる4点が存在する．
 	\end{enumerate}
 	を表現することを意図した論理式であると解釈できる．
 	上記\(\apply{C}{x, y, z}\)は「3点\(x, y, z\)は共線ではない」という主張に対応する論理式であると考えることができる．
 \end{Ex}
 
 \begin{Note}
-	\cref{Ex:ProjectiveGeometry}では\(c\)や\(n\)のようなもとの言語になかった記号が理論を記述するために使用されている．
-	しかし，ここでの\(\apply{c}{x, y, y}\)や\(\apply{n}{a, b, c, d}\)は単に既知の論理式の略記表現であり，
-	アリティ3, 4の新しい関係記号が導入されたわけではないことに注意しよう．
-	\(c, n\)を使った論理式は，単に\(\apply{c}{x, y, z}, \apply{n}{a, b, c, d}\)をその定義に置き換えることによって
-	いつでも\(c, n\)があらわれない形に書き直すことができる．
+	\cref{Ex:ProjectiveGeometry}では\(C, \varphi\)や\(n\)のようなもとの言語になかった記号が理論を記述するために使用されている．
+	しかし，ここでの\(\apply{C}{x, y, y}\)や\(\apply{\varphi}{x, y, z, w}\)および\(\apply{n}{a, b, c, d}\)は単に既知の論理式の略記表現であり，
+	それぞれのアリティ3, 4, 4の新しい関係記号が導入されたわけではないことに注意しよう．
+	\(C, \varphi, n\)を使った論理式は，単に\(\apply{C}{x, y, z}, \apply{\varphi}{x, y, z, w}, \apply{n}{a, b, c, d}\)をその定義に置き換えることによって
+	いつでも\(C, n\)があらわれない形に書き直すことができる．
+
+	なお，それぞれの記号を言語に導入したと考えても本質的には変わらない．
+	詳細は\cref{sec:extensionbydefinition}で述べる．
 \end{Note}
 
 \begin{Note}

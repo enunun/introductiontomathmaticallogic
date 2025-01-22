@@ -1093,7 +1093,7 @@ Gödel数を定義する文脈においては「項や論理式が自然数と�
 		}.
 		\label{eq:sequentGodelNumber}
 	\end{equation}
-	ただし，右辺も左辺も空なシークエントに対しては，そのGödel数は\cref{Def:codizeforfinitesequence}で空列に与えたコード\(\finitesequencecode{} = 0\)とする．
+	ここで，左辺が空なシークエントに対しては，そのGödel数は右辺の論理式\(\varphi\)のGödel数\(\GodelNumber{\varphi}\)である．
 \end{Def}
 
 \begin{Def}[証明図のGödel数] \label{Def:proofdiagramGodelNumber}
@@ -1941,7 +1941,7 @@ Kleeneの標準形定理を用いると，以下の定理を証明できる．
 
 \begin{Thm}[第1不完全性定理] \label[Thm]{Thm:weakfirstimcompletetheorem}
 	\(T\)が\(\RArithmetic\)を含む1無矛盾な\(\SigmaFormula_1\)理論であるならば，
-	\(T \notprovable \sigma\)かつ\(T \notprovable \sigma\)となるような文\(\sigma\)が存在する．
+	\(T \notprovable \sigma\)かつ\(T \notprovable \lnot \sigma\)となるような文\(\sigma\)が存在する．
 \end{Thm}
 
 \index[widx]{Gödelぶん@Gödel文}
@@ -1971,7 +1971,7 @@ Kleeneの標準形定理を用いると，以下の定理を証明できる．
 		\exists y \paren{\apply{\ProofPredicate_T}{y, x} \land \forall z < y \lnot \apply{\ProofPredicate_T}{z, \lnot x}}
 		\label{eq:Bewstar}
 	\end{equation}
-	ここで，\(\lnot\)は\(x\)が論理式\(\varphi\)のGödel数である場合の\(\lnot \varphi\)のGödel数を表す．
+	ここで，\(\lnot x\)は\(x\)が論理式\(\varphi\)のGödel数である場合の\(\lnot \varphi\)のGödel数を表す．
 \end{Def}
 
 \begin{Lemma} \label[Lemma]{lemma:Bewstar}

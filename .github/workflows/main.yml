@@ -71,8 +71,8 @@ jobs:
         mkdir output
         docker compose -f ./.devcontainer/docker-compose.yml build
         docker compose -f ./.devcontainer/docker-compose.yml up -d
-        docker exec $(docker ps -q --filter name=latex) sh -c "cd /home/src && llmk"
-        docker cp $(docker ps -q --filter name=latex):/home/src/main.pdf ./output/main.pdf
+        docker exec $(docker ps -q --filter name=latex) sh -c "cd /home/repository/src && llmk"
+        docker cp $(docker ps -q --filter name=latex):/home/repository/src/main.pdf ./output/main.pdf
 
     - name: Upload release asset
       uses: softprops/action-gh-release@v2.0.2

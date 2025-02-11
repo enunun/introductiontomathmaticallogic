@@ -736,15 +736,15 @@
 		\begin{aligned}
 			\apply{\pairfunc^1}{x}                                      & = x
 			\quad \text{(\(x \in \NaturalNumbers\))},                                                                                             \\
-			\apply{\pairfunc^{n + 1}}{x_0, x_2, \dots, x_{n  - 1}, x_n} & = \apply{\pairfunc}{x_0, \apply{\pairfunc^n}{x_1, \dots, x_{n-1}, x_n}} \\
-			                                                            & \quad \text{(\(x_0, x_2, \dots, x_{n-1}, x_n \in \NaturalNumbers\))}.
+			\apply{\pairfunc^{n + 1}}{x_0, x_1, \dots, x_{n  - 1}, x_n} & = \apply{\pairfunc}{x_0, \apply{\pairfunc^n}{x_1, \dots, x_{n-1}, x_n}} \\
+			                                                            & \quad \text{(\(x_0, x_1, \dots, x_{n-1}, x_n \in \NaturalNumbers\))}.
 		\end{aligned}
 		\label{eq:cantorpairfunctionn}
 	\end{align}
 \end{Def}
 
 \begin{Lemma} \label[Lemma]{lemma:cantorpairfunctionbijectionn}
-	正の整数\(n\)に対し，\(\pairfunc^n\)は全単射であり，その逆写像
+	正の整数\(n\)に対し，\(\pairfunc^n \colon \NaturalNumbers^n \to \NaturalNumbers\)は全単射であり，その逆写像
 	\[
 		x \mapsto \pair{\apply{\pairfunc_1^n}{x}, \apply{\pairfunc_2^n}{x}, \dots, \apply{\pairfunc_n^n}{x}}
 	\]
@@ -766,11 +766,11 @@
 \begin{Def} \label{Def:codizeforfinitesequence}
 	与えられた自然数からなる有限列
 	\[
-		x_0, x_2, \dots, x_{n-1} \in \bigcup_{n \in \NaturalNumbers} \NaturalNumbers^{\Set{0, 1, \dots, n-1}}
+		x_0, x_1, \dots, x_{n-1} \in \bigcup_{n \in \NaturalNumbers} \NaturalNumbers^{\Set{0, 1, \dots, n-1}}
 	\]
 	に対し，そのコード
 	\begin{equation}
-		\finitesequencecode{x_0, x_2, \dots, x_{n-1}}
+		\finitesequencecode{x_0, x_1, \dots, x_{n-1}}
 		\label{eq:finitesequencecode}
 	\end{equation}
 	を%
@@ -778,7 +778,7 @@
 		順序対と記号が被っているが，文脈上混同する可能性は低いと考えられる．
 	}%
 	\begin{equation}
-		\finitesequencecode{x_0, x_2, \dots, x_{n-1}} =
+		\finitesequencecode{x_0, x_1, \dots, x_{n-1}} =
 		\begin{cases*}
 			\apply{\pairfunc}{0,0}                                                  & (\(n = 0\)のとき), \\
 			\apply{\pairfunc}{0, 1 + x_0}                                           & (\(n = 1\)のとき), \\
@@ -801,7 +801,7 @@
 	\begin{equation*}
 		\finitesequencecode{x_0, x_1, \dots, x_{n-1}}
 	\end{equation*}
-	を対応させる\(\cup_{n \in \NaturalNumbers} \NaturalNumbers^{\Set{0,1,\dots,n-1}}\)から\(\NaturalNumbers\)への関数は全単射である．
+	を対応させる\(\bigcup_{n \in \NaturalNumbers} \NaturalNumbers^{\Set{0,1,\dots,n-1}}\)から\(\NaturalNumbers\)への関数は全単射である．
 \end{Lemma}
 
 \index[sidx]{\(\apply{\lh}{x}\)：コード化された有限列の長さ}
@@ -827,7 +827,7 @@
 
 \index[sidx]{\(\codefunctioninv{x}{i}\)：コードから有限列を得る関数}
 \begin{Def} \label{Def:codefunctioninv}
-	与えられた1以上の自然数\(x\)に対し，\(x\)に対応している自然数からなる有限列
+	与えられた1以上の自然数\(x\)に対し，\(x\)がそのコードとなる自然数からなる有限列
 	\(x_0, x_1, \dots, x_{n-1}\)における\(x_i\)を
 	\begin{equation}
 		\codefunctioninv{x}{i}
@@ -850,8 +850,9 @@
 
 \index[sidx]{\(x \codeconnection y\)：有限列の連結に対応するコード}
 \begin{Def} \label{Def:codeconnection}
-	自然数\(x, y\)に対し，\(x = \finitesequencecode{x_0, x_1, \dots, x_{n-1}}, y = \finitesequencecode{y_0, y_1, \dots, y_{m-1}}\)
-	としたとき，
+	自然数\(x, y\)を有限列のコードとして\(x = \finitesequencecode{x_0, x_1, \dots, x_{n-1}}\)，
+	\(y = \finitesequencecode{y_0, y_1, \dots, y_{m-1}}\)
+	と表示し，それを用いて
 	\begin{equation}
 		x \codeconnection y = \finitesequencecode{x_0, x_1, \dots, x_{n-1}, y_0, y_1, \dots, y_{m-1}}
 		\label{eq:codeconnection}

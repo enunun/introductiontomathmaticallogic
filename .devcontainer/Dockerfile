@@ -1,4 +1,4 @@
-FROM texlive/texlive:latest
+FROM texlive/texlive:TL2024-historic
 
 
 # KeTCindyの動作に必要なパッケージをインストール

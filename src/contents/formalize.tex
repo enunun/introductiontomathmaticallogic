@@ -746,14 +746,15 @@
 \begin{Lemma} \label[Lemma]{lemma:cantorpairfunctionbijectionn}
 	正の整数\(n\)に対し，\(\pairfunc^n \colon \NaturalNumbers^n \to \NaturalNumbers\)は全単射であり，その逆写像
 	\[
-		x \mapsto \pair{\apply{\pairfunc_1^n}{x}, \apply{\pairfunc_2^n}{x}, \dots, \apply{\pairfunc_n^n}{x}}
+		x \mapsto \pair{\apply{\pairfunc_0^n}{x}, \apply{\pairfunc_1^n}{x}, \dots, \apply{\pairfunc_{n-1}^n}{x}}
 	\]
 	は，\(\pairfunc_2\)を\(i\)回合成して得られる関数\(\pairfunc_2^{\paren{i}}\)を用いて以下のように与えられる：
 	\begin{equation}
 		\apply{\pairfunc_i^n}{x} =
 		\begin{cases*}
-			\apply{\pairfunc_1}{\apply{\pairfunc_2^{\paren{i}}}{x}} & (\(i < n\)のとき，\(x \in \NaturalNumbers\)), \\
-			\apply{\pairfunc_2^{\paren{n}}}{x}                      & (\(i = n\)のとき，\(x \in \NaturalNumbers\))
+			\apply{\pairfunc_1}{x}                                  & (\(i = 0\)のとき，\(x \in \NaturalNumbers\)),         \\
+			\apply{\pairfunc_1}{\apply{\pairfunc_2^{\paren{i}}}{x}} & (\(0 < i < n - 1\)のとき，\(x \in \NaturalNumbers\)), \\
+			\apply{\pairfunc_2^{\paren{n - 1}}}{x}                  & (\(i = n - 1\)のとき，\(x \in \NaturalNumbers\))
 		\end{cases*}
 		\label{eq:cantorpairfunctionninv}
 	\end{equation}
@@ -864,9 +865,12 @@
 	関数\(\connectionfunc \colon \NaturalNumbers^3 \to \NaturalNumbers\)を以下のように帰納的に定義する：
 	\begin{align}
 		\begin{aligned}
-			\apply{\connectionfunc}{0, x, y}   & = y \quad \text{(\(x, y \in \NaturalNumbers\))},                                           \\
-			\apply{\connectionfunc}{n+1, x, y} & = \apply{\pairfunc}{\apply{\lh}{x}, \apply{\connectionfunc}{n, \apply{\pairfunc_1}{x}, y}}
-			\quad \text{(\(n, x, y \in \NaturalNumbers\))}.
+			\apply{\connectionfunc}{0, x, y}   & = y \quad \text{(\(x, y \in \NaturalNumbers\))}, \\
+			\apply{\connectionfunc}{n+1, x, y} & =
+			\begin{cases*}
+				\apply{\pairfunc}{\apply{\pairfunc^{\apply{\lh}{x}}_{\apply{\lh}{x}-n-1}}{x},\apply{\connectionfunc}{n, x, y}} & (\(n < \apply{\lh}{x}\)のとき) \\
+				\apply{\pairfunc}{0,\apply{\connectionfunc}{n, x, y}}                                                          & (それ以外のとき)                   \\
+			\end{cases*}
 		\end{aligned}
 		\label{eq:codeconnectionfunc}
 	\end{align}

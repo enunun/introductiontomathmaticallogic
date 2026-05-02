@@ -126,6 +126,7 @@
 \DeclareMathOperator{\Bew}{Bew}
 \DeclareMathOperator{\Bewstar}{Bew^{\ast}}
 \DeclareMathOperator{\Con}{Con}
+\DeclareMathOperator{\Ack}{Ack}
 
 \NewDocumentCommand{\subst}{smm}{%
 \IfBooleanTF{#1}{#2[{#3}]%
@@ -298,6 +299,8 @@
 \NewDocumentCommand{\complementset}{m}{{#1}^{c}}
 
 \NewDocumentCommand{\partialequal}{}{\sim}
+
+\NewDocumentCommand{\evaluate}{}{\to}
 %
 %%%%%%%%%%%%%%=======================theorem==================%%%%%%%%%%%%%
 %
@@ -335,7 +338,7 @@
 	bookmarkstype=toc,
 	pdfborder={0 0 0},
 	colorlinks = true,
-	draft=false,
+	draft=true,
 }
 \usepackage{footnotebackref}
 %
@@ -438,6 +441,8 @@
 \makeatother
 %
 
+%\includeonly{contents/formalize,contents/computable,contents/answer}
+
 \begin{document}
 
 \begin{titlepage}
@@ -460,6 +465,7 @@
 \include{contents/semantics}
 \include{contents/proof}
 \include{contents/completeness}
+\include{contents/computable}
 \include{contents/peanoarithmetic}
 
 \backmatter

@@ -1502,8 +1502,33 @@
 が加わったものであるが，この公理は\(\GP\)上で（\(\provable\)という意味で）証明することができるので，
 削除しても理論としては等価である．こうして得られる理論は\(\symcal{L}_{\GP}\)理論\(\GP\)にほかならない．
 
+\section*{\Cref{chap:computable}}
 
 \section*{\Cref{chap:peanoarithmetic}}
+
+\subsection*{\Cref{Que:ackermannfunctiondefinition}}
+
+写像\(G \colon \bigcup_{\pair{x, y} \in \NaturalNumbers^2} \NaturalNumbers^{\Set{\pair{x', y'} \in \NaturalNumbers^2 | \pair{x', y'} \prec \pair{x, y}}} \to \NaturalNumbers\)
+を以下のように定めよう：
+\(f \colon \bigcup_{\pair{x, y} \in \NaturalNumbers^2} \NaturalNumbers^{\Set{\pair{x', y'} \in \NaturalNumbers^2 | \pair{x', y'} \prec \pair{x, y}}}\)を1つとる．
+このとき，\(f\)はある\(\pair{x, y} \in \NaturalNumbers^2\)に対しての\(\Set{\pair{x', y'} \in \NaturalNumbers^2 | \pair{x', y'} \prec \pair{x, y}} \)から\(\NaturalNumbers\)への写像である．
+このような\(\pair{x, y}\)は一意に定まるので，これを使って
+\begin{equation*}
+	\apply{G}{f} =
+	\begin{cases*}
+		y + 1                                 & (\(x = 0\)のとき),            \\
+		\apply{f}{x - 1, 1}                   & (\(x > 0\)かつ\(y = 0\)のとき), \\
+		\apply{f}{x - 1, \apply{f}{x, y - 1}} & (\(x > 0\)かつ\(y > 0\)のとき)
+	\end{cases*}
+\end{equation*}
+と定義する．
+\Cref{Thm:inductivedifinition}により，写像\(\Ack \colon \NaturalNumbers^2 \to \NaturalNumbers\)で
+任意の\(x, y \in \NaturalNumbers\)に対して
+\begin{equation*}
+	\apply{\Ack}{x, y} = \apply{G}{\Ack \restriction \Set{\pair{x', y'} \in \NaturalNumbers^2 | \pair{x', y'} \prec \pair{x, y}}}
+\end{equation*}
+を満たすものがただ1つ定まる．
+この写像\(\Ack \colon \NaturalNumbers^2 \to \NaturalNumbers\)が本文で定義しようとしたAckermann関数に他ならない．
 
 \subsection*{\Cref{Que:robinson1numeric}}
 

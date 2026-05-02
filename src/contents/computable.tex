@@ -1,0 +1,806 @@
+\chapter{帰納的関数と計算可能関数}
+\label[chapter]{chap:computable}
+
+これまでの議論では，数学における「論理」に関連した概念を形式体系として定式化し，その性質を調べてきた．
+特に\cref{chap:proof}では，数学における「証明」を形式的な記号列の変形操作として定式化した．
+この形式的な記号列の変形操作は「与えられた記号列に対していくつかの変形規則を適用し，目的の記号列に変形する」という形で行われるが，
+これは我々が普段行っている「計算」に非常によく似ている．
+この関連性は，不完全性定理をめぐる議論においても重要な役割を果たす．
+
+この章では，この「計算ができること」を定式化し，その性質を調べることを試みる．
+上記の「計算ができること」の数学的な定式化はいくつも知られている．
+本書では，廣瀬\cite{hirose2024}の流れに沿っての2種の定式化を取り扱う．
+他にもチューリングマシンによる定式化やラムダ記法による定式化なども知られており，これらの定式化はすべて等価であることが知られている．
+「計算ができること」のいくつもの定式化がすべて等価であるという事実は，これらの定式化が「計算ができること」の本質をよくとらえていることを示唆している．
+このことから，これらの関数を「計算可能関数」とみなすにしようという%
+\index[widx]{Churchのテーゼ}%
+Churchのテーゼ%
+\footnote{%
+	「テーゼ」とは，ものすごく大雑把にいえばある事柄に対する肯定的な主張のことを指す．
+}%
+がなされ，現代では広く受け入れられている．
+
+\section{帰納的関数}
+\label[section]{sec:inductive-function}
+
+まずは，計算可能性の1つ目の定式化として帰納的関数を定義する．
+
+\index[widx]{きのうてきかんすう@帰納的関数}
+\index[widx]{きのうてきかんすう@帰納的関数!げんしきのうてきかんすう@原始---}
+\index[widx]{ぜろかんすう@ゼロ関数}
+\index[widx]{こうしゃかんすう@後者関数}
+\index[widx]{しゃえいかんすう@射影関数}
+\index[sidx]{\(\muoperator\)：\(\muoperator\)作用素}
+\index[widx]{\(\muoperator\)さようそ@\(\muoperator\)さようそ}
+\index[sidx]{\(\zero^n\)：ゼロ関数}
+\index[sidx]{\(\proj_i^n\)：射影関数}
+\index[sidx]{\(\suc\)：後者関数}
+\begin{Def} \label{Def:recursivefunction}
+	\term{帰納的関数}は以下のように帰納的に定義される：
+	\begin{enumerate}
+		\item 正の整数\(n\)に対して\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への関数\(x \mapsto 0\)は帰納的関数である．
+		      この関数を
+		      \begin{equation}
+			      \zero^n
+			      \label{eq:zerofunction}
+		      \end{equation}
+		      と表す．
+		      各\(n\)に対する\(\zero^n\)を総称してゼロ関数呼ぶ．
+		\item \(\NaturalNumbers\)から\(\NaturalNumbers\)への関数\(x \mapsto x + 1\)は帰納的関数である．この関数を後者関数と呼び，
+		      \begin{equation}
+			      \suc
+			      \label{eq:sucfunction}
+		      \end{equation}
+		      と表す．
+		\item \(n\)を正の整数とする．\(i=1,2,\dots, n\)に対して，\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への関数\(\pair{x_1, \dots, x_n} \mapsto x_i\)は帰納的関数である．
+		      この関数を
+		      \begin{equation}
+			      \proj_i^n
+		      \end{equation}
+		      と表す．
+		      各\(i, n\)に対する\(\proj_i^n\)を総称して射影関数と呼ぶ．
+		\item \(n,m\)を正の整数とする．\(h \colon \NaturalNumbers^m \to \NaturalNumbers\)が帰納的関数で，
+		      \(i = 1,2,\dots,m\)に対して\(g_i \colon \NaturalNumbers^n \to \NaturalNumbers\)が帰納的関数ならば，
+		      \begin{align*}
+			      \apply{f}{x_1, \dots, x_n} = \apply{h}{
+				      \apply{g_1}{x_1, \dots, x_n},
+				      \apply{g_2}{x_1, \dots, x_n},
+				      \dots,
+				      \apply{g_m}{x_1, \dots, x_n}
+			      } \\
+			      \text{(\(x_1, \dots, x_n \in \NaturalNumbers\))}
+		      \end{align*}
+		      で定義される関数\(f \colon \NaturalNumbers^n \to \NaturalNumbers\)は帰納的関数である．
+		      \(f\)は\(g, h\)から関数合成によって得られる関数である．
+		\item \(n\)を正の整数とする．\(g \colon \NaturalNumbers^n \to \NaturalNumbers\)と\(h \colon \NaturalNumbers^{n+2}\)がともに帰納的関数ならば，
+		      \begin{align*}
+			      \apply{f}{x_1, x_2, \dots, x_n}        & = \apply{g}{x_1, x_2, \dots, x_n} \quad \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}, \\
+			      \apply{f}{x_1, x_2, \dots, x_n, y + 1} & = \apply{h}{x_1, x_2, \dots, x_n, y, \apply{f}{x_1, x_2, \dots, x_n}}                          \\
+			                                             & \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}
+		      \end{align*}
+		      で定義される関数\(f \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)は帰納的関数である．
+		      \(f\)は\(g, h\)から原始帰納法によって定義される関数である．
+		\item \(g \colon \NaturalNumbers^{n + 1} \to \NaturalNumbers\)は帰納的関数で，すべての\(x_1, x_2, \dots, x_n\)に対して
+		      \(\apply{g}{x_1, x_2, \dots, x_n, y} = 0\)となる\(y\)が存在したとする．
+		      そのような\(y\)のうち最小のものを
+		      \begin{equation}
+			      \apply{\muoperator y}{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}
+			      \label{eq:muoperator}
+		      \end{equation}
+		      と表すこととする．記号\(\muoperator\)を
+		      \term{\(\muoperator\)作用素}と呼ぶことがある．
+		      このとき，
+		      \[
+			      \apply{f}{x_1, \dots, x_n} = \apply{\muoperator y}{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}
+			      \quad \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}
+		      \]
+		      で定義される関数\(f \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)は帰納的関数である．
+		\item 以上の規則を有限回適用して得られる関数のみが帰納的関数である．
+	\end{enumerate}
+
+	また，規則6を1度も適用せずに得られる帰納的関数を特に
+	\term{原始帰納的関数}と呼ぶ．
+\end{Def}
+
+\begin{Note}
+	与えられた帰納的関数について，その構成過程は一意に定まらない．
+	例えば，ゼロ関数は何回合成してもゼロ関数である．
+	よって，帰納的関数同士の関係としてその定義に付随する順序が整礎であるとはいえない．
+	しかし，それぞれの定義同士の関係としての順序は整礎である．
+	そのため，帰納的関数の構成に関する帰納法を利用する場合，代わりにその定義の構成に関する帰納法を用いる．
+	帰納的関数に関する定理の主張の証明としてはこれで問題ないので，
+	帰納的関数の定義の構成に関する帰納法も帰納的関数の構成に関する帰納法と呼ぶことが多い．
+\end{Note}
+
+議論の本筋とは少々ずれるが，帰納的関数の定義に関する帰納法の題材として
+以下のAckermann関数を考えよう．
+
+\index[widx]{Ackermannかんすう@Ackermann関数}
+\index[sidx]{\(\Ack\)：Ackermann関数}
+\begin{Def} \label{Def:ackermannfunction}
+	Ackermann関数\(\Ack \colon \NaturalNumbers^2 \to \NaturalNumbers\)を以下のように帰納的に定義する：
+	\begin{align}
+		\begin{aligned}
+			\apply{\Ack}{0, y}         & = y + 1 \quad \text{(\(y \in \NaturalNumbers\))},              \\
+			\apply{\Ack}{x + 1, 0}     & = \apply{\Ack}{x, 1} \quad \text{(\(x \in \NaturalNumbers\))}, \\
+			\apply{\Ack}{x + 1, y + 1} & = \apply{\Ack}{x, \apply{\Ack}{x + 1, y}} \quad
+			\text{(\(x, y \in \NaturalNumbers\))}.
+		\end{aligned}
+		\label{eq:ackermannfunctiondefinition}
+	\end{align}
+\end{Def}
+
+\begin{Que} \label[Que]{Que:ackermannfunctiondefinition}
+	\(\NaturalNumbers^2\)上に，\(\pair{x_1, y_1} \prec \pair{x_2, y_2}\)であることを以下のいずれかが満たされることと定義して\(\NaturalNumbers^2\)上の二項関係を定める：
+	\begin{itemize}
+		\item \(x_1 < x_2\)である．
+		\item \(x_1 = x_2\)であり，かつ\(y_1 < y_2\)である．
+	\end{itemize}
+	このとき，\(\prec\)は\(\NaturalNumbers^2\)上の整礎な半順序である．
+	Ackermann関数の定義を\(\NaturalNumbers^2\)をこの順序\(\prec\)による整礎帰納法によって正当化せよ．
+	すなわち，\cref{eq:ackermannfunctiondefinition}を満たす関数\(\Ack \colon \NaturalNumbers^2 \to \NaturalNumbers\)がただ1つ存在することを示せ．
+\end{Que}
+
+\begin{Ex} \label[Ex]{Ex:constantprimitiverecursive}
+	\(c\)を自然数とする．このとき，正の整数\(n\)に対して\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への定数関数\(x \mapsto c\)は原始帰納的関数である．
+	これを示そう．原始帰納的関数全体の集合を\(\symcal{F}\)として，以下のように写像\(F \colon \NaturalNumbers \to \symcal{F}\)を帰納的に定義する：
+	\begin{align*}
+		\apply{F}{0}     & = \zero^1,                                                                  \\
+		\apply{F}{n + 1} & = \suc \circ \paren{\apply{F}{n}} \quad \text{(\(n \in \NaturalNumbers\))}.
+	\end{align*}
+	この\(F\)に対し，\(\apply{F}{c}\)は定数関数\(x \mapsto c\)である．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:identitypromitiverecursive}
+	\(\NaturalNumbers\)上の恒等写像\(\iota \colon x \mapsto x\)は原始帰納的関数である．
+	実際，関数\(\iota_0 \colon \NaturalNumbers^2 \to \NaturalNumbers\)を以下のように原始帰納法によって定義すると，恒等写像\(\iota\)は\(\iota_0\)と
+	射影関数\(\proj_2^2\)の合成によって定義できる．
+	\begin{align*}
+		\apply{\iota_0}{x, 0}     & = \apply{\zero}{x, 0} \quad \text{(\(x \in \NaturalNumbers\))},    \\
+		\apply{\iota_0}{x, y + 1} & = \apply{\suc}{{\apply{\proj_2^3}{{x, y, \apply{\iota_0}{x, y}}}}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+	ここで，規則5における関数\(g, h\)としてそれぞれ\(\zero^2\)と\(\suc \circ \proj_2^3\)をとった．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:addition}
+	加法を表す\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への関数\(\pair{x_1, x_2} \mapsto x_1 + x_2\)は原始帰納的関数である．
+	実際，以下のように原始帰納法によって定義される関数\(p \colon \NaturalNumbers^2 \to \NaturalNumbers\)が加法を表す関数に相当する：
+	\begin{align*}
+		\apply{p}{x, 0}     & = \apply{\proj_1^2}{x, 0}
+		\quad \text{(\(x \in \NaturalNumbers\))},                                      \\
+		\apply{p}{x, y + 1} & = \apply{\suc}{\apply{\proj_3^3}{x, y, \apply{p}{x, y}}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:predecessorprimitiverecursive}
+	自然数\(x\)の前者\(x - 1\)を表す関数\(m \colon \NaturalNumbers \to \NaturalNumbers\)は原始帰納的関数である．
+	実際，\(m\)は原始帰納法によって以下のように定義される関数\(m_0\)と\(\proj_2^2\)との合成によって定義できる：
+	\begin{align*}
+		\apply{m_0}{x, 0}     & = \apply{\zero^2}{x, 0}	\quad \text{(\(x \in \NaturalNumbers\))}, \\
+		\apply{m_0}{x, y + 1} & = \apply{\proj_2^3}{x, y, \apply{m_0}{x}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+
+	「\(\apply{m}{x}\)で\(x\)の前者を表す」という意図に沿って考えると，
+	本来\(\apply{m}{0}\)は\(0-1\)となるべきだが，これは自然数ではないので便宜的にその値を\(0\)としている．
+\end{Ex}
+
+\begin{Ex} \label[Ex]{Ex:minusprimitiverecursivefunction}
+	減法を表す\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への以下の関数\(\entireminus\)は原始帰納的関数である．
+	実際，以下のように原始帰納法によって定義される関数\(d \colon  \NaturalNumbers^2 \to \NaturalNumbers\)が減法を表す関数に相当する：
+	\begin{align*}
+		\apply{d}{x, 0}     & = \apply{\proj_1^2}{x}
+		\quad \text{(\(x \in \NaturalNumbers\))},                                   \\
+		\apply{d}{x, y + 1} & = \apply{\proj_3^3}{x, y, \apply{m}{\apply{d}{x, y}}}
+		\quad \text{(\(x, y \in \NaturalNumbers\))}.
+	\end{align*}
+	ここで，\(m \colon \NaturalNumbers \to \NaturalNumbers\)は\cref{Ex:predecessorprimitiverecursive}における前者を表す関数である．
+
+	\(x, y \in \NaturalNumbers\)に対する\(\apply{d}{x, y}\)を
+	\begin{equation}
+		x \entireminus y
+		\label{eq:entireminus}
+	\end{equation}
+	と表す．
+	\(x \geq y\)ならば\(x \entireminus y = x - y\)であり（つまり通常の減法と同じ），\(x < y\)ならば\(x \entireminus y = 0\)である．
+\end{Ex}
+
+\begin{Que} \label[Que]{Que:primitiverevursivefunction}
+	\(n\)を正の整数とする．
+	以下の\(\NaturalNumbers, \NaturalNumbers^2, \NaturalNumbers^n\)から\(\NaturalNumbers\)への関数はいずれも原始帰納的関数であることを示せ．
+	\begin{align*}
+		\pair{x, y}                 & \mapsto xy,                              \\
+		\pair{x, y}                 & \mapsto x^y,                             \\
+		x                           & \mapsto x!,                              \\
+		\pair{x_1, x_2, \dots, x_n} & \mapsto \max \Set{x_1, x_2, \dots, x_n}, \\
+		\pair{x_1, x_2, \dots, x_n} & \mapsto \min \Set{x_1, x_2, \dots, x_n}.
+	\end{align*}
+	ただし，\(0! = 0^0 = 1\)と決めておくこととする．
+\end{Que}
+
+\index[sidx]{\(\truefunction\)：真であることを表す関数}
+\index[sidx]{\(\falsefunction\)：偽であることを表す関数}
+\begin{Que} \label[Que]{Que:truefalseprimitiverecursive}
+	以下で定義される関数\(\truefunction, \falsefunction \colon \NaturalNumbers \to \NaturalNumbers\)が原始帰納的関数であることを示せ：
+	\begin{align}
+		\apply{\truefunction}{x}  & =
+		\begin{cases*}
+			0 & (\(x = 0\)のとき), \\
+			1 & (それ以外のとき),
+		\end{cases*}
+		\label{eq:trueprimitiverecursive} \\
+		\apply{\falsefunction}{x} & =
+		\begin{cases*}
+			1 & (\(x = 0\)のとき), \\
+			0 & (それ以外のとき).
+		\end{cases*}
+		\label{eq:falseprimitiverecursive}
+	\end{align}
+\end{Que}
+
+上記の例や\cref{Que:primitiverevursivefunction}により，以下の主張が従う．
+
+\begin{Lemma} \label[Lemma]{lemma:recursivefunctionoperation}
+	原始帰納的関数の和，（\(\entireminus\)の意味での）差，積，べき乗によって表される関数はすべて原始帰納的関数であり，
+	帰納的関数の和，（\(\entireminus\)の意味での）差，積，べき乗によって表される関数はすべて帰納的関数である．
+\end{Lemma}
+
+\begin{Que} \label[Que]{Que:absolutedifferenceprimitiverecursive}
+	以下の関数は原始帰納的関数であることを示せ．
+	\[
+		\pair{x, y} \mapsto \absolute{x - y}
+	\]
+\end{Que}
+
+\begin{Que} \label[Que]{Que:remquoprimitiverecursive}
+	以下の関数は原始帰納的関数であることを示せ．
+	\begin{enumerate}
+		\item \(x, y \in \NaturalNumbers\)に対し，\(y = 0\)ならば\(x\)を，\(y \neq 0\)ならば\(x\)を\(y\)で割った余りをそれぞれ対応させる関数\(\rem \colon \NaturalNumbers^2 \to \NaturalNumbers\)，
+		\item \(x, y \in \NaturalNumbers\)に対し，\(y = 0\)ならば0を\(y \neq 0\)ならば\(x\)を\(y\)で割った商をそれぞれ対応させる\(\quo \colon \NaturalNumbers^2 \to \NaturalNumbers\)．
+	\end{enumerate}
+\end{Que}
+
+以上の事実から，\cref{sec:codizeforfinitesequence}で定義したCantorの対関数や有限列のコード化に関する種々の関数が原始帰納的関数であることがわかる．
+
+\begin{Lemma} \label[Lemma]{lemma:codizeforfinitesequenceprimitiverecursive}
+	\Cref{sec:codizeforfinitesequence}で定義した関数\(\pairfunc, \pairfunc^n, \pairfunc_i^n, \connectionfunc\)はすべて原始帰納的関数である．
+	また，固定された自然数\(n\)に対して，
+	長さ\(n\)の自然数からなる有限列\(x_1, x_2, \dots, x_n\)をそのコード
+	\(\finitesequencecode{x_1, x_2, \dots, x_n}\)に対応させる\(\NaturalNumbers^n\)から\(\NaturalNumbers\)への関数も原始帰納的関数である．
+	さらに，自然数\(i, x\)を\(\codefunctioninv{x}{i}\)に対応させる\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への関数と
+	自然数\(x, y\)を\(x \codeconnection y\)に対応させる\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への関数も原始帰納的関数である．
+\end{Lemma}
+
+\begin{Def} \label{Def:pisumprimitiverecursive}
+	\(n\)を正の整数とする．
+	関数\(\varphi \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)が与えられたとき，
+	\(x_1, x_2, \dots, x_n, z \in \NaturalNumbers\)に対して
+	\begin{align*}
+		\apply{\varphi}{x_1, x_2, \dots, x_n, 0}
+		+ \apply{\varphi}{x_1, x_2, \dots, x_n, 1}
+		+ \dots
+		+ \apply{\varphi}{x_1, x_2, \dots, x_n, z \entireminus 1}, \\
+		\apply{\varphi}{x_1, x_2, \dots, x_n, 0}
+		\times \apply{\varphi}{x_1, x_2, \dots, x_n, 1}
+		\times \dots
+		\times \apply{\varphi}{x_1, x_2, \dots, x_n, z \entireminus 1}
+	\end{align*}
+	をそれぞれ
+	\begin{align}
+		\sum_{y < z} \apply{\varphi}{x_1, x_2, \dots, x_n, y},
+		\label{eq:sumprimitiverecursive} \\
+		\prod_{y < z} \apply{\varphi}{x_1, x_2, \dots, x_n, y}
+		\label{eq:piprimitiverecursive}
+	\end{align}
+	と表す．ただし，\(z = 0\)のときは\cref{eq:sumprimitiverecursive}と\cref{eq:piprimitiverecursive}の値はそれぞれ
+	\(0, 1\)であるものとする．
+\end{Def}
+
+\Cref{lemma:recursivefunctionoperation}により，以下の定理が得られる．
+\begin{Lemma} \label[Lemma]{lemma:sumprimitiverecursive}
+	\(\varphi \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)が原始帰納的関数であるならば
+	\(\pair{x_1, x_2, \dots, x_n, z} \in \NaturalNumbers^{n + 1}\)を\cref{eq:sumprimitiverecursive}, \cref{eq:piprimitiverecursive}に対応させる
+	\(\NaturalNumbers^{n+1}\)から\(\NaturalNumbers\)への関数はいずれも原始帰納的関数であり，
+	\(\varphi\)が帰納的関数であるならば
+	\(\pair{x_1, x_2, \dots, x_n, z} \in \NaturalNumbers^{n + 1}\)を\cref{eq:sumprimitiverecursive}, \cref{eq:piprimitiverecursive}に対応させる
+	\(\NaturalNumbers^{n+1}\)から\(\NaturalNumbers\)への関数はいずれも帰納的関数である．
+\end{Lemma}
+
+\index[widx]{げんしきのうてきじゅつご@原始帰納的述語}
+\index[widx]{きのうてきじゅつご@帰納的述語}
+\begin{Def} \label{Def:recursivepredicate}
+	\(n\)を正の整数とする．\(\NaturalNumbers\)上の\(n\)項関係\(R \subset \NaturalNumbers^n\)が
+	\term{原始帰納的述語}であるとは，
+	以下で定義される\(R\)の特性関数\(\characteristicfunction{R} \colon \NaturalNumbers^n \to \NaturalNumbers\)が原始帰納的関数であることをいう：
+	\begin{align}
+		\apply{\characteristicfunction{R}}{x_1, x_2, \dots, x_n} =
+		\begin{cases*}
+			1 & (\(\pair{x_1, x_2, \dots, x_n} \in R\)のとき), \\
+			0 & (それ以外のとき).
+		\end{cases*}
+		\label{eq:characteristicfunction}
+	\end{align}
+	また，\(\characteristicfunction{R}\)が帰納的関数であるならば，\(R\)は\term{帰納的述語}であるという．
+\end{Def}
+
+\begin{Ex} \label[Ex]{Ex:recursivepredicate}
+	二項関係\(x = y, x < y\)は原始帰納的述語である．実際，それぞれの特性関数が
+	\begin{align*}
+		\characteristicfunction{x = y} & = \apply{\falsefunction}{\absolute{x-y}}  \\
+		\characteristicfunction{x < y} & = \apply{\truefunction}{y \entireminus x}
+	\end{align*}
+	と表せる．
+\end{Ex}
+
+\begin{Lemma} \label[Lemma]{lemma:relationoperationrecursive}
+	\(n\)を正の整数とする．\(R \subset \NaturalNumbers^n\)が原始帰納的述語であるならば，
+	\[
+		\complementset{R}
+	\]
+	も原始帰納的述語である．ここで，\(\complementset{R} = \NaturalNumbers^n \setminus R\)は\(R\)の補集合である．
+	また，\(R_1, R_2 \subset \NaturalNumbers^n\)が原始帰納的述語であるならば，
+	\begin{align*}
+		 & R_1 \cup R_2, \\
+		 & R_1 \cap R_2
+	\end{align*}
+	も原始帰納的述語である．
+	上記「原始帰納的」を「帰納的」に置き換えた主張も同様に成り立つ．
+\end{Lemma}
+
+\begin{proof}
+	それぞれの特性関数が以下のように書けることから従う：
+	\begin{align*}
+		\apply{\characteristicfunction{\complementset{R}}}{x} & = \apply{\falsefunction}{\apply{\characteristicfunction{R}}{x}}
+		\quad \text{(\(x \in \NaturalNumbers^n\))},                                                                                                                        \\
+		\apply{\characteristicfunction{R_1 \cup R_2}}{x}      & = \apply{\truefunction}{\apply{\characteristicfunction{R_1}}{x} + \apply{\characteristicfunction{R_2}}{x}}
+		\quad \text{(\(x \in \NaturalNumbers^n\))},                                                                                                                        \\
+		\apply{\characteristicfunction{R_1 \cap R_2}}{x}      & = \apply{\characteristicfunction{R_1}}{x} \cdot \apply{\characteristicfunction{R_2}}{x}
+		\quad \text{(\(x \in \NaturalNumbers^n\))}.
+	\end{align*}
+\end{proof}
+
+\begin{Lemma} \label[Lemma]{lemma:casesrecursive}
+	\(n, m\)を正の整数とする．
+	\(R_1, R_2, \dots, R_m \subset \NaturalNumbers^n\)
+	を，どの2つも同時に成り立たない，つまり\(i \neq j\)ならば\(R_i \cap R_j = \emptyset\)であるような\(\NaturalNumbers\)上の\(n\)項関係とする．
+	関数\(\varphi_1, \varphi_2, \dots, \varphi_m, \varphi_{m+1} \colon \NaturalNumbers^n \to \NaturalNumbers\)に対して，
+	関数\(\varphi \colon \NaturalNumbers^n \to \NaturalNumbers\)を
+	\begin{align*}
+		\apply{\varphi}{x_1, x_2, \dots, x_n} =
+		\begin{cases*}
+			\apply{\varphi_1}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, x_2, \dots, x_n} \in R_1\)のとき), \\
+			\apply{\varphi_2}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, x_2, \dots, x_n} \in R_2\)のとき), \\
+			\dotsb                                      &                                               \\
+			\apply{\varphi_m}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, x_2, \dots, x_n} \in R_m\)のとき), \\
+			\apply{\varphi_{m+1}}{x_1, x_2, \dots, x_n} & (上記以外のとき)
+		\end{cases*}
+	\end{align*}
+	と定義する．このとき，以下が成り立つ．
+	\begin{enumerate}
+		\item 各\(R_i\)がすべて原始帰納的述語で，各\(\varphi_i\)がすべて原始帰納的関数であるならば，\(\varphi\)も原始帰納的関数である．
+		\item 各\(R_i\)がすべて帰納的述語で，各\(\varphi_i\)がすべて帰納的関数であるならば，\(\varphi\)も帰納的関数である．
+	\end{enumerate}
+\end{Lemma}
+
+\begin{proof}
+	\(\varphi\)が
+	\begin{align*}
+		\apply{\varphi}{x_1, x_2, \dots, x_n} = \sum_{i < m+1} \apply{\characteristicfunction{R_i}}{x_1, x_2, \dots, x_n} \cdot \apply{\varphi_i}{x_1, x_2, \dots, x_n} \\
+		\quad + \apply{\characteristicfunction{\complementset{\paren{R_1 \cup R_2 \cup \dotsb \cup R_m}}}}{x_1, x_2, \dots, x_n} \cdot \apply{\varphi_{m+1}}{x_1, x_2, \dots, x_n}
+	\end{align*}
+	と書けることから従う．
+\end{proof}
+
+\begin{Lemma} \label[Lemma]{lemma:forallexistsrecursive}
+	\(n\)を自然数とする．\(R\)を\(\NaturalNumbers\)上の\(n+1\)項関係とするとき，
+	以下で定義される\(n\)項関係\(R_1, R_2\)を考える．
+	\begin{align*}
+		                & \pair{x_1, x_2, \dots, x_n, z} \in R_1                                       \\
+		\metaequivalent & \text{\(\pair{x_1, x_2, \dots, x_n, y} \in R\)かつ\(y < z\)となる\(y\)が存在する},     \\
+		                & \pair{x_1, x_2, \dots, x_n, z} \in R_1                                       \\
+		\metaequivalent & \text{\(y < z\)となるすべての\(y\)に対して\(\pair{x_1, x_2, \dots, x_n, y} \in R\)となる}.
+	\end{align*}
+	このとき，\(R\)が原始帰納的述語であるならば\(R_1, R_2\)も原始帰納的述語であり，
+	\(R\)が帰納的述語ならば\(R_1, R_2\)も帰納的述語である．
+\end{Lemma}
+
+\begin{proof}
+	特性関数がそれぞれ
+	\begin{align*}
+		 & \apply{\truefunction}{\sum_{y < z} \apply{\characteristicfunction{R}}{x_1, x_2, \dots, x_n, y}}, \\
+		 & \apply{\truefunction}{\prod_{y < z} \apply{\characteristicfunction{R}}{x_1, x_2, \dots, x_n, y}} \\
+	\end{align*}
+	と表されることから従う．
+\end{proof}
+
+\index[sidx]{\(\muoperator_{y<z}\)：有界\(\muoperator\)演算子}
+\index[widx]{\(\muoperator\)さようそ@\(\muoperator\)さようそ!ゆうかい\(\muoperator\)作用素@有界---}
+\begin{Def} \label{Def:boundedmuoperator}
+	\(n\)を正の整数とし，\(R\)を\(\NaturalNumbers\)上の\(n\)項関係とする．
+	各\(x_1, x_2, \dots, x_n, z \in \NaturalNumbers\)に対して，
+	\(y < z\)かつ\(\pair{x_1, x_2, \dots, x_n, y} \in R\)となる\(y \in \NaturalNumbers\)が存在するならば
+	そのような\(y\)の最小値を，存在しないならば\(z\)を
+	\begin{equation}
+		\muoperator_{y < z} \apply{R}{x_1, x_2, \dots, x_n, y}
+		\label{eq:boundedmuoperator}
+	\end{equation}
+	と表す．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma:boundedmuoperatorrecursive}
+	\(R\)が原始帰納的述語であれば
+	\(\pair{x_1, x_2, \dots, x_n, z}\)に対して\cref{eq:boundedmuoperator}で定義される自然数を対応させる関数は原始帰納的関数である．
+	\(R\)が帰納的述語であれば
+	\(\pair{x_1, x_2, \dots, x_n, z}\)に対して\cref{eq:boundedmuoperator}で定義される自然数を対応させる関数は帰納的関数である．
+\end{Lemma}
+
+\begin{proof}
+	\[
+		\muoperator_{y<z} \apply{R}{x_1, x_2, \dots, x_n, y} = \sum_{w < z} \prod_{y < w} \apply{\characteristicfunction{\complementset{R}}}{x_1, x_2, \dots, x_n, y}
+	\]
+	と書けることから従う．
+\end{proof}
+
+
+以上の議論では，帰納的関数や原始帰納的関数は\(\NaturalNumbers^n\)上全域で定義された関数を対象にした．
+ここでは，必ずしも\(\NaturalNumbers^n\)上全域で定義されているとは限らない関数について考えよう．
+まずは以下のように記号を定義しておく．
+
+\index[sidx]{\(\partialequal\)：部分関数に対する等号の拡張}
+\index[widx]{ぶぶんかんすう@部分関数}
+\begin{Def} \label{Def:partialequal}
+	\(n\)を正の整数とする．\(X, Y \subset \NaturalNumbers^n\)に対して，
+	関数\(f \colon X \to \NaturalNumbers\)と関数\(g \colon Y \to \NaturalNumbers\)を考える．
+	このような\(f, g\)を\(\NaturalNumbers\)の\term{部分関数}という．
+	このとき，各\(x_1, x_2, \dots, x_n \in \NaturalNumbers\)に対して
+	\begin{equation}
+		\apply{f}{x_1, x_2, \dots, x_n} \partialequal \apply{g}{x_1, x_2, \dots, x_n}
+		\label{eq:partialequal}
+	\end{equation}
+	を，以下の表に従って定める．
+
+	\begin{table}[htbp]
+		\centering
+		\caption{\(\apply{f}{x_1, x_2, \dots, x_n} \partialequal \apply{g}{x_1, x_2, \dots, x_n}\)の真偽}
+		\label{tab:partialequal}
+		\begin{tabular}{cccc}
+			\toprule
+			\(\pair{x_1, x_2, \dots, x_n} \in X\) &
+			\(\pair{x_1, x_2, \dots, x_n} \in Y\) &
+			真偽                                                        \\
+			\midrule
+			成り立つ                                  & 成り立つ   & 通常の等号と同じ \\
+			成り立たない                                & 成り立つ   & 偽        \\
+			成り立つ                                  & 成り立たない & 偽        \\
+			成り立たない                                & 成り立たない & 真        \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+
+	ここで，\cref{tab:partialequal}における「通常の等号と同じ」とは，その真偽が
+	\[
+		\apply{f}{x_1, x_2, \dots, x_n} = \apply{g}{x_1, x_2, \dots, x_n}
+	\]
+	が成り立つことと同じであるという意味である．
+
+	また，\(X \subset \NaturalNumbers^n\)とするとき，\(X\)の部分集合\(R \subset X\)を\(n\)個の自然数の間の関係を表したものとみなすとき，
+	\(R\)を\(\NaturalNumbers^n\)上の\term{部分述語}という．
+	このとき，\(R\)の特性関数\(\characteristicfunction{R} \colon X \to \NaturalNumbers\)は，
+	\cref{eq:characteristicfunction}における\(\NaturalNumbers^n\)を\(X\)に置き換えることによって得られる．
+\end{Def}
+
+さて，上記の概念をもとにして定義域が\(\NaturalNumbers^n\)全域とは限らない場合の帰納的関数と原始帰納的関数を定義しよう．
+
+\index[widx]{きのうてきぶぶんかんすう@帰納的部分関数}
+\index[widx]{げんしきのうてきぶぶんかんすう@原始帰納的部分関数}
+\begin{Def} \label{Def:partialrecursivefunction}
+	\term{帰納的部分関数}は，以下のように帰納的に定義される：
+	\begin{enumerate}
+		\item ゼロ関数，後者関数，射影関数はいずれも帰納的部分関数である．
+		\item 合成と原始帰納法については，\cref{Def:recursivefunction}における等号を\(\partialequal\)に置き換えたもので同様に定義する．
+		\item \(g\)が\(\NaturalNumbers^{n+1}\)上の帰納的部分関数であるとき，
+		      \begin{equation}
+			      \apply{f}{x_1, x_2, \dots, x_n} \partialequal \muoperator y \paren{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}
+			      \label{eq:partialequalminimization}
+		      \end{equation}
+		      で定義される\(\NaturalNumbers^n\)上の部分関数\(f\)は帰納的部分関数である．
+		      ここで，\(\muoperator y \paren{\apply{g}{x_1, x_2, \dots, x_n, y} = 0}\)の値が定義されており，
+		      その値が\(a\)であるとは，すべての\(b < a\)に対して\(\apply{g}{x_1, x_2, \dots, x_n, b}\)の値が定義されており，
+		      その値が0より大きく，しかも\(\apply{g}{x_1, x_2, \dots, x_n, a} = 0\)であることをいう．
+	\end{enumerate}
+
+	また，上記規則3を一度も適用せずに得られる帰納的部分関数をとくに
+	\term{原始帰納的部分関数}という．
+
+	さらに，\(\NaturalNumbers^n\)上の部分述語\(R\)が\term{帰納的部分述語}であるとは，
+	その特性関数が帰納的部分関数であることをいい，\(R\)が\term{原始帰納的部分述語}であるとは，
+	その特性関数が帰納的部分関数であることをいう．
+\end{Def}
+
+\Cref{Def:partialrecursivefunction}では，最小化において最小値の存在を仮定しなかった．
+これは，\(\apply{f}{x_1, x_2, \dots, x_n}\)の値が定義されている必要がなくなったことによる．
+
+帰納的関数において重要な結果となるのが以下に述べるKleeneの標準形定理である．
+証明には長い準備が必要なため，廣瀬\cite{hirose2024}を参照のこと．
+
+\index[widx]{Kleeneのひょうじゅんけいていり@Kleeneの標準形定理}
+\begin{Thm}[Kleeneの標準形定理]
+	\(n\)を正の整数とする．原始帰納的関数\(U \colon \NaturalNumbers \to \NaturalNumbers\)と
+	\(\NaturalNumbers^{n+1}\)が存在して，
+	任意の\(\NaturalNumbers^n\)上の帰納的部分関数は，自然数\(e\)を用いて
+	\begin{equation}
+		\apply{f}{x_1, x_2, \dots, x_n} \partialequal \apply{U}{\muoperator y \apply{T_n}{e, x_1, x_2, \dots, x_n, y}}
+		\quad \text{(\(x_1, x_2, \dots, x_n \in \NaturalNumbers\))}
+		\label{eq:kleenenormaltheorem}
+	\end{equation}
+	と表せる．ここで，\(\muoperator y \apply{T_n}{e, x_1, x_2, \dots, x_n, y}\)は，
+	\(\pair{e, x_1, x_2, \dots, x_n, y} \in T_n\)が成り立つような\(y\)のうち最小のものである．
+\end{Thm}
+
+\section{計算可能関数} \label[section]{sec:computablefunction}
+
+帰納的関数は，今でこそ計算可能性の定式化の1つであるとみなされているが，
+定義だけを見ると「計算」というニュアンスはあまり感じられないかもしれない．
+そこで，もう1つの定式化として形式的体系によるものを紹介する．
+廣瀬\cite{hirose2024}に従い，この体系を\(\symcal{R}\)と表記する．
+形式的体系というと\cref{chap:proof}で紹介した自然演繹式シークエント計算を思い浮かべるかもしれないが，
+それとはまったく別の体系である．
+自然演繹式シークエント計算は数学における「論理」をシミュレートするために導入した体系であったが，
+今回導入する形式的体系は，数学における「計算」をシミュレートするための体系である．
+
+体系の内容としては計算機科学における型システムに近い．
+例えば，古典ではあるがいわゆるTaPL\cite{pierce2013types_jp}を見れば，おおよそ同じような体系が紹介されている．
+
+まったく別の体系とは言っても，使う記号や定義は\cref{chap:syntax}で紹介したものと非常に似通っている．
+ただし，異なる点も多いので，イチからすべて説明しよう．
+
+まずは使う記号である．
+
+\index[widx]{へんすうきごう@変数記号}
+\index[widx]{かんすうきごう@関数記号}
+\index[widx]{ていすうきごう@定数記号}
+\index[widx]{かんけいきごう@関係記号}
+\index[widx]{ほじょきごう@補助記号}
+\index[sidx]{\(\symcal{R}\)：計算可能関数を定義する形式的体系}
+\index[sidx]{\(\obj{0}\)：体系\(\symcal{R}\)における定数記号}
+\index[sidx]{\(\obj{s}\)：体系\(\symcal{R}\)における関数記号}
+\index[sidx]{\(\evaluate\)：体系\(\symcal{R}\)における関係記号}
+\begin{table}[htbp]
+	\centering
+	\caption{体系\(\symcal{R}\)で使用する記号の一覧}
+	\label{tab:computablefunctionsymbol}
+	\begin{tabular}{ccc}
+		\toprule
+		種別        & 一覧                                                                   & 備考              \\
+		\midrule
+		変数記号      & \(\obj{x}, \obj{y}, \obj{z}, \dotsc\)                                & 無限に多く存在する（可算無限） \\
+		関数記号      & \(\obj{f}, \obj{g}, \obj{h}, \dotsc\)                                & 無限に多く存在する（可算無限） \\
+		（特定の）定数記号 & \(\obj{0}\)                                                          &                 \\
+		（特定の）関数記号 & \(\obj{s}\)                                                          &                 \\
+		（特定の）関係記号 & \(\evaluate\)                                                        &                 \\
+		補助記号      & \(\text{``\(\lparen\)''}, \text{``\(\rparen\)''}, \text{``\(,\)''}\) & カッコやカンマ         \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+さて，次は項である．
+
+\begin{Def} \label{Def:computablefunctionterm}
+	\(\symcal{R}\)における項は，以下のように帰納的に定義される．
+	\begin{enumerate}
+		\item 変数記号はすべて項である．
+		\item 定数記号\(\obj{0}\)は項である．
+		\item 項\(t_1, t_2, \dotsc, t_n\)と関数記号\(f\)に対して，\(\apply{f}{t_1, t_2, \dots, t_n}\)も項である．
+		\item 以上の規則を有限回適用して得られる記号列のみが項である．
+	\end{enumerate}
+\end{Def}
+
+項の略記法を定義しておく．
+
+\begin{Def} \label{Def:computablefunctionnumeral}
+	\(n\)を自然数とする．項\(\numeral{n}\)を以下のように帰納的に定義する．
+	\begin{align}
+		\numeral{0}     & = \obj{0},                                                               \\
+		\numeral{n + 1} & = \apply{\obj{s}}{\numeral{n}} \quad \text{(\(n \in \NaturalNumbers\))}.
+	\end{align}
+	自然数\(n\)に対する項\(\numeral{n}\)を，\(n\)に対する\term{数項}と呼ぶ．
+\end{Def}
+
+\section{有限列のコード化} \label[section]{sec:codizeforfinitesequence}
+
+本節では，のちの章への準備としての自然数からなる有限列のコード化について議論する．
+有限列のコード化とは，有限列に対して一意な自然数を割り当てることである．
+コード化の手法は異なったものが複数知られているが，本書ではCantorの対関数を使ったものを紹介する．
+他の手法として有名なものに素因数分解の一意性を用いたものが挙げられる．
+
+なお，本節の内容が必要になるのは\cref{chap:peanoarithmetic}以降である．
+そのため「まずは完全性定理まで最速で入門したい」という場合には本節の内容を読み飛ばしても問題ない．
+
+\index[widx]{Cantorのついかんすう@Cantorの対関数}
+\index[sidx]{\(\pairfunc\)：Cantorの対関数}
+\begin{Def} \label{Def:cantorpairfunction}
+	関数\(\pairfunc \colon \NaturalNumbers^2 \to \NaturalNumbers\)を
+	\begin{equation}
+		\apply{\pairfunc}{x, y} = \sum_{i < x + y + 1} i + x = \frac{1}{2} \paren{x + y} \paren{x + y + 1} + x
+		\quad \text{(\(x, y \in \NaturalNumbers\))}
+		\label{eq:cantorpairfunction}
+	\end{equation}
+	と定める．この関数\(\pairfunc\)を\term{Cantorの対関数}と呼ぶ．
+\end{Def}
+
+よく知られているように，Cantorの対関数は\(\NaturalNumbers^2\)から\(\NaturalNumbers\)への全単射になっている．
+
+\begin{Lemma} \label[Lemma]{lemma:cantorpairfunctionbijection}
+	Cantorの対関数\(\pairfunc \colon \NaturalNumbers^2 \to \NaturalNumbers\)は全単射であり，
+	その逆関数\(x \mapsto \pair{\apply{\pairfunc_1}{x}, \apply{\pairfunc_2}{x}}\)は以下で与えられる：
+	\begin{align}
+		\apply{t}{x}           & = \max \Set{n \in \NaturalNumbers | \sum_{i < n + 1} i < x}
+		\quad \text{(\(x \in \NaturalNumbers\))},
+		\label{eq:cantorpairfunctioninversebase}                                             \\
+		\apply{\pairfunc_2}{x} & = x - \sum_{i < \apply{t}{x} + 1} i
+		\quad \text{(\(x \in \NaturalNumbers\))},
+		\label{eq:cantorpairfunctioninverse2}                                                \\
+		\apply{\pairfunc_1}{x} & = \apply{t}{x} - \apply{\pairfunc_2}{x}
+		\quad \text{(\(x \in \NaturalNumbers\))}.
+		\label{eq:cantorpairfunctioninverse1}
+	\end{align}
+\end{Lemma}
+
+\begin{Def} \label{Def:cantorpairfunctionn}
+	正の整数\(n\)に対し，写像\(\pairfunc^n \colon \NaturalNumbers^n \to \NaturalNumbers\)を以下のように帰納的に定義する：
+	\begin{align}
+		\begin{aligned}
+			\apply{\pairfunc^1}{x}                                      & = x
+			\quad \text{(\(x \in \NaturalNumbers\))},                                                                                             \\
+			\apply{\pairfunc^{n + 1}}{x_0, x_1, \dots, x_{n  - 1}, x_n} & = \apply{\pairfunc}{x_0, \apply{\pairfunc^n}{x_1, \dots, x_{n-1}, x_n}} \\
+			                                                            & \quad \text{(\(x_0, x_1, \dots, x_{n-1}, x_n \in \NaturalNumbers\))}.
+		\end{aligned}
+		\label{eq:cantorpairfunctionn}
+	\end{align}
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma:cantorpairfunctionbijectionn}
+	正の整数\(n\)に対し，\(\pairfunc^n \colon \NaturalNumbers^n \to \NaturalNumbers\)は全単射であり，その逆写像
+	\[
+		x \mapsto \pair{\apply{\pairfunc_0^n}{x}, \apply{\pairfunc_1^n}{x}, \dots, \apply{\pairfunc_{n-1}^n}{x}}
+	\]
+	は，\(\pairfunc_2\)を\(i\)回合成して得られる関数\(\pairfunc_2^{\paren{i}}\)を用いて以下のように与えられる：
+	\begin{equation}
+		\apply{\pairfunc_i^n}{x} =
+		\begin{cases*}
+			\apply{\pairfunc_1}{x}                                  & (\(i = 0\)のとき，\(x \in \NaturalNumbers\)),         \\
+			\apply{\pairfunc_1}{\apply{\pairfunc_2^{\paren{i}}}{x}} & (\(0 < i < n - 1\)のとき，\(x \in \NaturalNumbers\)), \\
+			\apply{\pairfunc_2^{\paren{n - 1}}}{x}                  & (\(i = n - 1\)のとき，\(x \in \NaturalNumbers\))
+		\end{cases*}
+		\label{eq:cantorpairfunctionninv}
+	\end{equation}
+\end{Lemma}
+
+以上の準備により，有限列のコード化を定義することができる．
+
+\index[sidx]{\(\finitesequencecode{x_0, x_1, \dots, x_{n-1}}\)：有限列のコード}
+\index[widx]{こーど@（自然数からなる有限列の）コード}
+\begin{Def} \label{Def:codizeforfinitesequence}
+	与えられた自然数からなる有限列
+	\[
+		x_0, x_1, \dots, x_{n-1} \in \bigcup_{n \in \NaturalNumbers} \NaturalNumbers^{\Set{0, 1, \dots, n-1}}
+	\]
+	に対し，そのコード
+	\begin{equation}
+		\finitesequencecode{x_0, x_1, \dots, x_{n-1}}
+		\label{eq:finitesequencecode}
+	\end{equation}
+	を%
+	\footnote{%
+		順序対と記号が被っているが，文脈上混同する可能性は低いと考えられる．
+	}%
+	\begin{equation}
+		\finitesequencecode{x_0, x_1, \dots, x_{n-1}} =
+		\begin{cases*}
+			\apply{\pairfunc}{0,0}                                                  & (\(n = 0\)のとき), \\
+			\apply{\pairfunc}{0, 1 + x_0}                                           & (\(n = 1\)のとき), \\
+			\apply{\pairfunc}{n - 1, \apply{\pairfunc^n}{x_0, x_1, \dots, x_{n-1}}} & (それ以外のとき)
+		\end{cases*}
+		\label{eq:finitesequencecodedefinition}
+	\end{equation}
+	と定める．
+	与えられた有限列が空列である場合もそのコードが0として定まっていることに注意しよう．
+\end{Def}
+
+\Cref{lemma:cantorpairfunctionbijectionn}から，以下の主張が従う．
+
+\begin{Lemma} \label[Lemma]{lemma:codizeforfinitesequencebijection}
+	与えられた自然数からなる有限列
+	\[
+		x_0, x_1, \dots, x_{n-1} \in \bigcup_{n \in \NaturalNumbers} \NaturalNumbers^{\Set{0, 1, \dots, n-1}}
+	\]
+	に対し，そのコード
+	\begin{equation*}
+		\finitesequencecode{x_0, x_1, \dots, x_{n-1}}
+	\end{equation*}
+	を対応させる\(\bigcup_{n \in \NaturalNumbers} \NaturalNumbers^{\Set{0,1,\dots,n-1}}\)から\(\NaturalNumbers\)への関数は全単射である．
+\end{Lemma}
+
+\index[sidx]{\(\apply{\lh}{x}\)：コード化された有限列の長さ}
+\begin{Def} \label{Def:finitesequencecodelength}
+	与えられた自然数\(x\)に対し，\(x\)に対応している自然数からなる有限列
+	\(x_0, x_1, \dots, x_{n-1}\)の長さ\(n\)を
+	\begin{equation}
+		\apply{\lh}{x}
+		\label{eq:finitesequencecodelength}
+	\end{equation}
+	と表す．
+	\(\apply{\lh}{x}\)は具体的に
+	\begin{equation}
+		\apply{\lh}{x} =
+		\begin{cases*}
+			0                          & (\(x = 0\)のとき), \\
+			\apply{\pairfunc_1}{x} + 1 & (それ以外のとき)
+		\end{cases*}
+		\label{eq:finitesequencecodelengthdefinition}
+	\end{equation}
+	と表示できる．
+\end{Def}
+
+\index[sidx]{\(\codefunctioninv{x}{i}\)：コードから有限列を得る関数}
+\begin{Def} \label{Def:codefunctioninv}
+	与えられた1以上の自然数\(x\)に対し，\(x\)がそのコードとなる自然数からなる有限列
+	\(x_0, x_1, \dots, x_{n-1}\)における\(x_i\)を
+	\begin{equation}
+		\codefunctioninv{x}{i}
+		\label{eq:codefunctioninv}
+	\end{equation}
+	と表す．
+	\(\codefunctioninv{x}{i}\)は具体的に
+	\begin{equation}
+		\codefunctioninv{x}{i} =
+		\begin{cases*}
+			\apply{\pairfunc_2}{x} - 1                                   & (\(\apply{\lh}{x} = 1\)のとき) \\
+			\apply{\pairfunc_i^{\apply{\lh}{x}}}{\apply{\pairfunc_2}{x}} & (それ以外のとき)
+		\end{cases*}
+		\label{eq:codefunctioninvdefinition}
+	\end{equation}
+	と表示できる．
+
+	\(x = 0\)である，もしくは\(\apply{\lh}{x} \leq i\)である場合には\cref{eq:codefunctioninv}の値は0と約束する．
+\end{Def}
+
+\index[sidx]{\(x \codeconnection y\)：有限列の連結に対応するコード}
+\begin{Def} \label{Def:codeconnection}
+	自然数\(x, y\)を有限列のコードとして\(x = \finitesequencecode{x_0, x_1, \dots, x_{n-1}}\)，
+	\(y = \finitesequencecode{y_0, y_1, \dots, y_{m-1}}\)
+	と表示し，それを用いて
+	\begin{equation}
+		x \codeconnection y = \finitesequencecode{x_0, x_1, \dots, x_{n-1}, y_0, y_1, \dots, y_{m-1}}
+		\label{eq:codeconnection}
+	\end{equation}
+	と定める．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma:codeconnection}
+	関数\(\connectionfunc \colon \NaturalNumbers^3 \to \NaturalNumbers\)を以下のように帰納的に定義する：
+	\begin{align}
+		\begin{aligned}
+			\apply{\connectionfunc}{0, x, y}   & = y \quad \text{(\(x, y \in \NaturalNumbers\))}, \\
+			\apply{\connectionfunc}{n+1, x, y} & =
+			\begin{cases*}
+				\apply{\pairfunc}{\apply{\pairfunc^{\apply{\lh}{x}}_{\apply{\lh}{x}-n-1}}{x},\apply{\connectionfunc}{n, x, y}} & (\(n < \apply{\lh}{x}\)のとき) \\
+				\apply{\pairfunc}{0,\apply{\connectionfunc}{n, x, y}}                                                          & (それ以外のとき)                   \\
+			\end{cases*}
+		\end{aligned}
+		\label{eq:codeconnectionfunc}
+	\end{align}
+
+	\(x, y \in \NaturalNumbers\)に対する\(x \codeconnection y\)は，上記\(\connectionfunc\)を用いて
+	\begin{equation}
+		x \codeconnection y = \apply{\connectionfunc}{\apply{\lh}{x}, x, y}
+		\label{eq:codeconnectionconnectionfunc}
+	\end{equation}
+	と表せる．
+\end{Lemma}
+
+
+\Cref{chap:peanoarithmetic}での議論においては，
+ここで定義した種々の関数がCantorの対関数を使って具体的に表示できているという点も重要となる．

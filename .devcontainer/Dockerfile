@@ -1,4 +1,4 @@
-FROM texlive/texlive:TL2025-historic
+FROM docker.io/texlive/texlive:TL2025-historic
 
 
 # KeTCindyの動作に必要なパッケージをインストール
@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
 	gcc \
 	evince \
 	pkexec \
+	openssh-client \
 	sudo
 
 # Cinderellaのアーカイブをダウンロードして解凍
@@ -27,3 +28,17 @@ RUN LATEST_RELEASE=$(wget -qO- https://api.github.com/repos/ketpic/ketcindy/rele
 	&& mkdir -p /home/ketcindy \
 	&& tar -xzf /tmp/ketcindy-$LATEST_RELEASE.tar.gz -C /home/ketcindy \
 	&& rm /tmp/ketcindy-$LATEST_RELEASE.tar.gz
+
+ARG RTK_VERSION=0.45.0
+
+RUN set -eux; \
+	case "$(dpkg --print-architecture)" in \
+	amd64) rtk_target="x86_64-unknown-linux-musl" ;; \
+	arm64) rtk_target="aarch64-unknown-linux-gnu" ;; \
+	*) echo "Unsupported architecture" >&2; exit 1 ;; \
+	esac; \
+	curl -fsSL "https://github.com/rtk-ai/rtk/releases/download/v${RTK_VERSION}/rtk-${rtk_target}.tar.gz" \
+	| tar -xz -C /usr/local/bin rtk; \
+	chmod +x /usr/local/bin/rtk
+
+CMD ["sleep", "infinity"]

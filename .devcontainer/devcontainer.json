@@ -7,8 +7,20 @@
 		"vscode": {
 			"extensions": [
 				"efoerster.texlab",
-				"mhutchie.git-graph"
+				"mhutchie.git-graph",
+				"anthropic.claude-code",
+				"growthjack.claude-code-usage"
 			]
 		}
-	}
+	},
+	"initializeCommand": "mkdir -p \"${localWorkspaceFolder}/.devcontainer/claude-home/.claude\" \"${localWorkspaceFolder}/.devcontainer/rtk-home/.config/rtk\" \"${localWorkspaceFolder}/.devcontainer/rtk-home/.local/share/rtk\"",
+	"mounts": [
+		"source=${localWorkspaceFolder}/.devcontainer/claude-home/.claude,target=/root/.claude,type=bind",
+		"source=${localWorkspaceFolder}/.devcontainer/rtk-home/.config/rtk,target=/root/.config/rtk,type=bind",
+		"source=${localWorkspaceFolder}/.devcontainer/rtk-home/.local/share/rtk,target=/root/.local/share/rtk,type=bind"
+	],
+	"containerEnv": {
+		"CLAUDE_CONFIG_DIR": "/root/.claude"
+	},
+	"postCreateCommand": "rtk init -g --auto-patch"
 }

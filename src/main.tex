@@ -13,7 +13,7 @@
 	skip = .2\baselineskip,
 	width = .85\linewidth,
 	subrefformat = parens,
-	skip = 5\jsc@mpt
+	skip = 5\jsc@mpt%
 }
 \captionsetup[subfigure]{%
 	labelformat = parens,
@@ -52,6 +52,7 @@
 \usepackage{multicol}
 \usepackage{framed}
 \usepackage{numbersets}
+\usepackage[skins, breakable]{tcolorbox}
 
 \numberwithin{equation}{section}
 
@@ -304,15 +305,81 @@
 %
 %%%%%%%%%%%%%%=======================theorem==================%%%%%%%%%%%%%
 %
-%
-\theoremstyle{definition}
+% ヘッダ文字の書式：ラベル部分（「定義3.2」など）をチップ状に囲む
+% 演習だけ黒背景・白文字で強調し，それ以外は共通のグレーチップにする
+\newtheoremstyle{logicchip}%
+	{6pt}{4pt}%
+	{\normalfont}%
+	{0pt}%
+	{\normalfont\bfseries\headfont}{}{.5em}%
+	{\colorbox{black!8}{\thmname{#1}\thmnumber{\,#2}}\thmnote{\,(#3)}}
+\newtheoremstyle{logicque}%
+	{5pt}{2pt}%
+	{\normalfont}%
+	{0pt}%
+	{\normalfont\bfseries\headfont}{}{.5em}%
+	{\colorbox{black}{\textcolor{white}{\thmname{#1}\thmnumber{\,#2}}}\thmnote{\,(#3)}}
+\theoremstyle{logicchip}
 \newtheorem{Def}{定義}[section]
 \newtheorem{Thm}[Def]{定理}
 \newtheorem{Ex}[Def]{例}
+\theoremstyle{logicque}
 \newtheorem{Que}{演習}[section]
+\theoremstyle{logicchip}
 \newtheorem{Lemma}[Def]{補題}
 \newtheorem{Corollary}[Def]{系}
 \newtheorem{Note}[Def]{注意}
+%
+% 定理・補題・系：tcolorboxのtitle機能（enhanced skin）で，本文幅いっぱいの
+% 黒帯ラベルを枠の上辺・左右にぴったり接して描く（すきま無し）．
+% amsthmの\newtheoremが用意したカウンタ（定義と共有）・crefタイプ名は
+% そのまま使い，環境の描画部分だけをtcolorboxに手組みで差し替える
+% （\begin{Thm}[名前] \label[Thm]{...} ... という呼び出し方は不変）．
+\tcbset{
+	logicbox/result/.style = {
+		breakable, enhanced,
+		colback = black!5, colframe = black!30,
+		boxrule = 0.5pt, arc = 0pt,
+		fonttitle = \bfseries\headfont, coltitle = white, colbacktitle = black!80,
+		left = 8pt, right = 8pt, top = 6pt, bottom = 6pt,
+	},
+}
+\makeatletter
+\RenewDocumentEnvironment{Thm}{o}{%
+	\refstepcounter{Def}%
+	\begin{tcolorbox}[logicbox/result,
+		title = {定理~\theThm\IfNoValueTF{#1}{}{\,（#1）}}]%
+}{%
+	\end{tcolorbox}%
+}
+\RenewDocumentEnvironment{Lemma}{o}{%
+	\refstepcounter{Def}%
+	\begin{tcolorbox}[logicbox/result,
+		title = {補題~\theLemma\IfNoValueTF{#1}{}{\,（#1）}}]%
+}{%
+	\end{tcolorbox}%
+}
+\RenewDocumentEnvironment{Corollary}{o}{%
+	\refstepcounter{Def}%
+	\begin{tcolorbox}[logicbox/result,
+		title = {系~\theCorollary\IfNoValueTF{#1}{}{\,（#1）}}]%
+}{%
+	\end{tcolorbox}%
+}
+\makeatother
+%
+% proof環境：和文見出しに修正し，補助環境相当の書体に揃える（バーは付けない）
+\renewcommand{\proofname}{証明}
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+	\pushQED{\qed}%
+	\normalfont \topsep6\p@\@plus6\p@\relax
+	\trivlist
+	\item[\hskip\labelsep\normalfont\headfont #1\hskip.5em]\ignorespaces
+}{%
+	\popQED\endtrivlist\@endpefalse
+}
+\makeatother
 %
 %
 %%%%%%%%%%%%%=====================index==================================%%%%%%%%%%%%%%
@@ -401,21 +468,76 @@
 \addbibresource{reference/book.bib}
 %\addbibresource{reference/online.bib}
 
+% 節・小節見出し：左に縦アクセントバーのみ（下線なし）．
+% 「太さ＝重要度」で節は太く（3pt），小節は細く（2pt，グレー）．
+% titlesec等の見出し専用パッケージには頼らず，\@startsectionが内部で呼ぶ
+% \@sect・\@ssectと同じ流儀でそのまま手組みする．
+% （\section*/\subsection*も\@ifstarで分岐して両対応する．白黒印刷前提のため
+%   色はxcolorの黒・グレーのみを使う．）
 \makeatletter
 \renewcommand{\section}{%
-	\if@slide\clearpage\fi
-	\@startsection{section}{1}{\z@}%
-	{\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
-	{.5\Cvs \@plus.3\Cdp}% 後アキ
-	%   {\normalfont\Large\headfont\@secapp}}
-	{\normalfont\Large\headfont\presectionname\raggedright}%
-}
+	\if@noskipsec \leavevmode \fi
+	\par
+	\addpenalty\@secpenalty
+	\addvspace{\Cvs \@plus.5\Cdp \@minus.2\Cdp}%
+	\@afterheading
+	\@ifstar{\@logicssect}{\@logicsect}}
+\def\@logicsect#1{%
+	\ifnum 1>\c@secnumdepth
+		\let\@logicsvsec\@empty
+	\else
+		\refstepcounter{section}%
+		\protected@edef\@logicsvsec{\presectionname\thesection\quad}%
+	\fi
+	\begingroup
+		\normalfont\Large\headfont\raggedright
+		\rule[-.28\baselineskip]{3pt}{\baselineskip}\hspace{14pt}%
+		\@logicsvsec
+		\interlinepenalty\@M #1\@@par
+	\endgroup
+	\sectionmark{#1}%
+	\addcontentsline{toc}{section}{%
+		\ifnum 1>\c@secnumdepth\else\protect\numberline{\thesection}\fi #1}%
+	\@xsect{.5\Cvs \@plus.3\Cdp}}
+\def\@logicssect#1{%
+	\begingroup
+		\normalfont\Large\headfont\raggedright
+		\rule[-.28\baselineskip]{3pt}{\baselineskip}\hspace{14pt}%
+		\interlinepenalty\@M #1\@@par
+	\endgroup
+	\@xsect{.5\Cvs \@plus.3\Cdp}}
+%
 \renewcommand{\subsection}{%
-	\@startsection{subsection}{2}{\z@}%
-	{\Cvs \@plus.5\Cdp \@minus.2\Cdp}% 前アキ
-	{.5\Cvs \@plus.3\Cdp}% 後アキ
-	{\normalfont\large\headfont\presubsectionname}%
-}
+	\if@noskipsec \leavevmode \fi
+	\par
+	\addpenalty\@secpenalty
+	\addvspace{\Cvs \@plus.5\Cdp \@minus.2\Cdp}%
+	\@afterheading
+	\@ifstar{\@logicssubsect}{\@logicsubsect}}
+\def\@logicsubsect#1{%
+	\ifnum 2>\c@secnumdepth
+		\let\@logicsvsubsec\@empty
+	\else
+		\refstepcounter{subsection}%
+		\protected@edef\@logicsvsubsec{\presubsectionname\thesubsection\quad}%
+	\fi
+	\begingroup
+		\normalfont\large\headfont\raggedright
+		\color{black!55}\rule[-.24\baselineskip]{2pt}{\baselineskip}\hspace{12pt}%
+		\color{black}\@logicsvsubsec
+		\interlinepenalty\@M #1\@@par
+	\endgroup
+	\addcontentsline{toc}{subsection}{%
+		\ifnum 2>\c@secnumdepth\else\protect\numberline{\thesubsection}\fi #1}%
+	\@xsect{.5\Cvs \@plus.3\Cdp}}
+\def\@logicssubsect#1{%
+	\begingroup
+		\normalfont\large\headfont\raggedright
+		\color{black!55}\rule[-.24\baselineskip]{2pt}{\baselineskip}\hspace{12pt}%
+		\color{black}%
+		\interlinepenalty\@M #1\@@par
+	\endgroup
+	\@xsect{.5\Cvs \@plus.3\Cdp}}
 \makeatother
 \renewcommand{\presectionname}{\S}
 \newcommand{\presubsectionname}{\S\S}

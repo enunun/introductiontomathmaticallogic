@@ -370,10 +370,10 @@ Churchのテーゼ%
 	\begin{align*}
 		\apply{\varphi}{x_1, x_2, \dots, x_n} =
 		\begin{cases*}
-			\apply{\varphi_1}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, x_2, \dots, x_n} \in R_1\)のとき), \\
-			\apply{\varphi_2}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, x_2, \dots, x_n} \in R_2\)のとき), \\
-			\dotsb                                      &                                               \\
-			\apply{\varphi_m}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, x_2, \dots, x_n} \in R_m\)のとき), \\
+			\apply{\varphi_1}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, \dots, x_n} \in R_1\)のとき), \\
+			\apply{\varphi_2}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, \dots, x_n} \in R_2\)のとき), \\
+			\dotsb                                      &                                          \\
+			\apply{\varphi_m}{x_1, x_2, \dots, x_n}     & (\(\pair{x_1, \dots, x_n} \in R_m\)のとき), \\
 			\apply{\varphi_{m+1}}{x_1, x_2, \dots, x_n} & (上記以外のとき)
 		\end{cases*}
 	\end{align*}
@@ -550,13 +550,13 @@ Churchのテーゼ%
 自然演繹式シークエント計算は数学における「論理」をシミュレートするために導入した体系であったが，
 今回導入する形式的体系は，数学における「計算」をシミュレートするための体系である．
 
-体系の内容としては計算機科学における型システムに近い．
-例えば，古典ではあるがいわゆるTaPL\cite{pierce2013types_jp}を見れば，おおよそ同じような体系が紹介されている．
+体系の内容としては計算機科学における操作的意味論によるプログラミング言語の動作定義に近い．
+例えば，古典ではあるがいわゆるTaPL\cite{pierce2013types_jp}を見れば，おおよそ似たような形で式の評価規則が定義されている．
 
 まったく別の体系とは言っても，使う記号や定義は\cref{chap:syntax}で紹介したものと非常に似通っている．
 ただし，異なる点も多いので，イチからすべて説明しよう．
 
-まずは使う記号である．
+まずは使う記号である．\Cref{tab:computablefunctionsymbol}に体系\(\symcal{R}\)で使用する記号の一覧を示す．
 
 \index[widx]{へんすうきごう@変数記号}
 \index[widx]{かんすうきごう@関数記号}
@@ -565,8 +565,7 @@ Churchのテーゼ%
 \index[widx]{ほじょきごう@補助記号}
 \index[sidx]{\(\symcal{R}\)：計算可能関数を定義する形式的体系}
 \index[sidx]{\(\obj{0}\)：体系\(\symcal{R}\)における定数記号}
-\index[sidx]{\(\obj{s}\)：体系\(\symcal{R}\)における関数記号}
-\index[sidx]{\(\evaluate\)：体系\(\symcal{R}\)における関係記号}
+\index[sidx]{\(\obj{\succfunc}\)：体系\(\symcal{R}\)における関数記号}
 \begin{table}[htbp]
 	\centering
 	\caption{体系\(\symcal{R}\)で使用する記号の一覧}
@@ -578,14 +577,17 @@ Churchのテーゼ%
 		変数記号      & \(\obj{x}, \obj{y}, \obj{z}, \dotsc\)                                & 無限に多く存在する（可算無限） \\
 		関数記号      & \(\obj{f}, \obj{g}, \obj{h}, \dotsc\)                                & 無限に多く存在する（可算無限） \\
 		（特定の）定数記号 & \(\obj{0}\)                                                          &                 \\
-		（特定の）関数記号 & \(\obj{s}\)                                                          &                 \\
-		（特定の）関係記号 & \(\evaluate\)                                                        &                 \\
+		（特定の）関数記号 & \(\obj{\succfunc}\)                                                  &                 \\
 		補助記号      & \(\text{``\(\lparen\)''}, \text{``\(\rparen\)''}, \text{``\(,\)''}\) & カッコやカンマ         \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
-さて，次は項である．
+1階述語論理のときと似ているが少し違う．例えば1階述語論理では言語という形で定数記号や関数記号にバリエーションを持たせることができたが，
+\(\symcal{R}\)では定数記号は\(\obj{0}\)のみ，関数記号は特定の\(\obj{\succfunc}\)の他は変数記号と似たような取り扱いがなされている．
+これは，\(\symcal{R}\)は計算可能関数を定義するための体系であることからくる違いである．
+
+さて，次は項である．定義は\cref{Def:term}とほぼ同じである．
 
 \begin{Def} \label{Def:computablefunctionterm}
 	\(\symcal{R}\)における項は，以下のように帰納的に定義される．
@@ -602,11 +604,177 @@ Churchのテーゼ%
 \begin{Def} \label{Def:computablefunctionnumeral}
 	\(n\)を自然数とする．項\(\numeral{n}\)を以下のように帰納的に定義する．
 	\begin{align}
-		\numeral{0}     & = \obj{0},                                                               \\
-		\numeral{n + 1} & = \apply{\obj{s}}{\numeral{n}} \quad \text{(\(n \in \NaturalNumbers\))}.
+		\numeral{0}     & = \obj{0},                                                                       \\
+		\numeral{n + 1} & = \apply{\obj{\succfunc}}{\numeral{n}} \quad \text{(\(n \in \NaturalNumbers\))}.
 	\end{align}
 	自然数\(n\)に対する項\(\numeral{n}\)を，\(n\)に対する\term{数項}と呼ぶ．
 \end{Def}
+
+計算結果を示すための記号列を定義しよう．
+\Cref{Def:evaluation}は，\cref{chap:proof}におけるシークエントの定義（\cref{Def:sequent}）に相当する．
+
+\index[widx]{ひょうかしき@評価式}
+\index[sidx]{\(t_1 \evaluate t_2\)：評価式}
+\index[widx]{ひょうかしき@評価式!うへん@---の右辺}
+\index[widx]{ひょうかしき@評価式!さへん@---の左辺}
+\begin{Def} \label{Def:evaluation}
+	項\(t_1, t_2\)を用いて
+	\begin{equation}
+		t_1 \evaluate t_2
+		\label{eq:evaluation}
+	\end{equation}
+	と表される記号列を\term{評価式}と呼ぶ．
+	\(t_1\)をこの評価式の\term{左辺}，\(t_2\)をこの評価式の\term{右辺}と呼ぶ．
+\end{Def}
+
+次に導入すべきは推論規則である．まずはそのために必要な概念を定義しよう．
+
+\begin{Def} \label{Def:computablefunctionsubstitution}
+	\(e\)を評価式，\(a\)を変数記号，\(n\)を数項とする．
+	このとき，\(e\)に現れるすべての\(a\)を\(n\)に置き換えた評価式を
+	\begin{equation}
+		\SubEvaluate{e}{a}{n}
+		\label{eq:computablefunctionsubstitution}
+	\end{equation}
+	と表す．
+\end{Def}
+
+\begin{Def} \label{Def:computablefunctionreplacement}
+	\(t\)を項，\(a\)を変数記号，\(n\)を数項とする．
+	このとき，\(t\)に現れるすべての\(a\)を\(n\)に置き換えた項を
+	\begin{equation}
+		\RepTerm{t}{a}{n}
+		\label{eq:computablefunctionreplacement}
+	\end{equation}
+	と表す．
+\end{Def}
+
+いよいよ推論規則を定義しよう．
+
+\begin{Def} \label{Def:computablefunctioninference}
+	\(e\)を評価式，\(a\)を変数記号，\(n\)を数項とする．
+	このとき，下記は\(\symcal{R}\)における推論規則である．
+	\begin{prooftree}
+		\AxiomC{\(e\)}
+		\LeftLabel{(SUB)}
+		\UnaryInfC{\(\SubEvaluate{e}{a}{n}\)}
+	\end{prooftree}
+
+	また，\(t_1, t_2\)を項，\(f\)を関数記号，\(n_1, n_2, \dots, n_r, n\)を数項とするとき，
+	下記は\(\symcal{R}\)における推論規則である．
+	\begin{prooftree}
+		\AxiomC{\(t_1 \evaluate t_2\)}
+		\AxiomC{\(\apply{f}{n_1, n_2, \dots, n_r} \evaluate n\)}
+		\LeftLabel{(REPL)}
+		\BinaryInfC{\(t_1 \evaluate \RepTerm{t_2}{\apply{f}{n_1, n_2, \dots, n_r}}{n}\)}
+	\end{prooftree}
+\end{Def}
+
+推論規則はこの2つだけである．
+ここから評価式の導出が定義できる．
+以下の定義は，\cref{chap:proof}における証明図の定義（\cref{Def:proofDiagram}）に相当する．
+
+\index[widx]{どうしゅつず@導出図}
+\begin{Def} \label{Def:evaluatable}
+	\(E\)を評価式の集合とする．評価式\(e\)を下段とする\(E\)からの\term{導出図}を，以下のように帰納的に定義する：
+	\begin{enumerate}
+		\item \(e \in E\)ならば，以下の図式は\(e\)を下段とする\(E\)からの導出図である：
+		      \begin{prooftree}
+			      \AxiomC{}
+			      \UnaryInfC{\(e\)}
+		      \end{prooftree}
+		\item \(\symcal{D}\)が評価式\(e\)を下段とする\(E\)からの導出図であり，\(a\)が変数記号，\(n\)が数項であるならば，
+		      以下の図式は\(\SubEvaluate{e}{a}{n}\)を下段とする\(E\)からの導出図である：
+		      \begin{prooftree}
+			      \AxiomC{\(\symcal{D}\)}
+			      \LeftLabel{(SUB)}
+			      \UnaryInfC{\(\SubEvaluate{e}{a}{n}\)}
+		      \end{prooftree}
+		\item \(\symcal{D}_1\)が評価式\(t_1 \evaluate t_2\)を下段とする\(E\)からの導出図であり，
+		      \(\symcal{D}_2\)が評価式\(\apply{f}{n_1, n_2, \dots, n_r} \evaluate n\)を下段とする\(E\)からの導出図であるならば，
+		      以下の図式は評価式\(t_1 \evaluate \RepTerm{t_2}{\apply{f}{n_1, n_2, \dots, n_r}}{n}\)を下段とする\(E\)からの導出図である：
+		      \begin{prooftree}
+			      \AxiomC{\(\symcal{D}_1\)}
+			      \AxiomC{\(\symcal{D}_2\)}
+			      \LeftLabel{(REPL)}
+			      \BinaryInfC{\(t_1 \evaluate \RepTerm{t_2}{\apply{f}{n_1, n_2, \dots, n_r}}{n}\)}
+		      \end{prooftree}
+		\item 以上の規則を有限回適用して得られるもののみが\(E\)からの導出図である．
+	\end{enumerate}
+\end{Def}
+
+導出図とくればあとは導出可能性である．
+\Cref{chap:proof}における証明可能性の定義（\cref{Def:provable}）を思い起こせば，
+以下の定義は極めて自然であろう．
+
+\index[widx]{どうしゅつかのう@導出可能}
+\index[sidx]{\(E \evaluatable e\)：\(E\)から導出可能}
+\begin{Def} \label{Def:computablefunctionevaluatable}
+	\(E\)を評価式の集合とする．評価式\(e\)が\(E\)から\term{導出可能}であるとは，
+	\(e\)を下段とする\(E\)からの導出図が存在することをいう．
+	このことを
+	\begin{equation}
+		E \evaluatable e
+		\label{eq:computablefunctionevaluatable}
+	\end{equation}
+	と表す．
+\end{Def}
+
+\begin{Ex} \label{Ex:computablefunctionevaluatable}
+	\(E\)を以下の2つの評価式からなる集合とする：
+	\begin{align*}
+		\apply{\obj{f}}{a_0, \numeral{0}}            & \evaluate a_0,                                          \\
+		\apply{\obj{f}}{a_0, \apply{\succfunc}{a_1}} & \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, a_1}}.
+	\end{align*}
+	このとき，以下は評価式\(\apply{\obj{f}}{a_0, \numeral{1}} \evaluate \apply{\succfunc}{a_0}\)の\(E\)からの導出図である：
+	\begin{prooftree}
+		\AxiomC{}
+		\UnaryInfC{\(\apply{\obj{f}}{a_0, \numeral{0}} \evaluate a_0\)}
+		\AxiomC{}
+		\UnaryInfC{\(\apply{\obj{f}}{a_0, \apply{\succfunc}{a_1}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, a_1}}\)}
+		\LeftLabel{(SUB)}
+		\UnaryInfC{\(\apply{\obj{f}}{a_0, \numeral{1}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, \numeral{0}}}\)}
+		\LeftLabel{(REPL)}
+		\BinaryInfC{\(\apply{\obj{f}}{a_0, \numeral{1}} \evaluate \apply{\succfunc}{a_0}\)}
+	\end{prooftree}
+\end{Ex}
+
+\Cref{Ex:computablefunctionevaluatable}は，通常の数学において
+\begin{align*}
+	\apply{f}{x, 0}     & = x \quad (x \in \NaturalNumbers),                     \\
+	\apply{f}{x, y + 1} & = \apply{f}{x, y} + 1 \quad (x, y \in \NaturalNumbers)
+\end{align*}
+と帰納的に定義された関数\(f\)における\(\apply{f}{x, 1}\)の計算を表している．
+
+もう少し複雑な例として，\(E\)からの評価式\(\apply{\obj{f}}{\numeral{2}, \numeral{3}} \evaluate \numeral{5}\)の導出を見てみよう．
+\Cref{Thm:lawofexcludedmiddle}の証明と同じように，評価式を書き並べる形で書いてみることとする．
+
+\begin{Ex} \label{Ex:computablefunctionevaluatable2}
+	\(E\)を\cref{Ex:computablefunctionevaluatable}と同じ集合とする．このとき，
+	\(\apply{\obj{f}}{\numeral{2}, \numeral{3}} \evaluate \numeral{5}\)の\(E\)からの導出は以下のように書ける：
+	\begin{enumerate}
+		\item \(\apply{\obj{f}}{a_0, \numeral{0}} \evaluate a_0\)\quad（\(E\)より）
+		\item \(\apply{\obj{f}}{a_0, \apply{\succfunc}{a_1}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, a_1}}\)\quad（\(E\)より）
+		\item \(\apply{\obj{f}}{a_0, \numeral{1}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, \numeral{0}}}\)\quad（2から(SUB)による）
+		\item \(\apply{\obj{f}}{a_0, \numeral{1}} \evaluate \apply{\succfunc}{a_0}\)\quad（1, 3から(REPL)による）
+		\item \(\apply{\obj{f}}{a_0, \numeral{2}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, \numeral{1}}}\)\quad（2から(SUB)による）
+		\item \(\apply{\obj{f}}{a_0, \numeral{2}} \evaluate \apply{\succfunc}{\apply{\succfunc}{a_0}}\)\quad（4, 5から(REPL)による）
+		\item \(\apply{\obj{f}}{a_0, \numeral{3}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, \numeral{2}}}\)\quad（2から(SUB)による）
+		\item \(\apply{\obj{f}}{a_0, \numeral{3}} \evaluate \apply{\succfunc}{\apply{\succfunc}{\apply{\succfunc}{a_0}}}\)\quad（6, 7から(REPL)による）
+		\item \(\apply{\obj{f}}{\numeral{2}, \numeral{3}} \evaluate \numeral{5}\)\quad（8から(SUB)による）
+	\end{enumerate}
+\end{Ex}
+
+\Cref{Ex:computablefunctionevaluatable2}における評価式\(\apply{\obj{f}}{\numeral{2}, \numeral{3}} \evaluate \numeral{5}\)の導出は，
+通常の数学における\(\apply{f}{2, 3}\)の計算に対応している．
+使用する規則自体は極めて原始的な代入操作と置換操作のみであるため，まさしく数学における「計算」をシミュレートしているといえるのではないだろうか%
+\footnote{%
+	\(\symcal{R}\)における導出が数学における「計算」であることは先の例で認識できたと思うが，まだ「これで十分か？」という問いには答えられていない．
+	この問いへの解答は，\(\symcal{R}\)における導出がもつ一般的な性質を観察したり他の定式化との等価性を議論するよりほかはない．
+	とはいえ現代では本書の定式化と他の数多くの定式化との等価性はすでに示されているため，
+	これらの定式化を数学における「計算」の定式化と考えようというのが冒頭で述べたChurchのテーゼである．
+}%
+．
 
 \section{有限列のコード化} \label[section]{sec:codizeforfinitesequence}
 

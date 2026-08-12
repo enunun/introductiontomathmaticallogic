@@ -302,6 +302,13 @@
 \NewDocumentCommand{\partialequal}{}{\sim}
 
 \NewDocumentCommand{\evaluate}{}{\to}
+\DeclareMathOperator{\succfunc}{succ}
+\DeclareMathOperator{\Sub}{Sub}
+\DeclareMathOperator{\Rep}{Rep}
+
+\NewDocumentCommand{\SubEvaluate}{mmm}{\apply{\Sub}{#1; \; #2, #3}}
+\NewDocumentCommand{\RepTerm}{mmm}{\apply{\Rep}{#1; \; #2, #3}}
+\NewDocumentCommand{\evaluatable}{}{\mathbin{\provable_{\symcal{R}}}}
 %
 %%%%%%%%%%%%%%=======================theorem==================%%%%%%%%%%%%%
 %
@@ -330,11 +337,7 @@
 \newtheorem{Corollary}[Def]{系}
 \newtheorem{Note}[Def]{注意}
 %
-% 定理・補題・系：tcolorboxのtitle機能（enhanced skin）で，本文幅いっぱいの
-% 黒帯ラベルを枠の上辺・左右にぴったり接して描く（すきま無し）．
-% amsthmの\newtheoremが用意したカウンタ（定義と共有）・crefタイプ名は
-% そのまま使い，環境の描画部分だけをtcolorboxに手組みで差し替える
-% （\begin{Thm}[名前] \label[Thm]{...} ... という呼び出し方は不変）．
+% 定理，補題，系のスタイル
 \tcbset{
 	logicbox/result/.style = {
 		breakable, enhanced,
@@ -469,11 +472,6 @@
 %\addbibresource{reference/online.bib}
 
 % 節・小節見出し：左に縦アクセントバーのみ（下線なし）．
-% 「太さ＝重要度」で節は太く（3pt），小節は細く（2pt，グレー）．
-% titlesec等の見出し専用パッケージには頼らず，\@startsectionが内部で呼ぶ
-% \@sect・\@ssectと同じ流儀でそのまま手組みする．
-% （\section*/\subsection*も\@ifstarで分岐して両対応する．白黒印刷前提のため
-%   色はxcolorの黒・グレーのみを使う．）
 \makeatletter
 \renewcommand{\section}{%
 	\if@noskipsec \leavevmode \fi
@@ -563,7 +561,7 @@
 \makeatother
 %
 
-%\includeonly{contents/formalize,contents/computable,contents/answer}
+\includeonly{contents/formalize,contents/proof,contents/computable,contents/answer}
 
 \begin{document}
 

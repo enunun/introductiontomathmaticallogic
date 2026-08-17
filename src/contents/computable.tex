@@ -599,6 +599,12 @@ Churchのテーゼ%
 	\end{enumerate}
 \end{Def}
 
+1階述語論理では関数記号は言語側が有していたためアリティの存在を要請していたが，
+\(\symcal{R}\)ではアリティの存在を要請しない．
+関数記号を無限に多く存在することを要請しているのは「すでに登場した関数記号のいずれとも異なる関数記号をいつでも用意できる」ことを担保するためである．
+ここで関数記号に対してアリティの存在を要請してしまうと「今欲しいアリティの関数記号がもうない」という事態に陥りかねない．
+そこで，\(\symcal{R}\)では関数記号に対してアリティの存在を要請せず，項を組み立てる際に組み立てる側が自由にアリティを指定できるようにしている．
+
 項の略記法を定義しておく．
 
 \begin{Def} \label{Def:computablefunctionnumeral}
@@ -640,10 +646,10 @@ Churchのテーゼ%
 \end{Def}
 
 \begin{Def} \label{Def:computablefunctionreplacement}
-	\(t\)を項，\(a\)を変数記号，\(n\)を数項とする．
-	このとき，\(t\)に現れるすべての\(a\)を\(n\)に置き換えた項を
+	\(t\)を項，\(f\)を関数記号，\(n_1, n_2, \dots, n_r, n\)を数項とする．
+	このとき，\(t\)に現れるすべての\(\apply{f}{n_1, n_2, \dots, n_r}\)を\(n\)に置き換えた項を
 	\begin{equation}
-		\RepTerm{t}{a}{n}
+		\RepTerm{t}{\apply{f}{n_1, n_2, \dots, n_r}}{n}
 		\label{eq:computablefunctionreplacement}
 	\end{equation}
 	と表す．
@@ -676,7 +682,7 @@ Churchのテーゼ%
 
 \index[widx]{どうしゅつず@導出図}
 \begin{Def} \label{Def:evaluatable}
-	\(E\)を評価式の集合とする．評価式\(e\)を下段とする\(E\)からの\term{導出図}を，以下のように帰納的に定義する：
+	\(E\)を評価式の有限集合とする．評価式\(e\)を下段とする\(E\)からの\term{導出図}を，以下のように帰納的に定義する：
 	\begin{enumerate}
 		\item \(e \in E\)ならば，以下の図式は\(e\)を下段とする\(E\)からの導出図である：
 		      \begin{prooftree}
@@ -710,7 +716,7 @@ Churchのテーゼ%
 \index[widx]{どうしゅつかのう@導出可能}
 \index[sidx]{\(E \evaluatable e\)：\(E\)から導出可能}
 \begin{Def} \label{Def:computablefunctionevaluatable}
-	\(E\)を評価式の集合とする．評価式\(e\)が\(E\)から\term{導出可能}であるとは，
+	\(E\)を評価式の有限集合とする．評価式\(e\)が\(E\)から\term{導出可能}であるとは，
 	\(e\)を下段とする\(E\)からの導出図が存在することをいう．
 	このことを
 	\begin{equation}
@@ -720,23 +726,30 @@ Churchのテーゼ%
 	と表す．
 \end{Def}
 
-\begin{Ex} \label{Ex:computablefunctionevaluatable}
+\begin{Ex} \label[Ex]{Ex:computablefunctionevaluatable}
 	\(E\)を以下の2つの評価式からなる集合とする：
 	\begin{align*}
 		\apply{\obj{f}}{a_0, \numeral{0}}            & \evaluate a_0,                                          \\
 		\apply{\obj{f}}{a_0, \apply{\succfunc}{a_1}} & \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, a_1}}.
 	\end{align*}
-	このとき，以下は評価式\(\apply{\obj{f}}{a_0, \numeral{1}} \evaluate \apply{\succfunc}{a_0}\)の\(E\)からの導出図である：
+\(x\)を自然数とする．このとき，以下は評価式\(\apply{\obj{f}}{\numeral{x}, \numeral{1}} \evaluate \apply{\succfunc}{\numeral{x}}\)の\(E\)からの導出図である：
 	\begin{prooftree}
 		\AxiomC{}
 		\UnaryInfC{\(\apply{\obj{f}}{a_0, \numeral{0}} \evaluate a_0\)}
+		\LeftLabel{(SUB)}
+		\UnaryInfC{\(\apply{\obj{f}}{\numeral{x}, \numeral{0}} \evaluate \numeral{x}\)}
 		\AxiomC{}
 		\UnaryInfC{\(\apply{\obj{f}}{a_0, \apply{\succfunc}{a_1}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, a_1}}\)}
 		\LeftLabel{(SUB)}
 		\UnaryInfC{\(\apply{\obj{f}}{a_0, \numeral{1}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, \numeral{0}}}\)}
+		\LeftLabel{(SUB)}
+		\UnaryInfC{\(\apply{\obj{f}}{\numeral{x}, \numeral{1}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{\numeral{x}, \numeral{0}}}\)}
 		\LeftLabel{(REPL)}
-		\BinaryInfC{\(\apply{\obj{f}}{a_0, \numeral{1}} \evaluate \apply{\succfunc}{a_0}\)}
+		\BinaryInfC{\(\apply{\obj{f}}{\numeral{x}, \numeral{1}} \evaluate \apply{\succfunc}{\numeral{x}}\)}
 	\end{prooftree}
+	(REPL)の第2の前提として用いた\(\apply{\obj{f}}{\numeral{x}, \numeral{0}} \evaluate \numeral{x}\)は，
+	関数記号\(\obj{f}\)の引数がどちらも数項（\(\numeral{x}, \numeral{0}\)）になってはじめて使えることに注意しよう．
+	そのため，2つ目の枝でも\(a_1\)だけでなく\(a_0\)にも(SUB)を適用し，\(\apply{\obj{f}}{a_0, \numeral{1}} \evaluate \dots\)の段階でいったん止めずに\(\apply{\obj{f}}{\numeral{x}, \numeral{1}} \evaluate \dots\)まで具体化してから(REPL)を適用している．
 \end{Ex}
 
 \Cref{Ex:computablefunctionevaluatable}は，通常の数学において
@@ -749,32 +762,292 @@ Churchのテーゼ%
 もう少し複雑な例として，\(E\)からの評価式\(\apply{\obj{f}}{\numeral{2}, \numeral{3}} \evaluate \numeral{5}\)の導出を見てみよう．
 \Cref{Thm:lawofexcludedmiddle}の証明と同じように，評価式を書き並べる形で書いてみることとする．
 
-\begin{Ex} \label{Ex:computablefunctionevaluatable2}
+\begin{Ex} \label[Ex]{Ex:computablefunctionevaluatable2}
 	\(E\)を\cref{Ex:computablefunctionevaluatable}と同じ集合とする．このとき，
 	\(\apply{\obj{f}}{\numeral{2}, \numeral{3}} \evaluate \numeral{5}\)の\(E\)からの導出は以下のように書ける：
 	\begin{enumerate}
 		\item \(\apply{\obj{f}}{a_0, \numeral{0}} \evaluate a_0\)\quad（\(E\)より）
 		\item \(\apply{\obj{f}}{a_0, \apply{\succfunc}{a_1}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, a_1}}\)\quad（\(E\)より）
-		\item \(\apply{\obj{f}}{a_0, \numeral{1}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, \numeral{0}}}\)\quad（2から(SUB)による）
-		\item \(\apply{\obj{f}}{a_0, \numeral{1}} \evaluate \apply{\succfunc}{a_0}\)\quad（1, 3から(REPL)による）
-		\item \(\apply{\obj{f}}{a_0, \numeral{2}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, \numeral{1}}}\)\quad（2から(SUB)による）
-		\item \(\apply{\obj{f}}{a_0, \numeral{2}} \evaluate \apply{\succfunc}{\apply{\succfunc}{a_0}}\)\quad（4, 5から(REPL)による）
-		\item \(\apply{\obj{f}}{a_0, \numeral{3}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, \numeral{2}}}\)\quad（2から(SUB)による）
-		\item \(\apply{\obj{f}}{a_0, \numeral{3}} \evaluate \apply{\succfunc}{\apply{\succfunc}{\apply{\succfunc}{a_0}}}\)\quad（6, 7から(REPL)による）
-		\item \(\apply{\obj{f}}{\numeral{2}, \numeral{3}} \evaluate \numeral{5}\)\quad（8から(SUB)による）
+		\item \(\apply{\obj{f}}{\numeral{2}, \numeral{0}} \evaluate \numeral{2}\)\quad（1から(SUB)による）
+		\item \(\apply{\obj{f}}{\numeral{2}, \numeral{1}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{\numeral{2}, \numeral{0}}}\)\quad（2に(SUB)を2回適用）
+		\item \(\apply{\obj{f}}{\numeral{2}, \numeral{1}} \evaluate \numeral{3}\)\quad（3, 4から(REPL)による）
+		\item \(\apply{\obj{f}}{\numeral{2}, \numeral{2}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{\numeral{2}, \numeral{1}}}\)\quad（2に(SUB)を2回適用）
+		\item \(\apply{\obj{f}}{\numeral{2}, \numeral{2}} \evaluate \numeral{4}\)\quad（5, 6から(REPL)による）
+		\item \(\apply{\obj{f}}{\numeral{2}, \numeral{3}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{\numeral{2}, \numeral{2}}}\)\quad（2に(SUB)を2回適用）
+		\item \(\apply{\obj{f}}{\numeral{2}, \numeral{3}} \evaluate \numeral{5}\)\quad（7, 8から(REPL)による）
 	\end{enumerate}
+	各(REPL)の第2の前提（3, 5, 7行目）は，いずれも\(\obj{f}\)の引数がどちらも数項になっている評価式であることに注意しよう．
+	\cref{Ex:computablefunctionevaluatable}のときと同様に，(SUB)は\(a_1\)だけでなく\(a_0\)についても毎回適用しており，
+	\(a_0\)が\(\numeral{2}\)に定まる前の（変数\(a_0\)を含んだままの）評価式どうしを(REPL)で組み合わせることはしていない．
 \end{Ex}
 
 \Cref{Ex:computablefunctionevaluatable2}における評価式\(\apply{\obj{f}}{\numeral{2}, \numeral{3}} \evaluate \numeral{5}\)の導出は，
 通常の数学における\(\apply{f}{2, 3}\)の計算に対応している．
 使用する規則自体は極めて原始的な代入操作と置換操作のみであるため，まさしく数学における「計算」をシミュレートしているといえるのではないだろうか%
 \footnote{%
-	\(\symcal{R}\)における導出が数学における「計算」であることは先の例で認識できたと思うが，まだ「これで十分か？」という問いには答えられていない．
+	\(\symcal{R}\)における導出が数学における「計算」であることは先の例で認識できたと思うが，まだ「推論規則はこれで十分か？」という問いには答えられていない．
 	この問いへの解答は，\(\symcal{R}\)における導出がもつ一般的な性質を観察したり他の定式化との等価性を議論するよりほかはない．
 	とはいえ現代では本書の定式化と他の数多くの定式化との等価性はすでに示されているため，
 	これらの定式化を数学における「計算」の定式化と考えようというのが冒頭で述べたChurchのテーゼである．
 }%
 ．
+
+以上の準備のもと，導出可能性を用いて計算可能関数を定義しよう．
+
+\index[widx]{けいさんかのうかんすう@計算可能関数}
+\begin{Def} \label{Def:computablefunction}
+	\(n\)を正の整数とする．関数\(f \colon \NaturalNumbers^n \to \NaturalNumbers\)が\term{計算可能関数}であるとは，
+	評価式の有限集合\(E\)と関数記号\(\obj{f}\)が存在して，任意の\(x_1, x_2, \dots, x_n, y \in \NaturalNumbers\)に対して
+	\begin{equation}
+		\apply{f}{x_1, x_2, \dots, x_n} = y
+		\quad\metaequivalent\quad
+		E \evaluatable \apply{\obj{f}}{\numeral{x_1}, \numeral{x_2}, \dots, \numeral{x_n}} \evaluate \numeral{y}
+		\label{eq:computablefunction}
+	\end{equation}
+	が成り立つことをいう．
+\end{Def}
+
+\Cref{eq:computablefunction}の\(\metaequivalent\)は2つの主張を同時に要求していることに注意しよう．
+1つは，正しい値\(\apply{f}{x_1, \dots, x_n}\)に対応する評価式\(\apply{\obj{f}}{\numeral{x_1}, \dots, \numeral{x_n}} \evaluate \numeral{\apply{f}{x_1, \dots, x_n}}\)が実際に\(E\)から導出できるという主張であり，
+もう1つは，\(\apply{\obj{f}}{\numeral{x_1}, \dots, \numeral{x_n}}\)を左辺とする評価式として\(E\)から導出できる数項はこれ以外に存在しないという主張である．
+すなわち，\(E\)は関数記号\(\obj{f}\)を通じて，\(f\)の値を過不足なく計算する手続きを与えていなければならない．
+
+\Cref{Ex:computablefunctionevaluatable}, \cref{Ex:computablefunctionevaluatable2}はまさにこの意味において，
+\(\apply{\obj{f}}{a_0, \numeral{0}} \evaluate a_0\)と\(\apply{\obj{f}}{a_0, \apply{\succfunc}{a_1}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{a_0, a_1}}\)からなる\(E\)によって，
+加法に相当する関数が計算可能関数であることを（後半の一意性の主張は除いて）具体的に示す例になっている．
+この一意性の主張も含めた完全な確認は\cref{Que:additioncomputable}で行う．
+
+以下では，帰納的関数がすべて計算可能関数であることを示す．
+そのために，\(E\)からの導出のしかたそのものに関する次の事実を用いる．
+
+\begin{Lemma} \label[Lemma]{lemma:evaluationderivationshape}
+	\(E\)を評価式の有限集合とし，評価式\(t_1 \evaluate t_2\)が\(E\)から導出可能であるとする．
+	このとき，\(E\)のある要素に(SUB)を有限回（0回でもよい）適用して得られる評価式\(t_1 \evaluate t_2'\)が存在して，
+	\(t_2\)は\(t_2'\)に(REPL)を有限回（0回でもよい）適用して得られる．
+\end{Lemma}
+
+\begin{proof}
+	\(t_1 \evaluate t_2\)を下段とする\(E\)からの導出図の構成（\cref{Def:evaluatable}）に関する帰納法による．
+	\(t_1 \evaluate t_2 \in E\)である場合は，これ自身に(SUB), (REPL)をともに0回適用したものと考えればよい．
+
+	(SUB)によって\(t_1 \evaluate t_2\)が得られた場合，すなわちある評価式\(u_1 \evaluate u_2\)を下段とする導出図から\(t_1 \evaluate t_2 = \SubEvaluate{u_1 \evaluate u_2}{a}{n}\)が得られた場合を考える．
+	帰納法の仮定より，\(E\)のある要素に(SUB)を有限回適用して得られる評価式\(u_1 \evaluate v\)が存在して，\(u_2\)は\(v\)に(REPL)を有限回適用して得られる．
+	(REPL)によって置き換えられる部分項はもとより数項のみからなり変数記号\(a\)を含まないから，
+	その置き換えは，さらに変数記号\(a\)を数項\(n\)に置き換える操作の影響を受けない．
+	よって，\(v\)にこれらの(REPL)を適用してから\(a\)を\(n\)に置き換えても，先に\(a\)を\(n\)に置き換えてから同じ(REPL)を適用しても，得られる評価式は変わらない．
+	そこで，\(u_1 \evaluate v\)に，変数記号\(a\)を数項\(n\)に置き換える(SUB)をさらに適用して得られる評価式を\(t_1 \evaluate t_2'\)とすれば，
+	これは\(E\)のある要素に(SUB)を有限回適用して得られたものであり，\(t_2\)はこの\(t_2'\)に，先と同じ(REPL)の適用を行った結果に等しい．
+
+	(REPL)によって\(t_1 \evaluate t_2\)が得られた場合，すなわち左側の前提\(\symcal{D}_1\)の下段が\(t_1 \evaluate w\)であるとする．
+	帰納法の仮定を\(\symcal{D}_1\)に適用すれば，\(E\)のある要素に(SUB)を有限回適用して得られる評価式\(t_1 \evaluate t_2'\)が存在して，\(w\)は\(t_2'\)に(REPL)を有限回適用して得られる．
+	\(t_1 \evaluate t_2\)は\(t_1 \evaluate w\)にさらに(REPL)を1回適用したものだから，
+	\(t_2\)も同じ\(t_2'\)に(REPL)を（1回多く）適用した結果として得られる．
+\end{proof}
+
+\Cref{lemma:evaluationderivationshape}からもわかるように，
+今回の体系\(\symcal{R}\)は推論規則が非常に単純であるがゆえに極めて限定された形の導出で導出可能な評価式を網羅できる．
+これは，導出可能な評価式についても同様である．
+
+\index[widx]{しゅようかんすうきごう@主要関数記号}
+\begin{Def} \label{Def:computablefunctionheadfunctionsymbol}
+	項\(\apply{f}{t_1, t_2, \dots, t_n}\)（\(f\)は関数記号，\(t_1, \dots, t_n\)は項）に対し，
+	関数記号\(f\)をこの項の\term{主要関数記号}と呼ぶ．
+	なお，変数記号や定数記号\(\obj{0}\)は主要関数記号を持たない．
+\end{Def}
+
+\begin{Lemma} \label[Lemma]{lemma:evaluationreplrestriction}
+	\(E\)を評価式の有限集合とし，\(n_1, n_2, \dots, n_r, n\)は数項，\(f\)は関数記号とする．
+	\(E\)から\(\apply{f}{n_1, n_2, \dots, n_r} \evaluate n\)の形の評価式が導出可能であるならば，
+	\(f\)は\(E\)のある要素の左辺の主要関数記号である．
+\end{Lemma}
+
+\begin{proof}
+	\(E \evaluatable \apply{k}{n_1, \dots, n_r} \evaluate n\)であるとする．
+	\cref{lemma:evaluationderivationshape}より，\(E\)のある要素に(SUB)を有限回適用すると，その左辺として\(\apply{k}{n_1, \dots, n_r}\)が得られる．
+	(SUB)は変数記号を数項に置き換えるだけの操作であり，項の主要関数記号を変えることはないから（\cref{Def:computablefunctionheadfunctionsymbol}），
+	この\(E\)の要素の左辺の主要関数記号は\(\apply{k}{n_1, \dots, n_r}\)の主要関数記号，すなわち\(k\)と一致する．
+\end{proof}
+
+\Cref{lemma:evaluationreplrestriction}の対偶をとれば，関数記号\(k\)がどの要素の左辺の主要関数記号でもないならば，
+\(E\)から\(\apply{k}{n_1, \dots, n_r} \evaluate n\)の形の評価式は導出できない．
+すなわち，(REPL)によって数項に置き換えられる部分項\(\apply{k}{n_1, \dots, n_r}\)の主要関数記号\(k\)は，
+つねに\(E\)のいずれかの要素の左辺の主要関数記号として現れるものに限られる．
+
+\begin{Que} \label[Que]{Que:basicfunctionscomputable}
+	\cref{lemma:evaluationderivationshape}, \cref{lemma:evaluationreplrestriction}を用いて，
+	ゼロ関数\(\zero^n\)，後者関数\(\suc\)，射影関数\(\proj_i^n\)（\cref{Def:recursivefunction}の規則1--3）が，
+	いずれも計算可能関数であることを示せ．
+\end{Que}
+
+\begin{Que} \label[Que]{Que:additioncomputable}
+	\cref{Ex:computablefunctionevaluatable}, \cref{Ex:computablefunctionevaluatable2}における評価式の集合\(E\)と関数記号\(\obj{f}\)を考える．
+	\cref{lemma:evaluationderivationshape}, \cref{lemma:evaluationreplrestriction}を用いて，任意の\(x, y, z \in \NaturalNumbers\)に対して
+	\[
+		x + y = z
+		\quad\metaequivalent\quad
+		E \evaluatable \apply{\obj{f}}{\numeral{x}, \numeral{y}} \evaluate \numeral{z}
+	\]
+	が成り立つことを示せ．
+	すなわち，加法を表す関数\(\pair{x, y} \mapsto x + y\)が，この\(E\)と\(\obj{f}\)によって\cref{Def:computablefunction}の意味で計算可能関数であることを確かめよ．
+\end{Que}
+
+\begin{Que} \label[Que]{Que:fibonaccicomputable}
+	自然数の列\(\apply{\Fib}{0}, \apply{\Fib}{1}, \apply{\Fib}{2}, \dots\)（フィボナッチ数列）を
+	\begin{align*}
+		\apply{\Fib}{0}     & = 0,                                                                             \\
+		\apply{\Fib}{1}     & = 1,                                                                             \\
+		\apply{\Fib}{n + 2} & = \apply{\Fib}{n + 1} + \apply{\Fib}{n} \quad \text{(\(n \in \NaturalNumbers\))}
+	\end{align*}
+	として定める．\(\Fib \colon \NaturalNumbers \to \NaturalNumbers\)が計算可能関数であることを示せ．
+
+	\(\apply{\Fib}{n}\)だけを1変数の原始帰納法の形（\cref{Def:recursivefunction}規則5）に直接乗せようとすると，
+	1つ前の値だけでなく2つ前の値も必要になるためうまくいかない．
+	そこで，組\(\pair{\apply{\Fib}{n}, \apply{\Fib}{n+1}}\)を求める2つの関数記号を，互いに参照し合う形で定義することを考えよ．
+	その際，加法を表す関数記号として\cref{Que:additioncomputable}の\(\obj{f}\)（とその\(E\)）を部品として使ってよい．
+\end{Que}
+
+帰納的関数がすべて計算可能関数であることを，2段階に分けて示そう．
+まずは，\cref{Def:recursivefunction}の規則6（\(\muoperator\)作用素）を用いない場合，すなわち原始帰納的関数の場合を考える．
+
+\begin{Thm} \label[Thm]{Thm:primitiverecursivefunctioncomputable}
+	任意の原始帰納的関数は計算可能関数である．
+\end{Thm}
+
+\begin{proof}
+	原始帰納的関数の構成に関する帰納法，すなわち\cref{Def:recursivefunction}の規則1--5に関する帰納法によって示す．
+	すなわち，これらの規則のそれぞれについて，用いられている関数がすべて計算可能関数であるならば，その規則によって得られる関数も計算可能関数であることを示せばよい．
+	規則1（ゼロ関数），規則2（後者関数），規則3（射影関数）については\cref{Que:basicfunctionscomputable}ですでに示した．
+	なお，関数記号は可算無限に存在するため，以下ではそれまでに登場したいずれの評価式の集合にも現れない新しい関数記号を自由に選べることに注意する．
+
+	規則4（合成）について．\(g_1, \dots, g_m \colon \NaturalNumbers^n \to \NaturalNumbers\)と\(h \colon \NaturalNumbers^m \to \NaturalNumbers\)が計算可能関数であるとし，
+	帰納法の仮定によりそれぞれに対応する評価式の集合\(E_{g_1}, \dots, E_{g_m}, E_h\)と互いに相異なる関数記号\(\obj{g_1}, \dots, \obj{g_m}, \obj{h}\)がとれるとする．
+	\(a_1, \dots, a_n\)を相異なる変数記号とし，新しい関数記号\(\obj{f}\)を用いて
+	\[
+		E = E_{g_1} \cup \dots \cup E_{g_m} \cup E_h \cup
+		\Set{\apply{\obj{f}}{a_1, \dots, a_n} \evaluate \apply{\obj{h}}{\apply{\obj{g_1}}{a_1, \dots, a_n}, \dots, \apply{\obj{g_m}}{a_1, \dots, a_n}}}
+	\]
+	とする．\(x_1, \dots, x_n\)を固定する．
+	\(\obj{f}\)は新しい関数記号としたので，\cref{lemma:evaluationderivationshape}より，
+	\(E \evaluatable \apply{\obj{f}}{\numeral{x_1}, \dots, \numeral{x_n}} \evaluate n\)となる数項\(n\)は，
+	\(E\)の最後の要素に(SUB)を\(n\)回適用して得られる評価式
+	\[
+		\apply{\obj{f}}{\numeral{x_1}, \dots, \numeral{x_n}} \evaluate
+		\apply{\obj{h}}{\apply{\obj{g_1}}{\numeral{x_1}, \dots, \numeral{x_n}}, \dots, \apply{\obj{g_m}}{\numeral{x_1}, \dots, \numeral{x_n}}}
+	\]
+	の右辺に，(REPL)を有限回適用して得られるものに限られる．
+	\cref{lemma:evaluationreplrestriction}より，この(REPL)によって置き換えられる部分項の主要関数記号は\(\obj{g_1}, \dots, \obj{g_m}, \obj{h}\)のいずれかであり，
+	帰納法の仮定（各\(g_i, h\)についての\cref{eq:computablefunction}）により，
+	部分項\(\apply{\obj{g_i}}{\numeral{x_1}, \dots, \numeral{x_n}}\)を置き換えられる数項は\(\numeral{\apply{g_i}{x_1, \dots, x_n}}\)しかなく，
+	これらがすべて置き換えられたのちに残る部分項を置き換えられる数項も
+	\[
+		\numeral{\apply{h}{\apply{g_1}{x_1, \dots, x_n}, \dots, \apply{g_m}{x_1, \dots, x_n}}} = \numeral{\apply{f}{x_1, \dots, x_n}}
+	\]
+	しかない．よって\(n = \numeral{\apply{f}{x_1, \dots, x_n}}\)である．
+	逆に，帰納法の仮定より\(E \evaluatable \apply{\obj{g_i}}{\numeral{x_1}, \dots, \numeral{x_n}} \evaluate \numeral{\apply{g_i}{x_1, \dots, x_n}}\)（各\(i\)）と
+	\[
+		E \evaluatable \apply{\obj{h}}{\numeral{\apply{g_1}{x_1, \dots, x_n}}, \dots, \numeral{\apply{g_m}{x_1, \dots, x_n}}} \evaluate \numeral{\apply{f}{x_1, \dots, x_n}}
+	\]
+	が成り立つから，これらを上記の(SUB)の適用結果と(REPL)によって\(m + 1\)回組み合わせれば，
+	実際に\(E \evaluatable \apply{\obj{f}}{\numeral{x_1}, \dots, \numeral{x_n}} \evaluate \numeral{\apply{f}{x_1, \dots, x_n}}\)が導出できる．
+
+	規則5（原始帰納法）について．\(g \colon \NaturalNumbers^n \to \NaturalNumbers\)と\(h \colon \NaturalNumbers^{n+2} \to \NaturalNumbers\)が計算可能関数であるとし，
+	帰納法の仮定により対応する評価式の集合\(E_g, E_h\)と相異なる関数記号\(\obj{g}, \obj{h}\)がとれるとする．
+	\(a_1, \dots, a_n, b\)を相異なる変数記号とし，新しい関数記号\(\obj{f}\)を用いて
+	\begin{align*}
+		E = E_g \cup E_h \cup \Set{
+			\begin{aligned}
+				 & \apply{\obj{f}}{a_1, \dots, a_n, \numeral{0}} \evaluate \apply{\obj{g}}{a_1, \dots, a_n},                                                 \\
+				 & \apply{\obj{f}}{a_1, \dots, a_n, \apply{\succfunc}{b}} \evaluate \apply{\obj{h}}{a_1, \dots, a_n, b, \apply{\obj{f}}{a_1, \dots, a_n, b}}
+			\end{aligned}
+		}
+	\end{align*}
+	とする．これは，\cref{Ex:computablefunctionevaluatable}, \cref{Ex:computablefunctionevaluatable2}の\(E\)を，一般の計算可能関数\(\obj{g}, \obj{h}\)に対して一般化したものにほかならない．
+	\(x_1, \dots, x_n\)を固定し，\(y\)に関する帰納法によって，
+	\(E \evaluatable \apply{\obj{f}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{y}} \evaluate n\)となる数項\(n\)がちょうど\(\numeral{\apply{f}{x_1, \dots, x_n, y}}\)であることを示す．
+
+	\(y = 0\)のとき．\(\numeral{0}\)と\(\apply{\succfunc}{\dots}\)の形は互いに排他的である（\cref{Def:computablefunctionnumeral}）から，
+	\(\obj{f}\)が新しい関数記号であることと\cref{lemma:evaluationderivationshape}より，\(n\)は\(E\)の1つ目の等式に(SUB)を適用して得られる評価式
+	\(\apply{\obj{f}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{0}} \evaluate \apply{\obj{g}}{\numeral{x_1}, \dots, \numeral{x_n}}\)
+	の右辺への(REPL)の適用の結果に限られる．
+	\cref{lemma:evaluationreplrestriction}と帰納法の仮定（\(g\)についての\cref{eq:computablefunction}）より，この右辺を置き換えられる数項は\(\numeral{\apply{g}{x_1, \dots, x_n}} = \numeral{\apply{f}{x_1, \dots, x_n, 0}}\)しかないから，\(n\)はこれに等しい．
+	逆に，帰納法の仮定による\(E \evaluatable \apply{\obj{g}}{\numeral{x_1}, \dots, \numeral{x_n}} \evaluate \numeral{\apply{f}{x_1, \dots, x_n, 0}}\)と上記の(SUB)の適用を(REPL)で組み合わせれば，実際にこの評価式は導出できる．
+
+	\(y\)から\(y + 1\)への場合．同様に，\(n\)は\(E\)の2つ目の等式に(SUB)を適用して得られる評価式
+	\(\apply{\obj{f}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{y+1}} \evaluate \apply{\obj{h}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{y}, \apply{\obj{f}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{y}}}\)
+	の右辺への(REPL)の適用の結果に限られる．
+	\cref{lemma:evaluationreplrestriction}より，この右辺で置き換えの対象となりうる部分項は\(\obj{f}\)を主要関数記号とするものと\(\obj{h}\)を主要関数記号とするものだけである．
+	まず内側の部分項\(\apply{\obj{f}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{y}}\)は，\(y\)についての帰納法の仮定によって\(\numeral{\apply{f}{x_1, \dots, x_n, y}}\)にしか置き換えられない．
+	これにより残る部分項\(\apply{\obj{h}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{y}, \numeral{\apply{f}{x_1, \dots, x_n, y}}}\)は，帰納法の仮定（\(h\)についての\cref{eq:computablefunction}）によって\(\numeral{\apply{h}{x_1, \dots, x_n, y, \apply{f}{x_1, \dots, x_n, y}}} = \numeral{\apply{f}{x_1, \dots, x_n, y+1}}\)にしか置き換えられない．
+	よって\(n = \numeral{\apply{f}{x_1, \dots, x_n, y+1}}\)である．
+	逆に，\(y\)についての帰納法の仮定と\(h\)についての帰納法の仮定を上記の(SUB)の適用結果に(REPL)で2回組み合わせれば，実際にこの評価式は導出できる．
+	以上の\(y\)に関する帰納法により，すべての\(y\)について主張が成り立つ．
+
+	以上，規則1--5のいずれについても，用いられている関数がすべて計算可能関数であれば，得られる関数も計算可能関数であることが示された．
+	\cref{Def:recursivefunction}の規則6を1度も適用せずに得られる帰納的関数が原始帰納的関数であったから，
+	原始帰納的関数の構成に関する帰納法によって，任意の原始帰納的関数が計算可能関数であることが従う．
+\end{proof}
+
+\Cref{Thm:primitiverecursivefunctioncomputable}の証明のうち規則1--5に関する部分は，
+そこで用いた関数が計算可能関数であるという仮定のみを使っており，それらが原始帰納的関数であることは一切用いていない．
+したがって，同じ議論は一般の帰納的関数の構成に関する帰納法においても，規則1--5についてそのまま通用する．
+あとは，規則6（\(\muoperator\)作用素）についても同様のことが成り立つことを示せば，帰納的関数がすべて計算可能関数であることがわかる．
+
+\begin{Thm} \label[Thm]{Thm:recursivefunctioncomputable}
+	任意の帰納的関数は計算可能関数である．
+\end{Thm}
+
+\begin{proof}
+	帰納的関数の構成に関する帰納法によって示す．
+	規則1--5については\cref{Thm:primitiverecursivefunctioncomputable}の証明における議論がそのまま適用できるので，
+	以下では規則6についてのみ示せばよい．
+	関数記号は可算無限に存在するため，以下ではそれまでに登場したいずれの評価式の集合にも現れない新しい関数記号を自由に選べることに注意する．
+
+	規則6（\(\muoperator\)作用素）について．\(g \colon \NaturalNumbers^{n+1} \to \NaturalNumbers\)が計算可能関数であり，
+	すべての\(x_1, \dots, x_n\)に対して\(\apply{g}{x_1, \dots, x_n, y} = 0\)となる\(y\)が存在するとする．
+	帰納法の仮定により対応する評価式の集合\(E_g\)と関数記号\(\obj{g}\)がとれる．
+	\(a_1, \dots, a_n, b, c\)を相異なる変数記号とし，新しい関数記号\(\obj{f}, \obj{R}, \obj{S}\)を用いて
+	\begin{align*}
+		E = E_g \cup \Set{
+			\begin{aligned}
+				 & \apply{\obj{f}}{a_1, \dots, a_n} \evaluate \apply{\obj{R}}{a_1, \dots, a_n, \numeral{0}},                                  \\
+				 & \apply{\obj{R}}{a_1, \dots, a_n, b} \evaluate \apply{\obj{S}}{\apply{\obj{g}}{a_1, \dots, a_n, b}, a_1, \dots, a_n, b},    \\
+				 & \apply{\obj{S}}{\numeral{0}, a_1, \dots, a_n, b} \evaluate b,                                                              \\
+				 & \apply{\obj{S}}{\apply{\succfunc}{c}, a_1, \dots, a_n, b} \evaluate \apply{\obj{R}}{a_1, \dots, a_n, \apply{\succfunc}{b}}
+			\end{aligned}
+		}
+	\end{align*}
+	とする．\(\obj{R}\)は「\(b\)以上で最小の，\(g\)が0となる引数」を求める関数記号，\(\obj{S}\)はその探索の1歩分を，\(g\)の値によって場合分けして表す関数記号である．
+	\(x_1, \dots, x_n\)を固定し，\(y^{\ast} = \apply{\muoperator y}{\apply{g}{x_1, \dots, x_n, y} = 0}\)（\(= \apply{f}{x_1, \dots, x_n}\)）とおく．
+
+	\(b = y^{\ast}, y^{\ast} - 1, \dots, 0\)の順に，\(y^{\ast} - b\)に関する帰納法によって，
+	\(E \evaluatable \apply{\obj{R}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{b}} \evaluate n\)となる数項\(n\)がちょうど\(\numeral{y^{\ast}}\)であることを示す．
+	\(\obj{R}\)についての等式は\(E\)にただ1つしかないから，\cref{lemma:evaluationderivationshape}より，
+	この\(n\)は\(\obj{R}\)の等式に(SUB)を適用して得られる評価式\(\apply{\obj{R}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{b}} \evaluate \apply{\obj{S}}{\apply{\obj{g}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{b}}, \numeral{x_1}, \dots, \numeral{x_n}, \numeral{b}}\)の右辺への(REPL)の適用の結果に限られる．
+	帰納法の仮定（\(g\)についての\cref{eq:computablefunction}）より，部分項\(\apply{\obj{g}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{b}}\)は\(\numeral{\apply{g}{x_1, \dots, x_n, b}}\)にしか置き換えられない．
+
+	\(b = y^{\ast}\)のとき，\(\apply{g}{x_1, \dots, x_n, y^{\ast}} = 0\)であるから，残る部分項は\(\apply{\obj{S}}{\numeral{0}, \numeral{x_1}, \dots, \numeral{x_n}, \numeral{y^{\ast}}}\)である．
+	\(\numeral{0}\)と\(\apply{\succfunc}{\dots}\)の形は互いに排他的であるから，これに整合する\(\obj{S}\)の等式は1つ目のものに限られ，(SUB)によって\(n = \numeral{y^{\ast}}\)と定まる（右辺は変数記号\(b\)そのものであり，これ以上(REPL)は適用できない）．
+	逆に，帰納法の仮定による\(E \evaluatable \apply{\obj{g}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{y^{\ast}}} \evaluate \numeral{0}\)と，\(\obj{R}, \obj{S}\)の等式への(SUB)の適用とを(REPL)で組み合わせれば，実際に\(E \evaluatable \apply{\obj{R}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{y^{\ast}}} \evaluate \numeral{y^{\ast}}\)が導出できる．
+
+	\(b < y^{\ast}\)のとき，\(y^{\ast}\)の最小性から\(\apply{g}{x_1, \dots, x_n, b} \neq 0\)であり，これをある自然数\(c\)を用いて\(\apply{g}{x_1, \dots, x_n, b} = c + 1\)とかけば，
+	残る部分項は\(\apply{\obj{S}}{\apply{\succfunc}{\numeral{c}}, \numeral{x_1}, \dots, \numeral{x_n}, \numeral{b}}\)である．
+	今度は2つ目の\(\obj{S}\)の等式に整合するから，(SUB)によってこれは\(\apply{\obj{R}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{b + 1}}\)への(REPL)の適用の結果に限られる．
+	\(b + 1\)についての帰納法の仮定（\(y^{\ast} - (b+1) < y^{\ast} - b\)）より，この部分項は\(\numeral{y^{\ast}}\)にしか置き換えられないから，\(n = \numeral{y^{\ast}}\)である．
+	逆に，\(g(x_1, \dots, x_n, b) = c+1\)の導出可能性と，\(b+1\)についての帰納法の仮定による\(E \evaluatable \apply{\obj{R}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{b+1}} \evaluate \numeral{y^{\ast}}\)とを，
+	\(\obj{R}, \obj{S}\)の等式への(SUB)の適用結果に(REPL)で2回組み合わせれば，実際に\(E \evaluatable \apply{\obj{R}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{b}} \evaluate \numeral{y^{\ast}}\)が導出できる．
+
+	以上の帰納法によって\(b = 0\)の場合を得れば，\(E \evaluatable \apply{\obj{R}}{\numeral{x_1}, \dots, \numeral{x_n}, \numeral{0}} \evaluate n\)となる\(n\)は\(\numeral{y^{\ast}}\)に限られ，かつ実際に導出できる．
+	これを\(\obj{f}\)の等式と組み合わせれば，同様の議論によって\(E \evaluatable \apply{\obj{f}}{\numeral{x_1}, \dots, \numeral{x_n}} \evaluate n\)となる数項\(n\)は\(\numeral{y^{\ast}} = \numeral{\apply{f}{x_1, \dots, x_n}}\)に限られ，かつ実際にこれが導出できることがわかる．
+
+	以上により，規則6についても，用いられている関数が計算可能関数であれば，得られる関数も計算可能関数であることが示された．
+	これと\cref{Thm:primitiverecursivefunctioncomputable}の証明における規則1--5についての議論を合わせれば，
+	\cref{Def:recursivefunction}の規則1--6のいずれについても，用いられている関数がすべて計算可能関数であれば，得られる関数も計算可能関数であることがわかる．
+	\cref{Def:recursivefunction}の規則7により帰納的関数は上記の規則を有限回適用して得られる関数に限られるから，
+	帰納的関数の構成に関する帰納法によって，任意の帰納的関数が計算可能関数であることが従う．
+\end{proof}
+
+\Cref{Thm:recursivefunctioncomputable}の逆，すなわちすべての計算可能関数が帰納的関数であることも実は成り立つ．
+しかし，その証明には本書の範囲を超える準備が必要となるため，ここでは扱わない．
 
 \section{有限列のコード化} \label[section]{sec:codizeforfinitesequence}
 

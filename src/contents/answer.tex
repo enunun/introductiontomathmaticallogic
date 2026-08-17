@@ -1504,6 +1504,101 @@
 
 \section*{\Cref{chap:computable}}
 
+\subsection*{\Cref{Que:basicfunctionscomputable}}
+
+ゼロ関数\(\zero^n\)について．\(a_1, a_2, \dots, a_n\)を相異なる変数記号とし，
+\[
+	E = \Set{\apply{\obj{f}}{a_1, a_2, \dots, a_n} \evaluate \numeral{0}}
+\]
+とする．\(E\)の要素はこれのみであり，その右辺\(\numeral{0}\)には関数記号の適用が現れないから，
+\cref{lemma:evaluationreplrestriction}よりこれに(REPL)を適用することはできない．
+よって\cref{lemma:evaluationderivationshape}により，\(E \evaluatable \apply{\obj{f}}{\numeral{x_1}, \dots, \numeral{x_n}} \evaluate n\)となる数項\(n\)は，
+\(E\)の要素に(SUB)を\(n\)回適用して得られるものに限られ，\(n = \numeral{0} = \numeral{\apply{\zero^n}{x_1, \dots, x_n}}\)である．
+そして，この(SUB)の適用によって実際にこの評価式は導出できる．
+
+後者関数\(\suc\)について．\(a\)を変数記号とし，
+\[
+	E = \Set{\apply{\obj{f}}{a} \evaluate \apply{\succfunc}{a}}
+\]
+とする．ゼロ関数の場合と同様に，\(E\)の唯一の要素の右辺\(\apply{\succfunc}{a}\)には\(E\)の要素の左辺に現れる関数記号の適用が現れないから，
+\(E \evaluatable \apply{\obj{f}}{\numeral{x}} \evaluate n\)となる数項\(n\)は(SUB)によって\(n = \apply{\succfunc}{\numeral{x}} = \numeral{x + 1}\)（\cref{Def:computablefunctionnumeral}）と定まり，かつ実際に導出できる．
+
+射影関数\(\proj_i^n\)について．\(a_1, \dots, a_n\)を相異なる変数記号とし，
+\[
+	E = \Set{\apply{\obj{f}}{a_1, \dots, a_n} \evaluate a_i}
+\]
+とする．(SUB)は評価式に現れる\emph{すべて}の対象の変数記号を置き換えるから，
+\(a_1, \dots, a_n\)をそれぞれ\(\numeral{x_1}, \dots, \numeral{x_n}\)に置き換える(SUB)の適用によって
+\(E \evaluatable \apply{\obj{f}}{\numeral{x_1}, \dots, \numeral{x_n}} \evaluate \numeral{x_i}\)が直接得られる．
+ゼロ関数の場合と同様に右辺には関数記号の適用が現れないため，これが導出できる唯一の数項でもある．
+
+\subsection*{\Cref{Que:additioncomputable}}
+
+\(x \in \NaturalNumbers\)を固定し，\(y\)に関する帰納法によって，
+\(E \evaluatable \apply{\obj{f}}{\numeral{x}, \numeral{y}} \evaluate n\)となる数項\(n\)がちょうど\(\numeral{x + y}\)であることを示す．
+
+\(y = 0\)のとき．\(\numeral{0}\)と\(\apply{\succfunc}{\dots}\)の形は互いに排他的である（\cref{Def:computablefunctionnumeral}）から，
+\cref{lemma:evaluationderivationshape}より，\(n\)は\(E\)の1つ目の等式\(\apply{\obj{f}}{a_0, \numeral{0}} \evaluate a_0\)に(SUB)を適用して得られる評価式
+\(\apply{\obj{f}}{\numeral{x}, \numeral{0}} \evaluate \numeral{x}\)の右辺に(REPL)を適用して得られるものに限られる．
+右辺\(\numeral{x}\)には関数記号の適用が現れないので，\cref{lemma:evaluationreplrestriction}よりこれ以上(REPL)は適用できず，\(n = \numeral{x} = \numeral{x + 0}\)である．
+そして，この(SUB)の適用によって実際にこの評価式は導出できる．
+
+\(y\)から\(y + 1\)への場合．同様に，\(n\)は\(E\)の2つ目の等式に(SUB)を適用して得られる評価式
+\(\apply{\obj{f}}{\numeral{x}, \numeral{y+1}} \evaluate \apply{\succfunc}{\apply{\obj{f}}{\numeral{x}, \numeral{y}}}\)の右辺への(REPL)の適用の結果に限られる．
+\cref{lemma:evaluationreplrestriction}より，この右辺で置き換えの対象となりうる部分項は\(\obj{f}\)を主要関数記号とするものだけであり，
+\(y\)についての帰納法の仮定によって\(\apply{\obj{f}}{\numeral{x}, \numeral{y}}\)は\(\numeral{x + y}\)にしか置き換えられない．
+よって\(n = \apply{\succfunc}{\numeral{x + y}} = \numeral{x + y + 1} = \numeral{x + (y+1)}\)である．
+逆に，\(y\)についての帰納法の仮定を上記の(SUB)の適用結果に(REPL)で組み合わせれば，実際にこの評価式は導出できる．
+
+以上の\(y\)に関する帰納法により，すべての\(x, y, z \in \NaturalNumbers\)について
+\(x + y = z \metaequivalent E \evaluatable \apply{\obj{f}}{\numeral{x}, \numeral{y}} \evaluate \numeral{z}\)が成り立つ．
+
+\subsection*{\Cref{Que:fibonaccicomputable}}
+
+\cref{Que:additioncomputable}で得た評価式の集合と関数記号を，ここでは\(E_{\obj{add}}\)と\(\obj{add}\)と書くことにする．
+すなわち，任意の\(x, y \in \NaturalNumbers\)に対して\(E_{\obj{add}} \evaluatable \apply{\obj{add}}{\numeral{x}, \numeral{y}} \evaluate \numeral{x + y}\)であり，これ以外の数項は導出できない．
+
+新しい関数記号\(\obj{p}, \obj{q}, \obj{fib}\)（相異なるもの）と変数記号\(a, b\)を用いて
+\begin{align*}
+	E = E_{\obj{add}} \cup \Set{
+		\begin{aligned}
+			 & \apply{\obj{p}}{\numeral{0}} \evaluate \numeral{0},                                                        \\
+			 & \apply{\obj{q}}{\numeral{0}} \evaluate \apply{\succfunc}{\numeral{0}},                                     \\
+			 & \apply{\obj{p}}{\apply{\succfunc}{b}} \evaluate \apply{\obj{q}}{b},                                        \\
+			 & \apply{\obj{q}}{\apply{\succfunc}{b}} \evaluate \apply{\obj{add}}{\apply{\obj{p}}{b}, \apply{\obj{q}}{b}}, \\
+			 & \apply{\obj{fib}}{a} \evaluate \apply{\obj{p}}{a}
+		\end{aligned}
+	}
+\end{align*}
+と定める．\(\obj{p}\)は\(\apply{\Fib}{n}\)を，\(\obj{q}\)は\(\apply{\Fib}{n+1}\)を，それぞれ求める関数記号である．
+
+\(n\)に関する帰納法によって，\(E \evaluatable \apply{\obj{p}}{\numeral{n}} \evaluate n_1\)となる数項\(n_1\)がちょうど\(\numeral{\apply{\Fib}{n}}\)であり，
+\(E \evaluatable \apply{\obj{q}}{\numeral{n}} \evaluate n_2\)となる数項\(n_2\)がちょうど\(\numeral{\apply{\Fib}{n+1}}\)であることを，同時に示す．
+
+\(n = 0\)のとき．\(\numeral{0}\)と\(\apply{\succfunc}{\dots}\)の形は互いに排他的であるから，
+\(\obj{p}, \obj{q}\)についての等式のうち左辺が\(\numeral{0}\)に整合するのは，それぞれ1つ目のものに限られる．
+\(\apply{\obj{p}}{\numeral{0}} \evaluate \numeral{0}\)の右辺には関数記号の適用が現れないので\(n_1 = \numeral{0} = \numeral{\apply{\Fib}{0}}\)であり，
+\(\apply{\obj{q}}{\numeral{0}} \evaluate \apply{\succfunc}{\numeral{0}} = \numeral{1}\)より\(n_2 = \numeral{1} = \numeral{\apply{\Fib}{1}}\)である．
+これらはいずれも(SUB)のみで実際に導出できる．
+
+\(n\)から\(n + 1\)への場合．左辺が\(\apply{\succfunc}{\numeral{n}}\)に整合する等式は，それぞれ3つ目，4つ目のものに限られる．
+\(\apply{\obj{p}}{\numeral{n+1}} \evaluate \apply{\obj{q}}{\numeral{n}}\)の右辺は，帰納法の仮定（\(\obj{q}\)についての主張）と\cref{lemma:evaluationreplrestriction}により\(\numeral{\apply{\Fib}{n+1}}\)にしか置き換えられないから，\(n_1 = \numeral{\apply{\Fib}{n+1}}\)である．
+\(\apply{\obj{q}}{\numeral{n+1}} \evaluate \apply{\obj{add}}{\apply{\obj{p}}{\numeral{n}}, \apply{\obj{q}}{\numeral{n}}}\)の右辺は，
+帰納法の仮定により部分項\(\apply{\obj{p}}{\numeral{n}}, \apply{\obj{q}}{\numeral{n}}\)がそれぞれ\(\numeral{\apply{\Fib}{n}}, \numeral{\apply{\Fib}{n+1}}\)にしか置き換えられず，
+残る部分項\(\apply{\obj{add}}{\numeral{\apply{\Fib}{n}}, \numeral{\apply{\Fib}{n+1}}}\)も\cref{Que:additioncomputable}の結果により
+\[
+	\numeral{\apply{\Fib}{n} + \apply{\Fib}{n+1}} = \numeral{\apply{\Fib}{n + 2}}
+\]
+にしか置き換えられない．よって\(n_2 = \numeral{\apply{\Fib}{n+2}} = \numeral{\apply{\Fib}{(n+1)+1}}\)である．
+逆向きも，それぞれ帰納法の仮定と\cref{Que:additioncomputable}の結果とを，上記の(SUB)の適用結果に(REPL)で組み合わせれば，実際に導出できる．
+
+以上の帰納法により，すべての\(n\)について\(\obj{p}, \obj{q}\)に関する主張が成り立つ．
+最後に，\(\obj{fib}\)についての等式に(SUB)を適用して得られる\(\apply{\obj{fib}}{\numeral{n}} \evaluate \apply{\obj{p}}{\numeral{n}}\)と，
+上で示した\(E \evaluatable \apply{\obj{p}}{\numeral{n}} \evaluate \numeral{\apply{\Fib}{n}}\)とを(REPL)で組み合わせれば，
+\(E \evaluatable \apply{\obj{fib}}{\numeral{n}} \evaluate \numeral{\apply{\Fib}{n}}\)が導出できる．
+また，\(\obj{fib}\)は新しい関数記号としたので，\cref{lemma:evaluationderivationshape}よりこれ以外の数項は導出できない．
+よって，\(\Fib \colon \NaturalNumbers \to \NaturalNumbers\)は\(E\)と\(\obj{fib}\)によって計算可能関数である．
+
 \section*{\Cref{chap:peanoarithmetic}}
 
 \subsection*{\Cref{Que:ackermannfunctiondefinition}}
